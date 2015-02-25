@@ -1,0 +1,27 @@
+Overview
+--------
+
+	The REDCapAPI package provides classes that simplify the use
+of the REDCap application programming interface (API).
+
+        The REDCap API is a set of web services that allow other
+programs to interoperate with REDCap by exporting or importing data
+using HTTP Post requests. The REDCap development team supplies a
+class, RestCallRequest, which wraps the lower level code needed to
+encrypt, send, receive, and decrypt messages to the REDCap service in
+easier-to-use methods.
+
+	The REDCapAPI classes build on RestCallRequest to provide
+higher level methods for commonly performed tasks such as exporting
+sets of records defined by various criteria, importing records, and
+reporting problems via email. The REDCapAPI classes also provide methods
+for common related tasks such as checking advanced link authorization,
+retrieving parameters sent by a data entry trigger, and checking
+whether or not a request was sent by an authorized server.
+
+Files
+-----
+
+Examples
+--------
+
