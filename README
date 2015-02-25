@@ -19,8 +19,34 @@ for common related tasks such as checking advanced link authorization,
 retrieving parameters sent by a data entry trigger, and checking
 whether or not a request was sent by an authorized server.
 
+Architecture
+------------
+
+	
+
 Files
 -----
+	REDCapAPI.php	        -- Contains the classes:
+			   	   REDCapFactory
+			   	   REDCapProject
+			   	   REDCapDETHandler
+
+	SampleConnection.php    -- Includes an example class that
+				   configures and uses REDCapAPI for a
+				   sample project.
+
+	SampleNotifier.php	-- Includes an example class for
+				   sending notifications via email 
+				   if there are errors in using the
+				   REDCap API.
+
+	sample.php		-- An example executable that uses
+				   SampleConnection.pm
+
+
+	RestCallRequest.php -- NOT SUPPLIED IN THIS PACKAGE. This file
+			       is supplied by Vanderbilt University
+			       as part of REDCap
 
 Examples
 --------
