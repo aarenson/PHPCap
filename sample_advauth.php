@@ -16,6 +16,7 @@
 //    parameters.
 // -- Configure the REDCap project to have a project bookmark that uses
 //    advanced authentication to call this program.
+// -- Navigate to a REDCap record and click on the project bookmark.
 //
 //========================================================================= 
 

@@ -3,6 +3,12 @@
 // sample.php -- A command-line executed program that uses REDCapAPI.php
 //               via the SampleConnection class.
 //
+// To use this program:
+//
+// -- Configure SampleConnection.php with appropriate URL, Token, and email
+//    parameters.
+// -- Execute sample.php on the comman line with: 'php sample.php'
+//
 //========================================================================= 
 
 //--------------------------------------------------------------------------
