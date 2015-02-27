@@ -1,15 +1,13 @@
 <?php
 
 //-------------------------------------------------------------------------
-// $Id$
-//
-// Notifier is used to send notifications to someone
+// SampleNotifier is used to send notifications to someone
 //
 // So far, only email is supported as a means to send the notification.
 //
 //-------------------------------------------------------------------------
 //
-class Notifier {
+class SampleNotifier {
 
   protected $sender = '';     // Email address to be used as From: address
   protected $recipient = '';  // Email address of recipient
