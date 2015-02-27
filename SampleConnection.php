@@ -80,18 +80,19 @@ class SampleConnection {
 
     // Get primary keys for all records in this project
     // NOTE: get_ids_all would be better here, but is not yet implemented
-    $primary_keys = $this->get_partials_all('Failed to get partials',
-					    array($this->project->primary));
+    $primary_keys = 
+      $this->project->get_partials_all('Failed to get partials',
+				       array(PRIMARY_KEY));
 
     // Determine the lowest subject
     $sorted_primary_keys = sort($primary_keys);
     $cur_id = $sorted_primary_keys[0];
 
     // Get all values for the lowest subject
-    $records = $this->get_records_by_ids('Failed to get records',
-					 array($cur_id));
+    $records = $this->project->get_records_by_ids('Failed to get records',
+						  array($cur_id));
 
-    return $record[0];
+    return $records[0];
   }
 
 }

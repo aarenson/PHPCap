@@ -20,12 +20,6 @@ require_once('SampleConnection.php');
 //-------------------------------------------------------------------------
 // n/a
 
-// START CREATING THE CLASS for this executable here. Everything will
-// be in the class, and then below this we will simply create the class.
-
-// MIGHT BE ABLE to move constants into the class since we're now planning
-// on extending the Connection class.
-
 //
 class Sample extends SampleConnection {
 
