@@ -86,7 +86,7 @@ class SampleAdvAuth extends SampleConnection {
 
     // This program doesn't care _which_ user is authenticated,
     // as any user that could authenticate this way is authorized.
-    $body_array = $this->proj_spade->check_advanced_link_auth($this->authkey);
+    $body_array = $this->project->check_advanced_link_auth($this->authkey);
 
     if (is_array($body_array) && isset($body_array['username'])) {
       $this->username = $body_array['username'];
@@ -203,7 +203,11 @@ class SampleAdvAuth extends SampleConnection {
 
     $record = $this->get_lowest_subject();
 
-    $html .= print_r($record);
+    $html .= "<h1>Authorized user: ".$this->username."</h1>\n";
+
+    $html .= "<pre>\n";
+    $html .= print_r($record,true);
+    $html .= "</pre>\n";
 
     return $html;
   }
@@ -212,9 +216,9 @@ class SampleAdvAuth extends SampleConnection {
 
 
 }
-// END of class Visualizer
+// END of class SampleAdvAuth
 //-------------------------------------------------------------------------
 
-new Visualizer(__FILE__);
+new SampleAdvAuth(__FILE__);
 
 ?>
