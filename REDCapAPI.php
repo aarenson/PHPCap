@@ -152,6 +152,9 @@ class REDCapProject {
 
     // Get all records, but only the fields of interest
     $fields = array_keys($field_values);
+    if (!in_array($this->primary,$fields)) {
+      array_push($fields,$this->primary);
+    }
     $error = "Could not get subset of fields in get_records_by_fields ".
       "using: ".implode(',',$fields).'.';
     $partials = $this->get_partials_all($error,$fields);
@@ -164,7 +167,7 @@ class REDCapProject {
 
       foreach ($field_values as $field => $value) {
 
-	if ($value !== $cur_partials[$field]) {
+	if ((string)$value !== (string)$cur_partials[$field]) {
 	  $match = false;
 	  break;
 	}
@@ -239,12 +242,17 @@ class REDCapProject {
 
     // Decode the JSON content returned by REDCap (into an array rather
     // than into an object by specifying the second argument as "true"),
-    $body_array = json_decode($body_str, true);
+    if (empty($body_str)) {
+      $body_array = array();
+    }
+    else {
+      $body_array = json_decode($body_str, true);
+    }
 
     // Make sure we get a valid body
-    if ( ('file' == $data['content']) &&
+    if ( ('file' === $data['content']) &&
 	 (is_array($body_array)) ) {            // Files aren't sent as array
-    
+
       if (array_key_exists('error',$body_array)) {
 	$error .= "Error: '".$body_array['error']."'\n";
 
@@ -261,7 +269,7 @@ class REDCapProject {
     
     }
   
-    elseif( (! 'file' == $data['content']) &&  // Other content should be array
+    elseif( ( 'file' !== $data['content']) &&  // Other content should be array
 	    ( (! isset($body_array)) || 
 	      (empty($body_array)) || 
 	      (array_key_exists('error',$body_array)) ) ) {
@@ -350,9 +358,9 @@ class REDCapProject {
   //-------------------------------------------------------------------------
   // check_advanced_link_auth -- Use authkey to authenticate
   //
-  // REDCap's advanced link option sends an authkey. By sending that 
+  // REDCap's advanced link option sends an authkey. By sending that
   // authkey back to REDCap via the API, we determine whether or not
-  // it is a valid authkey and the user of that authkey is still 
+  // it is a valid authkey and the user of that authkey is still
   // authenticated.
   //
   // If not, get back '0'.
@@ -364,29 +372,29 @@ class REDCapProject {
   // a 0.
   //
   public function check_advanced_link_auth($authkey) {
-	
-    // Create REDCap API request object               
-    $data = array(
-		  'authkey' => $authkey,
-		  'format' => 'json'
-		  );
-    $request = new RestCallRequest($this->api_url, 'POST', $data);
 
-    // Initiate the API request, and fetch the results from the request object.
-    $request->execute();
-    $body_str = $request->getResponseBody();
-    $header_array = $request->getResponseInfo();
+  // Create REDCap API request object
+  $data = array(
+		'authkey' => $authkey,
+              'format' => 'json'
+		);
+  $request = new RestCallRequest($this->api_url, 'POST', $data);
 
-    // Decode the JSON content returned by REDCap (into an array rather        
-    // than into an object by specifying the second argument as "true"),       
-    $body_array = json_decode($body_str, true);
+  // Initiate the API request, and fetch the results from the request object.
+  $request->execute();
+  $body_str = $request->getResponseBody();
+  $header_array = $request->getResponseInfo();
 
-    // NOTE: If there is an error, $body_array is set to '0'.
-    return($body_array);
-  
-  }
-  // END check_advanced_link_auth
-  //---------------------------------------------------------------------------
+  // Decode the JSON content returned by REDCap (into an array rather
+  // than into an object by specifying the second argument as "true"),
+  $body_array = json_decode($body_str, true);
+
+  // NOTE: If there is an error, $body_array is set to '0'.
+  return($body_array);
+
+}
+// END check_advanced_link_auth
+//-------------------------------------------------------------------------
 
 
 }
@@ -540,6 +548,7 @@ class REDCapDETHandler {
 
       $error = 
 	"Server remote address not allowed: ".$_SERVER['REMOTE_ADDR']."\n";
+
       $this->notifier->notify($error);
 
       exit(1);
