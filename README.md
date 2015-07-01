@@ -98,29 +98,28 @@ that configures and uses REDCapAPI classes for a sample project.
 Class Methods/Attributes
 ===========================================================================
 
-```
-  class REDCapProject
-  	Provides a variety of export and import methods. Uses
-	a Notifier object to determine what to do with errors
-	encountered with the REDCap API
+*  `REDCapProject` class
+
+    Provides a variety of export and import methods. Uses
+    a Notifier object to determine what to do with errors
+    encountered with the REDCap API
 	      
-      get_records_all:          All records with all fields
-      get_ids_all:              The ID for every record
-      get_partials_all:         A subset of fields for every record
-
-      get_records_by_ids:       All fields for the specified records
-      get_partials_by_ids:      A subset of fields for the specified records
-
-      get_records_by_fields:    All fields for records that match values
-                                     of some particular fields
-      get_ids_by_fields:        The ids for records that match values
-                                     of some particular fields
-      get_partials_by_fields:   A subset of fields that match values
-                                     of some particular fields
-
-      import_records:	        Importing records
-
-      check_advanced_link_auth: Check authkey sent by advanced link
+| Method | Description |
+| :----- | :---------- |
+| `get_records_all`          | All records with all fields |
+| `get_ids_all`              | The ID for every record |
+| `get_partials_all`         | A subset of fields for every record |
+|                            | |
+| `get_records_by_ids`       | All fields for the specified records |
+| `get_partials_by_ids`      | A subset of fields for the specified records |
+|                            | |
+| `get_records_by_fields`    | All fields for records that match values of some particular fields |
+| `get_ids_by_fields`        | The ids for records that match values of some particular fields |
+| `get_partials_by_fields`   | A subset of fields that match values of some particular fields |
+|                            | |
+| `import_records`	     | Importing records |
+|                            | |
+| `check_advanced_link_auth` | Check authkey sent by advanced link |
 ```
   
 ```  
