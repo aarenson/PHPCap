@@ -2,6 +2,7 @@ REDCapAPI
 ==========================================================================
 
 Author: Andy Arenson, aarenson@iu.edu
+
 Date: 26-Feb-2015
 
 Overview
@@ -66,40 +67,33 @@ The calling structure and inheritance structure would look
 similar to:
 
 ```
-	project-executable.php
+project-executable.php
 
-	   extends ProjectConnection class
+   extends ProjectConnection class
 
-	      which uses REDCapFactory class
-	      to create REDCapProject and REDCapDETHandler classes
+      which uses REDCapFactory class
+      to create REDCapProject and REDCapDETHandler classes
 ```
 
 Files
 ===========================================================================
-```
-	REDCapAPI.php	        -- Contains the classes:
-			   	   REDCapFactory
-			   	   REDCapProject
-			   	   REDCapDETHandler
 
-	RestCallRequest.php     -- NOT SUPPLIED IN THIS PACKAGE. This file
-			           is supplied by Vanderbilt
-			           University as part of REDCap
+* `REDCapAPI.php` contains the classes:
+    1. `REDCapFactory`
+    1. `REDCapProject`
+    1. `REDCapDETHandler`
 
-	SampleNotifier.php      -- Includes an example helper class that's
-				   needed by REDCapAPI classes for
-				   sending notifications via email if
-				   there are errors in using the
-				   REDCap API.
+* `RestCallRequest.php` is NOT SUPPLIED IN THIS PACKAGE. This file is supplied by Vanderbilt University as part of REDCap
 
-	SampleConnection.php    -- Includes an example class,
-				   SampleConnection, that configures
-				   and uses REDCapAPI classes for a
-				   sample project.
+* `SampleNotifier.php` includes an example helper class that's
+needed by REDCapAPI classes for sending notifications via email if
+there are errors in using the REDCap API.
 
-	sample.php		-- An example executable that uses
-				   SampleConnection.pm
-```
+* `SampleConnection.php` includes an example class, `SampleConnection`, 
+that configures and uses REDCapAPI classes for a sample project.
+
+* `sample.php` is an example executable that uses `SampleConnection.pm```
+
 
 Class Methods/Attributes
 ===========================================================================
