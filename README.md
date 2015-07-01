@@ -101,35 +101,30 @@ Class Methods/Attributes
 
 ###  `REDCapProject` class
 Provides a variety of export and import methods. Uses
-a Notifier object to determine what to do with errors
+a `Notifier` object to determine what to do with errors
 encountered with the REDCap API
 	      
-| Method | Description |
-| :----- | :---------- |
+| Method                     | Description |
+| :------------------------- | :---------- |
 | `get_records_all`          | All records with all fields |
 | `get_ids_all`              | The ID for every record |
 | `get_partials_all`         | A subset of fields for every record |
-|  ---                       | |
 | `get_records_by_ids`       | All fields for the specified records |
 | `get_partials_by_ids`      | A subset of fields for the specified records |
-|  ---                       | |
 | `get_records_by_fields`    | All fields for records that match values of some particular fields |
 | `get_ids_by_fields`        | The ids for records that match values of some particular fields |
 | `get_partials_by_fields`   | A subset of fields that match values of some particular fields |
-|  ---                       | |
 | `import_records`	     | Importing records |
-|  ---                       | |
 | `check_advanced_link_auth` | Check authkey sent by advanced link |
 
 ### `REDCapFactory` class 
 Models an entire REDCap instance.  Provides a way to set the common configuations for a set of REDCapProject objects once.
-```  
-      make_project:	 	Returns REDCapProject object
 
-      make_dethandler:		Returns REDCapDETHandler object
-
-      set_notifier:		Sets Notifier object to be used by
-      				     any created objects
+| Method                     | Description |
+| :------------------------- | :---------- |
+| `make_project`	     | Returns `REDCapProject` object |
+| `make_dethandler`	     | Returns `REDCapDETHandler` object |
+| `set_notifier`	     | Sets `Notifier` object to be used by any created objects |
 ```      
   
 ### `REDCapDETHandler` class  
