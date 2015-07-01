@@ -14,11 +14,11 @@ of the REDCap application programming interface (API).
 The REDCap API is a set of web services that allow other
 programs to interoperate with REDCap by exporting or importing data
 using HTTP Post requests. The REDCap development team supplies a
-class, RestCallRequest, which wraps the lower level code needed to
+class, `RestCallRequest`, which wraps the lower level code needed to
 encrypt, send, receive, and decrypt messages to the REDCap service in
 easier-to-use methods.
 
-The REDCapAPI classes build on RestCallRequest to provide
+The REDCapAPI classes build on `RestCallRequest` to provide
 higher level methods for commonly performed tasks such as exporting
 sets of records defined by various criteria, importing records, and
 reporting problems via email. The REDCapAPI classes also provide methods
@@ -37,29 +37,29 @@ REDCapProject objects, which are then configured with information
 specific to using the API with that project, such as the API token to
 use and which field is the primary key for that project.
 
-The REDCapFactory object can also be used to create a
-REDCapDETHandler object, which would be configured with information
+The `REDCapFactory` object can also be used to create a
+`REDCapDETHandler` object, which would be configured with information
 for assuring that data entry trigger requests only come from expected
 sources -- particular servers and/or a particular REDCap project id.
 
-REDCapFactory and REDCapProject objects must be configured with
-a Notifier object, which is used by the REDCapProject object to send a
+`REDCapFactory` and `REDCapProject` objects must be configured with
+a Notifier object, which is used by the `REDCapProject` object to send a
 notification by some means (typically email) if a problem occurs in
 trying to use the REDCap API.
 
 If multiple programs are going to interact via the REDCap API
 with the same set of REDCap projects, it is useful to have a single
-class, perhaps called Connection.pm, that sets up all of the required
-REDCapFactory, REDCapProject, and REDCapDETHandler objects, as well as
+class, perhaps called "Connection.pm", that sets up all of the required
+`REDCapFactory`, `REDCapProject`, and `REDCapDETHandler` objects, as well as
 providing methods for the business logic of the executables -- methods
 that take business terms and translate them into REDCapAPI
 methods. 
 
 For example, an executable that needs to get records from
 REDCap for all of the subjects that are female might call the method
-Connection->get_subjects_female using the business logic terms
-'subjects' and 'female', and then the get_subjects_female method would
-in turn use a method like REDCapProject->get_records_by_fields, which
+`Connection->get_subjects_female` using the business logic terms
+'subjects' and 'female', and then the `get_subjects_female` method would
+in turn use a method like `REDCapProject->get_records_by_fields`, which
 provides the common functionality of needing to retrieve only those
 records that match certain values in certain fields.
 
