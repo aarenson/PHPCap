@@ -29,18 +29,18 @@ whether or not a request was sent by an authorized server.
 Architecture
 ===========================================================================
 
-The REDCapFactory class represents a REDCap instance. It is
+The `REDCapFactory` class represents a REDCap instance. It is
 configured with information that is general to the usage of the API
 with any REDCap project in that instance, such as the URL for API
-requests. Once configured, a REDCapFactory object is used to create
-REDCapProject objects, which are then configured with information
+requests. Once configured, a `REDCapFactory` object is used to create
+`REDCapProject` objects, which are then configured with information
 specific to using the API with that project, such as the API token to
 use and which field is the primary key for that project.
 
 The `REDCapFactory` object can also be used to create a
 `REDCapDETHandler` object, which would be configured with information
 for assuring that data entry trigger requests only come from expected
-sources -- particular servers and/or a particular REDCap project id.
+sources -- particular servers and/or a particular REDCap `project_id`.
 
 `REDCapFactory` and `REDCapProject` objects must be configured with
 a Notifier object, which is used by the `REDCapProject` object to send a
@@ -66,14 +66,13 @@ records that match certain values in certain fields.
 The calling structure and inheritance structure would look
 similar to:
 
-```
+```php
 project-executable.php
 
    extends ProjectConnection class
-
-      which uses REDCapFactory class
-      to create REDCapProject and REDCapDETHandler classes
 ```
+which uses `REDCapFactory` class to create `REDCapProject` and `REDCapDETHandler` classes.
+
 
 Files
 ===========================================================================
@@ -146,9 +145,9 @@ Examples
 $notifier = new Notifier('admin@somewhere.edu');
 	    	         
 $apifactory = new REDCapFactory('Application name',
-	      	  	        'http://redcap.somewhere.edu/api',
-				$notifier);
-				
+                                'http://redcap.somewhere.edu/api',
+                                $notifier);
+
 $project = $apifactory->make_project('ABC...','primary_key');
 
 
