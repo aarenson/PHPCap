@@ -1,15 +1,17 @@
-REDCapAPI
+PhpCap
 ==========================================================================
 
 Author: Andy Arenson, aarenson@iu.edu
 
-Date: 26-Feb-2015
-
 Overview
 --------
 
-The REDCapAPI package provides classes that simplify the use
-of the REDCap application programming interface (API).
+The PhpCap package provides classes that simplify the use
+of the REDCap application programming interface (API) using PHP.
+
+For information about REDCap please see http://www.project-redcap.org.
+REDCap is a mature, secure web application for building and managing
+online surveys and databases.
 
 The REDCap API is a set of web services that allow other
 programs to interoperate with REDCap by exporting or importing data
@@ -18,13 +20,13 @@ class, `RestCallRequest`, which wraps the lower level code needed to
 encrypt, send, receive, and decrypt messages to the REDCap service in
 easier-to-use methods.
 
-The REDCapAPI classes build on `RestCallRequest` to provide
-higher level methods for commonly performed tasks such as exporting
-sets of records defined by various criteria, importing records, and
-reporting problems via email. The REDCapAPI classes also provide methods
-for common related tasks such as checking advanced link authorization,
-retrieving parameters sent by a data entry trigger, and checking
-whether or not a request was sent by an authorized server.
+The PhpCap classes build on `RestCallRequest` to provide higher level
+methods for commonly performed tasks such as exporting sets of records
+defined by various criteria, importing records, and reporting problems
+via email. The PhpCap classes also provide methods for common related
+tasks such as checking advanced link authorization, retrieving
+parameters sent by a data entry trigger, and checking whether or not a
+request was sent by an authorized server.
 
 Architecture
 ===========================================================================
@@ -47,13 +49,13 @@ a Notifier object, which is used by the `REDCapProject` object to send a
 notification by some means (typically email) if a problem occurs in
 trying to use the REDCap API.
 
-If multiple programs are going to interact via the REDCap API
-with the same set of REDCap projects, it is useful to have a single
-class, perhaps called "Connection.pm", that sets up all of the required
-`REDCapFactory`, `REDCapProject`, and `REDCapDETHandler` objects, as well as
-providing methods for the business logic of the executables -- methods
-that take business terms and translate them into REDCapAPI
-methods. 
+If multiple programs are going to interact via the REDCap API with the
+same set of REDCap projects, it is useful to have a single class,
+perhaps called "Connection.pm", that sets up all of the required
+`REDCapFactory`, `REDCapProject`, and `REDCapDETHandler` objects, as
+well as providing methods for the business logic of the executables --
+methods that take business terms and translate them into PhpCap
+methods.
 
 For example, an executable that needs to get records from
 REDCap for all of the subjects that are female might call the method
@@ -77,20 +79,22 @@ which uses `REDCapFactory` class to create `REDCapProject` and `REDCapDETHandler
 Files
 ===========================================================================
 
-* `REDCapAPI.php` contains the classes:
+* `PhpCap.php` contains the classes:
     1. `REDCapFactory`
     1. `REDCapProject`
     1. `REDCapDETHandler`
 
-* `RestCallRequest.php` is NOT SUPPLIED IN THIS PACKAGE. This file is supplied 
-by Vanderbilt University as part of REDCap
+* `RestCallRequest.php` is NOT SUPPLIED IN THIS PACKAGE. This file is
+supplied by Vanderbilt University as part of REDCap. See
+http://www.project-redcap.org/ for information about the REDCap
+consortium.
 
-* `SampleNotifier.php` includes an example helper class that's
-needed by REDCapAPI classes for sending notifications via email if
-there are errors in using the REDCap API.
+* `SampleNotifier.php` includes an example helper class that's needed
+by PhpCap classes for sending notifications via email if there are
+errors in using the REDCap API.
 
 * `SampleConnection.php` includes an example class, `SampleConnection`, 
-that configures and uses REDCapAPI classes for a sample project.
+that configures and uses PhpCap classes for a sample project.
 
 * `sample.php` is an example executable that uses `SampleConnection.pm`
 
