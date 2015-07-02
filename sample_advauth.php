@@ -2,13 +2,13 @@
 
 // sample_advauth.php -- A web-executed program that is called via
 //                       a REDCap advanced authorization project bookmark
-//                       and uses REDCapAPI.php via the SampleConnection 
+//                       and uses PhiCap.php via the SampleConnection 
 //                       class.
 //
 // To use this program:
 //
 // -- Copy sample_advauth.php, SampleConnection.php, SampleNotifier.php,
-//    REDCapAPI.php, and RestCallRequest.php to a directory that can be
+//    PhiCap.php, and RestCallRequest.php to a directory that can be
 //    served by a web server.
 // -- Choose a REDCap project for which you have an API token with
 //    export privileges.
