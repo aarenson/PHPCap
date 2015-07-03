@@ -8,7 +8,7 @@
 // Classes
 //-------------------------------------------------------------------------
 require_once('SampleNotifier.php');
-require_once('REDCapAPI.php');
+require_once('PhpCap.php');
 
 //-------------------------------------------------------------------------
 // Environment
