@@ -1,6 +1,6 @@
 <?php
 
-// sample.php -- A command-line executed program that uses REDCapAPI.php
+// sample.php -- A command-line executed program that uses PhpCap.php
 //               via the SampleConnection class.
 //
 // To use this program:
