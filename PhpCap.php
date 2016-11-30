@@ -683,54 +683,6 @@ class REDCapProject {
 
 
   //-------------------------------------------------------------------------
-  // export_project_info
-  //
-  // $error is used if export fails
-  // 
-  // $data is array to use in Rest Request
-  //
-  public function export_project_info($error,$data) {
-
-    $data['token'] = $this->token;
-
-    // Create REDCap API request object
-    $request = new RestCallRequest($this->api_url, 'POST', $data);
-
-    // Initiate the API request, and fetch the results from the request object.
-    $request->execute();
-    $body_str = $request->getResponseBody();
-    $header_array = $request->getResponseInfo();
-
-    // Decode the JSON content returned by REDCap (into an array rather
-    // than into an object by specifying the second argument as "true"),
-    if (empty($body_str)) {
-      $body_array = array();
-    }
-    else {
-      $body_array = json_decode($body_str, true);
-    }
-
-    if( (! isset($body_array)) || 
-	(empty($body_array)) || 
-	(array_key_exists('error',$body_array)) ) {
-
-      if (array_key_exists('error',$body_array)) {
-	$error .= "Error: '".$body_array['error']."'\n";
-      }
-
-      $this->notifier->notify($error);
-
-      return false;
-    }
-
-    return(array($body_array,$header_array));
-  }
-
-  // END export_project_info
-  //-------------------------------------------------------------------------
-
-
-  //-------------------------------------------------------------------------
   // import_records -- Import one record into a project
   //
   // $records = array( array( $key1 => $val1, ...) ...)
