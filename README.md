@@ -15,8 +15,8 @@ online surveys and databases.
 
 The REDCap API is a set of web services that allow other
 programs to interoperate with REDCap by exporting or importing data
-using HTTP Post requests. The REDCap development team supplies a
-class, `RestCallRequest`, which wraps the lower level code needed to
+using HTTP Post requests. The REDCap development team supplied a
+class, `RestCallRequest` (original source of this file is unknown), which wraps the lower level code needed to
 encrypt, send, receive, and decrypt messages to the REDCap service in
 easier-to-use methods.
 
@@ -51,7 +51,7 @@ trying to use the REDCap API.
 
 If multiple programs are going to interact via the REDCap API with the
 same set of REDCap projects, it is useful to have a single class,
-perhaps called "Connection.pm", that sets up all of the required
+perhaps called "Connection.php", that sets up all of the required
 `REDCapFactory`, `REDCapProject`, and `REDCapDETHandler` objects, as
 well as providing methods for the business logic of the executables --
 methods that take business terms and translate them into PhpCap
@@ -84,10 +84,8 @@ Files
     1. `REDCapProject`
     1. `REDCapDETHandler`
 
-* `RestCallRequest.php` is NOT SUPPLIED IN THIS PACKAGE. This file is
-supplied by Vanderbilt University as part of REDCap. See
-http://www.project-redcap.org/ for information about the REDCap
-consortium.
+* `RestCallRequest.php` This original provenance of this file is unknown. It was at one time
+supplied by Vanderbilt University as part of REDCap as part of a collection of examples for the API.
 
 * `SampleNotifier.php` includes an example helper class that's needed
 by PhpCap classes for sending notifications via email if there are
@@ -117,6 +115,13 @@ encountered with the REDCap API
 | `get_records_by_fields`    | All fields for records that match values of some particular fields |
 | `get_ids_by_fields`        | The ids for records that match values of some particular fields |
 | `get_partials_by_fields`   | A subset of fields that match values of some particular fields |
+| `get_records_by_ids_batch` | Uses batching to get all fields for the specified record. Requires `prep_records_by_ids_batch` |
+| `get_file_from_project`    | A file from a field |
+| `get_lookup_choices`       | All fields that have labels. For each field, an array of categories to labels. |
+| `get_fieldnames`           | All fieldnames, including a field for each checkbox choice. |
+| `get_project_id`           | The ID of the project |
+| `get_survey_url`           | The URL for a survey for a particular participant. |
+| `get_survey_return_code`   | The return code for a survey for a particular participant. |
 | `import_records`           | Importing records |
 | `check_advanced_link_auth` | Check authkey sent by advanced link |
 
