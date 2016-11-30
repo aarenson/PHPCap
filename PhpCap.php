@@ -407,7 +407,7 @@ class REDCapProject {
   //-----------------------------------------------------------------------
   // get_lookup_choices
   //
-  // $error is used if export_metadata fails
+  // $error is used if export_general fails
   //
   // $results = array($field_name1 => array($category1 => $label1, ...),
   //                  ...)     	      			  
@@ -474,7 +474,7 @@ class REDCapProject {
   //-----------------------------------------------------------------------
   // get_metadata
   //
-  // $error is used if export_metadata fails
+  // $error is used if export_general fails
   // 
   public function get_metadata($error,$fields,$forms) {
 
@@ -487,7 +487,7 @@ class REDCapProject {
 		     'forms' => $forms, 
 		     );  
 
-       $new_message = $this->export_metadata($error,$data);
+       $new_message = $this->export_general($error,$data);
        $this->metadata = $new_message[0];
      }
 
@@ -497,58 +497,10 @@ class REDCapProject {
   //-------------------------------------------------------------------------
 
 
-  //-------------------------------------------------------------------------
-  // export_medata
-  //
-  // $error is used if export fails
-  // 
-  // $data is array to use in Rest Request
-  //
-  public function export_metadata($error,$data) {
-
-    $data['token'] = $this->token;
-
-    // Create REDCap API request object
-    $request = new RestCallRequest($this->api_url, 'POST', $data);
-
-    // Initiate the API request, and fetch the results from the request object.
-    $request->execute();
-    $body_str = $request->getResponseBody();
-    $header_array = $request->getResponseInfo();
-
-    // Decode the JSON content returned by REDCap (into an array rather
-    // than into an object by specifying the second argument as "true"),
-    if (empty($body_str)) {
-      $body_array = array();
-    }
-    else {
-      $body_array = json_decode($body_str, true);
-    }
-
-    if( (! isset($body_array)) || 
-	(empty($body_array)) || 
-	(array_key_exists('error',$body_array)) ) {
-
-      if (array_key_exists('error',$body_array)) {
-	$error .= "Error: '".$body_array['error']."'\n";
-      }
-
-      $this->notifier->notify($error);
-
-      return false;
-    }
-
-    return(array($body_array,$header_array));
-  }
-
-  // END export_metadata
-  //-------------------------------------------------------------------------
-
-
   //-----------------------------------------------------------------------
   // get_fieldnames
   //
-  // $error is used if export_exportfieldnames fails
+  // $error is used if export_general fails
   //
   // $results = array($field_name1 => 1, ...)
   // 
@@ -576,7 +528,7 @@ class REDCapProject {
   //-----------------------------------------------------------------------
   // get_exportfieldnames
   //
-  // $error is used if export_exportfieldnames fails
+  // $error is used if export_general fails
   // 
   public function get_exportfieldnames($error,$field) {
 
@@ -587,7 +539,7 @@ class REDCapProject {
 		     'field' => $field, 
 		     );  
 
-       $new_message = $this->export_exportfieldnames($error,$data);
+       $new_message = $this->export_general($error,$data);
        $this->exportfieldnames = $new_message[0];
      }
 
@@ -598,13 +550,13 @@ class REDCapProject {
 
 
   //-------------------------------------------------------------------------
-  // export_exportfieldnames
+  // export_general
   //
-  // $error is used if export fails
+  // $error is used if export_general fails
   // 
   // $data is array to use in Rest Request
   //
-  public function export_exportfieldnames($error,$data) {
+  public function export_general($error,$data) {
 
     $data['token'] = $this->token;
 
@@ -641,7 +593,7 @@ class REDCapProject {
     return(array($body_array,$header_array));
   }
 
-  // END export_exportfieldnames
+  // END export_general
   //-------------------------------------------------------------------------
 
 
@@ -674,7 +626,7 @@ class REDCapProject {
 		  'format' => 'json', 
 		  );  
 
-    $new_message = $this->export_metadata($error,$data);
+    $new_message = $this->export_general($error,$data);
 
     return($new_message[0]);
   }
