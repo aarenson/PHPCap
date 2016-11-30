@@ -759,28 +759,127 @@ class REDCapProject {
   //
   public function check_advanced_link_auth($authkey) {
 
-  // Create REDCap API request object
-  $data = array(
-		'authkey' => $authkey,
-              'format' => 'json'
-		);
-  $request = new RestCallRequest($this->api_url, 'POST', $data);
+    // Create REDCap API request object
+    $data = array(
+		  'authkey' => $authkey,
+		  'format' => 'json'
+		  );
+    $request = new RestCallRequest($this->api_url, 'POST', $data);
 
-  // Initiate the API request, and fetch the results from the request object.
-  $request->execute();
-  $body_str = $request->getResponseBody();
-  $header_array = $request->getResponseInfo();
+    // Initiate the API request, and fetch the results from the request object.
+    $request->execute();
+    $body_str = $request->getResponseBody();
+    $header_array = $request->getResponseInfo();
 
-  // Decode the JSON content returned by REDCap (into an array rather
-  // than into an object by specifying the second argument as "true"),
-  $body_array = json_decode($body_str, true);
+    // Decode the JSON content returned by REDCap (into an array rather
+    // than into an object by specifying the second argument as "true"),
+    $body_array = json_decode($body_str, true);
 
-  // NOTE: If there is an error, $body_array is set to '0'.
-  return($body_array);
+    // NOTE: If there is an error, $body_array is set to '0'.
+    return($body_array);
+    
+  }
+  // END check_advanced_link_auth
+  //-------------------------------------------------------------------------
 
-}
-// END check_advanced_link_auth
-//-------------------------------------------------------------------------
+
+  //-------------------------------------------------------------------------  
+  // get_survey_url -- Get the URL for a particular survey in a particular
+  //                   event.
+  //                                                                           
+  //                                                                           
+  public function get_survey_url($instrument,$event,$record,$error) {
+
+    $url = $this->get_survey_string('surveyLink',
+				    $instrument,$event,$record,$error);
+
+    return $url;
+  }
+  // END get_survey_url
+  //---------------------------------------------------------------------------
+
+
+  //-------------------------------------------------------------------------  
+  // get_survey_return_code -- Get the return code for a particular survey 
+  //                           in a particular event.
+  //                                                                           
+  //                                                                           
+  public function get_survey_return_code($instrument,$event,$record,$error) {
+
+    $code = $this->get_survey_string('surveyReturnCode',
+				     $instrument,$event,$record,$error);
+
+    return $code;
+  }
+  // END get_survey_return_code
+  //---------------------------------------------------------------------------
+
+
+  //-------------------------------------------------------------------------  
+  // get_survey_string -- For API calls that get a single result string
+  //                      related to a particular survey
+  //                                                                           
+  //                                                                           
+  public function get_survey_string($content, 
+				    $instrument,$event,$record,$error) {
+
+    $data = array('content' => $content,
+		  'format' => 'json', 
+		  'instrument' => $instrument,
+		  'event' => $event, 
+		  'record' => $record, 
+		  'returnFormat' => 'json'
+		  );  
+    $result = $this->api_get_string($data,$error);
+
+    return $result;
+  }
+  // END get_survey_string
+  //---------------------------------------------------------------------------
+
+
+  //-------------------------------------------------------------------------  
+  // api_get_string -- Makes an API call that expects a single string result
+  //                                                                           
+  // $error is used if export fails
+  // 
+  // $data is array to use in Rest Request
+  //
+  public function api_get_string($data,$error) {
+
+    $data['token'] = $this->token;
+
+    // Create REDCap API request object
+    $request = new RestCallRequest($this->api_url, 'POST', $data);
+
+    // Initiate the API request, and fetch the results from the request object.
+    $request->execute();
+    $body_str = $request->getResponseBody();
+    $header_array = $request->getResponseInfo();
+
+    // Decode the JSON content returned by REDCap (into an array rather
+    // than into an object by specifying the second argument as "true"),
+    $body_array = json_decode($body_str, true);
+
+    // If an error is returned, there will be an 'error' key in
+    // the $body_array
+    if ((is_array($body_array)) &&
+	(array_key_exists('error',$body_array))) {
+      $error .= "Error: '".$body_array['error']."'\n";
+      
+      $this->notifier->notify($error);
+
+      return false;
+    }
+
+    // Otherwises, the body_str will have our result
+    else {
+      return $body_str;
+    }
+
+  }
+  // END api_get_string
+  //---------------------------------------------------------------------------
 
 
 }
