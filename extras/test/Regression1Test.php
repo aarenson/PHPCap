@@ -2,9 +2,6 @@
 
 require_once('PHPUnit/Autoload.php');
 
-// Change to the PhpCap directory
-chdir('../..');
-
 require_once('SampleNotifier.php');
 require_once('PhpCap.php');
 
