@@ -27,6 +27,7 @@ class PhpCap_TestCase extends PHPUnit_Framework_TestCase {
   const URL = 'https://redcap.uits.iu.edu/api/';
   const TOKEN = 'C5477C91801C64BB1C0BD65DEDB6C354';
   const PRIMARY = 'record_id';
+  const PROJECT_ID = 8604;
 
   protected function setUp() {
 
