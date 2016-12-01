@@ -13,17 +13,12 @@ For information about REDCap please see http://www.project-redcap.org.
 REDCap is a mature, secure web application for building and managing
 online surveys and databases.
 
-The REDCap API is a set of web services that allow other
-programs to interoperate with REDCap by exporting or importing data
-using HTTP Post requests. The REDCap development team supplied a
-class, `RestCallRequest` (original source of this file is unknown), which wraps the lower level code needed to
-encrypt, send, receive, and decrypt messages to the REDCap service in
-easier-to-use methods.
-
-The PhpCap classes build on `RestCallRequest` to provide higher level
-methods for commonly performed tasks such as exporting sets of records
-defined by various criteria, importing records, and reporting problems
-via email. The PhpCap classes also provide methods for common related
+The REDCap API is a set of web services that allow other programs to
+interoperate with REDCap by exporting or importing data using HTTP
+Post requests. The PhpCap classes provide higher level methods for
+commonly performed tasks such as exporting sets of records defined by
+various criteria, importing records, and reporting problems via
+email. The PhpCap classes also provide methods for common related
 tasks such as checking advanced link authorization, retrieving
 parameters sent by a data entry trigger, and checking whether or not a
 request was sent by an authorized server.
@@ -83,9 +78,7 @@ Files
     1. `REDCapFactory`
     1. `REDCapProject`
     1. `REDCapDETHandler`
-
-* `RestCallRequest.php` This original provenance of this file is unknown. It was at one time
-supplied by Vanderbilt University as part of REDCap as part of a collection of examples for the API.
+    1. `RestCallRequst` - This class is used by the others to send API calls to REDCap
 
 * `SampleNotifier.php` includes an example helper class that's needed
 by PhpCap classes for sending notifications via email if there are
