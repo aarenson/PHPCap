@@ -146,11 +146,11 @@ Examples
 // Create a REDCapProject object
 $notifier = new Notifier('admin@somewhere.edu');
 	    	         
-$apifactory = new REDCapFactory('Application name',
+$apifactory = new REDCapFactory('... your application name ...',
                                 'http://redcap.somewhere.edu/api',
                                 $notifier);
 
-$project = $apifactory->make_project('ABC...','primary_key');
+$project = $apifactory->make_project('...your API token...','primary_key');
 
 
 // Check advanced authorization
