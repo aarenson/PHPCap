@@ -340,7 +340,7 @@ class REDCapProject {
     $data['token'] = $this->token;
 
     // Create REDCap API request object
-    $request = new RestCallRequest($this->api_url, 'POST', $data);
+    $request = new RestCallRequest($this->api_url, $data);
 
     // Initiate the API request, and fetch the results from the request object.
     $request->execute();
@@ -560,7 +560,7 @@ class REDCapProject {
     $data['token'] = $this->token;
 
     // Create REDCap API request object
-    $request = new RestCallRequest($this->api_url, 'POST', $data);
+    $request = new RestCallRequest($this->api_url, $data);
 
     // Initiate the API request, and fetch the results from the request object.
     $request->execute();
@@ -655,7 +655,7 @@ class REDCapProject {
 		  );  
 
     // Create REDCap API request object
-    $request = new RestCallRequest($this->api_url, 'POST', $data);
+    $request = new RestCallRequest($this->api_url, $data);
     
     // Initiate the API request, and fetch the results from the request object.
     $request->execute();
@@ -715,7 +715,7 @@ class REDCapProject {
 		  'authkey' => $authkey,
 		  'format' => 'json'
 		  );
-    $request = new RestCallRequest($this->api_url, 'POST', $data);
+    $request = new RestCallRequest($this->api_url, $data);
 
     // Initiate the API request, and fetch the results from the request object.
     $request->execute();
@@ -801,7 +801,7 @@ class REDCapProject {
     $data['token'] = $this->token;
 
     // Create REDCap API request object
-    $request = new RestCallRequest($this->api_url, 'POST', $data);
+    $request = new RestCallRequest($this->api_url, $data);
 
     // Initiate the API request, and fetch the results from the request object.
     $request->execute();
@@ -1043,7 +1043,7 @@ class RestCallRequest {
     return $this->responseInfo;
   } 
 	
-  public function __construct ($url, $verb, $requestBody) {
+  public function __construct ($url, $requestBody) {
     $this->url	         = $url;
     $this->requestBody   = http_build_query($requestBody, '', '&');
     $this->responseBody  = null;
