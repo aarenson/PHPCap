@@ -154,6 +154,7 @@ $project = $apifactory->make_project('...your API token...','primary_key');
 
 
 // Check advanced authorization
+// NOTE: $authkey is sent as a POST parameter by the REDCap advanced auth bookmark
 $username = $project->check_advanced_link_auth($authkey);
 
 
