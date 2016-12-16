@@ -64,12 +64,17 @@ The calling structure and inheritance structure would look
 similar to:
 
 ```php
-project-executable.php
+File: project-executable.php
 
-   extends ProjectConnection class
+   class Project extends ProjectConnection class
 ```
-which uses `REDCapFactory` class to create `REDCapProject` and `REDCapDETHandler` classes.
+```php
+File: ProjectConnection.php
+   
+   class Project
 
+      *uses `REDCapFactory` class to create `REDCapProject` and `REDCapDETHandler` classes*
+```
 
 Files
 ===========================================================================
