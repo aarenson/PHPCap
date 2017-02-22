@@ -1,7 +1,7 @@
 PhpCap
 ==========================================================================
 
-Author: Andy Arenson, aarenson@iu.edu
+Developers: [Andy Arenson](https://github.com/aarenson), aarenson@iu.edu; [Jim Mullen](https://github.com/mullen2)
 
 Overview
 --------
