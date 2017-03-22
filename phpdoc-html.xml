@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--
+    phpdoc config file for generating HTML API documentation.
+     
+    use the -c option with phpdoc to specify the configuration file to be used:
+    
+        phpdoc -c phpdoc-html.xml
+ -->
+<phpdoc>
+    <title>PHPCap API Documentation</title>
+    <parser>
+        <target>build</target>
+    </parser>
+    <transformer>
+        <target>docs/api/html</target>
+    </transformer>
+    <transformations>
+        <template name="clean" />
+    </transformations>
+    <files>
+        <directory>src</directory>
+    </files>
+</phpdoc>
