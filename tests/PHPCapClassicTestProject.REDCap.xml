@@ -1,0 +1,2369 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ODM xmlns="http://www.cdisc.org/ns/odm/v1.3" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:redcap="https://projectredcap.org" xsi:schemaLocation="http://www.cdisc.org/ns/odm/v1.3 schema/odm/ODM1-3-1.xsd" ODMVersion="1.3.1" FileOID="000-00-0000" FileType="Snapshot" Description="PHPCap Classic Test Project" AsOfDateTime="2017-03-21T16:52:01" CreationDateTime="2017-03-21T16:52:01" SourceSystem="REDCap" SourceSystemVersion="7.0.10">
+<Study OID="Project.PHPCapClassicTestProject">
+<GlobalVariables>
+	<StudyName>PHPCap Classic Test Project</StudyName>
+	<StudyDescription>This file contains the metadata, events, and data for REDCap project "PHPCap Classic Test Project".</StudyDescription>
+	<ProtocolName>PHPCap Classic Test Project</ProtocolName>
+	<redcap:RecordAutonumberingEnabled>0</redcap:RecordAutonumberingEnabled>
+	<redcap:CustomRecordLabel></redcap:CustomRecordLabel>
+	<redcap:SecondaryUniqueField></redcap:SecondaryUniqueField>
+	<redcap:SchedulingEnabled>0</redcap:SchedulingEnabled>
+	<redcap:Purpose>1</redcap:Purpose>
+	<redcap:PurposeOther>Testing</redcap:PurposeOther>
+	<redcap:ProjectNotes></redcap:ProjectNotes>
+</GlobalVariables>
+<MetaDataVersion OID="Metadata.PHPCapClassicTestProject_2017-03-21_1652" Name="PHPCap Classic Test Project" redcap:RecordIdField="study_id">
+	<FormDef OID="Form.demographics" Name="Demographics" Repeating="No" redcap:FormName="demographics">
+		<ItemGroupRef ItemGroupOID="demographics.study_id" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.date_enrolled" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.patient_document" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.first_name" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.last_name" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.gym___0" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.aerobics___0" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.specify_mood" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.meds___1" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.comments" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="demographics.demographics_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.baseline_data" Name="Baseline Data" Repeating="No" redcap:FormName="baseline_data">
+		<ItemGroupRef ItemGroupOID="baseline_data.date_visit_b" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="baseline_data.date_blood_b" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="baseline_data.baseline_data_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.month_1_data" Name="Month 1 Data" Repeating="No" redcap:FormName="month_1_data">
+		<ItemGroupRef ItemGroupOID="month_1_data.date_visit_1" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_1_data.alb_1" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_1_data.hospit_1" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_1_data.cause_hosp_1" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_1_data.death_1" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_1_data.date_death_1" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_1_data.month_1_data_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.month_2_data" Name="Month 2 Data" Repeating="No" redcap:FormName="month_2_data">
+		<ItemGroupRef ItemGroupOID="month_2_data.date_visit_2" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_2_data.alb_2" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_2_data.hospit_2" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_2_data.cause_hosp_2" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_2_data.death_2" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_2_data.date_death_2" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_2_data.month_2_data_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.month_3_data" Name="Month 3 Data" Repeating="No" redcap:FormName="month_3_data">
+		<ItemGroupRef ItemGroupOID="month_3_data.date_visit_3" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_3_data.date_blood_3" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_3_data.hospit_3" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_3_data.cause_hosp_3" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_3_data.death_3" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_3_data.date_death_3" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="month_3_data.month_3_data_complete" Mandatory="No"/>
+	</FormDef>
+	<FormDef OID="Form.completion_data" Name="Completion Data" Repeating="No" redcap:FormName="completion_data">
+		<ItemGroupRef ItemGroupOID="completion_data.complete_study" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="completion_data.withdraw_date" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="completion_data.study_comments" Mandatory="No"/>
+		<ItemGroupRef ItemGroupOID="completion_data.completion_data_complete" Mandatory="No"/>
+	</FormDef>
+	<ItemGroupDef OID="demographics.study_id" Name="Demographics" Repeating="No">
+		<ItemRef ItemOID="study_id" Mandatory="No" redcap:Variable="study_id"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.date_enrolled" Name="Consent Information" Repeating="No">
+		<ItemRef ItemOID="date_enrolled" Mandatory="No" redcap:Variable="date_enrolled"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.patient_document" Name="Demographics" Repeating="No">
+		<ItemRef ItemOID="patient_document" Mandatory="No" redcap:Variable="patient_document"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.first_name" Name="Contact Information" Repeating="No">
+		<ItemRef ItemOID="first_name" Mandatory="No" redcap:Variable="first_name"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.last_name" Name="Demographics" Repeating="No">
+		<ItemRef ItemOID="last_name" Mandatory="No" redcap:Variable="last_name"/>
+		<ItemRef ItemOID="address" Mandatory="No" redcap:Variable="address"/>
+		<ItemRef ItemOID="telephone_1" Mandatory="No" redcap:Variable="telephone_1"/>
+		<ItemRef ItemOID="email" Mandatory="No" redcap:Variable="email"/>
+		<ItemRef ItemOID="dob" Mandatory="No" redcap:Variable="dob"/>
+		<ItemRef ItemOID="age" Mandatory="No" redcap:Variable="age"/>
+		<ItemRef ItemOID="ethnicity" Mandatory="No" redcap:Variable="ethnicity"/>
+		<ItemRef ItemOID="race" Mandatory="No" redcap:Variable="race"/>
+		<ItemRef ItemOID="sex" Mandatory="No" redcap:Variable="sex"/>
+		<ItemRef ItemOID="given_birth" Mandatory="No" redcap:Variable="given_birth"/>
+		<ItemRef ItemOID="num_children" Mandatory="No" redcap:Variable="num_children"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.gym___0" Name="Please provide the patient&#039;s weekly schedule for the activities below." Repeating="No">
+		<ItemRef ItemOID="gym___0" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___1" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___2" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___3" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___4" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___0" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___1" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___2" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___3" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___4" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___0" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___1" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___2" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___3" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___4" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___0" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___1" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___2" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___3" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___4" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___0" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___1" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___2" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___3" Mandatory="No" redcap:Variable="gym"/>
+		<ItemRef ItemOID="gym___4" Mandatory="No" redcap:Variable="gym"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.aerobics___0" Name="" Repeating="No">
+		<ItemRef ItemOID="aerobics___0" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___1" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___2" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___3" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___4" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___0" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___1" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___2" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___3" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___4" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___0" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___1" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___2" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___3" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___4" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___0" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___1" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___2" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___3" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___4" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___0" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___1" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___2" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___3" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="aerobics___4" Mandatory="No" redcap:Variable="aerobics"/>
+		<ItemRef ItemOID="eat___0" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___1" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___2" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___3" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___4" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___0" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___1" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___2" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___3" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___4" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___0" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___1" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___2" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___3" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___4" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___0" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___1" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___2" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___3" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___4" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___0" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___1" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___2" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___3" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="eat___4" Mandatory="No" redcap:Variable="eat"/>
+		<ItemRef ItemOID="drink___0" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___1" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___2" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___3" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___4" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___0" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___1" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___2" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___3" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___4" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___0" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___1" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___2" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___3" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___4" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___0" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___1" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___2" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___3" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___4" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___0" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___1" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___2" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___3" Mandatory="No" redcap:Variable="drink"/>
+		<ItemRef ItemOID="drink___4" Mandatory="No" redcap:Variable="drink"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.specify_mood" Name="Other information" Repeating="No">
+		<ItemRef ItemOID="specify_mood" Mandatory="No" redcap:Variable="specify_mood"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.meds___1" Name="" Repeating="No">
+		<ItemRef ItemOID="meds___1" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___2" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___3" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___4" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___5" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___1" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___2" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___3" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___4" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___5" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___1" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___2" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___3" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___4" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___5" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___1" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___2" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___3" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___4" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___5" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___1" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___2" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___3" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___4" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="meds___5" Mandatory="No" redcap:Variable="meds"/>
+		<ItemRef ItemOID="height" Mandatory="No" redcap:Variable="height"/>
+		<ItemRef ItemOID="weight" Mandatory="No" redcap:Variable="weight"/>
+		<ItemRef ItemOID="bmi" Mandatory="No" redcap:Variable="bmi"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.comments" Name="General Comments" Repeating="No">
+		<ItemRef ItemOID="comments" Mandatory="No" redcap:Variable="comments"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="demographics.demographics_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="demographics_complete" Mandatory="No" redcap:Variable="demographics_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="baseline_data.date_visit_b" Name="Baseline Measurements" Repeating="No">
+		<ItemRef ItemOID="date_visit_b" Mandatory="No" redcap:Variable="date_visit_b"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="baseline_data.date_blood_b" Name="Baseline Data" Repeating="No">
+		<ItemRef ItemOID="date_blood_b" Mandatory="No" redcap:Variable="date_blood_b"/>
+		<ItemRef ItemOID="alb_b" Mandatory="No" redcap:Variable="alb_b"/>
+		<ItemRef ItemOID="prealb_b" Mandatory="No" redcap:Variable="prealb_b"/>
+		<ItemRef ItemOID="creat_b" Mandatory="No" redcap:Variable="creat_b"/>
+		<ItemRef ItemOID="npcr_b" Mandatory="No" redcap:Variable="npcr_b"/>
+		<ItemRef ItemOID="chol_b" Mandatory="No" redcap:Variable="chol_b"/>
+		<ItemRef ItemOID="transferrin_b" Mandatory="No" redcap:Variable="transferrin_b"/>
+		<ItemRef ItemOID="kt_v_b" Mandatory="No" redcap:Variable="kt_v_b"/>
+		<ItemRef ItemOID="drywt_b" Mandatory="No" redcap:Variable="drywt_b"/>
+		<ItemRef ItemOID="plasma1_b" Mandatory="No" redcap:Variable="plasma1_b"/>
+		<ItemRef ItemOID="plasma2_b" Mandatory="No" redcap:Variable="plasma2_b"/>
+		<ItemRef ItemOID="plasma3_b" Mandatory="No" redcap:Variable="plasma3_b"/>
+		<ItemRef ItemOID="serum1_b" Mandatory="No" redcap:Variable="serum1_b"/>
+		<ItemRef ItemOID="serum2_b" Mandatory="No" redcap:Variable="serum2_b"/>
+		<ItemRef ItemOID="serum3_b" Mandatory="No" redcap:Variable="serum3_b"/>
+		<ItemRef ItemOID="sga_b" Mandatory="No" redcap:Variable="sga_b"/>
+		<ItemRef ItemOID="date_supplement_dispensed" Mandatory="No" redcap:Variable="date_supplement_dispensed"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="baseline_data.baseline_data_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="baseline_data_complete" Mandatory="No" redcap:Variable="baseline_data_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_1_data.date_visit_1" Name="Month 1" Repeating="No">
+		<ItemRef ItemOID="date_visit_1" Mandatory="No" redcap:Variable="date_visit_1"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_1_data.alb_1" Name="Month 1 Data" Repeating="No">
+		<ItemRef ItemOID="alb_1" Mandatory="No" redcap:Variable="alb_1"/>
+		<ItemRef ItemOID="prealb_1" Mandatory="No" redcap:Variable="prealb_1"/>
+		<ItemRef ItemOID="creat_1" Mandatory="No" redcap:Variable="creat_1"/>
+		<ItemRef ItemOID="npcr_1" Mandatory="No" redcap:Variable="npcr_1"/>
+		<ItemRef ItemOID="chol_1" Mandatory="No" redcap:Variable="chol_1"/>
+		<ItemRef ItemOID="transferrin_1" Mandatory="No" redcap:Variable="transferrin_1"/>
+		<ItemRef ItemOID="kt_v_1" Mandatory="No" redcap:Variable="kt_v_1"/>
+		<ItemRef ItemOID="drywt_1" Mandatory="No" redcap:Variable="drywt_1"/>
+		<ItemRef ItemOID="no_show_1" Mandatory="No" redcap:Variable="no_show_1"/>
+		<ItemRef ItemOID="compliance_1" Mandatory="No" redcap:Variable="compliance_1"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_1_data.hospit_1" Name="Hospitalization Data" Repeating="No">
+		<ItemRef ItemOID="hospit_1" Mandatory="No" redcap:Variable="hospit_1"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_1_data.cause_hosp_1" Name="Month 1 Data" Repeating="No">
+		<ItemRef ItemOID="cause_hosp_1" Mandatory="No" redcap:Variable="cause_hosp_1"/>
+		<ItemRef ItemOID="admission_date_1" Mandatory="No" redcap:Variable="admission_date_1"/>
+		<ItemRef ItemOID="discharge_date_1" Mandatory="No" redcap:Variable="discharge_date_1"/>
+		<ItemRef ItemOID="discharge_summary_1" Mandatory="No" redcap:Variable="discharge_summary_1"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_1_data.death_1" Name="Mortality Data" Repeating="No">
+		<ItemRef ItemOID="death_1" Mandatory="No" redcap:Variable="death_1"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_1_data.date_death_1" Name="Month 1 Data" Repeating="No">
+		<ItemRef ItemOID="date_death_1" Mandatory="No" redcap:Variable="date_death_1"/>
+		<ItemRef ItemOID="cause_death_1" Mandatory="No" redcap:Variable="cause_death_1"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_1_data.month_1_data_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="month_1_data_complete" Mandatory="No" redcap:Variable="month_1_data_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_2_data.date_visit_2" Name="Month 2" Repeating="No">
+		<ItemRef ItemOID="date_visit_2" Mandatory="No" redcap:Variable="date_visit_2"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_2_data.alb_2" Name="Month 2 Data" Repeating="No">
+		<ItemRef ItemOID="alb_2" Mandatory="No" redcap:Variable="alb_2"/>
+		<ItemRef ItemOID="prealb_2" Mandatory="No" redcap:Variable="prealb_2"/>
+		<ItemRef ItemOID="creat_2" Mandatory="No" redcap:Variable="creat_2"/>
+		<ItemRef ItemOID="npcr_2" Mandatory="No" redcap:Variable="npcr_2"/>
+		<ItemRef ItemOID="chol_2" Mandatory="No" redcap:Variable="chol_2"/>
+		<ItemRef ItemOID="transferrin_2" Mandatory="No" redcap:Variable="transferrin_2"/>
+		<ItemRef ItemOID="kt_v_2" Mandatory="No" redcap:Variable="kt_v_2"/>
+		<ItemRef ItemOID="drywt_2" Mandatory="No" redcap:Variable="drywt_2"/>
+		<ItemRef ItemOID="no_show_2" Mandatory="No" redcap:Variable="no_show_2"/>
+		<ItemRef ItemOID="compliance_2" Mandatory="No" redcap:Variable="compliance_2"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_2_data.hospit_2" Name="Hospitalization Data" Repeating="No">
+		<ItemRef ItemOID="hospit_2" Mandatory="No" redcap:Variable="hospit_2"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_2_data.cause_hosp_2" Name="Month 2 Data" Repeating="No">
+		<ItemRef ItemOID="cause_hosp_2" Mandatory="No" redcap:Variable="cause_hosp_2"/>
+		<ItemRef ItemOID="admission_date_2" Mandatory="No" redcap:Variable="admission_date_2"/>
+		<ItemRef ItemOID="discharge_date_2" Mandatory="No" redcap:Variable="discharge_date_2"/>
+		<ItemRef ItemOID="discharge_summary_2" Mandatory="No" redcap:Variable="discharge_summary_2"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_2_data.death_2" Name="Mortality Data" Repeating="No">
+		<ItemRef ItemOID="death_2" Mandatory="No" redcap:Variable="death_2"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_2_data.date_death_2" Name="Month 2 Data" Repeating="No">
+		<ItemRef ItemOID="date_death_2" Mandatory="No" redcap:Variable="date_death_2"/>
+		<ItemRef ItemOID="cause_death_2" Mandatory="No" redcap:Variable="cause_death_2"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_2_data.month_2_data_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="month_2_data_complete" Mandatory="No" redcap:Variable="month_2_data_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_3_data.date_visit_3" Name="Month 3" Repeating="No">
+		<ItemRef ItemOID="date_visit_3" Mandatory="No" redcap:Variable="date_visit_3"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_3_data.date_blood_3" Name="Month 3 Data" Repeating="No">
+		<ItemRef ItemOID="date_blood_3" Mandatory="No" redcap:Variable="date_blood_3"/>
+		<ItemRef ItemOID="alb_3" Mandatory="No" redcap:Variable="alb_3"/>
+		<ItemRef ItemOID="prealb_3" Mandatory="No" redcap:Variable="prealb_3"/>
+		<ItemRef ItemOID="creat_3" Mandatory="No" redcap:Variable="creat_3"/>
+		<ItemRef ItemOID="npcr_3" Mandatory="No" redcap:Variable="npcr_3"/>
+		<ItemRef ItemOID="chol_3" Mandatory="No" redcap:Variable="chol_3"/>
+		<ItemRef ItemOID="transferrin_3" Mandatory="No" redcap:Variable="transferrin_3"/>
+		<ItemRef ItemOID="kt_v_3" Mandatory="No" redcap:Variable="kt_v_3"/>
+		<ItemRef ItemOID="drywt_3" Mandatory="No" redcap:Variable="drywt_3"/>
+		<ItemRef ItemOID="plasma1_3" Mandatory="No" redcap:Variable="plasma1_3"/>
+		<ItemRef ItemOID="plasma2_3" Mandatory="No" redcap:Variable="plasma2_3"/>
+		<ItemRef ItemOID="plasma3_3" Mandatory="No" redcap:Variable="plasma3_3"/>
+		<ItemRef ItemOID="serum1_3" Mandatory="No" redcap:Variable="serum1_3"/>
+		<ItemRef ItemOID="serum2_3" Mandatory="No" redcap:Variable="serum2_3"/>
+		<ItemRef ItemOID="serum3_3" Mandatory="No" redcap:Variable="serum3_3"/>
+		<ItemRef ItemOID="sga_3" Mandatory="No" redcap:Variable="sga_3"/>
+		<ItemRef ItemOID="no_show_3" Mandatory="No" redcap:Variable="no_show_3"/>
+		<ItemRef ItemOID="compliance_3" Mandatory="No" redcap:Variable="compliance_3"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_3_data.hospit_3" Name="Hospitalization Data" Repeating="No">
+		<ItemRef ItemOID="hospit_3" Mandatory="No" redcap:Variable="hospit_3"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_3_data.cause_hosp_3" Name="Month 3 Data" Repeating="No">
+		<ItemRef ItemOID="cause_hosp_3" Mandatory="No" redcap:Variable="cause_hosp_3"/>
+		<ItemRef ItemOID="admission_date_3" Mandatory="No" redcap:Variable="admission_date_3"/>
+		<ItemRef ItemOID="discharge_date_3" Mandatory="No" redcap:Variable="discharge_date_3"/>
+		<ItemRef ItemOID="discharge_summary_3" Mandatory="No" redcap:Variable="discharge_summary_3"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_3_data.death_3" Name="Mortality Data" Repeating="No">
+		<ItemRef ItemOID="death_3" Mandatory="No" redcap:Variable="death_3"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_3_data.date_death_3" Name="Month 3 Data" Repeating="No">
+		<ItemRef ItemOID="date_death_3" Mandatory="No" redcap:Variable="date_death_3"/>
+		<ItemRef ItemOID="cause_death_3" Mandatory="No" redcap:Variable="cause_death_3"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="month_3_data.month_3_data_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="month_3_data_complete" Mandatory="No" redcap:Variable="month_3_data_complete"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="completion_data.complete_study" Name="Study Completion Information" Repeating="No">
+		<ItemRef ItemOID="complete_study" Mandatory="No" redcap:Variable="complete_study"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="completion_data.withdraw_date" Name="Completion Data" Repeating="No">
+		<ItemRef ItemOID="withdraw_date" Mandatory="No" redcap:Variable="withdraw_date"/>
+		<ItemRef ItemOID="withdraw_reason" Mandatory="No" redcap:Variable="withdraw_reason"/>
+		<ItemRef ItemOID="complete_study_date" Mandatory="No" redcap:Variable="complete_study_date"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="completion_data.study_comments" Name="General Comments" Repeating="No">
+		<ItemRef ItemOID="study_comments" Mandatory="No" redcap:Variable="study_comments"/>
+	</ItemGroupDef>
+	<ItemGroupDef OID="completion_data.completion_data_complete" Name="Form Status" Repeating="No">
+		<ItemRef ItemOID="completion_data_complete" Mandatory="No" redcap:Variable="completion_data_complete"/>
+	</ItemGroupDef>
+	<ItemDef OID="study_id" Name="study_id" DataType="text" Length="999" redcap:Variable="study_id" redcap:FieldType="text">
+		<Question><TranslatedText>Study ID</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="date_enrolled" Name="date_enrolled" DataType="date" Length="999" redcap:Variable="date_enrolled" redcap:FieldType="text" redcap:TextValidationType="date_ymd" redcap:FieldNote="YYYY-MM-DD" redcap:SectionHeader="Consent Information">
+		<Question><TranslatedText>Date subject signed consent</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="patient_document" Name="patient_document" DataType="text" Length="999" redcap:Variable="patient_document" redcap:FieldType="file">
+		<Question><TranslatedText>Upload the patient&#039;s consent form</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="first_name" Name="first_name" DataType="text" Length="999" redcap:Variable="first_name" redcap:FieldType="text" redcap:SectionHeader="Contact Information" redcap:Identifier="y">
+		<Question><TranslatedText>First Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="last_name" Name="last_name" DataType="text" Length="999" redcap:Variable="last_name" redcap:FieldType="text" redcap:Identifier="y">
+		<Question><TranslatedText>Last Name</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="address" Name="address" DataType="text" Length="999" redcap:Variable="address" redcap:FieldType="textarea" redcap:Identifier="y">
+		<Question><TranslatedText>Street, City, State, ZIP</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="telephone_1" Name="telephone_1" DataType="text" Length="999" redcap:Variable="telephone_1" redcap:FieldType="text" redcap:TextValidationType="phone" redcap:FieldNote="Include Area Code" redcap:Identifier="y">
+		<Question><TranslatedText>Phone number</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="email" Name="email" DataType="text" Length="999" redcap:Variable="email" redcap:FieldType="text" redcap:TextValidationType="email" redcap:Identifier="y">
+		<Question><TranslatedText>E-mail</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="dob" Name="dob" DataType="date" Length="999" redcap:Variable="dob" redcap:FieldType="text" redcap:TextValidationType="date_ymd" redcap:Identifier="y">
+		<Question><TranslatedText>Date of birth</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="age" Name="age" DataType="float" Length="999" redcap:Variable="age" redcap:FieldType="calc" redcap:Calculation="rounddown(datediff([dob],&#039;today&#039;,&#039;y&#039;))">
+		<Question><TranslatedText>Age (years)</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="ethnicity" Name="ethnicity" DataType="text" Length="1" redcap:Variable="ethnicity" redcap:FieldType="radio" redcap:CustomAlignment="LH">
+		<Question><TranslatedText>Ethnicity</TranslatedText></Question>
+		<CodeListRef CodeListOID="ethnicity.choices"/>
+	</ItemDef>
+	<ItemDef OID="race" Name="race" DataType="text" Length="1" redcap:Variable="race" redcap:FieldType="select">
+		<Question><TranslatedText>Race</TranslatedText></Question>
+		<CodeListRef CodeListOID="race.choices"/>
+	</ItemDef>
+	<ItemDef OID="sex" Name="sex" DataType="text" Length="1" redcap:Variable="sex" redcap:FieldType="radio">
+		<Question><TranslatedText>Gender</TranslatedText></Question>
+		<CodeListRef CodeListOID="sex.choices"/>
+	</ItemDef>
+	<ItemDef OID="given_birth" Name="given_birth" DataType="boolean" Length="1" redcap:Variable="given_birth" redcap:FieldType="yesno" redcap:BranchingLogic="[sex] = &quot;0&quot;">
+		<Question><TranslatedText>Has the patient given birth before?</TranslatedText></Question>
+		<CodeListRef CodeListOID="given_birth.choices"/>
+	</ItemDef>
+	<ItemDef OID="num_children" Name="num_children" DataType="integer" Length="999" redcap:Variable="num_children" redcap:FieldType="text" redcap:TextValidationType="int" redcap:BranchingLogic="[sex] = &quot;0&quot; and [given_birth] = &quot;1&quot;">
+		<Question><TranslatedText>How many times has the patient given birth?</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0 - no limit). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="gym___0" Name="gym___0" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___1" Name="gym___1" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___2" Name="gym___2" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___3" Name="gym___3" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___4" Name="gym___4" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___0" Name="gym___0" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___1" Name="gym___1" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___2" Name="gym___2" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___3" Name="gym___3" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___4" Name="gym___4" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___0" Name="gym___0" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___1" Name="gym___1" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___2" Name="gym___2" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___3" Name="gym___3" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___4" Name="gym___4" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___0" Name="gym___0" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___1" Name="gym___1" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___2" Name="gym___2" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___3" Name="gym___3" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___4" Name="gym___4" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___0" Name="gym___0" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___1" Name="gym___1" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___2" Name="gym___2" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___3" Name="gym___3" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="gym___4" Name="gym___4" DataType="boolean" Length="1" redcap:Variable="gym" redcap:FieldType="checkbox" redcap:SectionHeader="Please provide the patient&#039;s weekly schedule for the activities below." redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Gym (Weight Training)</TranslatedText></Question>
+		<CodeListRef CodeListOID="gym___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___0" Name="aerobics___0" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___1" Name="aerobics___1" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___2" Name="aerobics___2" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___3" Name="aerobics___3" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___4" Name="aerobics___4" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___0" Name="aerobics___0" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___1" Name="aerobics___1" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___2" Name="aerobics___2" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___3" Name="aerobics___3" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___4" Name="aerobics___4" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___0" Name="aerobics___0" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___1" Name="aerobics___1" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___2" Name="aerobics___2" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___3" Name="aerobics___3" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___4" Name="aerobics___4" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___0" Name="aerobics___0" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___1" Name="aerobics___1" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___2" Name="aerobics___2" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___3" Name="aerobics___3" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___4" Name="aerobics___4" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___0" Name="aerobics___0" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___1" Name="aerobics___1" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___2" Name="aerobics___2" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___3" Name="aerobics___3" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="aerobics___4" Name="aerobics___4" DataType="boolean" Length="1" redcap:Variable="aerobics" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Aerobics</TranslatedText></Question>
+		<CodeListRef CodeListOID="aerobics___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___0" Name="eat___0" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___1" Name="eat___1" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___2" Name="eat___2" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___3" Name="eat___3" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___4" Name="eat___4" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___0" Name="eat___0" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___1" Name="eat___1" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___2" Name="eat___2" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___3" Name="eat___3" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___4" Name="eat___4" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___0" Name="eat___0" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___1" Name="eat___1" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___2" Name="eat___2" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___3" Name="eat___3" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___4" Name="eat___4" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___0" Name="eat___0" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___1" Name="eat___1" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___2" Name="eat___2" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___3" Name="eat___3" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___4" Name="eat___4" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___0" Name="eat___0" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___1" Name="eat___1" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___2" Name="eat___2" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___3" Name="eat___3" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="eat___4" Name="eat___4" DataType="boolean" Length="1" redcap:Variable="eat" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Eat Out (Dinner/Lunch)</TranslatedText></Question>
+		<CodeListRef CodeListOID="eat___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___0" Name="drink___0" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___1" Name="drink___1" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___2" Name="drink___2" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___3" Name="drink___3" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___4" Name="drink___4" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___0" Name="drink___0" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___1" Name="drink___1" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___2" Name="drink___2" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___3" Name="drink___3" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___4" Name="drink___4" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___0" Name="drink___0" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___1" Name="drink___1" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___2" Name="drink___2" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___3" Name="drink___3" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___4" Name="drink___4" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___0" Name="drink___0" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___1" Name="drink___1" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___2" Name="drink___2" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___3" Name="drink___3" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___4" Name="drink___4" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___0" Name="drink___0" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___0.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___1" Name="drink___1" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___2" Name="drink___2" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___3" Name="drink___3" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="drink___4" Name="drink___4" DataType="boolean" Length="1" redcap:Variable="drink" redcap:FieldType="checkbox" redcap:MatrixGroupName="weekly_schedule">
+		<Question><TranslatedText>Drink (Alcoholic Beverages)</TranslatedText></Question>
+		<CodeListRef CodeListOID="drink___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="specify_mood" Name="specify_mood" DataType="integer" Length="999" redcap:Variable="specify_mood" redcap:FieldType="slider" redcap:SectionHeader="Other information" redcap:CustomAlignment="RH">
+		<Question><TranslatedText>Specify the patient&#039;s mood</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="meds___1" Name="meds___1" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___2" Name="meds___2" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___3" Name="meds___3" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___4" Name="meds___4" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___5" Name="meds___5" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___5.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___1" Name="meds___1" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___2" Name="meds___2" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___3" Name="meds___3" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___4" Name="meds___4" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___5" Name="meds___5" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___5.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___1" Name="meds___1" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___2" Name="meds___2" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___3" Name="meds___3" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___4" Name="meds___4" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___5" Name="meds___5" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___5.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___1" Name="meds___1" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___2" Name="meds___2" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___3" Name="meds___3" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___4" Name="meds___4" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___5" Name="meds___5" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___5.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___1" Name="meds___1" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___1.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___2" Name="meds___2" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___2.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___3" Name="meds___3" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___3.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___4" Name="meds___4" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___4.choices"/>
+	</ItemDef>
+	<ItemDef OID="meds___5" Name="meds___5" DataType="boolean" Length="1" redcap:Variable="meds" redcap:FieldType="checkbox">
+		<Question><TranslatedText>Is patient taking any of the following medications? (check all that apply)</TranslatedText></Question>
+		<CodeListRef CodeListOID="meds___5.choices"/>
+	</ItemDef>
+	<ItemDef OID="height" Name="height" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="height" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Height (cm)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>130</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (130 - 215). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>215</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (130 - 215). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="weight" Name="weight" DataType="integer" Length="999" redcap:Variable="weight" redcap:FieldType="text" redcap:TextValidationType="int">
+		<Question><TranslatedText>Weight (kilograms)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>35</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (35 - 200). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>200</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (35 - 200). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="bmi" Name="bmi" DataType="float" Length="999" redcap:Variable="bmi" redcap:FieldType="calc" redcap:Calculation="round(([weight]*10000)/(([height])^(2)),1)">
+		<Question><TranslatedText>BMI</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="comments" Name="comments" DataType="text" Length="999" redcap:Variable="comments" redcap:FieldType="textarea" redcap:SectionHeader="General Comments">
+		<Question><TranslatedText>Comments</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="demographics_complete" Name="demographics_complete" DataType="text" Length="1" redcap:Variable="demographics_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="demographics_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="date_visit_b" Name="date_visit_b" DataType="date" Length="999" redcap:Variable="date_visit_b" redcap:FieldType="text" redcap:TextValidationType="date_ymd" redcap:SectionHeader="Baseline Measurements">
+		<Question><TranslatedText>Date of baseline visit</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="date_blood_b" Name="date_blood_b" DataType="date" Length="999" redcap:Variable="date_blood_b" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date blood was drawn</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="alb_b" Name="alb_b" DataType="integer" Length="999" redcap:Variable="alb_b" redcap:FieldType="text" redcap:TextValidationType="int">
+		<Question><TranslatedText>Serum Albumin (g/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>3</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (3 - 5). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>5</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (3 - 5). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="prealb_b" Name="prealb_b" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="prealb_b" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Serum Prealbumin (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>10</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (10 - 40). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>40</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (10 - 40). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="creat_b" Name="creat_b" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="creat_b" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Creatinine (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.5</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 20). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>20</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 20). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="npcr_b" Name="npcr_b" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="npcr_b" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Normalized Protein Catabolic Rate (g/kg/d)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.5</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 2). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>2</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 2). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="chol_b" Name="chol_b" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="chol_b" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Cholesterol (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>100</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>300</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="transferrin_b" Name="transferrin_b" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="transferrin_b" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Transferrin (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>100</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>300</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="kt_v_b" Name="kt_v_b" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="kt_v_b" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Kt/V</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.9</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.9 - 3). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>3</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.9 - 3). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="drywt_b" Name="drywt_b" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="drywt_b" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Dry weight (kilograms)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>35</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (35 - 200). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>200</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (35 - 200). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="plasma1_b" Name="plasma1_b" DataType="text" Length="1" redcap:Variable="plasma1_b" redcap:FieldType="select">
+		<Question><TranslatedText>Collected Plasma 1?</TranslatedText></Question>
+		<CodeListRef CodeListOID="plasma1_b.choices"/>
+	</ItemDef>
+	<ItemDef OID="plasma2_b" Name="plasma2_b" DataType="text" Length="1" redcap:Variable="plasma2_b" redcap:FieldType="select">
+		<Question><TranslatedText>Collected Plasma 2?</TranslatedText></Question>
+		<CodeListRef CodeListOID="plasma2_b.choices"/>
+	</ItemDef>
+	<ItemDef OID="plasma3_b" Name="plasma3_b" DataType="text" Length="1" redcap:Variable="plasma3_b" redcap:FieldType="select">
+		<Question><TranslatedText>Collected Plasma 3?</TranslatedText></Question>
+		<CodeListRef CodeListOID="plasma3_b.choices"/>
+	</ItemDef>
+	<ItemDef OID="serum1_b" Name="serum1_b" DataType="text" Length="1" redcap:Variable="serum1_b" redcap:FieldType="select">
+		<Question><TranslatedText>Collected Serum 1?</TranslatedText></Question>
+		<CodeListRef CodeListOID="serum1_b.choices"/>
+	</ItemDef>
+	<ItemDef OID="serum2_b" Name="serum2_b" DataType="text" Length="1" redcap:Variable="serum2_b" redcap:FieldType="select">
+		<Question><TranslatedText>Collected Serum 2?</TranslatedText></Question>
+		<CodeListRef CodeListOID="serum2_b.choices"/>
+	</ItemDef>
+	<ItemDef OID="serum3_b" Name="serum3_b" DataType="text" Length="1" redcap:Variable="serum3_b" redcap:FieldType="select">
+		<Question><TranslatedText>Collected Serum 3?</TranslatedText></Question>
+		<CodeListRef CodeListOID="serum3_b.choices"/>
+	</ItemDef>
+	<ItemDef OID="sga_b" Name="sga_b" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="sga_b" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Subject Global Assessment (score = 1-7)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.9</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.9 - 7.1). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>7.1</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.9 - 7.1). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="date_supplement_dispensed" Name="date_supplement_dispensed" DataType="date" Length="999" redcap:Variable="date_supplement_dispensed" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date patient begins supplement</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="baseline_data_complete" Name="baseline_data_complete" DataType="text" Length="1" redcap:Variable="baseline_data_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="baseline_data_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="date_visit_1" Name="date_visit_1" DataType="date" Length="999" redcap:Variable="date_visit_1" redcap:FieldType="text" redcap:TextValidationType="date_ymd" redcap:SectionHeader="Month 1">
+		<Question><TranslatedText>Date of Month 1 visit</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="alb_1" Name="alb_1" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="alb_1" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Serum Albumin (g/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>3</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (3 - 5). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>5</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (3 - 5). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="prealb_1" Name="prealb_1" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="prealb_1" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Serum Prealbumin (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>10</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (10 - 40). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>40</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (10 - 40). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="creat_1" Name="creat_1" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="creat_1" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Creatinine (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.5</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 20). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>20</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 20). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="npcr_1" Name="npcr_1" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="npcr_1" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Normalized Protein Catabolic Rate (g/kg/d)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.5</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 2). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>2</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 2). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="chol_1" Name="chol_1" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="chol_1" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Cholesterol (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>100</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>300</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="transferrin_1" Name="transferrin_1" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="transferrin_1" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Transferrin (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>100</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>300</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="kt_v_1" Name="kt_v_1" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="kt_v_1" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Kt/V</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.9</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.9 - 3). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>3</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.9 - 3). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="drywt_1" Name="drywt_1" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="drywt_1" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Dry weight (kilograms)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>35</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (35 - 200). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>200</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (35 - 200). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="no_show_1" Name="no_show_1" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="no_show_1" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Number of treatments missed</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0 - 7). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>7</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0 - 7). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="compliance_1" Name="compliance_1" DataType="text" Length="1" redcap:Variable="compliance_1" redcap:FieldType="select">
+		<Question><TranslatedText>How compliant was the patient in drinking the supplement?</TranslatedText></Question>
+		<CodeListRef CodeListOID="compliance_1.choices"/>
+	</ItemDef>
+	<ItemDef OID="hospit_1" Name="hospit_1" DataType="text" Length="1" redcap:Variable="hospit_1" redcap:FieldType="select" redcap:SectionHeader="Hospitalization Data">
+		<Question><TranslatedText>Was patient hospitalized since last visit?</TranslatedText></Question>
+		<CodeListRef CodeListOID="hospit_1.choices"/>
+	</ItemDef>
+	<ItemDef OID="cause_hosp_1" Name="cause_hosp_1" DataType="text" Length="1" redcap:Variable="cause_hosp_1" redcap:FieldType="select">
+		<Question><TranslatedText>What was the cause of hospitalization?</TranslatedText></Question>
+		<CodeListRef CodeListOID="cause_hosp_1.choices"/>
+	</ItemDef>
+	<ItemDef OID="admission_date_1" Name="admission_date_1" DataType="date" Length="999" redcap:Variable="admission_date_1" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date of hospital admission</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="discharge_date_1" Name="discharge_date_1" DataType="date" Length="999" redcap:Variable="discharge_date_1" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date of hospital discharge</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="discharge_summary_1" Name="discharge_summary_1" DataType="text" Length="1" redcap:Variable="discharge_summary_1" redcap:FieldType="select">
+		<Question><TranslatedText>Discharge summary in patients binder?</TranslatedText></Question>
+		<CodeListRef CodeListOID="discharge_summary_1.choices"/>
+	</ItemDef>
+	<ItemDef OID="death_1" Name="death_1" DataType="text" Length="1" redcap:Variable="death_1" redcap:FieldType="select" redcap:SectionHeader="Mortality Data">
+		<Question><TranslatedText>Has patient died since last visit?</TranslatedText></Question>
+		<CodeListRef CodeListOID="death_1.choices"/>
+	</ItemDef>
+	<ItemDef OID="date_death_1" Name="date_death_1" DataType="date" Length="999" redcap:Variable="date_death_1" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date of death</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="cause_death_1" Name="cause_death_1" DataType="text" Length="1" redcap:Variable="cause_death_1" redcap:FieldType="select">
+		<Question><TranslatedText>What was the cause of death?</TranslatedText></Question>
+		<CodeListRef CodeListOID="cause_death_1.choices"/>
+	</ItemDef>
+	<ItemDef OID="month_1_data_complete" Name="month_1_data_complete" DataType="text" Length="1" redcap:Variable="month_1_data_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="month_1_data_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="date_visit_2" Name="date_visit_2" DataType="date" Length="999" redcap:Variable="date_visit_2" redcap:FieldType="text" redcap:TextValidationType="date_ymd" redcap:SectionHeader="Month 2">
+		<Question><TranslatedText>Date of Month 2 visit</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="alb_2" Name="alb_2" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="alb_2" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Serum Albumin (g/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>3</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (3 - 5). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>5</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (3 - 5). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="prealb_2" Name="prealb_2" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="prealb_2" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Serum Prealbumin (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>10</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (10 - 40). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>40</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (10 - 40). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="creat_2" Name="creat_2" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="creat_2" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Creatinine (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.5</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 20). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>20</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 20). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="npcr_2" Name="npcr_2" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="npcr_2" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Normalized Protein Catabolic Rate (g/kg/d)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.5</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 2). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>2</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 2). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="chol_2" Name="chol_2" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="chol_2" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Cholesterol (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>100</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>300</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="transferrin_2" Name="transferrin_2" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="transferrin_2" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Transferrin (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>100</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>300</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="kt_v_2" Name="kt_v_2" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="kt_v_2" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Kt/V</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.9</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.9 - 3). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>3</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.9 - 3). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="drywt_2" Name="drywt_2" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="drywt_2" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Dry weight (kilograms)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>35</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (35 - 200). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>200</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (35 - 200). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="no_show_2" Name="no_show_2" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="no_show_2" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Number of treatments missed</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0 - 7). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>7</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0 - 7). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="compliance_2" Name="compliance_2" DataType="text" Length="1" redcap:Variable="compliance_2" redcap:FieldType="select">
+		<Question><TranslatedText>How compliant was the patient in drinking the supplement?</TranslatedText></Question>
+		<CodeListRef CodeListOID="compliance_2.choices"/>
+	</ItemDef>
+	<ItemDef OID="hospit_2" Name="hospit_2" DataType="text" Length="1" redcap:Variable="hospit_2" redcap:FieldType="select" redcap:SectionHeader="Hospitalization Data">
+		<Question><TranslatedText>Was patient hospitalized since last visit?</TranslatedText></Question>
+		<CodeListRef CodeListOID="hospit_2.choices"/>
+	</ItemDef>
+	<ItemDef OID="cause_hosp_2" Name="cause_hosp_2" DataType="text" Length="1" redcap:Variable="cause_hosp_2" redcap:FieldType="select">
+		<Question><TranslatedText>What was the cause of hospitalization?</TranslatedText></Question>
+		<CodeListRef CodeListOID="cause_hosp_2.choices"/>
+	</ItemDef>
+	<ItemDef OID="admission_date_2" Name="admission_date_2" DataType="date" Length="999" redcap:Variable="admission_date_2" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date of hospital admission</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="discharge_date_2" Name="discharge_date_2" DataType="date" Length="999" redcap:Variable="discharge_date_2" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date of hospital discharge</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="discharge_summary_2" Name="discharge_summary_2" DataType="text" Length="1" redcap:Variable="discharge_summary_2" redcap:FieldType="select">
+		<Question><TranslatedText>Discharge summary in patients binder?</TranslatedText></Question>
+		<CodeListRef CodeListOID="discharge_summary_2.choices"/>
+	</ItemDef>
+	<ItemDef OID="death_2" Name="death_2" DataType="text" Length="1" redcap:Variable="death_2" redcap:FieldType="select" redcap:SectionHeader="Mortality Data">
+		<Question><TranslatedText>Has patient died since last visit?</TranslatedText></Question>
+		<CodeListRef CodeListOID="death_2.choices"/>
+	</ItemDef>
+	<ItemDef OID="date_death_2" Name="date_death_2" DataType="date" Length="999" redcap:Variable="date_death_2" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date of death</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="cause_death_2" Name="cause_death_2" DataType="text" Length="1" redcap:Variable="cause_death_2" redcap:FieldType="select">
+		<Question><TranslatedText>What was the cause of death?</TranslatedText></Question>
+		<CodeListRef CodeListOID="cause_death_2.choices"/>
+	</ItemDef>
+	<ItemDef OID="month_2_data_complete" Name="month_2_data_complete" DataType="text" Length="1" redcap:Variable="month_2_data_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="month_2_data_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="date_visit_3" Name="date_visit_3" DataType="date" Length="999" redcap:Variable="date_visit_3" redcap:FieldType="text" redcap:TextValidationType="date_ymd" redcap:SectionHeader="Month 3">
+		<Question><TranslatedText>Date of Month 3 visit</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="date_blood_3" Name="date_blood_3" DataType="date" Length="999" redcap:Variable="date_blood_3" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date blood was drawn</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="alb_3" Name="alb_3" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="alb_3" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Serum Albumin (g/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>3</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (3 - 5). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>5</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (3 - 5). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="prealb_3" Name="prealb_3" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="prealb_3" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Serum Prealbumin (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>10</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (10 - 40). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>40</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (10 - 40). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="creat_3" Name="creat_3" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="creat_3" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Creatinine (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.5</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 20). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>20</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 20). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="npcr_3" Name="npcr_3" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="npcr_3" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Normalized Protein Catabolic Rate (g/kg/d)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.5</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 2). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>2</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.5 - 2). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="chol_3" Name="chol_3" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="chol_3" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Cholesterol (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>100</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>300</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="transferrin_3" Name="transferrin_3" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="transferrin_3" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Transferrin (mg/dL)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>100</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>300</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (100 - 300). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="kt_v_3" Name="kt_v_3" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="kt_v_3" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Kt/V</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.9</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.9 - 3). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>3</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.9 - 3). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="drywt_3" Name="drywt_3" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="drywt_3" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Dry weight (kilograms)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>35</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (35 - 200). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>200</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (35 - 200). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="plasma1_3" Name="plasma1_3" DataType="text" Length="1" redcap:Variable="plasma1_3" redcap:FieldType="select">
+		<Question><TranslatedText>Collected Plasma 1?</TranslatedText></Question>
+		<CodeListRef CodeListOID="plasma1_3.choices"/>
+	</ItemDef>
+	<ItemDef OID="plasma2_3" Name="plasma2_3" DataType="text" Length="1" redcap:Variable="plasma2_3" redcap:FieldType="select">
+		<Question><TranslatedText>Collected Plasma 2?</TranslatedText></Question>
+		<CodeListRef CodeListOID="plasma2_3.choices"/>
+	</ItemDef>
+	<ItemDef OID="plasma3_3" Name="plasma3_3" DataType="text" Length="1" redcap:Variable="plasma3_3" redcap:FieldType="select">
+		<Question><TranslatedText>Collected Plasma 3?</TranslatedText></Question>
+		<CodeListRef CodeListOID="plasma3_3.choices"/>
+	</ItemDef>
+	<ItemDef OID="serum1_3" Name="serum1_3" DataType="text" Length="1" redcap:Variable="serum1_3" redcap:FieldType="select">
+		<Question><TranslatedText>Collected Serum 1?</TranslatedText></Question>
+		<CodeListRef CodeListOID="serum1_3.choices"/>
+	</ItemDef>
+	<ItemDef OID="serum2_3" Name="serum2_3" DataType="text" Length="1" redcap:Variable="serum2_3" redcap:FieldType="select">
+		<Question><TranslatedText>Collected Serum 2?</TranslatedText></Question>
+		<CodeListRef CodeListOID="serum2_3.choices"/>
+	</ItemDef>
+	<ItemDef OID="serum3_3" Name="serum3_3" DataType="text" Length="1" redcap:Variable="serum3_3" redcap:FieldType="select">
+		<Question><TranslatedText>Collected Serum 3?</TranslatedText></Question>
+		<CodeListRef CodeListOID="serum3_3.choices"/>
+	</ItemDef>
+	<ItemDef OID="sga_3" Name="sga_3" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="sga_3" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Subject Global Assessment (score = 1-7)</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0.9</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.9 - 7.1). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>7.1</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0.9 - 7.1). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="no_show_3" Name="no_show_3" DataType="float" Length="999" SignificantDigits="1" redcap:Variable="no_show_3" redcap:FieldType="text" redcap:TextValidationType="float">
+		<Question><TranslatedText>Number of treatments missed</TranslatedText></Question>
+		<RangeCheck Comparator="GE" SoftHard="Soft">
+			<CheckValue>0</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0 - 7). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+		<RangeCheck Comparator="LE" SoftHard="Soft">
+			<CheckValue>7</CheckValue>
+			<ErrorMessage><TranslatedText>The value you provided is outside the suggested range. (0 - 7). This value is admissible, but you may wish to verify.</TranslatedText></ErrorMessage>
+		</RangeCheck>
+	</ItemDef>
+	<ItemDef OID="compliance_3" Name="compliance_3" DataType="text" Length="1" redcap:Variable="compliance_3" redcap:FieldType="select">
+		<Question><TranslatedText>How compliant was the patient in drinking the supplement?</TranslatedText></Question>
+		<CodeListRef CodeListOID="compliance_3.choices"/>
+	</ItemDef>
+	<ItemDef OID="hospit_3" Name="hospit_3" DataType="text" Length="1" redcap:Variable="hospit_3" redcap:FieldType="select" redcap:SectionHeader="Hospitalization Data">
+		<Question><TranslatedText>Was patient hospitalized since last visit?</TranslatedText></Question>
+		<CodeListRef CodeListOID="hospit_3.choices"/>
+	</ItemDef>
+	<ItemDef OID="cause_hosp_3" Name="cause_hosp_3" DataType="text" Length="1" redcap:Variable="cause_hosp_3" redcap:FieldType="select">
+		<Question><TranslatedText>What was the cause of hospitalization?</TranslatedText></Question>
+		<CodeListRef CodeListOID="cause_hosp_3.choices"/>
+	</ItemDef>
+	<ItemDef OID="admission_date_3" Name="admission_date_3" DataType="date" Length="999" redcap:Variable="admission_date_3" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date of hospital admission</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="discharge_date_3" Name="discharge_date_3" DataType="date" Length="999" redcap:Variable="discharge_date_3" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date of hospital discharge</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="discharge_summary_3" Name="discharge_summary_3" DataType="text" Length="1" redcap:Variable="discharge_summary_3" redcap:FieldType="select">
+		<Question><TranslatedText>Discharge summary in patients binder?</TranslatedText></Question>
+		<CodeListRef CodeListOID="discharge_summary_3.choices"/>
+	</ItemDef>
+	<ItemDef OID="death_3" Name="death_3" DataType="text" Length="1" redcap:Variable="death_3" redcap:FieldType="select" redcap:SectionHeader="Mortality Data">
+		<Question><TranslatedText>Has patient died since last visit?</TranslatedText></Question>
+		<CodeListRef CodeListOID="death_3.choices"/>
+	</ItemDef>
+	<ItemDef OID="date_death_3" Name="date_death_3" DataType="date" Length="999" redcap:Variable="date_death_3" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date of death</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="cause_death_3" Name="cause_death_3" DataType="text" Length="1" redcap:Variable="cause_death_3" redcap:FieldType="select">
+		<Question><TranslatedText>What was the cause of death?</TranslatedText></Question>
+		<CodeListRef CodeListOID="cause_death_3.choices"/>
+	</ItemDef>
+	<ItemDef OID="month_3_data_complete" Name="month_3_data_complete" DataType="text" Length="1" redcap:Variable="month_3_data_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="month_3_data_complete.choices"/>
+	</ItemDef>
+	<ItemDef OID="complete_study" Name="complete_study" DataType="text" Length="1" redcap:Variable="complete_study" redcap:FieldType="select" redcap:SectionHeader="Study Completion Information">
+		<Question><TranslatedText>Has patient completed study?</TranslatedText></Question>
+		<CodeListRef CodeListOID="complete_study.choices"/>
+	</ItemDef>
+	<ItemDef OID="withdraw_date" Name="withdraw_date" DataType="date" Length="999" redcap:Variable="withdraw_date" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Put a date if patient withdrew study</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="withdraw_reason" Name="withdraw_reason" DataType="text" Length="1" redcap:Variable="withdraw_reason" redcap:FieldType="select">
+		<Question><TranslatedText>Reason patient withdrew from study</TranslatedText></Question>
+		<CodeListRef CodeListOID="withdraw_reason.choices"/>
+	</ItemDef>
+	<ItemDef OID="complete_study_date" Name="complete_study_date" DataType="date" Length="999" redcap:Variable="complete_study_date" redcap:FieldType="text" redcap:TextValidationType="date_ymd">
+		<Question><TranslatedText>Date of study completion</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="study_comments" Name="study_comments" DataType="text" Length="999" redcap:Variable="study_comments" redcap:FieldType="textarea" redcap:SectionHeader="General Comments">
+		<Question><TranslatedText>Comments</TranslatedText></Question>
+	</ItemDef>
+	<ItemDef OID="completion_data_complete" Name="completion_data_complete" DataType="text" Length="1" redcap:Variable="completion_data_complete" redcap:FieldType="select" redcap:SectionHeader="Form Status">
+		<Question><TranslatedText>Complete?</TranslatedText></Question>
+		<CodeListRef CodeListOID="completion_data_complete.choices"/>
+	</ItemDef>
+	<CodeList OID="ethnicity.choices" Name="ethnicity" DataType="text" redcap:Variable="ethnicity">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Hispanic or Latino</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>NOT Hispanic or Latino</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Unknown / Not Reported</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="race.choices" Name="race" DataType="text" redcap:Variable="race">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>American Indian/Alaska Native</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Asian</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Native Hawaiian or Other Pacific Islander</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Black or African American</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="4"><Decode><TranslatedText>White</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="5"><Decode><TranslatedText>More Than One Race</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="6"><Decode><TranslatedText>Unknown / Not Reported</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="sex.choices" Name="sex" DataType="text" redcap:Variable="sex">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Female</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Male</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="given_birth.choices" Name="given_birth" DataType="boolean" redcap:Variable="given_birth">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___0.choices" Name="gym___0" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___1.choices" Name="gym___1" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___2.choices" Name="gym___2" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___3.choices" Name="gym___3" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___4.choices" Name="gym___4" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___0.choices" Name="gym___0" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___1.choices" Name="gym___1" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___2.choices" Name="gym___2" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___3.choices" Name="gym___3" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___4.choices" Name="gym___4" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___0.choices" Name="gym___0" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___1.choices" Name="gym___1" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___2.choices" Name="gym___2" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___3.choices" Name="gym___3" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___4.choices" Name="gym___4" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___0.choices" Name="gym___0" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___1.choices" Name="gym___1" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___2.choices" Name="gym___2" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___3.choices" Name="gym___3" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___4.choices" Name="gym___4" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___0.choices" Name="gym___0" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___1.choices" Name="gym___1" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___2.choices" Name="gym___2" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___3.choices" Name="gym___3" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="gym___4.choices" Name="gym___4" DataType="boolean" redcap:Variable="gym" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___0.choices" Name="aerobics___0" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___1.choices" Name="aerobics___1" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___2.choices" Name="aerobics___2" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___3.choices" Name="aerobics___3" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___4.choices" Name="aerobics___4" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___0.choices" Name="aerobics___0" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___1.choices" Name="aerobics___1" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___2.choices" Name="aerobics___2" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___3.choices" Name="aerobics___3" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___4.choices" Name="aerobics___4" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___0.choices" Name="aerobics___0" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___1.choices" Name="aerobics___1" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___2.choices" Name="aerobics___2" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___3.choices" Name="aerobics___3" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___4.choices" Name="aerobics___4" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___0.choices" Name="aerobics___0" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___1.choices" Name="aerobics___1" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___2.choices" Name="aerobics___2" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___3.choices" Name="aerobics___3" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___4.choices" Name="aerobics___4" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___0.choices" Name="aerobics___0" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___1.choices" Name="aerobics___1" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___2.choices" Name="aerobics___2" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___3.choices" Name="aerobics___3" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="aerobics___4.choices" Name="aerobics___4" DataType="boolean" redcap:Variable="aerobics" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___0.choices" Name="eat___0" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___1.choices" Name="eat___1" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___2.choices" Name="eat___2" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___3.choices" Name="eat___3" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___4.choices" Name="eat___4" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___0.choices" Name="eat___0" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___1.choices" Name="eat___1" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___2.choices" Name="eat___2" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___3.choices" Name="eat___3" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___4.choices" Name="eat___4" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___0.choices" Name="eat___0" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___1.choices" Name="eat___1" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___2.choices" Name="eat___2" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___3.choices" Name="eat___3" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___4.choices" Name="eat___4" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___0.choices" Name="eat___0" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___1.choices" Name="eat___1" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___2.choices" Name="eat___2" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___3.choices" Name="eat___3" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___4.choices" Name="eat___4" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___0.choices" Name="eat___0" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___1.choices" Name="eat___1" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___2.choices" Name="eat___2" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___3.choices" Name="eat___3" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="eat___4.choices" Name="eat___4" DataType="boolean" redcap:Variable="eat" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___0.choices" Name="drink___0" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___1.choices" Name="drink___1" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___2.choices" Name="drink___2" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___3.choices" Name="drink___3" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___4.choices" Name="drink___4" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___0.choices" Name="drink___0" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___1.choices" Name="drink___1" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___2.choices" Name="drink___2" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___3.choices" Name="drink___3" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___4.choices" Name="drink___4" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___0.choices" Name="drink___0" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___1.choices" Name="drink___1" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___2.choices" Name="drink___2" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___3.choices" Name="drink___3" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___4.choices" Name="drink___4" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___0.choices" Name="drink___0" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___1.choices" Name="drink___1" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___2.choices" Name="drink___2" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___3.choices" Name="drink___3" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___4.choices" Name="drink___4" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___0.choices" Name="drink___0" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___1.choices" Name="drink___1" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___2.choices" Name="drink___2" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___3.choices" Name="drink___3" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="drink___4.choices" Name="drink___4" DataType="boolean" redcap:Variable="drink" redcap:CheckboxChoices="0, Monday | 1, Tuesday | 2, Wednesday | 3, Thursday | 4, Friday">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___1.choices" Name="meds___1" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___2.choices" Name="meds___2" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___3.choices" Name="meds___3" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___4.choices" Name="meds___4" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___5.choices" Name="meds___5" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___1.choices" Name="meds___1" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___2.choices" Name="meds___2" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___3.choices" Name="meds___3" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___4.choices" Name="meds___4" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___5.choices" Name="meds___5" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___1.choices" Name="meds___1" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___2.choices" Name="meds___2" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___3.choices" Name="meds___3" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___4.choices" Name="meds___4" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___5.choices" Name="meds___5" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___1.choices" Name="meds___1" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___2.choices" Name="meds___2" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___3.choices" Name="meds___3" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___4.choices" Name="meds___4" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___5.choices" Name="meds___5" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___1.choices" Name="meds___1" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___2.choices" Name="meds___2" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___3.choices" Name="meds___3" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___4.choices" Name="meds___4" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="meds___5.choices" Name="meds___5" DataType="boolean" redcap:Variable="meds" redcap:CheckboxChoices="1, Lexapro | 2, Celexa | 3, Prozac | 4, Paxil | 5, Zoloft">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Checked</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Unchecked</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="demographics_complete.choices" Name="demographics_complete" DataType="text" redcap:Variable="demographics_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="plasma1_b.choices" Name="plasma1_b" DataType="text" redcap:Variable="plasma1_b">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="plasma2_b.choices" Name="plasma2_b" DataType="text" redcap:Variable="plasma2_b">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="plasma3_b.choices" Name="plasma3_b" DataType="text" redcap:Variable="plasma3_b">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="serum1_b.choices" Name="serum1_b" DataType="text" redcap:Variable="serum1_b">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="serum2_b.choices" Name="serum2_b" DataType="text" redcap:Variable="serum2_b">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="serum3_b.choices" Name="serum3_b" DataType="text" redcap:Variable="serum3_b">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="baseline_data_complete.choices" Name="baseline_data_complete" DataType="text" redcap:Variable="baseline_data_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="compliance_1.choices" Name="compliance_1" DataType="text" redcap:Variable="compliance_1">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>100 percent</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>99-75 percent</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>74-50 percent</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>49-25 percent</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="4"><Decode><TranslatedText>0-24 percent</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="hospit_1.choices" Name="hospit_1" DataType="text" redcap:Variable="hospit_1">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="cause_hosp_1.choices" Name="cause_hosp_1" DataType="text" redcap:Variable="cause_hosp_1">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Vascular access related events</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>CVD events</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Other</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="discharge_summary_1.choices" Name="discharge_summary_1" DataType="text" redcap:Variable="discharge_summary_1">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="death_1.choices" Name="death_1" DataType="text" redcap:Variable="death_1">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="cause_death_1.choices" Name="cause_death_1" DataType="text" redcap:Variable="cause_death_1">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>All-cause</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Cardiovascular</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="month_1_data_complete.choices" Name="month_1_data_complete" DataType="text" redcap:Variable="month_1_data_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="compliance_2.choices" Name="compliance_2" DataType="text" redcap:Variable="compliance_2">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>100 percent</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>99-75 percent</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>74-50 percent</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>49-25 percent</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="4"><Decode><TranslatedText>0-24 percent</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="hospit_2.choices" Name="hospit_2" DataType="text" redcap:Variable="hospit_2">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="cause_hosp_2.choices" Name="cause_hosp_2" DataType="text" redcap:Variable="cause_hosp_2">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Vascular access related events</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>CVD events</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Other</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="discharge_summary_2.choices" Name="discharge_summary_2" DataType="text" redcap:Variable="discharge_summary_2">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="death_2.choices" Name="death_2" DataType="text" redcap:Variable="death_2">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="cause_death_2.choices" Name="cause_death_2" DataType="text" redcap:Variable="cause_death_2">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>All-cause</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Cardiovascular</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="month_2_data_complete.choices" Name="month_2_data_complete" DataType="text" redcap:Variable="month_2_data_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="plasma1_3.choices" Name="plasma1_3" DataType="text" redcap:Variable="plasma1_3">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="plasma2_3.choices" Name="plasma2_3" DataType="text" redcap:Variable="plasma2_3">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="plasma3_3.choices" Name="plasma3_3" DataType="text" redcap:Variable="plasma3_3">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="serum1_3.choices" Name="serum1_3" DataType="text" redcap:Variable="serum1_3">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="serum2_3.choices" Name="serum2_3" DataType="text" redcap:Variable="serum2_3">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="serum3_3.choices" Name="serum3_3" DataType="text" redcap:Variable="serum3_3">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="compliance_3.choices" Name="compliance_3" DataType="text" redcap:Variable="compliance_3">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>100 percent</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>99-75 percent</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>74-50 percent</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>49-25 percent</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="4"><Decode><TranslatedText>0-24 percent</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="hospit_3.choices" Name="hospit_3" DataType="text" redcap:Variable="hospit_3">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="cause_hosp_3.choices" Name="cause_hosp_3" DataType="text" redcap:Variable="cause_hosp_3">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Vascular access related events</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>CVD events</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Other</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="discharge_summary_3.choices" Name="discharge_summary_3" DataType="text" redcap:Variable="discharge_summary_3">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="death_3.choices" Name="death_3" DataType="text" redcap:Variable="death_3">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="cause_death_3.choices" Name="cause_death_3" DataType="text" redcap:Variable="cause_death_3">
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>All-cause</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Cardiovascular</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="month_3_data_complete.choices" Name="month_3_data_complete" DataType="text" redcap:Variable="month_3_data_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="complete_study.choices" Name="complete_study" DataType="text" redcap:Variable="complete_study">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>No</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Yes</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="withdraw_reason.choices" Name="withdraw_reason" DataType="text" redcap:Variable="withdraw_reason">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Non-compliance</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Did not wish to continue in study</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Could not tolerate the supplement</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="3"><Decode><TranslatedText>Hospitalization</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="4"><Decode><TranslatedText>Other</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+	<CodeList OID="completion_data_complete.choices" Name="completion_data_complete" DataType="text" redcap:Variable="completion_data_complete">
+		<CodeListItem CodedValue="0"><Decode><TranslatedText>Incomplete</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="1"><Decode><TranslatedText>Unverified</TranslatedText></Decode></CodeListItem>
+		<CodeListItem CodedValue="2"><Decode><TranslatedText>Complete</TranslatedText></Decode></CodeListItem>
+	</CodeList>
+</MetaDataVersion>
+</Study>
+<ClinicalData StudyOID="Project.PHPCapClassicTestProject" MetaDataVersionOID="Metadata.PHPCapClassicTestProject_2017-03-21_1652">
+	<SubjectData SubjectKey="11214" redcap:RecordIdField="study_id">
+			<FormData FormOID="Form.demographics" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="demographics.study_id" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="study_id" Value="11214"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="demographics.date_enrolled" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="date_enrolled" Value="2017-03-01"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="demographics.first_name" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="first_name" Value="Joe"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="demographics.last_name" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="last_name" Value="Smith"/>
+					<ItemData ItemOID="address" Value="123 Main St.
+Indianapolis, IN 12345"/>
+					<ItemData ItemOID="telephone_1" Value="(317) 444-2222"/>
+					<ItemData ItemOID="email" Value="joesmith@mailinator.com"/>
+					<ItemData ItemOID="dob" Value="1994-12-01"/>
+					<ItemData ItemOID="age" Value="22"/>
+					<ItemData ItemOID="ethnicity" Value="1"/>
+					<ItemData ItemOID="race" Value="4"/>
+					<ItemData ItemOID="sex" Value="1"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="demographics.gym___0" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="gym___0" Value="0"/>
+					<ItemData ItemOID="gym___1" Value="0"/>
+					<ItemData ItemOID="gym___2" Value="0"/>
+					<ItemData ItemOID="gym___3" Value="0"/>
+					<ItemData ItemOID="gym___4" Value="0"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="demographics.aerobics___0" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="aerobics___0" Value="0"/>
+					<ItemData ItemOID="aerobics___1" Value="0"/>
+					<ItemData ItemOID="aerobics___2" Value="0"/>
+					<ItemData ItemOID="aerobics___3" Value="0"/>
+					<ItemData ItemOID="aerobics___4" Value="0"/>
+					<ItemData ItemOID="eat___0" Value="0"/>
+					<ItemData ItemOID="eat___1" Value="0"/>
+					<ItemData ItemOID="eat___2" Value="0"/>
+					<ItemData ItemOID="eat___3" Value="0"/>
+					<ItemData ItemOID="eat___4" Value="1"/>
+					<ItemData ItemOID="drink___0" Value="1"/>
+					<ItemData ItemOID="drink___1" Value="1"/>
+					<ItemData ItemOID="drink___2" Value="1"/>
+					<ItemData ItemOID="drink___3" Value="1"/>
+					<ItemData ItemOID="drink___4" Value="1"/>
+					<ItemData ItemOID="meds___1" Value="0"/>
+					<ItemData ItemOID="meds___2" Value="0"/>
+					<ItemData ItemOID="meds___3" Value="0"/>
+					<ItemData ItemOID="meds___4" Value="0"/>
+					<ItemData ItemOID="meds___5" Value="0"/>
+					<ItemData ItemOID="height" Value="176"/>
+					<ItemData ItemOID="weight" Value="104"/>
+					<ItemData ItemOID="bmi" Value="33.6"/>
+				</ItemGroupData>
+				<ItemGroupData ItemGroupOID="demographics.demographics_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="demographics_complete" Value="2"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.baseline_data" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="baseline_data.baseline_data_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="baseline_data_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.month_1_data" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="month_1_data.month_1_data_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="month_1_data_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.month_2_data" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="month_2_data.month_2_data_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="month_2_data_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.month_3_data" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="month_3_data.month_3_data_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="month_3_data_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+			<FormData FormOID="Form.completion_data" FormRepeatKey="1">
+				<ItemGroupData ItemGroupOID="completion_data.completion_data_complete" ItemGroupRepeatKey="1">
+					<ItemData ItemOID="completion_data_complete" Value="0"/>
+				</ItemGroupData>
+			</FormData>
+	</SubjectData>
+</ClinicalData>
+</ODM>
