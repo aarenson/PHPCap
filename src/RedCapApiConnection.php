@@ -23,6 +23,8 @@ class RedCapApiConnection
     private $sslVerify;
     private $caCertificateFile;
     private $timeOutInSeconds;
+    
+    /** @var resource cURL handle. */
     private $curlHandle;
 
     /**
@@ -52,6 +54,7 @@ class RedCapApiConnection
         $this->timeOutInSeconds = $timeOutInSeconds;
         
         $this->curlHandle = curl_init();
+        
         curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYPEER, $this->sslVerify);
         
         if ($this->sslVerify && $this->caCertificateFile != null && trim($this->caCertificateFile) != '') {
