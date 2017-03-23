@@ -12,7 +12,7 @@ Requirements
 To use PHPCap, you need to have:
 * A computer with PHP 5.6 or later installed, and PHP needs to have cURL and OpenSSL enabled.
 * An account on a REDCap site.
-* API token(s) for that project(s) you want to access. API tokens need to be requested within the REDCap system.
+* API token(s) for the project(s) you want to access. API tokens need to be requested within the REDCap system.
 
 Example
 --------------------------

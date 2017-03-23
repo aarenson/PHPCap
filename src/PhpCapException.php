@@ -15,7 +15,7 @@ namespace IU\PHPCap;
 class PhpCapException extends \Exception
 {
     // Error codes
-    const ILLEGAL_ARGUMENT = 1;   // If an illegal argument is passed to a PHPCap method
+    const INVALID_ARGUMENT = 1;   // If an illegal argument is passed to a PHPCap method
     const CURL_ERROR = 2;
     const CA_CERTIFICATE_FILE_NOT_FOUND = 3;
     const CA_CERTIFICATE_FILE_UNREADABLE = 4;
