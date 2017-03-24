@@ -10,7 +10,8 @@ namespace IU\PHPCap;
  * 
  * You can call getCode() to get the error code.
  * 
- * @see http://php.net/manual/en/class.exception.php   additional methods provided by parent Exception class
+ * @see http://php.net/manual/en/class.exception.php 
+ *         Information on additional methods provided by parent class Exception.
  */
 class PhpCapException extends \Exception
 {
@@ -20,6 +21,7 @@ class PhpCapException extends \Exception
     const CA_CERTIFICATE_FILE_NOT_FOUND = 3;
     const CA_CERTIFICATE_FILE_UNREADABLE = 4;
     const URL_NOT_FOUND = 5;
+    const REDCAP_API_EXCEPTION = 6;   // An error response from the REDCap API
  
     
     /** @var integer|null cURL error number */

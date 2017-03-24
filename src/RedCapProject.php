@@ -108,26 +108,66 @@ class RedCapProject
     /**
      * Exports the specified records.
      * 
-     * @param array $records array of strings with record id's that are to be retrieved. 
+     * @param string $type the type of records exported: 'flat' or 'eav'.
+     *         'flat' exports one record per row. 'eav' exports one data point per row, so,
+     *         for non-longitudinal studies, each record will have the following
+     *         fields: record_id, field_name, value. For longitudinal studies, each record 
+     *         will have the fields: record_id, field_name, value, redcap_event_name. 
+     * @param array $recordIds array of strings with record id's that are to be retrieved. 
+     * @param array $fields array of field names to export
+     * @param array $forms array of form names for which fields should be exported
+     * @param array $events
+     * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
+     *         "[last_name] = 'Smith'".
      * @param array $callInfo
      * 
      * @return array of records
      */
-    public function exportRecords($recordIds = null, &$callInfo = null) {
+    public function exportRecords(
+            $type = 'flat',
+            $recordIds = null,
+            $fields = null,
+            $forms = null,
+            $events = null,
+            $filterLogic = null,
+            &$callInfo = null
+    ) {
         $data = array(
-                'token' => $this->apiToken,
-                'content' => 'record',
-                'format' => 'json',
+                'token'        => $this->apiToken,
+                'content'      => 'record',
+                'format'       => 'json',
                 'returnFormat' => 'json'
         );
         
+        if ($type == null) $type = 'flat';
+        $type = strtolower($type);
+        if (strcmp($type,'flat') !== 0 && strcmp($type,'eav') !== 0) {
+            throw new PhpCapException("Invalid type \"".$type."\". Type should be either 'flat' or 'eav'", PhpCapException::INVALID_ARGUMENT);
+        }
+        $data['type'] = $type;
+        
         if ($recordIds != null) {
             if (!is_array($recordIds)) {
-                throw new PhpCapException("recordIds has the wrong type.", PhpCapException::INVALID_ARGUMENT);
+                throw new PhpCapException("recordIds has the wrong type; it should be an array.", PhpCapException::INVALID_ARGUMENT);
             }
             $data['records'] = $recordIds;
         }
         
+        if ($fields != null) {
+            $data['fields'] = $fields;
+        }
+        
+        if ($forms != null) {
+            $data['forms'] = $forms;
+        }
+        
+        if ($events != null) {
+            $data['events'] = $events;
+        }
+
+        if ($filterLogic != null) {
+            $data['filterLogic'] = $filterLogic;
+        }
         
         $callData = http_build_query($data, '', '&');
         $records = $this->connection->call($callData, $callInfo);
@@ -146,12 +186,10 @@ class RedCapProject
      * Exports information about the project, e.g., project ID, project title, creation time.
      * 
      * @param array $callInfo optional output parameter used to return call information,
-     *                        for example: URL, content type, total time. 
+     *         for example: URL, content type, total time. 
      *                        
-     * @return array associative array (map) of call information field names to values. Example fields
-     * names include 'total_time', 'size_upload', 'size_download'.
-     * 
-     * @see http://php.net/manual/en/function.curl-getinfo.php description of the fields returned
+     * @return array associative array (map) of project information. See REDCap API documentation
+     *         for a list of the fields, or use the print_r function on the results of this method.
      */
     public function exportProjectInfo(&$callInfo = null) {
         $data = array(
@@ -173,7 +211,13 @@ class RedCapProject
         return $projectInfo;
     }
 
-
+    /**
+     * Exports metadata about the project, i.e., information about the fields in the project.
+     * 
+     * @param array $callInfo associative array (map) of call information field names to values.
+     *         Example fields names include 'total_time', 'size_upload', 'size_download'.
+     *         See http://php.net/manual/en/function.curl-getinfo.php description of the fields returned.
+     */
     public function exportMetadata(&$callInfo = null) {
         $data = array(
                 'token' => $this->apiToken,
