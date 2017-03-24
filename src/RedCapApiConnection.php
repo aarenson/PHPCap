@@ -92,13 +92,13 @@ class RedCapApiConnection
      * Makes a call to REDCap's API and returns the results.
      *
      * @param mixed $data
-     *            data for the call.
+     *         data for the call.
      * @param array $callInfo
-     *            optional output parameter that, if an argument for it is provided,
-     *            is set to information about the call that was made.
-     *            See http://php.net/manual/en/function.curl-getinfo.php for more information.
+     *         optional output parameter that, if an argument for it is provided,
+     *         is set to information about the call that was made.
+     *         See http://php.net/manual/en/function.curl-getinfo.php for more information.
      * @throws RedCapApiException
-     * @return string the response returned by the REDCap API for the speified call data.
+     * @return string the response returned by the REDCap API for the specified call data.
      *         See the REDCap API documentation for more information.
      */
     public function call($data, & $callInfo = null)

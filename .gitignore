@@ -21,3 +21,6 @@ composer.phar
 /build
 /docs/api/html
 /docs/api/xml
+
+# remove this eventually...
+/docs/api

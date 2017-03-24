@@ -14,6 +14,21 @@ To use PHPCap, you need to have:
 * An account on a REDCap site.
 * API token(s) for the project(s) you want to access. API tokens need to be requested within the REDCap system.
 
+How to Get PHPCap
+--------------------------
+If you have Git installed on your computer, you can use
+
+    git clone https://github.com/aarenson/PHPCap
+
+If you have Subversion, you can use
+
+    svn export https://github.com/aarenson/PHPCap
+
+Or, you can access [https://github.com/aarenson/PHPCap](https://github.com/aarenson/PHPCap) in a web browser, and then:    
+1. Click on the __Clone or download__ button
+2. Click on __Download Zip__
+3. Unzip the downloaded file  
+
 Example
 --------------------------
 

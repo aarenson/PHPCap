@@ -27,8 +27,9 @@ class RedCapProject
     
     /** @var RedCapApiConnection connection to the REDCap API at the $apiURL. */
     private $connection;
-    private $projectInfo;
-    private $metadata;
+    
+    //private $projectInfo;
+    //private $metadata;
  
     
     /**
@@ -71,7 +72,7 @@ class RedCapProject
         }
         elseif (!ctype_xdigit($apiToken)) {   // ctype_xdigit - check token for hexidecimal
             throw new PhpCapException("The REDCap API token has an invalid format."
-                    ." It should only contain numbers and ther letter A, B, C, D, E and F."
+                    ." It should only contain numbers and the letters A, B, C, D, E and F."
                     , PhpCapException::INVALID_ARGUMENT);
         }
         elseif (strlen($apiToken) != 32 && strlen($apiToken) != 64) {
