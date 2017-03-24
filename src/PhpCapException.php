@@ -22,7 +22,8 @@ class PhpCapException extends \Exception
     const CA_CERTIFICATE_FILE_UNREADABLE = 4;
     const URL_NOT_FOUND = 5;
     const REDCAP_API_EXCEPTION = 6;   // An error response from the REDCap API
- 
+    const JSON_ERROR = 7;
+    
     
     /** @var integer|null cURL error number */
     private $curlErrorNumber;

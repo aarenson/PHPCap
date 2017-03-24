@@ -170,14 +170,9 @@ class RedCapProject
         }
         
         $callData = http_build_query($data, '', '&');
-        $records = $this->connection->call($callData, $callInfo);
+        $jsonRecords = $this->connection->call($callData, $callInfo);
         
-        if (empty($records)) {
-            $records = array ();
-        }
-        else {
-            $records = json_decode($records, true);   // true => return as array instead of object
-        }
+        $records = $this->processJsonExport($jsonRecords);
         
         return $records;
     }
@@ -236,5 +231,36 @@ class RedCapProject
         }
     
         return $metadata;
+    }
+    
+    /**
+     * Processes JSON exported from REDCap.
+     * 
+     * @param string $jsonRecords
+     * @throws PHPCapException
+     */
+    private function processJsonExport($jsonRecords) {
+
+        if (empty($jsonRecords)) {
+            $records = array ();
+        }
+        else {
+            $records = json_decode($jsonRecords, true);   // true => return as array instead of object
+        
+            $jsonError = json_last_error();
+        
+            switch ($jsonError) {
+                case JSON_ERROR_NONE:
+                    break;
+                default:
+                    throw new PHPCapException("JSON error (".$jsonError.") \""
+                            .json_last_error_msg()."\" in REDCap API output."
+                                    ."\nThe first 1,000 characters of output returned from REDCap are:\n"
+                                            .substr($jsonRecords,0,1000), PhpCapException::JSON_ERROR);
+                    break;
+            }
+        }
+        
+        return $records;
     }
 }
