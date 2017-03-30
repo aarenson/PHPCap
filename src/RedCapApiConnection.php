@@ -115,7 +115,8 @@ class RedCapApiConnection
         $response = curl_exec($this->curlHandle);
         if ($errno = curl_errno($this->curlHandle)) {
             throw new RedCapApiException(curl_error($this->curlHandle), $errno);
-        } else {
+        }
+        else {
             // Check for HTTP errors
             $httpCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
             if ($httpCode == 301) {
@@ -138,4 +139,21 @@ class RedCapApiConnection
         
         return ($response);
     }
+    
+    
+    /**
+     * Returns call information for the most recent call.
+     * 
+     * @throws RedCapApiException
+     * @return array call information for the most recent call made.
+     */
+    public function getCallInfo() {
+        $callInfo = curl_getinfo($this->curlHandle);
+        if ($errno = curl_errno($this->curlHandle)) {
+            throw new RedCapApiException(curl_error($this->curlHandle), $errno);
+        }
+
+        return $callInfo;
+    }
+    
 }
