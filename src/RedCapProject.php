@@ -234,6 +234,22 @@ class RedCapProject
     }
     
     /**
+     * Gets the call information for the last cURL call. PHPCap uses cURL to
+     * communicate with the REDCap API.
+     * 
+     * @return array cURL call information for last cURL call made.
+     * 
+     * @see http://php.net/manual/en/function.curl-getinfo.php for information on what values are returned.
+     */
+    public function getCallInfo() {
+        $callInfo = $this->connection->getCallInfo();
+    
+        return $callInfo;
+    }
+    
+    
+    
+    /**
      * Processes JSON exported from REDCap.
      * 
      * @param string $jsonRecords
