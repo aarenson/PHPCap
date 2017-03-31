@@ -223,7 +223,7 @@ class RedCapProject
         $callData = http_build_query($data, '', '&');
         $metadata = $this->connection->call($callData, $callInfo);
     
-        if (empty($projectInfo)) {
+        if (empty($metadata)) {
             $metadata = array ();
         }
         else {
@@ -237,7 +237,8 @@ class RedCapProject
      * Processes JSON exported from REDCap.
      * 
      * @param string $jsonRecords
-     * @throws PHPCapException
+     * @return array processed JSON records.
+     * @throws PHPCapException if an error occurs.
      */
     private function processJsonExport($jsonRecords) {
 
