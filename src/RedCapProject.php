@@ -119,7 +119,6 @@ class RedCapProject
      * @param array $events
      * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
      *         "[last_name] = 'Smith'".
-     * @param array $callInfo
      * 
      * @return array of records
      */
@@ -129,8 +128,7 @@ class RedCapProject
             $fields = null,
             $forms = null,
             $events = null,
-            $filterLogic = null,
-            &$callInfo = null
+            $filterLogic = null
     ) {
         $data = array(
                 'token'        => $this->apiToken,
@@ -170,7 +168,7 @@ class RedCapProject
         }
         
         $callData = http_build_query($data, '', '&');
-        $jsonRecords = $this->connection->call($callData, $callInfo);
+        $jsonRecords = $this->connection->call($callData);
         
         $records = $this->processJsonExport($jsonRecords);
         
@@ -179,14 +177,11 @@ class RedCapProject
     
     /**
      * Exports information about the project, e.g., project ID, project title, creation time.
-     * 
-     * @param array $callInfo optional output parameter used to return call information,
-     *         for example: URL, content type, total time. 
      *                        
      * @return array associative array (map) of project information. See REDCap API documentation
      *         for a list of the fields, or use the print_r function on the results of this method.
      */
-    public function exportProjectInfo(&$callInfo = null) {
+    public function exportProjectInfo() {
         $data = array(
                 'token' => $this->apiToken,
                 'content' => 'project',
@@ -194,7 +189,7 @@ class RedCapProject
                 'returnFormat' => 'json'
         );
         $callData = http_build_query($data, '', '&');
-        $projectInfo = $this->connection->call($callData, $callInfo);
+        $projectInfo = $this->connection->call($callData);
 
         if (empty($projectInfo)) {
             $projectInfo = array ();
@@ -209,11 +204,8 @@ class RedCapProject
     /**
      * Exports metadata about the project, i.e., information about the fields in the project.
      * 
-     * @param array $callInfo associative array (map) of call information field names to values.
-     *         Example fields names include 'total_time', 'size_upload', 'size_download'.
-     *         See http://php.net/manual/en/function.curl-getinfo.php description of the fields returned.
      */
-    public function exportMetadata(&$callInfo = null) {
+    public function exportMetadata() {
         $data = array(
                 'token' => $this->apiToken,
                 'content' => 'metadata',
@@ -221,7 +213,7 @@ class RedCapProject
                 'returnFormat' => 'json'
         );
         $callData = http_build_query($data, '', '&');
-        $metadata = $this->connection->call($callData, $callInfo);
+        $metadata = $this->connection->call($callData);
     
         if (empty($metadata)) {
             $metadata = array ();

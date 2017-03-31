@@ -28,12 +28,13 @@ class ProjectTests extends TestCase {
     
     public function testMetadata()
     {
-        $callInfo = true;
-        $result = self::$project->exportMetadata($callInfo);
+        $result = self::$project->exportMetadata();
          
         $this->assertArrayHasKey('field_name', $result[0], 'Metadata has field_name field test.');
         $this->assertEquals($result[0]['field_name'], 'study_id', 'Metadata has study_id field test.');
     
+        $callInfo = self::$project->getCallInfo();
+     
         $this->assertEquals($callInfo['url'], self::$config['url'], 'Metadata url test.');
         $this->assertArrayHasKey('content_type', $callInfo, 'Metadata has content type test.');
         $this->assertArrayHasKey('http_code', $callInfo, 'Metadata has HTTP code test.');
