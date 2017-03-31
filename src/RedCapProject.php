@@ -116,7 +116,7 @@ class RedCapProject
      * @param array $recordIds array of strings with record id's that are to be retrieved. 
      * @param array $fields array of field names to export
      * @param array $forms array of form names for which fields should be exported
-     * @param array $events
+     * @param array $events array of event names for which fields should be exported
      * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
      *         "[last_name] = 'Smith'".
      * 
@@ -174,6 +174,7 @@ class RedCapProject
         
         return $records;
     }
+
     
     /**
      * Exports information about the project, e.g., project ID, project title, creation time.
@@ -204,6 +205,11 @@ class RedCapProject
     /**
      * Exports metadata about the project, i.e., information about the fields in the project.
      * 
+     * @return array associative array (map) of metatdata for the project, which consists of
+     *         information about each field in the project. Some examples of the information
+     *         provided are: 'field_name', 'form_name', 'field_type', 'field_label'.
+     *         See REDCap API documentation
+     *         for more information, or use the print_r function on the results of this method.
      */
     public function exportMetadata() {
         $data = array(
@@ -238,7 +244,44 @@ class RedCapProject
     
         return $callInfo;
     }
-    
+
+    /**
+     * Imports the specified records into the project.
+     *
+     * @param $recordData array
+     *            array of associated arrays (maps) where each key is a field name,
+     *            and its value is the value to store in that field.
+     * @param $type string
+     *            if set to 'flat' then each data element is a record, or
+     *            if 'eav' then each data element is one value.
+     * @param $dateFormat string date format which can be one of the following: 'MDY', 'DMY', 'YMD' [default].
+     *            'YMD' => Y-M-D (e.g., 2016-12-31), MDY => M/D/Y format, and DMY => D/M/Y format.
+     */
+    public function importRecords(
+            $recordData, 
+            $type = 'flat', 
+            $overwriteBehavior = 'normal', 
+            $returnContent = 'count',
+            $dateFormat = 'YMD'
+        )
+    {
+        $data = array (
+                'token' => $this->apiToken,
+                'content' => 'record',
+                'format' => 'json',
+                'returnFormat' => 'json' 
+        );
+        
+        // Need to convert data to JSON
+        $jsonRecordData = json_encode($recordData);
+        
+        $data ['data'] = $jsonRecordData;
+        
+        $callData = http_build_query($data, '', '&');
+        $result = $this->connection->call($callData);
+        
+        return $result;
+    }
     
     
     /**
