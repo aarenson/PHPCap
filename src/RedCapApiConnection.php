@@ -19,10 +19,14 @@ class RedCapApiConnection
     /** @var string the URL of the REDCap site being accessed. */
     private $url;
     
-    
+    /** @var boolean true if the SSL connection should be verified, and false if it should not. */
     private $sslVerify;
+    
+    /** @var the CA (Certificate Authority) file to use for SSL verification. */
     private $caCertificateFile;
-    private $timeOutInSeconds;
+    
+    /** @var the timeout in seconds for calls that are made to the REDCap API. */
+    private $timeoutInSeconds;
     
     /** @var resource cURL handle. */
     private $curlHandle;
@@ -38,7 +42,7 @@ class RedCapApiConnection
      *            the CA (Certificate Authority) certificate file used for veriying the REDCap site's
      *            SSL certificate (i.e., for verifying that the REDCap site that is
      *            connected to is the one specified).
-     * @param integer $timeOutInSeconds
+     * @param integer $timeoutInSeconds
      *
      * @throws RedCapApiException
      */
@@ -46,12 +50,18 @@ class RedCapApiConnection
         $url,
         $sslVerify = false,
         $caCertificateFile = '',
-        $timeOutInSeconds = self::DEFAULT_TIMEOUT_IN_SECONDS
+        $timeoutInSeconds = self::DEFAULT_TIMEOUT_IN_SECONDS
     ) {
         $this->url = $url;
         $this->sslVerify = $sslVerify;
         $this->caCertificateFile = $caCertificateFile;
-        $this->timeOutInSeconds = $timeOutInSeconds;
+        $this->timeoutInSeconds = $timeoutInSeconds;
+        // Have fixed and variable data/time call timeout
+        // - fixed would be used for metadata, project info, etc.
+        // - variable data would be used export data
+        // exception this class has no knowledge of calling method??? So would need to set
+        // this in the class above this.
+        // need to be able to reset
         
         $this->curlHandle = curl_init();
         
@@ -70,7 +80,7 @@ class RedCapApiConnection
             curl_setopt($this->curlHandle, CURLOPT_CAINFO, $this->caCertificateFile);
         }
         
-        curl_setopt($this->curlHandle, CURLOPT_TIMEOUT, $this->timeOutInSeconds);
+        curl_setopt($this->curlHandle, CURLOPT_TIMEOUT, $this->timeoutInSeconds);
         curl_setopt($this->curlHandle, CURLOPT_URL, $this->url);
         curl_setopt($this->curlHandle, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, array ('Accept: text/xml'));
@@ -103,10 +113,6 @@ class RedCapApiConnection
      */
     public function call($data, & $callInfo = null)
     {
-        // ???????? Add timeout parameter, so timeout can be set for specific call (for example, might want
-        // to set the timeout for the initial retrieval of project info and metadata to be low, so that
-        // if there is a problem, it doesn't take 20 minutes to time out!!!!!!!!!
-        // or just add setter to connection so it can be changed????
         $errno = 0;
         $response = '';
         
@@ -145,7 +151,9 @@ class RedCapApiConnection
      * Returns call information for the most recent call.
      * 
      * @throws RedCapApiException
-     * @return array call information for the most recent call made.
+     * @return array an associative array of values of call information for the most recent call made.
+     * 
+     * @see http://php.net/manual/en/function.curl-getinfo.php for information on what values are returned.
      */
     public function getCallInfo() {
         $callInfo = curl_getinfo($this->curlHandle);
@@ -154,6 +162,25 @@ class RedCapApiConnection
         }
 
         return $callInfo;
+    }
+
+
+    /**
+     * Gets the timeout in seconds for cURL calls.
+     * 
+     * @return integer timeout in seconds for cURL calls.
+     */
+    public function getTimeoutInSeconds() {
+        return $this->timeoutInSeconds;
+    }
+    
+    /**
+     * Sets the timeout for cURL calls to the specified amount of seconds.
+     * 
+     * @param integer $timeoutInSeconds timeout in seconds for cURL calls.
+     */
+    public function setTimeoutInSeconds($timeoutInSeconds) {
+        $this->timeoutInSeconds = $timeoutInSeconds;
     }
     
 }
