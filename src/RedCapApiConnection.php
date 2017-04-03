@@ -114,6 +114,12 @@ class RedCapApiConnection
      */
     public function call($data, & $callInfo = null)
     {
+        if (!is_string($data)) {
+            throw new PhpCapException("Data passed to ".__METHOD__
+                    ." has type ".gettype($data). ", but should be a string."
+                    , PhpCapException::INVALID_ARGUMENT);
+        }
+        
         $errno = 0;
         $response = '';
         
@@ -129,11 +135,12 @@ class RedCapApiConnection
             if ($httpCode == 301) {
                 $callInfo = curl_getinfo($this->curlHandle);
                 throw new PhpCapException("The page for the specified URL (" . $this->url
-                        . ") has moved to " . $callInfo ['redirect_url'] . ". Please update your URL.");
+                        . ") has moved to " . $callInfo ['redirect_url'] . ". Please update your URL.",
+                        PhpCapException::INVALID_URL, null, $httpCode);
             } elseif ($httpCode == 404) {
                 throw new PhpCapException('
                         The specified URL (' . $this->url . ') appears to be incorrect.'
-                        . ' Nothing was found at this URL.', PhpCapException::URL_NOT_FOUND);
+                        . ' Nothing was found at this URL.', PhpCapException::INVALID_UR, null, $httpCode);
             }
         }
         

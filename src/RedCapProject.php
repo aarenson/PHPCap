@@ -206,7 +206,7 @@ class RedCapProject
      * Exports metadata about the project, i.e., information about the fields in the project.
      * 
      * @return array associative array (map) of metatdata for the project, which consists of
-     *         information about each field in the project. Some examples of the information
+     *         information about each field. Some examples of the information
      *         provided are: 'field_name', 'form_name', 'field_type', 'field_label'.
      *         See REDCap API documentation
      *         for more information, or use the print_r function on the results of this method.
@@ -254,8 +254,10 @@ class RedCapProject
      * @param $type string
      *            if set to 'flat' then each data element is a record, or
      *            if 'eav' then each data element is one value.
+     * @param $returnContent string 'count' (the default) or 'ids'.
      * @param $dateFormat string date format which can be one of the following: 'MDY', 'DMY', 'YMD' [default].
      *            'YMD' => Y-M-D (e.g., 2016-12-31), MDY => M/D/Y format, and DMY => D/M/Y format.
+     * @return mixed
      */
     public function importRecords(
             $recordData, 
@@ -310,6 +312,10 @@ class RedCapProject
                                     ."\nThe first 1,000 characters of output returned from REDCap are:\n"
                                             .substr($jsonRecords,0,1000), PhpCapException::JSON_ERROR);
                     break;
+            }
+            
+            if (array_key_exists('error', $records)) {
+                throw new PhpCapException($records['error'], PhpCapException::REDCAP_API_EXCEPTION);
             }
         }
         
