@@ -24,7 +24,9 @@ class ApiConnectionTests extends TestCase {
                 'returnFormat' => 'json'
         );
         
-        $result = self::$apiConnection->call($data);
+        $callData = http_build_query($data, '', '&');
+        
+        $result = self::$apiConnection->call($callData);
         $result = json_decode($result, true);
         
         //print_r($result);
