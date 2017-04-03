@@ -22,7 +22,7 @@ If you have Git installed on your computer, you can use
 
 If you have Subversion, you can use
 
-    svn export https://github.com/aarenson/PHPCap
+    svn export https://github.com/aarenson/PHPCap/trunk PHPCap
 
 Or, you can access [https://github.com/aarenson/PHPCap](https://github.com/aarenson/PHPCap) in a web browser, and then:    
 1. Click on the __Clone or download__ button
