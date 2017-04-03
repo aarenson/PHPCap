@@ -7,7 +7,7 @@
 
 namespace IU\PHPCap;
 
-require_once(__DIR__."/RedCapApiException.php");
+require_once(__DIR__."/PhpCapException.php");
 
 /**
  * A connection to the API of a REDCap instance.
@@ -37,14 +37,15 @@ class RedCapApiConnection
      *
      * @param string $url
      *            the URL for the API of the REDCap site that you want to connect to.
-     * @param boolean $sslVerify
+     * @param boolean $sslVerify indicates if verification should be done for the SSL
+     *            connection to REDCap. Setting this to false is not secure.
      * @param string $caCertificateFile
      *            the CA (Certificate Authority) certificate file used for veriying the REDCap site's
      *            SSL certificate (i.e., for verifying that the REDCap site that is
      *            connected to is the one specified).
-     * @param integer $timeoutInSeconds
+     * @param integer $timeoutInSeconds the timeout in seconds for the connection.
      *
-     * @throws RedCapApiException
+     * @throws PhpCapException
      */
     public function __construct(
         $url,
@@ -70,12 +71,12 @@ class RedCapApiConnection
         if ($this->sslVerify && $this->caCertificateFile != null && trim($this->caCertificateFile) != '') {
             curl_setopt($this->curlHandle, CURLOPT_SSL_VERIFYHOST, 2);
             if (! file_exists($this->caCertificateFile)) {
-                throw new RedCapApiException('The cert file "' . $this->caCertificateFile
-                        . '" does not exist.', RedCapApiException::CA_CERTIFICATE_FILE_NOT_FOUND);
+                throw new PhpCapException('The cert file "' . $this->caCertificateFile
+                        . '" does not exist.', PhpCapException::CA_CERTIFICATE_FILE_NOT_FOUND);
                 // Try just letting curl catch this??? - or, check URL too (missing, wrong type)?
             } elseif (! is_readable($this->caCertificateFile)) {
-                throw new RedCapApiException('The cert file "' . $this->caCertificateFile
-                        . '" exists, but cannot be read.');
+                throw new PhpCapException('The cert file "' . $this->caCertificateFile
+                        . '" exists, but cannot be read.', PhpCapException::CA_CERTIFICATE_FILE_UNREADABLE);
             }
             curl_setopt($this->curlHandle, CURLOPT_CAINFO, $this->caCertificateFile);
         }
@@ -107,7 +108,7 @@ class RedCapApiConnection
      *         optional output parameter that, if an argument for it is provided,
      *         is set to information about the call that was made.
      *         See http://php.net/manual/en/function.curl-getinfo.php for more information.
-     * @throws RedCapApiException
+     * @throws PhpCapException
      * @return string the response returned by the REDCap API for the specified call data.
      *         See the REDCap API documentation for more information.
      */
@@ -120,26 +121,26 @@ class RedCapApiConnection
         curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, $data);
         $response = curl_exec($this->curlHandle);
         if ($errno = curl_errno($this->curlHandle)) {
-            throw new RedCapApiException(curl_error($this->curlHandle), $errno);
+            throw new PhpCapException(curl_error($this->curlHandle), PhpCapException::CURL_ERROR, $errno);
         }
         else {
             // Check for HTTP errors
             $httpCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
             if ($httpCode == 301) {
                 $callInfo = curl_getinfo($this->curlHandle);
-                throw new RedCapApiException("The page for the specified URL (" . $this->url
+                throw new PhpCapException("The page for the specified URL (" . $this->url
                         . ") has moved to " . $callInfo ['redirect_url'] . ". Please update your URL.");
             } elseif ($httpCode == 404) {
-                throw new RedCapApiException('
+                throw new PhpCapException('
                         The specified URL (' . $this->url . ') appears to be incorrect.'
-                        . ' Nothing was found at this URL.', RedCapApiException::URL_NOT_FOUND);
+                        . ' Nothing was found at this URL.', PhpCapException::URL_NOT_FOUND);
             }
         }
         
         if ($callInfo != null) {
             $callInfo = curl_getinfo($this->curlHandle);
             if ($errno = curl_errno($this->curlHandle)) {
-                throw new RedCapApiException(curl_error($this->curlHandle), $errno);
+                throw new PhpCapException(curl_error($this->curlHandle), PhpCapException::CURL_ERROR, $errno);
             }
         }
         
@@ -150,7 +151,7 @@ class RedCapApiConnection
     /**
      * Returns call information for the most recent call.
      * 
-     * @throws RedCapApiException
+     * @throws PhpCapException
      * @return array an associative array of values of call information for the most recent call made.
      * 
      * @see http://php.net/manual/en/function.curl-getinfo.php for information on what values are returned.
@@ -158,7 +159,7 @@ class RedCapApiConnection
     public function getCallInfo() {
         $callInfo = curl_getinfo($this->curlHandle);
         if ($errno = curl_errno($this->curlHandle)) {
-            throw new RedCapApiException(curl_error($this->curlHandle), $errno);
+            throw new PhpCapException(curl_error($this->curlHandle), PhpCapException::CURL_ERROR, $errno);
         }
 
         return $callInfo;
