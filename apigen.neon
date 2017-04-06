@@ -1,0 +1,11 @@
+#--------------------------------------------------------
+# ApiGen (API document generator) configuration file
+#--------------------------------------------------------
+destination: docs/apigen
+overwrite: true
+php: true
+
+source: [src]
+templateConfig: docs/themes/apigen/theme-phpcap/src/config.neon
+title: "PHPCap"
+
