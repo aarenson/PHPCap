@@ -617,3 +617,10 @@ span.l a.l:hover, span.l a.l:active, span.l a.l:focus {
 .right, .summary td.right {
 	text-align: right;
 }
+
+/* -------------------------------------------- PHPCap changes -------------------------------------- */
+
+/* Hide the search box, since it doesn't work for our use case */
+form#search {
+	visibility: hidden;
+}
