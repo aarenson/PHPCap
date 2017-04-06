@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class IU\PHPCap\RedCapProject | PHPCap</title>
+
+	<link rel="stylesheet" href="resources/style.css?f672509cdee74a93b9fcb130ea6c2cb541aa75a1">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active">
+					<a href="namespace-IU.html">
+						IU<span></span>
+					</a>
+
+						<ul>
+				<li class="active">
+					<a href="namespace-IU.PHPCap.html">
+						PHPCap					</a>
+
+						</li>
+							</ul></li>
+				<li>
+					<a href="namespace-PHP.html">
+						PHP					</a>
+
+						</li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li><a href="class-IU.PHPCap.RedCapApiConnection.html">RedCapApiConnection</a></li>
+				<li class="active"><a href="class-IU.PHPCap.RedCapProject.html">RedCapProject</a></li>
+			</ul>
+
+
+
+			<h3>Exceptions</h3>
+			<ul>
+				<li><a href="class-IU.PHPCap.PhpCapException.html">PhpCapException</a></li>
+			</ul>
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-IU.PHPCap.html" title="Summary of IU\PHPCap"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class RedCapProject</h1>
+
+
+	<div class="description">
+	<p>REDCap project class used to retrieve data from, and modify, REDCap projects.</p>
+	</div>
+
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-IU.html">IU</a>\<a href="namespace-IU.PHPCap.html">PHPCap</a><br>
+		
+
+			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapProject.html#10-329" title="Go to source code">RedCapProject.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#___construct">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#35-106" title="Go to source code">__construct</a>( <span>string <var>$apiUrl</var></span>, <span>string <var>$apiToken</var></span>, <span>boolean <var>$sslVerify</var> = <span class="php-keyword1">false</span></span>, <span>string <var>$caCertificateFile</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			<p>Contructs a REDCap project for the specifed information.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Contructs a REDCap project for the specifed information.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$apiUrl</var></dt>
+					<dd>the URL for the API for the REDCap that has the project.</dd>
+					<dt><var>$apiToken</var></dt>
+					<dd>the API token for this project.</dd>
+					<dt><var>$sslVerify</var></dt>
+					<dd>indicates if SSL connection to REDCap web site should be verified.</dd>
+					<dt><var>$caCertificateFile</var></dt>
+					<dd>the full path name of the CA (Certificate Authority) certificate file.</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					PHPCapException<br>if any of the arguments are invalid
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="exportRecords" id="_exportRecords">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#_exportRecords">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#108-176" title="Go to source code">exportRecords</a>( <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>array <var>$recordIds</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$fields</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$forms</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$events</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$filterLogic</var> = <span class="php-keyword1">null</span> </span> )</code>
+
+		<div class="description short">
+			<p>Exports the specified records.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Exports the specified records.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$type</var></dt>
+					<dd><p>the type of records exported: 'flat' or 'eav'.
+        'flat' exports one record per row. 'eav' exports one data point per row, so,
+        for non-longitudinal studies, each record will have the following
+        fields: record_id, field_name, value. For longitudinal studies, each record
+        will have the fields: record_id, field_name, value, redcap_event_name.</p></dd>
+					<dt><var>$recordIds</var></dt>
+					<dd>array of strings with record id's that are to be retrieved.</dd>
+					<dt><var>$fields</var></dt>
+					<dd>array of field names to export</dd>
+					<dt><var>$forms</var></dt>
+					<dd>array of form names for which fields should be exported</dd>
+					<dt><var>$events</var></dt>
+					<dd>array of event names for which fields should be exported</dd>
+					<dt><var>$filterLogic</var></dt>
+					<dd><p>logic used to restrict the records retrieved, e.g.,
+        "[last_name] = 'Smith'".</p></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>of records
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="exportProjectInfo" id="_exportProjectInfo">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#_exportProjectInfo">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#179-203" title="Go to source code">exportProjectInfo</a>( )</code>
+
+		<div class="description short">
+			<p>Exports information about the project, e.g., project ID, project title, creation time.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Exports information about the project, e.g., project ID, project title, creation time.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br><p>associative array (map) of project information. See REDCap API documentation
+        for a list of the fields, or use the print_r function on the results of this method.</p>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="exportMetadata" id="_exportMetadata">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#_exportMetadata">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#205-232" title="Go to source code">exportMetadata</a>( )</code>
+
+		<div class="description short">
+			<p>Exports metadata about the project, i.e., information about the fields in the project.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Exports metadata about the project, i.e., information about the fields in the project.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br><p>associative array (map) of metatdata for the project, which consists of
+        information about each field. Some examples of the information
+        provided are: 'field_name', 'form_name', 'field_type', 'field_label'.
+        See REDCap API documentation
+        for more information, or use the print_r function on the results of this method.</p>
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getCallInfo" id="_getCallInfo">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#_getCallInfo">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#234-246" title="Go to source code">getCallInfo</a>( )</code>
+
+		<div class="description short">
+			<p>Gets the call information for the last cURL call. PHPCap uses cURL to
+communicate with the REDCap API.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the call information for the last cURL call. PHPCap uses cURL to
+communicate with the REDCap API.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>cURL call information for last cURL call made.
+				</div>
+
+
+				<h4>See</h4>
+				<div class="list">
+						http://php.net/manual/en/function.curl-getinfo.php for information on what values are returned.<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="importRecords" id="_importRecords">
+
+		<td class="attributes"><code>
+			 public 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#_importRecords">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#248-291" title="Go to source code">importRecords</a>( <span>array <var>$records</var></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span> </span> )</code>
+
+		<div class="description short">
+			<p>Imports the specified records into the project.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Imports the specified records into the project.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$records</var></dt>
+					<dd><p>array of associated arrays (maps) where each key is a field name,
+           and its value is the value to store in that field.</p></dd>
+					<dt><var>$type</var></dt>
+					<dd><p>if set to 'flat' then each data element is a record, or
+           if 'eav' then each data element is one value.</p></dd>
+					<dt><var>$overwriteBehavior</var></dt>
+					<dd></dd>
+					<dt><var>$returnContent</var></dt>
+					<dd>'count' (the default) or 'ids'.</dd>
+					<dt><var>$dateFormat</var></dt>
+					<dd><p>date format which can be one of the following: 'MDY', 'DMY', 'YMD' [default].</p>
+
+<ul>
+             <li>'YMD' => Y-M-D (e.g., 2016-12-31)</li>
+             <li>'MDY' => M/D/Y format</li>
+             <li>'DMY' => D/M/Y format</li>
+          </ul></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		PHPCap API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js?a30f7291dd5487c24c30b4edc7d722339a3c3875"></script>
+<script src="elementlist.js?ee1d699d492a1a18cce551cde20b77d85969e02e"></script>
+</body>
+</html>

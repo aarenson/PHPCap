@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+
+	<title>Class IU\PHPCap\RedCapApiConnection | PHPCap</title>
+
+	<link rel="stylesheet" href="resources/style.css?f672509cdee74a93b9fcb130ea6c2cb541aa75a1">
+
+</head>
+
+<body>
+<div id="left">
+	<div id="menu">
+		<a href="index.html" title="Overview"><span>Overview</span></a>
+
+
+		<div id="groups">
+				<h3>Namespaces</h3>
+			<ul>
+				<li class="active">
+					<a href="namespace-IU.html">
+						IU<span></span>
+					</a>
+
+						<ul>
+				<li class="active">
+					<a href="namespace-IU.PHPCap.html">
+						PHPCap					</a>
+
+						</li>
+							</ul></li>
+				<li>
+					<a href="namespace-PHP.html">
+						PHP					</a>
+
+						</li>
+			</ul>
+		</div>
+
+		<hr>
+
+
+		<div id="elements">
+			<h3>Classes</h3>
+			<ul>
+				<li class="active"><a href="class-IU.PHPCap.RedCapApiConnection.html">RedCapApiConnection</a></li>
+				<li><a href="class-IU.PHPCap.RedCapProject.html">RedCapProject</a></li>
+			</ul>
+
+
+
+			<h3>Exceptions</h3>
+			<ul>
+				<li><a href="class-IU.PHPCap.PhpCapException.html">PhpCapException</a></li>
+			</ul>
+
+
+		</div>
+	</div>
+</div>
+
+<div id="splitter"></div>
+
+<div id="right">
+<div id="rightInner">
+	<form id="search">
+		<input type="hidden" name="cx" value="">
+		<input type="hidden" name="ie" value="UTF-8">
+		<input type="text" name="q" class="text" placeholder="Search">
+	</form>
+
+	<div id="navigation">
+		<ul>
+			<li>
+				<a href="index.html" title="Overview"><span>Overview</span></a>
+			</li>
+			<li>
+				<a href="namespace-IU.PHPCap.html" title="Summary of IU\PHPCap"><span>Namespace</span></a>
+			</li>
+			<li class="active">
+<span>Class</span>			</li>
+		</ul>
+		<ul>
+		</ul>
+		<ul>
+		</ul>
+	</div>
+
+<div id="content" class="class">
+	<h1>Class RedCapApiConnection</h1>
+
+
+	<div class="description">
+	<p>A connection to the API of a REDCap instance.</p>
+	</div>
+
+
+
+
+
+
+
+
+
+	<div class="info">
+		
+		
+		<b>Namespace:</b> <a href="namespace-IU.html">IU</a>\<a href="namespace-IU.PHPCap.html">PHPCap</a><br>
+		
+
+			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapApiConnection.html#12-194" title="Go to source code">RedCapApiConnection.php</a>
+		<br>
+	</div>
+
+
+
+	<table class="summary methods" id="methods">
+	<caption>Methods summary</caption>
+	<tr data-order="__construct" id="___construct">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#___construct">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#34-89" title="Go to source code">__construct</a>( <span>string <var>$url</var></span>, <span>boolean <var>$sslVerify</var> = <span class="php-keyword1">false</span></span>, <span>string <var>$caCertificateFile</var> = <span class="php-quote">''</span></span>, <span>integer <var>$timeoutInSeconds</var> = self::DEFAULT_TIMEOUT_IN_SECONDS </span> )</code>
+
+		<div class="description short">
+			<p>Constructor that creates a REDCap API connection for the specified URL, with the
+specified settings.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Constructor that creates a REDCap API connection for the specified URL, with the
+specified settings.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$url</var></dt>
+					<dd>the URL for the API of the REDCap site that you want to connect to.</dd>
+					<dt><var>$sslVerify</var></dt>
+					<dd><p>indicates if verification should be done for the SSL
+           connection to REDCap. Setting this to false is not secure.</p></dd>
+					<dt><var>$caCertificateFile</var></dt>
+					<dd><p>the CA (Certificate Authority) certificate file used for veriying the REDCap site's
+           SSL certificate (i.e., for verifying that the REDCap site that is
+           connected to is the one specified).</p></dd>
+					<dt><var>$timeoutInSeconds</var></dt>
+					<dd>the timeout in seconds for the connection.</dd>
+				</dl></div>
+
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-IU.PHPCap.PhpCapException.html">IU\PHPCap\PhpCapException</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="__destruct" id="___destruct">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#___destruct">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#91-100" title="Go to source code">__destruct</a>( )</code>
+
+		<div class="description short">
+			<p>Destructor that closes the cURL handle (if it is set).</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Destructor that closes the cURL handle (if it is set).</p>
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="call" id="_call">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#_call">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#102-155" title="Go to source code">call</a>( <span>mixed <var>$data</var></span>, <span>array <var>&amp; $callInfo</var> = <span class="php-keyword1">null</span></span> )</code>
+
+		<div class="description short">
+			<p>Makes a call to REDCap's API and returns the results.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Makes a call to REDCap's API and returns the results.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$data</var></dt>
+					<dd>data for the call.</dd>
+					<dt><var>$callInfo</var></dt>
+					<dd><p>optional output parameter that, if an argument for it is provided,
+        is set to information about the call that was made.
+        See http://php.net/manual/en/function.curl-getinfo.php for more information.</p></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br><p>the response returned by the REDCap API for the specified call data.
+        See the REDCap API documentation for more information.</p>
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-IU.PHPCap.PhpCapException.html">IU\PHPCap\PhpCapException</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getCallInfo" id="_getCallInfo">
+
+		<td class="attributes"><code>
+			 public 
+
+			array
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#_getCallInfo">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#158-173" title="Go to source code">getCallInfo</a>( )</code>
+
+		<div class="description short">
+			<p>Returns call information for the most recent call.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Returns call information for the most recent call.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					array<br>an associative array of values of call information for the most recent call made.
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-IU.PHPCap.PhpCapException.html">IU\PHPCap\PhpCapException</a></code>
+				</div>
+
+				<h4>See</h4>
+				<div class="list">
+						http://php.net/manual/en/function.curl-getinfo.php for information on what values are returned.<br>
+				</div>
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getTimeoutInSeconds" id="_getTimeoutInSeconds">
+
+		<td class="attributes"><code>
+			 public 
+
+			integer
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#_getTimeoutInSeconds">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#176-183" title="Go to source code">getTimeoutInSeconds</a>( )</code>
+
+		<div class="description short">
+			<p>Gets the timeout in seconds for cURL calls.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the timeout in seconds for cURL calls.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					integer<br>timeout in seconds for cURL calls.
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setTimeoutInSeconds" id="_setTimeoutInSeconds">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#_setTimeoutInSeconds">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#185-192" title="Go to source code">setTimeoutInSeconds</a>( <span>integer <var>$timeoutInSeconds</var></span> )</code>
+
+		<div class="description short">
+			<p>Sets the timeout for cURL calls to the specified amount of seconds.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets the timeout for cURL calls to the specified amount of seconds.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$timeoutInSeconds</var></dt>
+					<dd>timeout in seconds for cURL calls.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+	<table class="summary constants" id="constants">
+	<caption>Constants summary</caption>
+	<tr data-order="DEFAULT_TIMEOUT_IN_SECONDS" id="DEFAULT_TIMEOUT_IN_SECONDS">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-constant-DEFAULT_TIMEOUT_IN_SECONDS.html#17" title="Go to source code"><b>DEFAULT_TIMEOUT_IN_SECONDS</b></a>
+			</code>
+
+			<div class="description short">
+				
+			</div>
+
+			<div class="description detailed hidden">
+				
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#DEFAULT_TIMEOUT_IN_SECONDS" title="expand/collapse" class="anchor">+/-</a>
+				<code><span class="php-num">1200</span></code>
+			</div>
+		</td>
+	</tr>
+	</table>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+	<div id="footer">
+		PHPCap API documentation generated by <a href="http://apigen.org">ApiGen</a>
+	</div>
+</div>
+</div>
+<script src="resources/combined.js?a30f7291dd5487c24c30b4edc7d722339a3c3875"></script>
+<script src="elementlist.js?ee1d699d492a1a18cce551cde20b77d85969e02e"></script>
+</body>
+</html>
