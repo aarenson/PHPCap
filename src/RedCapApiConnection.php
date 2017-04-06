@@ -10,7 +10,10 @@ namespace IU\PHPCap;
 require_once(__DIR__."/PhpCapException.php");
 
 /**
- * A connection to the API of a REDCap instance.
+ * A connection to the API of a REDCap instance. This class provides a low-level
+ * interface to the REDCap API, and is primarily intended for internal use by PHPCap,
+ * but could be used directly by a user to access REDCap functionality not provided
+ * by PHPCap.
  */
 class RedCapApiConnection
 {

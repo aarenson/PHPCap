@@ -248,19 +248,24 @@ class RedCapProject
     /**
      * Imports the specified records into the project.
      *
-     * @param $recordData array
+     * @param array $records
      *            array of associated arrays (maps) where each key is a field name,
      *            and its value is the value to store in that field.
-     * @param $type string
+     * @param string $type
      *            if set to 'flat' then each data element is a record, or
      *            if 'eav' then each data element is one value.
-     * @param $returnContent string 'count' (the default) or 'ids'.
-     * @param $dateFormat string date format which can be one of the following: 'MDY', 'DMY', 'YMD' [default].
-     *            'YMD' => Y-M-D (e.g., 2016-12-31), MDY => M/D/Y format, and DMY => D/M/Y format.
+     * @param string $overwriteBehavior
+     * @param string $returnContent 'count' (the default) or 'ids'.
+     * @param string $dateFormat date format which can be one of the following: 'MDY', 'DMY', 'YMD' [default].
+     *            <ul>
+     *              <li>'YMD' => Y-M-D (e.g., 2016-12-31)</li>
+     *              <li>'MDY' => M/D/Y format</li>
+     *              <li>'DMY' => D/M/Y format</li>
+     *           </ul>
      * @return mixed
      */
     public function importRecords(
-            $recordData, 
+            $records, 
             $type = 'flat', 
             $overwriteBehavior = 'normal', 
             $returnContent = 'count',
@@ -275,7 +280,7 @@ class RedCapProject
         );
         
         // Need to convert data to JSON
-        $jsonRecordData = json_encode($recordData);
+        $jsonRecordData = json_encode($records);
         
         $data ['data'] = $jsonRecordData;
         

@@ -6,9 +6,28 @@
 namespace IU\PHPCap;
 
 /**
- * Exception class for PHPCap exceptions.
+ * Exception class for PHPCap exceptions. This is the exception that PHPCap will
+ * throw when it encounters an error.
  * 
- * You can call getCode() to get the error code.
+ * Example usage:
+ * 
+ * ```php
+ * ...
+ * try {
+ *     $projectInfo = $project->exportProjectInfo();
+ * }
+ * catch (PhpCapException $exception) {
+ *     print "The following error occurred: {$exception->getMessage()}\n";
+ *     print "Error code: {$exception->getCode()}\n";
+ *     $curlErrorNumber = $exception->getCurlErrorNumber();
+ *     if (isset($curlErrorNumber)) {
+ *         print "A cURL error occurred.\n";
+ *         print "cURL error number: {$curlErrorNumber}\n";
+ *     }
+ *     print "Stack trace:\n{$exception->getTraceAsString()}\n";
+ * }
+ * ...
+ * ```
  * 
  * @see http://php.net/manual/en/class.exception.php 
  *         Information on additional methods provided by parent class Exception.
@@ -16,9 +35,16 @@ namespace IU\PHPCap;
 class PhpCapException extends \Exception
 {
     // Error codes
-    const INVALID_ARGUMENT = 1;   // If an illegal argument is passed to a PHPCap method
+    
+    /** Invalid argument passed to a PHPCap method. */
+    const INVALID_ARGUMENT = 1;
+    
+    /** A cURL error occurred. */
     const CURL_ERROR = 2;
+    
+    /** A CA certificate file was specified, but it could not be found. */
     const CA_CERTIFICATE_FILE_NOT_FOUND = 3;
+    
     const CA_CERTIFICATE_FILE_UNREADABLE = 4;
     const INVALID_URL = 5;
     const REDCAP_API_EXCEPTION = 6;   // An error response from the REDCap API
