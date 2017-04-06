@@ -431,7 +431,8 @@ td.attributes {
 
 .class .methods td.name > div, .class td.value > div {
 	position: relative;
-	padding-right: 1em;
+	padding-right: 3em;    /* PHPCap change, because expand/collpase changed
+	                          from '#' to '+/-', so more room is needed. */
 }
 
 .anchor {
