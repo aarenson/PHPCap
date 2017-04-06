@@ -1,11 +1,18 @@
-#--------------------------------------------------------
-# ApiGen (API document generator) configuration file
-#--------------------------------------------------------
-destination: docs/apigen
+#-----------------------------------------------------------
+# ApiGen configuration file
+#
+# ApiGen generates HTML documentation from PHPDoc comments.
+#-----------------------------------------------------------
+source: [src]
+destination: docs/api
+title: "PHPCap"
+
+# overwrite existing documentation
 overwrite: true
+
+# generate documentation for PHP internal classes that are extended
 php: true
 
-source: [src]
+# custom template file
 templateConfig: docs/themes/apigen/theme-phpcap/src/config.neon
-title: "PHPCap"
 
