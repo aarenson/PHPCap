@@ -19,6 +19,7 @@ composer.phar
 
 # phpdoc generated files
 /build
+/cache
 /docs/api/html
 /docs/api/xml
 
