@@ -202,6 +202,7 @@ class RedCapProject
         return $projectInfo;
     }
 
+    
     /**
      * Exports metadata about the project, i.e., information about the fields in the project.
      * 
@@ -248,47 +249,125 @@ class RedCapProject
     /**
      * Imports the specified records into the project.
      *
-     * @param array $records
-     *            array of associated arrays (maps) where each key is a field name,
-     *            and its value is the value to store in that field.
+     * @param mixed $records
+     *            If the 'php' (default) format is being used, an array of associated arrays (maps)
+     *            where each key is a field name,
+     *            and its value is the value to store in that field. If any other format is being used, then
+     *            the records are represented by a string.
+     * @param string $format One of the following formats can be specified
+     *            <ul>
+     *              <li> 'php' - array of maps of values [default]</li>
+     *              <li> 'csv' - string of CSV (comma-separated values)</li>
+     *              <li> 'json' - string of JSON encoded values</li>
+     *              <li> 'xml' - string of XML encoded data</li>
+     *              <li> 'odm' - CDISC ODM XML format, specifically ODM version 1.3.1</li>
+     *            </ul>
      * @param string $type
      *            if set to 'flat' then each data element is a record, or
      *            if 'eav' then each data element is one value.
      * @param string $overwriteBehavior
      * @param string $returnContent 'count' (the default) or 'ids'.
-     * @param string $dateFormat date format which can be one of the following: 'MDY', 'DMY', 'YMD' [default].
+     * @param string $dateFormat date format which can be one of the following:
      *            <ul>
-     *              <li>'YMD' => Y-M-D (e.g., 2016-12-31)</li>
-     *              <li>'MDY' => M/D/Y format</li>
-     *              <li>'DMY' => D/M/Y format</li>
+     *              <li>'YMD' - Y-M-D format (e.g., 2016-12-31) [default]</li>
+     *              <li>'MDY' - M/D/Y format (e.g., 12/31/2016)</li>
+     *              <li>'DMY' - D/M/Y format (e.g., 31/12/2016)</li>
      *           </ul>
      * @return mixed
      */
     public function importRecords(
             $records, 
+            $format = 'php',
             $type = 'flat', 
             $overwriteBehavior = 'normal', 
             $returnContent = 'count',
             $dateFormat = 'YMD'
         )
     {
+        print "\n";
+        print_r($records);
+        
         $data = array (
-                'token' => $this->apiToken,
+                'token'   => $this->apiToken,
                 'content' => 'record',
-                'format' => 'json',
-                'returnFormat' => 'json' 
+                'format'  => $format,
+                'type'    => $type,
+                
+                'overwriteBehavior' => $overwriteBehavior,
+                'returnFormat'      => 'json',
+                'dateFormat'        => $dateFormat
         );
         
-        // Need to convert data to JSON
-        $jsonRecordData = json_encode($records);
+        // If the PHP format was used, need to convert to JSON
+        if ($format === 'php') {
+            $records = json_encode($records);
+            $data['format'] = 'json';
+        }
         
-        $data ['data'] = $jsonRecordData;
+        $data ['data'] = $records;
         
         $callData = http_build_query($data, '', '&');
+        
+
+        print "\n\n";
+        print_r($data);
+        print "\n\n";
+        print_r($callData);
+        print "\n\n";
+        
         $result = $this->connection->call($callData);
+        
+        // Check $result for errors ...
         
         return $result;
     }
+    
+    /**
+     * Imports the records from the specified file into the project.
+     *
+     * @param string $filename
+     *            The name of the file containing the records to import.
+     * @param string $format One of the following formats can be specified
+     *            <ul>
+     *              <li> 'csv' - string of CSV (comma-separated values)</li>
+     *              <li> 'json' - string of JSON encoded values</li>
+     *              <li> 'xml' - string of XML encoded data (default)</li>
+     *              <li> 'odm' - CDISC ODM XML format, specifically ODM version 1.3.1</li>
+     *            </ul>
+     * @param string $type
+     *            if set to 'flat' then each data element is a record, or
+     *            if 'eav' then each data element is one value.
+     * @param string $overwriteBehavior
+     * @param string $returnContent 'count' (the default) or 'ids'.
+     * @param string $dateFormat date format which can be one of the following:
+     *            <ul>
+     *              <li>'YMD' - Y-M-D format (e.g., 2016-12-31) [default]</li>
+     *              <li>'MDY' - M/D/Y format (e.g., 12/31/2016)</li>
+     *              <li>'DMY' - D/M/Y format (e.g., 31/12/2016)</li>
+     *           </ul>
+     * @return mixed
+     */
+    public function importRecordsFromFile(
+            $filename,
+            $format = 'xml',
+            $type = 'flat',
+            $overwriteBehavior = 'normal',
+            $returnContent = 'count',
+            $dateFormat = 'YMD'
+            )
+    {
+        $records = file_get_contents($filename);
+        
+        print "\n\n\nInitial records:\n";
+        print_r($records);
+        print "\n\n";
+        
+        $result = $this->importRecords($records, $format, $type, $overwriteBehavior, $returnContent, $dateFormat);
+    
+        return $result;
+    }
+    
+    
     
     
     /**
