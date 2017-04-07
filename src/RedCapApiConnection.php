@@ -107,15 +107,11 @@ class RedCapApiConnection
      *
      * @param mixed $data
      *         data for the call.
-     * @param array $callInfo
-     *         optional output parameter that, if an argument for it is provided,
-     *         is set to information about the call that was made.
-     *         See http://php.net/manual/en/function.curl-getinfo.php for more information.
      * @throws PhpCapException
      * @return string the response returned by the REDCap API for the specified call data.
      *         See the REDCap API documentation for more information.
      */
-    public function call($data, & $callInfo = null)
+    public function call($data)
     {
         if (!is_string($data)) {
             throw new PhpCapException("Data passed to ".__METHOD__
@@ -147,31 +143,26 @@ class RedCapApiConnection
             }
         }
         
-        if ($callInfo != null) {
-            $callInfo = curl_getinfo($this->curlHandle);
-            if ($errno = curl_errno($this->curlHandle)) {
-                throw new PhpCapException(curl_error($this->curlHandle), PhpCapException::CURL_ERROR, $errno);
-            }
-        }
-        
         return ($response);
     }
-    
+
     
     /**
      * Returns call information for the most recent call.
-     * 
+     *
      * @throws PhpCapException
      * @return array an associative array of values of call information for the most recent call made.
-     * 
-     * @see http://php.net/manual/en/function.curl-getinfo.php for information on what values are returned.
+     *        
+     * @see <a href="http://php.net/manual/en/function.curl-getinfo.php">http://php.net/manual/en/function.curl-getinfo.php</a>
+     *      for information on what values are returned.
      */
-    public function getCallInfo() {
+    public function getCallInfo()
+    {
         $callInfo = curl_getinfo($this->curlHandle);
         if ($errno = curl_errno($this->curlHandle)) {
             throw new PhpCapException(curl_error($this->curlHandle), PhpCapException::CURL_ERROR, $errno);
         }
-
+        
         return $callInfo;
     }
 
