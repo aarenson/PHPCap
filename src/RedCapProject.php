@@ -233,6 +233,24 @@ class RedCapProject
     }
     
     /**
+     * Gets the REDCap version number of the instance being used by the project.
+     * 
+     * @return string the REDCap version number of the instance being used by the project.
+     */
+    public  function exportRedcapVersion() {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'version'
+        );
+        $callData = http_build_query($data, '', '&');
+        $redcapVersion = $this->connection->call($callData);
+        
+        return $redcapVersion;
+    }
+    
+    
+    
+    /**
      * Gets the call information for the last cURL call. PHPCap uses cURL to
      * communicate with the REDCap API.
      * 
