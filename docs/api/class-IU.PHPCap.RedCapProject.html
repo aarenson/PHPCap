@@ -109,7 +109,7 @@
 		<b>Namespace:</b> <a href="namespace-IU.html">IU</a>\<a href="namespace-IU.PHPCap.html">PHPCap</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapProject.html#10-329" title="Go to source code">RedCapProject.php</a>
+			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapProject.html#10-429" title="Go to source code">RedCapProject.php</a>
 		<br>
 	</div>
 
@@ -275,7 +275,7 @@
 		<!-- PHPCap change -->
 		<a class="anchor" title="expand/collapse" href="#_exportMetadata">+/-</a>
 		
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#205-232" title="Go to source code">exportMetadata</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#206-233" title="Go to source code">exportMetadata</a>( )</code>
 
 		<div class="description short">
 			<p>Exports metadata about the project, i.e., information about the fields in the project.</p>
@@ -301,6 +301,43 @@
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="exportRedcapVersion" id="_exportRedcapVersion">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#_exportRedcapVersion">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#235-249" title="Go to source code">exportRedcapVersion</a>( )</code>
+
+		<div class="description short">
+			<p>Gets the REDCap version number of the instance being used by the project.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the REDCap version number of the instance being used by the project.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>the REDCap version number of the instance being used by the project.
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="getCallInfo" id="_getCallInfo">
 
 		<td class="attributes"><code>
@@ -316,7 +353,7 @@
 		<!-- PHPCap change -->
 		<a class="anchor" title="expand/collapse" href="#_getCallInfo">+/-</a>
 		
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#234-246" title="Go to source code">getCallInfo</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#253-268" title="Go to source code">getCallInfo</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the call information for the last cURL call. PHPCap uses cURL to
@@ -337,7 +374,10 @@ communicate with the REDCap API.</p>
 
 				<h4>See</h4>
 				<div class="list">
-						http://php.net/manual/en/function.curl-getinfo.php for information on what values are returned.<br>
+						<p><a href="http://php.net/manual/en/function.curl-getinfo.php">
+     http://php.net/manual/en/function.curl-getinfo.php
+     </a>
+     for information on what values are returned.</p><br>
 				</div>
 
 
@@ -359,7 +399,7 @@ communicate with the REDCap API.</p>
 		<!-- PHPCap change -->
 		<a class="anchor" title="expand/collapse" href="#_importRecords">+/-</a>
 		
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#248-291" title="Go to source code">importRecords</a>( <span>array <var>$records</var></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span> </span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#270-344" title="Go to source code">importRecords</a>( <span>mixed <var>$records</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span> </span> )</code>
 
 		<div class="description short">
 			<p>Imports the specified records into the project.</p>
@@ -372,8 +412,20 @@ communicate with the REDCap API.</p>
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$records</var></dt>
-					<dd><p>array of associated arrays (maps) where each key is a field name,
-           and its value is the value to store in that field.</p></dd>
+					<dd><p>If the 'php' (default) format is being used, an array of associated arrays (maps)
+           where each key is a field name,
+           and its value is the value to store in that field. If any other format is being used, then
+           the records are represented by a string.</p></dd>
+					<dt><var>$format</var></dt>
+					<dd><p>One of the following formats can be specified</p>
+
+<ul>
+             <li> 'php' - array of maps of values [default]</li>
+             <li> 'csv' - string of CSV (comma-separated values)</li>
+             <li> 'json' - string of JSON encoded values</li>
+             <li> 'xml' - string of XML encoded data</li>
+             <li> 'odm' - CDISC ODM XML format, specifically ODM version 1.3.1</li>
+           </ul></dd>
 					<dt><var>$type</var></dt>
 					<dd><p>if set to 'flat' then each data element is a record, or
            if 'eav' then each data element is one value.</p></dd>
@@ -382,12 +434,78 @@ communicate with the REDCap API.</p>
 					<dt><var>$returnContent</var></dt>
 					<dd>'count' (the default) or 'ids'.</dd>
 					<dt><var>$dateFormat</var></dt>
-					<dd><p>date format which can be one of the following: 'MDY', 'DMY', 'YMD' [default].</p>
+					<dd><p>date format which can be one of the following:</p>
 
 <ul>
-             <li>'YMD' => Y-M-D (e.g., 2016-12-31)</li>
-             <li>'MDY' => M/D/Y format</li>
-             <li>'DMY' => D/M/Y format</li>
+             <li>'YMD' - Y-M-D format (e.g., 2016-12-31) [default]</li>
+             <li>'MDY' - M/D/Y format (e.g., 12/31/2016)</li>
+             <li>'DMY' - D/M/Y format (e.g., 31/12/2016)</li>
+          </ul></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					mixed
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="importRecordsFromFile" id="_importRecordsFromFile">
+
+		<td class="attributes"><code>
+			 public 
+
+			mixed
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<a class="anchor" title="expand/collapse" href="#_importRecordsFromFile">+/-</a>
+		
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#346-389" title="Go to source code">importRecordsFromFile</a>( <span>string <var>$filename</var></span>, <span>string <var>$format</var> = <span class="php-quote">'xml'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span> </span> )</code>
+
+		<div class="description short">
+			<p>Imports the records from the specified file into the project.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Imports the records from the specified file into the project.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$filename</var></dt>
+					<dd>The name of the file containing the records to import.</dd>
+					<dt><var>$format</var></dt>
+					<dd><p>One of the following formats can be specified</p>
+
+<ul>
+             <li> 'csv' - string of CSV (comma-separated values)</li>
+             <li> 'json' - string of JSON encoded values</li>
+             <li> 'xml' - string of XML encoded data (default)</li>
+             <li> 'odm' - CDISC ODM XML format, specifically ODM version 1.3.1</li>
+           </ul></dd>
+					<dt><var>$type</var></dt>
+					<dd><p>if set to 'flat' then each data element is a record, or
+           if 'eav' then each data element is one value.</p></dd>
+					<dt><var>$overwriteBehavior</var></dt>
+					<dd></dd>
+					<dt><var>$returnContent</var></dt>
+					<dd>'count' (the default) or 'ids'.</dd>
+					<dt><var>$dateFormat</var></dt>
+					<dd><p>date format which can be one of the following:</p>
+
+<ul>
+             <li>'YMD' - Y-M-D format (e.g., 2016-12-31) [default]</li>
+             <li>'MDY' - M/D/Y format (e.g., 12/31/2016)</li>
+             <li>'DMY' - D/M/Y format (e.g., 31/12/2016)</li>
           </ul></dd>
 				</dl></div>
 
@@ -429,6 +547,6 @@ communicate with the REDCap API.</p>
 </div>
 </div>
 <script src="resources/combined.js?a30f7291dd5487c24c30b4edc7d722339a3c3875"></script>
-<script src="elementlist.js?ee1d699d492a1a18cce551cde20b77d85969e02e"></script>
+<script src="elementlist.js?c93eff3681f9bb998fbea03cc5b82d3fb0d70b0e"></script>
 </body>
 </html>
