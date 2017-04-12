@@ -287,6 +287,10 @@ class RedCapProject
      *            if set to 'flat' then each data element is a record, or
      *            if 'eav' then each data element is one value.
      * @param string $overwriteBehavior
+     *            <ul>
+     *              <li>normal - blank/empty values will be ignored [default]</li>
+     *              <li>overwrite - blank/empty values are valid and will overwrite data</li>
+     *            </ul>
      * @param string $returnContent 'count' (the default) or 'ids'.
      * @param string $dateFormat date format which can be one of the following:
      *            <ul>
@@ -305,8 +309,6 @@ class RedCapProject
             $dateFormat = 'YMD'
         )
     {
-        print "\n";
-        print_r($records);
         
         $data = array (
                 'token'   => $this->apiToken,
@@ -328,13 +330,6 @@ class RedCapProject
         $data ['data'] = $records;
         
         $callData = http_build_query($data, '', '&');
-        
-
-        print "\n\n";
-        print_r($data);
-        print "\n\n";
-        print_r($callData);
-        print "\n\n";
         
         $result = $this->connection->call($callData);
         
@@ -379,10 +374,6 @@ class RedCapProject
     {
         $records = file_get_contents($filename);
         
-        print "\n\n\nInitial records:\n";
-        print_r($records);
-        print "\n\n";
-        
         $result = $this->importRecords($records, $format, $type, $overwriteBehavior, $returnContent, $dateFormat);
     
         return $result;
@@ -412,12 +403,8 @@ class RedCapProject
             $data['event']  = $event;
         }
         
-        print_r($data);
-        
         $callData = http_build_query($data, '', '&');
         $jsonResult = $this->connection->call($callData);
-        
-        print_r($jsonResult);
         
         if (isset($jsonResult)) {
             $result = json_decode($jsonResult, true);
