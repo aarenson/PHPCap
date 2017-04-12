@@ -45,10 +45,22 @@ class PhpCapException extends \Exception
     /** A CA certificate file was specified, but it could not be found. */
     const CA_CERTIFICATE_FILE_NOT_FOUND = 3;
     
+    /** The CA certificate file could not be read. */
     const CA_CERTIFICATE_FILE_UNREADABLE = 4;
+    
+    /** An invalid URL was used. */
     const INVALID_URL = 5;
-    const REDCAP_API_EXCEPTION = 6;   // An error response from the REDCap API
+    
+    /** The REDCap API generated an error. */
+    const REDCAP_API_ERROR = 6;   // An error response from the REDCap API
+    
+    /** A JSON error occurred. This would typically happen when PHPCap is expecting
+     * the REDCap API to return data in JSON format, but the result returned is not valid JSON.
+     */
     const JSON_ERROR = 7;
+    
+    /** An error was caused by an input file. The file may not exists, or may not be readable. */
+    const INPUT_FILE_ERROR = 8;
     
     
     /** @var integer|null cURL error number */
@@ -56,6 +68,7 @@ class PhpCapException extends \Exception
     
     /** @var integer|null HTTP status code */
     private $httpStatusCode;
+    
     
     /**
      * Constructor.
