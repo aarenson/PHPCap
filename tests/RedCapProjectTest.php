@@ -39,5 +39,16 @@ class ProjectTests extends TestCase {
         $this->assertArrayHasKey('content_type', $callInfo, 'Metadata has content type test.');
         $this->assertArrayHasKey('http_code', $callInfo, 'Metadata has HTTP code test.');
     }
+    
+    public function testExportRecords()
+    {
+        $result = self::$basicDemographyProject->exportRecords();
+        
+        $this->assertEquals(count($result), 100, 'Number of records test.');
+        
+        $recordIds = array_column($result, 'record_id');
+        $this->assertEquals(min($recordIds), 1001, 'Min record_id test.');
+        $this->assertEquals(max($recordIds), 1100, 'Max record_id test.');   
+    }
 
 }
