@@ -5,7 +5,7 @@ require_once(__DIR__.'/../src/RedCapApiConnection.php');
 use PHPUnit\Framework\TestCase;
 use IU\PHPCap\RedCapApiConnection;
 
-class ApiConnectionTests extends TestCase {
+class RedCapApiConnectionTest extends TestCase {
     private static $config;
     private static $apiConnection;
     

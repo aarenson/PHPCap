@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use IU\PHPCap\RedCapApiConnection;
 use IU\PHPCap\RedCapProject;
 
-class ProjectTests extends TestCase {
+class RedCapProjectTest extends TestCase {
     private static $config;
     private static $basicDemographyProject;
     
