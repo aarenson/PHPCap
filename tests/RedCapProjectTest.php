@@ -17,7 +17,7 @@ class ProjectTests extends TestCase {
         self::$basicDemographyProject = new RedCapProject(self::$config['api.url'], self::$config['basic.demography.api.token']);
     }
     
-    public function testProjectInfo()
+    public function testExportProjectInfo()
     {
         $callInfo = true;
         $result = self::$basicDemographyProject->exportProjectInfo($callInfo);
@@ -26,7 +26,7 @@ class ProjectTests extends TestCase {
         $this->assertEquals($result['purpose_other'], 'PHPCap testing', 'Project info "purpose_other" test.');
     }
     
-    public function testMetadata()
+    public function testExportMetadata()
     {
         $result = self::$basicDemographyProject->exportMetadata();
          
@@ -48,7 +48,18 @@ class ProjectTests extends TestCase {
         
         $recordIds = array_column($result, 'record_id');
         $this->assertEquals(min($recordIds), 1001, 'Min record_id test.');
-        $this->assertEquals(max($recordIds), 1100, 'Max record_id test.');   
+        $this->assertEquals(max($recordIds), 1100, 'Max record_id test.');
+        
+        $lastNames = array_flip(array_column($result, 'last_name'));
+        $this->assertArrayHasKey('Braun',  $lastNames, 'Has last name Braun test.');
+        $this->assertArrayHasKey('Carter', $lastNames, 'Has last name Carter test.');
+        $this->assertArrayHasKey('Hayes',  $lastNames, 'Has last name Hayes test.');
+    }
+    
+    public function testExportRedcapVersion()
+    {
+        $result = self::$basicDemographyProject->exportRedcapVersion();
+        $this->assertRegExp('/^[0-9]+\.[0-9]+\.[0-9]+$/', $result, 'REDCap version format test.');
     }
 
 }
