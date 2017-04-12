@@ -9,33 +9,33 @@ use IU\PHPCap\RedCapProject;
 
 class ProjectTests extends TestCase {
     private static $config;
-    private static $project;
+    private static $basicDemographyProject;
     
     public static function setUpBeforeClass()
     {
-        self::$config = include('config.php');
-        self::$project = new RedCapProject(self::$config['url'], self::$config['token']);
+        self::$config = parse_ini_file('config.ini');
+        self::$basicDemographyProject = new RedCapProject(self::$config['api.url'], self::$config['basic.demography.api.token']);
     }
     
     public function testProjectInfo()
     {
         $callInfo = true;
-        $result = self::$project->exportProjectInfo($callInfo);
+        $result = self::$basicDemographyProject->exportProjectInfo($callInfo);
         
         $this->assertEquals($result['project_language'], 'English', 'Project info "project_language" test.');
-        $this->assertEquals($result['purpose_other'], 'Testing', 'Project info "purpose_other" test.');
+        $this->assertEquals($result['purpose_other'], 'PHPCap testing', 'Project info "purpose_other" test.');
     }
     
     public function testMetadata()
     {
-        $result = self::$project->exportMetadata();
+        $result = self::$basicDemographyProject->exportMetadata();
          
         $this->assertArrayHasKey('field_name', $result[0], 'Metadata has field_name field test.');
-        $this->assertEquals($result[0]['field_name'], 'study_id', 'Metadata has study_id field test.');
+        $this->assertEquals($result[0]['field_name'], 'record_id', 'Metadata has study_id field test.');
     
-        $callInfo = self::$project->getCallInfo();
+        $callInfo = self::$basicDemographyProject->getCallInfo();
      
-        $this->assertEquals($callInfo['url'], self::$config['url'], 'Metadata url test.');
+        $this->assertEquals($callInfo['url'], self::$config['api.url'], 'Metadata url test.');
         $this->assertArrayHasKey('content_type', $callInfo, 'Metadata has content type test.');
         $this->assertArrayHasKey('http_code', $callInfo, 'Metadata has HTTP code test.');
     }

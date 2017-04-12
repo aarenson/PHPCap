@@ -11,14 +11,14 @@ class ApiConnectionTests extends TestCase {
     
     public static function setUpBeforeClass()
     {
-        self::$config = include('config.php');
-        self::$apiConnection = new RedCapApiConnection(self::$config['url']);
+        self::$config = parse_ini_file('config.ini');
+        self::$apiConnection = new RedCapApiConnection(self::$config['api.url']);
     }
     
     public function testProjectInfo()
     {
         $data = array(
-                'token' => self::$config['token'],
+                'token' => self::$config['basic.demography.api.token'],
                 'content' => 'project',
                 'format' => 'json',
                 'returnFormat' => 'json'
@@ -32,7 +32,7 @@ class ApiConnectionTests extends TestCase {
         //print_r($result);
         
         $this->assertEquals($result['project_language'], 'English', 'Project info "project_language" test.');
-        $this->assertEquals($result['purpose_other'], 'Testing', 'Project info "purpose_other" test.');
+        $this->assertEquals($result['purpose_other'], 'PHPCap testing', 'Project info "purpose_other" test.');
 
     }
 
