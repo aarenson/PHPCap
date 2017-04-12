@@ -256,7 +256,10 @@ class RedCapProject
      * 
      * @return array cURL call information for last cURL call made.
      * 
-     * @see http://php.net/manual/en/function.curl-getinfo.php for information on what values are returned.
+     * @see <a href="http://php.net/manual/en/function.curl-getinfo.php">
+     *      http://php.net/manual/en/function.curl-getinfo.php
+     *      </a>
+     *      for information on what values are returned.
      */
     public function getCallInfo() {
         $callInfo = $this->connection->getCallInfo();
@@ -387,6 +390,74 @@ class RedCapProject
     
     
     
+    public function importFile($filename, $record, $field, $event='') {
+
+        if (!file_exists($filename)) {
+            throw new PHPCapException('The input file could not be found.',
+                    PhpCapException::INPUT_FILE_ERROR);
+        }
+        
+        
+        $data = array (
+                'token'        => $this->apiToken,
+                'content'      => 'file',
+                'action'       => 'import',
+                'returnFormat' => 'json'
+        );
+        
+        $data['file']   = $filename;
+        $data['record'] = $record;
+        $data['field']  = $field;
+        if (isset($event)) {
+            $data['event']  = $event;
+        }
+        
+        print_r($data);
+        
+        $callData = http_build_query($data, '', '&');
+        $jsonResult = $this->connection->call($callData);
+        
+        print_r($jsonResult);
+        
+        if (isset($jsonResult)) {
+            $result = json_decode($jsonResult, true);
+            if (array_key_exists('error', $result)) {
+                throw new PHPCapException($result['error'], PhpCapException::INPUT_FILE_ERROR);
+            }
+        }
+    }
+    
+    
+    /**
+     * Gets the timeout in seconds for calls to the REDCap API.
+     *
+     * @return integer timeout in seconds for cURL calls.
+     */
+    public function getTimeoutInSeconds() {
+        return $this->connection->getTimeoutInSeconds;
+    }
+    
+    /**
+     * Sets the timeout for calls to the REDCap API to the specified number of seconds.
+     *
+     * @param integer $timeoutInSeconds timeout in seconds for cURL calls.
+     */
+    public function setTimeoutInSeconds($timeoutInSeconds) {
+        $this->connection->setTimeoutInSeconds = $timeoutInSeconds;
+    }
+    
+    /**
+     * Returns the underlying REDCap API connection being used by the project.
+     * This can be used to make calls to the REDCap API, possibly to access functionality
+     * not supported by PHPCap.
+     *         
+     * @return RedCapApiConnection the underlying REDCap API connection being
+     *         used by the project. 
+     */
+    public function getConnection() {
+        return $this->connection;
+    }
+ 
     
     /**
      * Processes JSON exported from REDCap.
