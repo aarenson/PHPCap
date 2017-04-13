@@ -409,7 +409,7 @@ class RedCapProject
         );
         
         $data['file']   = $filename;
-        $data['record'] = $record;
+        $data['record'] = $recordId;
         $data['field']  = $field;
         if (isset($event)) {
             $data['event']  = $event;
@@ -425,6 +425,40 @@ class RedCapProject
             }
         }
     }
+    
+
+    /**
+     * Deletes the specified records from the project.
+     * 
+     * @param array $recordIds array of record IDs to delete
+     * @throws PhpCapException
+     * @return integer the number of records deleted.
+     */
+    public function deleteRecords($recordIds) {
+        $data = array (
+                'token'        => $this->apiToken,
+                'content'      => 'record',
+                'action'       => 'delete',
+                'returnFormat' => 'json',
+                'records'      => $recordIds
+        );
+        
+        $callData = http_build_query($data, '', '&');
+        $result = $this->connection->call($callData);
+        
+        if (strpos($result, 'error') !== false) {
+            $decodedResult = json_decode($result, true);
+            if (array_key_exists('error', $decodedResult)) {
+                throw new PhpCapException($decodedResult['error'], PhpCapException::REDCAP_API_ERROR);
+            }
+            else {
+                throw new PhpCapException("Unrecognized error: ".$result, PhpCapException::REDCAP_API_ERROR);
+            }
+        }
+        
+        return $result;
+    }
+    
     
     
     /**
