@@ -354,6 +354,10 @@ class RedCapProject
      *            if set to 'flat' then each data element is a record, or
      *            if 'eav' then each data element is one value.
      * @param string $overwriteBehavior
+     *            <ul>
+     *              <li>normal - blank/empty values will be ignored [default]</li>
+     *              <li>overwrite - blank/empty values are valid and will overwrite data</li>
+     *            </ul>
      * @param string $returnContent 'count' (the default) or 'ids'.
      * @param string $dateFormat date format which can be one of the following:
      *            <ul>
@@ -380,8 +384,16 @@ class RedCapProject
     }
     
     
-    
-    public function importFile($filename, $record, $field, $event='') {
+    /**
+     * Imports the file into the field of the record (with the specified event, if any).
+     * 
+     * @param string $filename the name of the file to import.
+     * @param string $recordId the record ID of the record to import the file into.
+     * @param string $field the field of the record to import the file into.
+     * @param string $event the event of the record to import the file into.
+     * @throws PHPCapException
+     */
+    public function importFile($filename, $recordId, $field, $event='') {
 
         if (!file_exists($filename)) {
             throw new PHPCapException('The input file could not be found.',
