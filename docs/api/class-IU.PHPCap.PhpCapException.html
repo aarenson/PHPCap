@@ -97,8 +97,7 @@ throw when it encounters an error.</p>
 
 <p>Example usage:</p>
 
-<pre>...
-<span class="php-keyword1">try</span> {
+<pre><span class="php-keyword1">try</span> {
     <span class="php-var">$projectInfo</span> = <span class="php-var">$project</span>-&gt;exportProjectInfo();
 }
 <span class="php-keyword1">catch</span> (PhpCapException <span class="php-var">$exception</span>) {
@@ -110,8 +109,7 @@ throw when it encounters an error.</p>
         <span class="php-keyword1">print</span> <span class="php-quote">&quot;cURL error number: </span><span class="php-var">{$curlErrorNumber}</span><span class="php-quote">\n&quot;</span>;
     }
     <span class="php-keyword1">print</span> <span class="php-quote">&quot;Stack trace:\n</span><span class="php-var">{$exception-&gt;getTraceAsString()}</span><span class="php-quote">\n&quot;</span>;
-}
-...</pre>
+}</pre>
 	</div>
 
 	<dl class="tree">
@@ -145,7 +143,7 @@ throw when it encounters an error.</p>
 				<b>See:</b>
 				<p>http://php.net/manual/en/class.exception.php
         Information on additional methods provided by parent class Exception.</p><br>
-			<b>Located at</b> <a href="source-class-IU.PHPCap.PhpCapException.html#8-95" title="Go to source code">PhpCapException.php</a>
+			<b>Located at</b> <a href="source-class-IU.PHPCap.PhpCapException.html#9-109" title="Go to source code">PhpCapException.php</a>
 		<br>
 	</div>
 
@@ -168,7 +166,7 @@ throw when it encounters an error.</p>
 		<!-- PHPCap change -->
 		<a class="anchor" title="expand/collapse" href="#___construct">+/-</a>
 		
-		<code><a href="source-class-IU.PHPCap.PhpCapException.html#60-73" title="Go to source code">__construct</a>( <span>string <var>$message</var></span>, <span>integer <var>$code</var></span>, <span>integer <var>$curlErrorNumber</var> = <span class="php-keyword1">null</span></span>, <span>integer <var>$httpStatusCode</var> = <span class="php-keyword1">null</span></span>, <span><code><a href="class-Exception.html">Exception</a></code> <var>$previous</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.PhpCapException.html#72-86" title="Go to source code">__construct</a>( <span>string <var>$message</var></span>, <span>integer <var>$code</var></span>, <span>integer <var>$curlErrorNumber</var> = <span class="php-keyword1">null</span></span>, <span>integer <var>$httpStatusCode</var> = <span class="php-keyword1">null</span></span>, <span><code><a href="class-Exception.html">Exception</a></code> <var>$previous</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Constructor.</p>
@@ -216,7 +214,7 @@ throw when it encounters an error.</p>
 		<!-- PHPCap change -->
 		<a class="anchor" title="expand/collapse" href="#_getCurlErrorNumber">+/-</a>
 		
-		<code><a href="source-class-IU.PHPCap.PhpCapException.html#76-84" title="Go to source code">getCurlErrorNumber</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.PhpCapException.html#89-97" title="Go to source code">getCurlErrorNumber</a>( )</code>
 
 		<div class="description short">
 			<p>Returns the cURL error number, or null if no cURL error occurred.</p>
@@ -253,7 +251,7 @@ throw when it encounters an error.</p>
 		<!-- PHPCap change -->
 		<a class="anchor" title="expand/collapse" href="#_getHttpStatusCode">+/-</a>
 		
-		<code><a href="source-class-IU.PHPCap.PhpCapException.html#87-94" title="Go to source code">getHttpStatusCode</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.PhpCapException.html#100-108" title="Go to source code">getHttpStatusCode</a>( )</code>
 
 		<div class="description short">
 			<p>Returns the HTTP status code, or null if this was not set.</p>
@@ -307,7 +305,7 @@ throw when it encounters an error.</p>
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-constant-INVALID_ARGUMENT.html#39-40" title="Go to source code"><b>INVALID_ARGUMENT</b></a>
+				<a href="source-class-IU.PHPCap.PhpCapException.html#38-39" title="Go to source code"><b>INVALID_ARGUMENT</b></a>
 			</code>
 
 			<div class="description short">
@@ -331,7 +329,7 @@ throw when it encounters an error.</p>
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-constant-CURL_ERROR.html#42-43" title="Go to source code"><b>CURL_ERROR</b></a>
+				<a href="source-class-IU.PHPCap.PhpCapException.html#41-42" title="Go to source code"><b>CURL_ERROR</b></a>
 			</code>
 
 			<div class="description short">
@@ -355,7 +353,7 @@ throw when it encounters an error.</p>
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-constant-CA_CERTIFICATE_FILE_NOT_FOUND.html#45-46" title="Go to source code"><b>CA_CERTIFICATE_FILE_NOT_FOUND</b></a>
+				<a href="source-class-IU.PHPCap.PhpCapException.html#44-45" title="Go to source code"><b>CA_CERTIFICATE_FILE_NOT_FOUND</b></a>
 			</code>
 
 			<div class="description short">
@@ -379,15 +377,15 @@ throw when it encounters an error.</p>
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-constant-CA_CERTIFICATE_FILE_UNREADABLE.html#48" title="Go to source code"><b>CA_CERTIFICATE_FILE_UNREADABLE</b></a>
+				<a href="source-class-IU.PHPCap.PhpCapException.html#47-48" title="Go to source code"><b>CA_CERTIFICATE_FILE_UNREADABLE</b></a>
 			</code>
 
 			<div class="description short">
-				
+				<p>The CA certificate file could not be read.</p>
 			</div>
 
 			<div class="description detailed hidden">
-				
+				<p>The CA certificate file could not be read.</p>
 
 			</div>
 		</td>
@@ -403,15 +401,15 @@ throw when it encounters an error.</p>
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-constant-INVALID_URL.html#49" title="Go to source code"><b>INVALID_URL</b></a>
+				<a href="source-class-IU.PHPCap.PhpCapException.html#50-51" title="Go to source code"><b>INVALID_URL</b></a>
 			</code>
 
 			<div class="description short">
-				
+				<p>An invalid URL was used.</p>
 			</div>
 
 			<div class="description detailed hidden">
-				
+				<p>An invalid URL was used.</p>
 
 			</div>
 		</td>
@@ -422,26 +420,26 @@ throw when it encounters an error.</p>
 			</div>
 		</td>
 	</tr>
-	<tr data-order="REDCAP_API_EXCEPTION" id="REDCAP_API_EXCEPTION">
+	<tr data-order="REDCAP_API_ERROR" id="REDCAP_API_ERROR">
 
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-constant-REDCAP_API_EXCEPTION.html#50" title="Go to source code"><b>REDCAP_API_EXCEPTION</b></a>
+				<a href="source-class-IU.PHPCap.PhpCapException.html#53-54" title="Go to source code"><b>REDCAP_API_ERROR</b></a>
 			</code>
 
 			<div class="description short">
-				
+				<p>The REDCap API generated an error.</p>
 			</div>
 
 			<div class="description detailed hidden">
-				
+				<p>The REDCap API generated an error.</p>
 
 			</div>
 		</td>
 		<td class="value">
 			<div>
-				<a href="#REDCAP_API_EXCEPTION" title="expand/collapse" class="anchor">+/-</a>
+				<a href="#REDCAP_API_ERROR" title="expand/collapse" class="anchor">+/-</a>
 				<code><span class="php-num">6</span></code>
 			</div>
 		</td>
@@ -451,15 +449,17 @@ throw when it encounters an error.</p>
 		<td class="attributes"><code>integer</code></td>
 		<td class="name">
 			<code>
-				<a href="source-constant-JSON_ERROR.html#51" title="Go to source code"><b>JSON_ERROR</b></a>
+				<a href="source-class-IU.PHPCap.PhpCapException.html#56-59" title="Go to source code"><b>JSON_ERROR</b></a>
 			</code>
 
 			<div class="description short">
-				
+				<p>A JSON error occurred. This would typically happen when PHPCap is expecting
+the REDCap API to return data in JSON format, but the result returned is not valid JSON.</p>
 			</div>
 
 			<div class="description detailed hidden">
-				
+				<p>A JSON error occurred. This would typically happen when PHPCap is expecting
+the REDCap API to return data in JSON format, but the result returned is not valid JSON.</p>
 
 			</div>
 		</td>
@@ -467,6 +467,30 @@ throw when it encounters an error.</p>
 			<div>
 				<a href="#JSON_ERROR" title="expand/collapse" class="anchor">+/-</a>
 				<code><span class="php-num">7</span></code>
+			</div>
+		</td>
+	</tr>
+	<tr data-order="INPUT_FILE_ERROR" id="INPUT_FILE_ERROR">
+
+		<td class="attributes"><code>integer</code></td>
+		<td class="name">
+			<code>
+				<a href="source-class-IU.PHPCap.PhpCapException.html#61-62" title="Go to source code"><b>INPUT_FILE_ERROR</b></a>
+			</code>
+
+			<div class="description short">
+				<p>An error was caused by an input file. The file may not exists, or may not be readable.</p>
+			</div>
+
+			<div class="description detailed hidden">
+				<p>An error was caused by an input file. The file may not exists, or may not be readable.</p>
+
+			</div>
+		</td>
+		<td class="value">
+			<div>
+				<a href="#INPUT_FILE_ERROR" title="expand/collapse" class="anchor">+/-</a>
+				<code><span class="php-num">8</span></code>
 			</div>
 		</td>
 	</tr>
@@ -499,7 +523,7 @@ throw when it encounters an error.</p>
 	</div>
 </div>
 </div>
-<script src="resources/combined.js?a30f7291dd5487c24c30b4edc7d722339a3c3875"></script>
-<script src="elementlist.js?c93eff3681f9bb998fbea03cc5b82d3fb0d70b0e"></script>
+<script src="resources/combined.js"></script>
+<script src="elementlist.js"></script>
 </body>
 </html>
