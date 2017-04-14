@@ -1,7 +1,5 @@
 <?php
 
-require_once(__DIR__.'/../src/RedCapApiConnection.php');
-
 use PHPUnit\Framework\TestCase;
 use IU\PHPCap\RedCapApiConnection;
 

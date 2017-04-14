@@ -1,12 +1,12 @@
 <?php
 
-require_once(__DIR__.'/../src/RedCapApiConnection.php');
-require_once(__DIR__.'/../src/RedCapProject.php');
-
 use PHPUnit\Framework\TestCase;
 use IU\PHPCap\RedCapApiConnection;
 use IU\PHPCap\RedCapProject;
 
+/**
+ * PHPUnit tests for the RedCapProject class.
+ */
 class RedCapProjectTest extends TestCase {
     private static $config;
     private static $basicDemographyProject;
