@@ -1,9 +1,8 @@
-<?php 
+<?php
 /**
  * This file contains the REDCap project class for PHPCap.
  */
 namespace IU\PHPCap;
-
 
 /**
  * REDCap project class used to retrieve data from, and modify, REDCap projects.
@@ -32,16 +31,16 @@ class RedCapProject
     
     /**
      * Contructs a REDCap project for the specifed information.
-     * 
+     *
      * @param string $apiUrl the URL for the API for the REDCap that has the project.
      * @param string $apiToken the API token for this project.
      * @param boolean $sslVerify indicates if SSL connection to REDCap web site should be verified.
      * @param string $caCertificateFile the full path name of the CA (Certificate Authority) certificate file.
-     * 
+     *
      * @throws PHPCapException if any of the arguments are invalid
      */
-    public function __construct($apiUrl, $apiToken, $sslVerify = false, $caCertificateFile = null) {
-        
+    public function __construct($apiUrl, $apiToken, $sslVerify = false, $caCertificateFile = null)
+    {
         #----------------------------------------------------------------------------------------
         # Process the REDCAp API URL
         # Note: standard PHP URL validation will fail for non-ASCII URLs (so it was not used)
@@ -49,10 +48,9 @@ class RedCapProject
         if (!isset($apiUrl)) {
             throw new PhpCapException("The REDCap API URL spefied for the project was null or blank."
                     . gettype($apiUrl), PhpCapException::INVALID_ARGUMENT);
-        }
-        elseif (gettype($apiUrl) !== 'string') {
+        } elseif (gettype($apiUrl) !== 'string') {
             throw new PhpCapException("The REDCap API URL provided (".$apiUrl.") should be a string, but has type: "
-                    . gettype($apiUrl), PhpCapException::INVALID_ARGUMENT);    
+                    . gettype($apiUrl), PhpCapException::INVALID_ARGUMENT);
         }
         $this->apiURL = $apiUrl;
         
@@ -63,21 +61,22 @@ class RedCapProject
         if (!isset($apiToken)) {
             throw new PhpCapException("The REDCap API token spefied for the project was null or blank."
                     . gettype($apiToken), PhpCapException::INVALID_ARGUMENT);
-        }
-        elseif (gettype($apiToken) !== 'string') {
+        } elseif (gettype($apiToken) !== 'string') {
             throw new PhpCapException("The REDCap API token provided should be a string, but has type: "
                     . gettype($apiToken), PhpCapException::INVALID_ARGUMENT);
-        }
-        elseif (!ctype_xdigit($apiToken)) {   // ctype_xdigit - check token for hexidecimal
-            throw new PhpCapException("The REDCap API token has an invalid format."
-                    ." It should only contain numbers and the letters A, B, C, D, E and F."
-                    , PhpCapException::INVALID_ARGUMENT);
-        }
-        elseif (strlen($apiToken) != 32 && strlen($apiToken) != 64) {
-            throw new PhpCapException("The REDCap API token has an invalid format."
-                    . " It has a length of ".strlen($apiToken)." characters, but should have a length of"
-                    . " 32 or 64 characters (if a super token is being used)."
-                    , PhpCapException::INVALID_ARGUMENT);
+        } elseif (!ctype_xdigit($apiToken)) {   // ctype_xdigit - check token for hexidecimal
+            throw new PhpCapException(
+                "The REDCap API token has an invalid format."
+                ." It should only contain numbers and the letters A, B, C, D, E and F.",
+                PhpCapException::INVALID_ARGUMENT
+            );
+        } elseif (strlen($apiToken) != 32 && strlen($apiToken) != 64) {
+            throw new PhpCapException(
+                "The REDCap API token has an invalid format."
+                . " It has a length of ".strlen($apiToken)." characters, but should have a length of"
+                . " 32 or 64 characters (if a super token is being used).",
+                PhpCapException::INVALID_ARGUMENT
+            );
         }
         $this->apiToken = $apiToken;
         
@@ -105,28 +104,28 @@ class RedCapProject
     
     /**
      * Exports the specified records.
-     * 
+     *
      * @param string $type the type of records exported: 'flat' or 'eav'.
      *         'flat' exports one record per row. 'eav' exports one data point per row, so,
      *         for non-longitudinal studies, each record will have the following
-     *         fields: record_id, field_name, value. For longitudinal studies, each record 
-     *         will have the fields: record_id, field_name, value, redcap_event_name. 
-     * @param array $recordIds array of strings with record id's that are to be retrieved. 
+     *         fields: record_id, field_name, value. For longitudinal studies, each record
+     *         will have the fields: record_id, field_name, value, redcap_event_name.
+     * @param array $recordIds array of strings with record id's that are to be retrieved.
      * @param array $fields array of field names to export
      * @param array $forms array of form names for which fields should be exported
      * @param array $events array of event names for which fields should be exported
      * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
      *         "[last_name] = 'Smith'".
-     * 
+     *
      * @return array of records
      */
     public function exportRecords(
-            $type = 'flat',
-            $recordIds = null,
-            $fields = null,
-            $forms = null,
-            $events = null,
-            $filterLogic = null
+        $type = 'flat',
+        $recordIds = null,
+        $fields = null,
+        $forms = null,
+        $events = null,
+        $filterLogic = null
     ) {
         $data = array(
                 'token'        => $this->apiToken,
@@ -135,16 +134,25 @@ class RedCapProject
                 'returnFormat' => 'json'
         );
         
-        if ($type == null) $type = 'flat';
+        if ($type == null) {
+            $type = 'flat';
+        }
         $type = strtolower($type);
-        if (strcmp($type,'flat') !== 0 && strcmp($type,'eav') !== 0) {
-            throw new PhpCapException("Invalid type \"".$type."\". Type should be either 'flat' or 'eav'", PhpCapException::INVALID_ARGUMENT);
+        
+        if (strcmp($type, 'flat') !== 0 && strcmp($type, 'eav') !== 0) {
+            throw new PhpCapException(
+                "Invalid type \"".$type."\". Type should be either 'flat' or 'eav'",
+                PhpCapException::INVALID_ARGUMENT
+            );
         }
         $data['type'] = $type;
         
         if ($recordIds != null) {
             if (!is_array($recordIds)) {
-                throw new PhpCapException("recordIds has the wrong type; it should be an array.", PhpCapException::INVALID_ARGUMENT);
+                throw new PhpCapException(
+                    "recordIds has the wrong type; it should be an array.",
+                    PhpCapException::INVALID_ARGUMENT
+                );
             }
             $data['records'] = $recordIds;
         }
@@ -176,11 +184,12 @@ class RedCapProject
     
     /**
      * Exports information about the project, e.g., project ID, project title, creation time.
-     *                        
+     *
      * @return array associative array (map) of project information. See REDCap API documentation
      *         for a list of the fields, or use the print_r function on the results of this method.
      */
-    public function exportProjectInfo() {
+    public function exportProjectInfo()
+    {
         $data = array(
                 'token' => $this->apiToken,
                 'content' => 'project',
@@ -192,8 +201,7 @@ class RedCapProject
 
         if (empty($projectInfo)) {
             $projectInfo = array ();
-        } 
-        else {
+        } else {
             $projectInfo = json_decode($projectInfo, true);   // true => return as array instead of object
         }
         
@@ -203,14 +211,15 @@ class RedCapProject
     
     /**
      * Exports metadata about the project, i.e., information about the fields in the project.
-     * 
+     *
      * @return array associative array (map) of metatdata for the project, which consists of
      *         information about each field. Some examples of the information
      *         provided are: 'field_name', 'form_name', 'field_type', 'field_label'.
      *         See REDCap API documentation
      *         for more information, or use the print_r function on the results of this method.
      */
-    public function exportMetadata() {
+    public function exportMetadata()
+    {
         $data = array(
                 'token' => $this->apiToken,
                 'content' => 'metadata',
@@ -222,8 +231,7 @@ class RedCapProject
     
         if (empty($metadata)) {
             $metadata = array ();
-        }
-        else {
+        } else {
             $metadata = json_decode($metadata, true);   // true => return as array instead of object
         }
     
@@ -232,10 +240,11 @@ class RedCapProject
     
     /**
      * Gets the REDCap version number of the instance being used by the project.
-     * 
+     *
      * @return string the REDCap version number of the instance being used by the project.
      */
-    public  function exportRedcapVersion() {
+    public function exportRedcapVersion()
+    {
         $data = array(
                 'token' => $this->apiToken,
                 'content' => 'version'
@@ -251,15 +260,16 @@ class RedCapProject
     /**
      * Gets the call information for the last cURL call. PHPCap uses cURL to
      * communicate with the REDCap API.
-     * 
+     *
      * @return array cURL call information for last cURL call made.
-     * 
+     *
      * @see <a href="http://php.net/manual/en/function.curl-getinfo.php">
      *      http://php.net/manual/en/function.curl-getinfo.php
      *      </a>
      *      for information on what values are returned.
      */
-    public function getCallInfo() {
+    public function getCallInfo()
+    {
         $callInfo = $this->connection->getCallInfo();
     
         return $callInfo;
@@ -299,14 +309,13 @@ class RedCapProject
      * @return mixed
      */
     public function importRecords(
-            $records, 
-            $format = 'php',
-            $type = 'flat', 
-            $overwriteBehavior = 'normal', 
-            $returnContent = 'count',
-            $dateFormat = 'YMD'
-        )
-    {
+        $records,
+        $format = 'php',
+        $type = 'flat',
+        $overwriteBehavior = 'normal',
+        $returnContent = 'count',
+        $dateFormat = 'YMD'
+    ) {
         
         $data = array (
                 'token'   => $this->apiToken,
@@ -366,14 +375,13 @@ class RedCapProject
      * @return mixed
      */
     public function importRecordsFromFile(
-            $filename,
-            $format = 'xml',
-            $type = 'flat',
-            $overwriteBehavior = 'normal',
-            $returnContent = 'count',
-            $dateFormat = 'YMD'
-            )
-    {
+        $filename,
+        $format = 'xml',
+        $type = 'flat',
+        $overwriteBehavior = 'normal',
+        $returnContent = 'count',
+        $dateFormat = 'YMD'
+    ) {
         $records = file_get_contents($filename);
         
         $result = $this->importRecords($records, $format, $type, $overwriteBehavior, $returnContent, $dateFormat);
@@ -384,20 +392,18 @@ class RedCapProject
     
     /**
      * Imports the file into the field of the record (with the specified event, if any).
-     * 
+     *
      * @param string $filename the name of the file to import.
      * @param string $recordId the record ID of the record to import the file into.
      * @param string $field the field of the record to import the file into.
      * @param string $event the event of the record to import the file into.
      * @throws PHPCapException
      */
-    public function importFile($filename, $recordId, $field, $event='') {
-
+    public function importFile($filename, $recordId, $field, $event = '')
+    {
         if (!file_exists($filename)) {
-            throw new PHPCapException('The input file could not be found.',
-                    PhpCapException::INPUT_FILE_ERROR);
+            throw new PHPCapException('The input file could not be found.', PhpCapException::INPUT_FILE_ERROR);
         }
-        
         
         $data = array (
                 'token'        => $this->apiToken,
@@ -427,12 +433,13 @@ class RedCapProject
 
     /**
      * Deletes the specified records from the project.
-     * 
+     *
      * @param array $recordIds array of record IDs to delete
      * @throws PhpCapException
      * @return integer the number of records deleted.
      */
-    public function deleteRecords($recordIds) {
+    public function deleteRecords($recordIds)
+    {
         $data = array (
                 'token'        => $this->apiToken,
                 'content'      => 'record',
@@ -447,10 +454,9 @@ class RedCapProject
         if (strpos($result, 'error') !== false) {
             $decodedResult = json_decode($result, true);
             if (array_key_exists('error', $decodedResult)) {
-                throw new PhpCapException($decodedResult['error'], PhpCapException::REDCAP_API_ERROR);
-            }
-            else {
-                throw new PhpCapException("Unrecognized error: ".$result, PhpCapException::REDCAP_API_ERROR);
+                throw new PhpCapException($decodedResult ['error'], PhpCapException::REDCAP_API_ERROR);
+            } else {
+                throw new PhpCapException("Unrecognized error: " . $result, PhpCapException::REDCAP_API_ERROR);
             }
         }
         
@@ -464,7 +470,8 @@ class RedCapProject
      *
      * @return integer timeout in seconds for cURL calls.
      */
-    public function getTimeoutInSeconds() {
+    public function getTimeoutInSeconds()
+    {
         return $this->connection->getTimeoutInSeconds;
     }
     
@@ -473,7 +480,8 @@ class RedCapProject
      *
      * @param integer $timeoutInSeconds timeout in seconds for cURL calls.
      */
-    public function setTimeoutInSeconds($timeoutInSeconds) {
+    public function setTimeoutInSeconds($timeoutInSeconds)
+    {
         $this->connection->setTimeoutInSeconds = $timeoutInSeconds;
     }
     
@@ -481,40 +489,43 @@ class RedCapProject
      * Returns the underlying REDCap API connection being used by the project.
      * This can be used to make calls to the REDCap API, possibly to access functionality
      * not supported by PHPCap.
-     *         
+     *
      * @return RedCapApiConnection the underlying REDCap API connection being
-     *         used by the project. 
+     *         used by the project.
      */
-    public function getConnection() {
+    public function getConnection()
+    {
         return $this->connection;
     }
  
     
     /**
      * Processes JSON exported from REDCap.
-     * 
+     *
      * @param string $jsonRecords
      * @return array processed JSON records.
      * @throws PHPCapException if an error occurs.
      */
-    private function processJsonExport($jsonRecords) {
-
+    private function processJsonExport($jsonRecords)
+    {
         if (empty($jsonRecords)) {
             $records = array ();
-        }
-        else {
-            $records = json_decode($jsonRecords, true);   // true => return as array instead of object
-        
+        } else {
+            $records = json_decode($jsonRecords, true); // true => return as array instead of object
+            
             $jsonError = json_last_error();
-        
+            
             switch ($jsonError) {
                 case JSON_ERROR_NONE:
                     break;
                 default:
-                    throw new PHPCapException("JSON error (".$jsonError.") \""
-                            .json_last_error_msg()."\" in REDCap API output."
-                                    ."\nThe first 1,000 characters of output returned from REDCap are:\n"
-                                            .substr($jsonRecords,0,1000), PhpCapException::JSON_ERROR);
+                    throw new PHPCapException(
+                        "JSON error (".$jsonError.") \""
+                        .json_last_error_msg()."\" in REDCap API output."
+                        ."\nThe first 1,000 characters of output returned from REDCap are:\n"
+                        .substr($jsonRecords, 0, 1000),
+                        PhpCapException::JSON_ERROR
+                    );
                     break;
             }
             

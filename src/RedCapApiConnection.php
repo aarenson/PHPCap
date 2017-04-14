@@ -6,7 +6,6 @@
 
 namespace IU\PHPCap;
 
-
 /**
  * A connection to the API of a REDCap instance. This class provides a low-level
  * interface to the REDCap API, and is primarily intended for internal use by PHPCap,
@@ -132,9 +131,13 @@ class RedCapApiConnection
             $httpCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
             if ($httpCode == 301) {
                 $callInfo = curl_getinfo($this->curlHandle);
-                throw new PhpCapException("The page for the specified URL (" . $this->url
-                        . ") has moved to " . $callInfo ['redirect_url'] . ". Please update your URL.",
-                        PhpCapException::INVALID_URL, null, $httpCode);
+                throw new PhpCapException(
+                    "The page for the specified URL (" . $this->url. ") has moved to ".
+                        $callInfo ['redirect_url'] . ". Please update your URL.",
+                    PhpCapException::INVALID_URL,
+                    null,
+                    $httpCode
+                );
             } elseif ($httpCode == 404) {
                 throw new PhpCapException('
                         The specified URL (' . $this->url . ') appears to be incorrect.'
@@ -151,7 +154,7 @@ class RedCapApiConnection
      *
      * @throws PhpCapException
      * @return array an associative array of values of call information for the most recent call made.
-     *        
+     *
      * @see <a href="http://php.net/manual/en/function.curl-getinfo.php">http://php.net/manual/en/function.curl-getinfo.php</a>
      *      for information on what values are returned.
      */
@@ -168,20 +171,21 @@ class RedCapApiConnection
 
     /**
      * Gets the timeout in seconds for cURL calls.
-     * 
+     *
      * @return integer timeout in seconds for cURL calls.
      */
-    public function getTimeoutInSeconds() {
+    public function getTimeoutInSeconds()
+    {
         return $this->timeoutInSeconds;
     }
     
     /**
      * Sets the timeout for cURL calls to the specified amount of seconds.
-     * 
+     *
      * @param integer $timeoutInSeconds timeout in seconds for cURL calls.
      */
-    public function setTimeoutInSeconds($timeoutInSeconds) {
+    public function setTimeoutInSeconds($timeoutInSeconds)
+    {
         $this->timeoutInSeconds = $timeoutInSeconds;
     }
-    
 }
