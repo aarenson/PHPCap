@@ -1,13 +1,11 @@
 <?php
 
 /**
- * Contains class for creating and using a connection to a REDCap API. 
+ * Contains class for creating and using a connection to a REDCap API.
  */
-
 
 namespace IU\PHPCap;
 
-require_once(__DIR__."/PhpCapException.php");
 
 /**
  * A connection to the API of a REDCap instance. This class provides a low-level
@@ -114,9 +112,11 @@ class RedCapApiConnection
     public function call($data)
     {
         if (!is_string($data)) {
-            throw new PhpCapException("Data passed to ".__METHOD__
-                    ." has type ".gettype($data). ", but should be a string."
-                    , PhpCapException::INVALID_ARGUMENT);
+            throw new PhpCapException(
+                "Data passed to ".__METHOD__
+                ." has type ".gettype($data). ", but should be a string.",
+                PhpCapException::INVALID_ARGUMENT
+            );
         }
         
         $errno = 0;
@@ -127,8 +127,7 @@ class RedCapApiConnection
         $response = curl_exec($this->curlHandle);
         if ($errno = curl_errno($this->curlHandle)) {
             throw new PhpCapException(curl_error($this->curlHandle), PhpCapException::CURL_ERROR, $errno);
-        }
-        else {
+        } else {
             // Check for HTTP errors
             $httpCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
             if ($httpCode == 301) {

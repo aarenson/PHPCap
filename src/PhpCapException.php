@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file contains the PHPCapException class.
  */
@@ -8,11 +9,10 @@ namespace IU\PHPCap;
 /**
  * Exception class for PHPCap exceptions. This is the exception that PHPCap will
  * throw when it encounters an error.
- * 
+ *
  * Example usage:
- * 
- * ```php
- * ...
+ *
+ * <code>
  * try {
  *     $projectInfo = $project->exportProjectInfo();
  * }
@@ -26,10 +26,9 @@ namespace IU\PHPCap;
  *     }
  *     print "Stack trace:\n{$exception->getTraceAsString()}\n";
  * }
- * ...
- * ```
- * 
- * @see http://php.net/manual/en/class.exception.php 
+ * </code>
+ *
+ * @see http://php.net/manual/en/class.exception.php
  *         Information on additional methods provided by parent class Exception.
  */
 class PhpCapException extends \Exception
@@ -72,14 +71,15 @@ class PhpCapException extends \Exception
     
     /**
      * Constructor.
-     * 
+     *
      * @param string $message the error message.
      * @param integer $code the error code.
      * @param integer $curlErrorNumber the cURL error number (set to null if no cURL error occurred).
      * @param integer $httpStatusCode the HTTP status code (set to null if no HTTP status code was returned).
      * @param \Exception $previous the previous exception
      */
-    public function __construct($message, $code, $curlErrorNumber = null, $httpStatusCode = null, $previous = null) {
+    public function __construct($message, $code, $curlErrorNumber = null, $httpStatusCode = null, $previous = null)
+    {
         parent::__construct($message, $code, $previous);
         $this->curlErrorNumber  = $curlErrorNumber;
         $this->httpStatusCode = $httpStatusCode;
@@ -88,7 +88,7 @@ class PhpCapException extends \Exception
     
     /**
      * Returns the cURL error number, or null if no cURL error occurred.
-     * 
+     *
      * @return integer|null cURL error number, or null if there was no cURL error.
      */
     public function getCurlErrorNumber()
@@ -102,7 +102,8 @@ class PhpCapException extends \Exception
      *
      * @return integer|null HTTP status code, or null if this was not set.
      */
-    public function getHttpStatusCode() {
+    public function getHttpStatusCode()
+    {
         return $this->httpStatusCode;
     }
 }

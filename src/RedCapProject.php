@@ -4,8 +4,6 @@
  */
 namespace IU\PHPCap;
 
-require_once(__DIR__."/RedCapApiConnection.php");
-require_once(__DIR__."/PhpCapException.php");
 
 /**
  * REDCap project class used to retrieve data from, and modify, REDCap projects.
