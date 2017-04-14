@@ -7,9 +7,6 @@ source: [src]
 destination: docs/api
 title: "PHPCap"
 
-# overwrite existing documentation
-overwrite: true
-
 # generate documentation for PHP internal classes that are extended
 php: true
 
