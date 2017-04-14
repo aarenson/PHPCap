@@ -5,12 +5,12 @@ This README is for people interested in developing PHPCap.
 
 Setup
 --------------------------------------------------------
+1. Install PHP 5.6 or greater with cURL and OpenSSL enabled.
 1. Install Git. The code for PHPCap is stored in GitHub, and Git is required to be able to download it for development.
    See: [https://git-scm.com/downloads](https://git-scm.com/downloads)
 2. Get PHPCap:
-
+     
     git clone https://github.com/aarenson/PHPCap
-    
 3. Get Composer. Composer is needed to download the development depedencies needed for PHPCap.
    See: [https://getcomposer.org/download/](https://getcomposer.org/download/).
    You can either install the composer.phar file to the root directory of PHPCap (the ..gitignore 
@@ -53,6 +53,7 @@ To check for compliance, execute the following command in the root directory of 
 
     ./vendor/bin/phpcs --standard=PSR1,PSR2 src
 
+PHPCap also follows the PSR-4 (Autoloader) standard, see: [http://www.php-fig.org/psr/psr-4/](http://www.php-fig.org/psr/psr-4/)
 
 ### API Document Generation
 To generate the API documentation (stored in **./docs/api**), execute the following command in PHPCap's root directory:
