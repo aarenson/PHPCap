@@ -48,3 +48,10 @@ print "project title: ".$projectInfo['project_title']."\n";
 
 ?>
 ```
+
+API Documentation
+----------------------------
+Detailed API documentation for PHPCap can be viewed by downloading PHPCap and then
+opening the following file (relative to PHPCap's top-level directory) with a web browser:
+
+    ./docs/api/index.html
