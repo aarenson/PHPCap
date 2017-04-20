@@ -13,8 +13,8 @@ To use the Firefox web browser to create a CA (Certificate Authority) certificat
 6. Select the top entry in the "Certificate Hierarchy" box.
 7. Click the "Export..." button.
 8. In the "Save Certificate to File" window that should appear:
-  1. navigate to where you want to save the file
-  2. change the name of the file if you don't want to use the default name
-  3. set "Save as type" to "X.509 Certificate (PEM)"
-  4. click on the "Save" button.  
+    1. navigate to where you want to save the file
+    2. change the name of the file if you don't want to use the default name
+    3. set "Save as type" to "X.509 Certificate (PEM)"
+    4. click on the "Save" button.  
     ![Certificate Viewer](save-certificate-to-file.png)   
