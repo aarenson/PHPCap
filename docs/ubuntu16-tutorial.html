@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="C:\Users\mullen2\git\PHPCap/docs/themes/apigen/theme-phpcap/src/resources/style.css">
+<link rel="stylesheet" href="C:\Users\mullen2\git\PHPCap/docs/themes/apigen/theme-phpcap/src/resources/docstyle.css">
+<title>PHPCap Documentation</title>
+</head>
+<body>
+<div id="content">
+<h1>PHPCap Tutorial for Ubuntu 16</h1>
+<ul>
+<li>
+<p>Prerequisites</p>
+<ul>
+<li>You need to know the URL of your REDCap's API (Application programming interface)</li>
+<li>You need to have an API token for a project in REDCap. You would typically get this
+by creating a project in REDCap and then requesting an API token.</li>
+</ul>
+</li>
+<li>
+<p>Execute the following commands to install the required software:</p>
+<div class="description"><pre><code class="language-shell">sudo apt install php7.0-cli php7.0-curl
+sudo apt install git</code></pre></div>
+</li>
+<li>
+<p>Create a directory for your project, and cd to that directory:</p>
+<div class="description"><pre><code class="language-shell">mkdir phpcap-project
+cd phpcap-project</code></pre></div>
+</li>
+<li>
+<p>Get PHPCap from GitHub:
+git clone <a href="https://github.com/aarenson/PHPCap">https://github.com/aarenson/PHPCap</a></p>
+</li>
+<li>
+<p>Create a file <strong>test.php</strong> with the following contents:</p>
+<div class="description"><pre><code class="language-php"><span class="xlang">&lt;?php</span>
+
+<span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>);  <span class="php-comment"># Adjust the path as necessary</span>
+
+<span class="php-var">$apiUrl</span> = <span class="php-quote">'https://redcap.uits.iu.edu/api/'</span>;  <span class="php-comment"># replace this URL with your institution's</span>
+                                              <span class="php-comment"># REDCap API URL.</span>
+
+<span class="php-var">$apiToken</span> = <span class="php-quote">'1234567890A1234567890B1234567890'</span>;    <span class="php-comment"># replace with your actual API token</span>
+
+<span class="php-var">$project</span> = <span class="php-keyword1">new</span> RedCapProject(<span class="php-var">$apiUrl</span>, <span class="php-var">$apiToken</span>);
+<span class="php-var">$projectInfo</span> = <span class="php-var">$project</span>-&gt;exportProjectInfo();
+
+<span class="php-keyword2">print_r</span>(<span class="php-var">$projectInfo</span>);</code></pre></div>
+</li>
+<li>Run the test program using the following on the command line:
+<div class="description"><pre><code>php test.php</code></pre></div></li>
+</ul></div>
+<div id="footer">
+PHPCap documentation
+</div>
+</body>
+</html>
