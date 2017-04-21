@@ -134,14 +134,24 @@ $(window).load(function() {
 		$('tr', $content).filter(':has(.detailed)')
 			.click(function() {
 				var $this = $(this);
+				
+				// PHPCap - changed, because it was getting status of last item expanded/collapsed (?)
+				//          instead of the current item's status.
+    			if ($('div.detailed', $this).is(':hidden')) {
+					trCollapsed = true;
+				}
+				else {
+					trCollapsed = false;
+				}
+				
 				if (trCollapsed) {
 					$('.short', $this).hide();
 					$('.detailed', $this).show();
-					trCollapsed = false;
+					//trCollapsed = false;
 				} else {					
 					$('.short', $this).show();
 					$('.detailed', $this).hide();
-					trCollapsed = true;
+					//trCollapsed = true;
 				}
 			});
 	}

@@ -1,0 +1,16 @@
+/* CSS for PHPCap non-API documentation */
+blockquote {
+	padding: .6em;
+	background: #fcfcf7;
+	border-left: 8px solid #ecede5;
+}
+
+#content .description {
+	background: #ecede5;
+	padding: 1px 8px;
+	margin: 1.2em 0;
+}
+
+#content .description pre {
+	margin: .5em 0;
+}

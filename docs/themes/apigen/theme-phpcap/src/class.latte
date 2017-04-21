@@ -109,8 +109,9 @@
 		<td class="name"><div>
 		
 		<!-- PHPCap change -->
-		<a class="anchor" title="expand/collapse" href="#{if $method->magic}m{/if}_{$method->name}">+/-</a>
-		
+		<!-- <a class="anchor" title="expand/collapse" href="#{if $method->magic}m{/if}_{$method->name}">+/-</a> -->
+		<a class="anchor" title="expand/collapse">+/-</a>
+				
 		<code>{block|strip}
 			{if $class->internal}
 				<a href="{$method|manualUrl}" title="Go to PHP documentation">{$method->name}</a>(
