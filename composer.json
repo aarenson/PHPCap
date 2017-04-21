@@ -7,5 +7,10 @@
 		"squizlabs/php_codesniffer" : "2.8.1",
 		"apigen/apigen" : "v4.1.2",
 		"erusev/parsedown" : "1.6.2"
+	},
+	"autoload" : {
+		"psr-4" : {
+			"IU\\PHPCap\\" : "src/"
+		}
 	}
 }
