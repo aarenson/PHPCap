@@ -2,8 +2,9 @@
 # Files to be ignored by Git
 #-------------------------------------------------
 
-# Eclipse project file
+# Eclipse project file and settings directory
 .project
+.settings/
 
 # ignore swap files
 *.swp
