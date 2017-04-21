@@ -443,6 +443,7 @@ td.attributes {
 	font-size: 85%;
 	margin: 0;
 	color: #006aeb !important;
+	cursor: pointer;    /* PHPCap */
 }
 
 .list {
@@ -624,4 +625,17 @@ span.l a.l:hover, span.l a.l:active, span.l a.l:focus {
 /* Hide the search box, since it doesn't work for our use case */
 form#search {
 	visibility: hidden;
+}
+
+#pageheader {
+	height: 82px;
+	padding-left: 10px;
+}
+
+#pagebody {
+	position: absolute;
+	top: 82px;
+	left: 0px;
+	right: 0px;
+	bottom: 0px;
 }

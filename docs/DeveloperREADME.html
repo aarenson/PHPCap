@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="C:\Users\mullen2\git\PHPCap/docs/themes/apigen/theme-phpcap/src/resources/style.css">
+<link rel="stylesheet" href="C:\Users\mullen2\git\PHPCap/docs/themes/apigen/theme-phpcap/src/resources/docstyle.css">
+<title>PHPCap Documentation</title>
+</head>
+<body>
+<div id="content">
+<h1>Developer README</h1>
+<p>This README is for people interested in developing PHPCap.</p>
+<h2>Setup</h2>
+<ol>
+<li>Install PHP 5.6 or greater with the following extensions:
+<ul>
+<li>cURL</li>
+<li>mbstring</li>
+<li>OpenSSL</li>
+</ul></li>
+<li>Install Git. The code for PHPCap is stored in GitHub, and Git is required to be able to download it for development.
+See: <a href="https://git-scm.com/downloads"><a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></a></li>
+<li>
+<p>Get PHPCap:</p>
+<div class="description"><pre><code class="language-shell">git clone https://github.com/aarenson/PHPCap</code></pre></div>
+</li>
+<li>Get Composer. Composer is needed to download the development depedencies needed for PHPCap.
+See: <a href="https://getcomposer.org/download/"><a href="https://getcomposer.org/download/">https://getcomposer.org/download/</a></a>.
+You can either install the composer.phar file to the root directory of PHPCap (the ..gitignore
+file is set to ignore this file), or install it globally at the system or account level.</li>
+<li>
+<p>Install PHPCap's development dependencies:</p>
+<div class="description"><pre><code class="language-shell"># If you installed the composer.phar file in PHPCap's root directory:
+php composer.phar install
+
+# If you installed composer globally:
+composer install
+
+# The dependencies should be installed into a &quot;vendor&quot; directory
+# (which will be ignored by Git).    </code></pre></div>
+</li>
+</ol>
+<h2>Usage</h2>
+<h3>Automated Tests</h3>
+<p>Before the tests can be run, setup and configuration needs to be completed: see <a href="../tests/README.md">../tests/README.md</a>. </p>
+<p>To run the automated tests, execute the following command in the top-level directory of your downloaded version of PHPCap:</p>
+<div class="description"><pre><code>./vendor/bin/phpunit</code></pre></div>
+<p>Note: PHPUnit uses the <strong>phpunit.xml</strong> configuration file in the root directory of PHPCap.</p>
+<h3>Coding Standard Compliance</h3>
+<p>PHPCap follows the PSR-1 and PSR-2 coding standards. See:</p>
+<ul>
+<li><a href="http://www.php-fig.org/psr/psr-1/"><a href="http://www.php-fig.org/psr/psr-1/">http://www.php-fig.org/psr/psr-1/</a></a></li>
+<li><a href="http://www.php-fig.org/psr/psr-2/"><a href="http://www.php-fig.org/psr/psr-2/">http://www.php-fig.org/psr/psr-2/</a></a></li>
+</ul>
+<p>To check for compliance, execute the following command in the root directory of the PHPCap:</p>
+<div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 src</code></pre></div>
+<p>PHPCap also follows the PSR-4 (Autoloader) standard, see: <a href="http://www.php-fig.org/psr/psr-4/"><a href="http://www.php-fig.org/psr/psr-4/">http://www.php-fig.org/psr/psr-4/</a></a></p>
+<h3>API Document Generation</h3>
+<p>To generate the API documentation (stored in <strong>./docs/api</strong>), execute the following command in PHPCap's root directory:</p>
+<div class="description"><pre><code>./vendor/bin/apigen generate</code></pre></div>
+<p>Note: ApiGen uses the <strong>apigen.neon</strong> configuration file in the root directory of PHPCap.</p>
+<p>The API documentation is stored in Git to eliminate the need for non-developer users to install Composer and the developer depedencies.</p>
+<h3>HTML Document Generation</h3>
+<p>To generate an HTML version for the Markdown documents in the <strong>docs-md/</strong> directory, execute the following command in PHPCap's root directory:</p>
+<div class="description"><pre><code>php generate-html-docs.php</code></pre></div></div>
+<div id="footer">
+PHPCap documentation
+</div>
+</body>
+</html>
