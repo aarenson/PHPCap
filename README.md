@@ -34,7 +34,7 @@ Example
 
 ```php
 <?php
-require_once('RedCapProject.php');
+require_once('PHPCap/autoloader.php');
 
 use \IU\PHPCap\RedCapProject;
 
@@ -48,6 +48,7 @@ print "project title: ".$projectInfo['project_title']."\n";
 
 ?>
 ```
+
 
 API Documentation
 ----------------------------
