@@ -14,9 +14,18 @@ It is possible that your system may already be set up to use a correct CA certif
 This can be tested by trying to access a project will SSL verification set to true, but with
 no CA certificate file specified, for example:
 
-    $sslVerify = true;
-    $project = RedCapProject($apiUrl, $apiToken, $sslVerify);
-    $project->exportProjectInfo();
+```php
+<?php
+
+require('PHPCap/autoloader.php');
+
+$apiUrl = '';
+$apiToken = '1234567890A1234567890B1234567890';
+
+$sslVerify = true;
+$project = RedCapProject($apiUrl, $apiToken, $sslVerify);
+$project->exportProjectInfo();
+```
 
 If this works, then that would indicate that your system is already set up with a CA certificate
 file. If it fails, and you get an error message about a security certificate, such as

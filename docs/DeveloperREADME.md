@@ -10,13 +10,17 @@ Setup
    See: [https://git-scm.com/downloads](https://git-scm.com/downloads)
 2. Get PHPCap:
      
+    ```shell
     git clone https://github.com/aarenson/PHPCap
+    ```
+    
 3. Get Composer. Composer is needed to download the development depedencies needed for PHPCap.
    See: [https://getcomposer.org/download/](https://getcomposer.org/download/).
    You can either install the composer.phar file to the root directory of PHPCap (the ..gitignore 
    file is set to ignore this file), or install it globally at the system or account level.
 4. Install PHPCap's development dependencies:
 
+    ```shell
     # If you installed the composer.phar file in PHPCap's root directory:
     php composer.phar install
     
@@ -25,7 +29,7 @@ Setup
     
     # The dependencies should be installed into a "vendor" directory
     # (which will be ignored by Git).    
-
+    ```
   
       
 
