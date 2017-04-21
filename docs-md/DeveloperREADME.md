@@ -5,7 +5,10 @@ This README is for people interested in developing PHPCap.
 
 Setup
 --------------------------------------------------------
-1. Install PHP 5.6 or greater with cURL and OpenSSL enabled.
+1. Install PHP 5.6 or greater with the following extensions:
+  * cURL
+  * mbstring
+  * OpenSSL
 1. Install Git. The code for PHPCap is stored in GitHub, and Git is required to be able to download it for development.
    See: [https://git-scm.com/downloads](https://git-scm.com/downloads)
 2. Get PHPCap:
@@ -68,5 +71,8 @@ Note: ApiGen uses the **apigen.neon** configuration file in the root directory o
 
 The API documentation is stored in Git to eliminate the need for non-developer users to install Composer and the developer depedencies.
 
+### HTML Document Generation
+To generate an HTML version for the Markdown documents in the __docs-md/__ directory, execute the following command in PHPCap's root directory:
 
+    php generate-html-docs.php
 
