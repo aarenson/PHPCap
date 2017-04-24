@@ -24,6 +24,8 @@ If you have Subversion, you can use
 
     svn export https://github.com/aarenson/PHPCap/trunk PHPCap
 
+To download a zip file of PHPCap, you can access this link: <a href="https://github.com/aarenson/PHPCap/archive/master.zip" download="PHPCap.zip">PHPCap.zip</a>
+
 Or, you can access [https://github.com/aarenson/PHPCap](https://github.com/aarenson/PHPCap) in a web browser, and then:    
 1. Click on the __Clone or download__ button
 2. Click on __Download Zip__

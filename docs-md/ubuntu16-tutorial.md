@@ -1,4 +1,4 @@
-PHPCap Tutorial for Ubuntu 16
+Tutorial for Ubuntu 16
 ====================================
 
 * Prerequisites

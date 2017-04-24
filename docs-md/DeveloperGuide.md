@@ -1,24 +1,25 @@
 Developer Guide
 ===================================================
 
-This README is for people interested in developing PHPCap.
+This guide is for people interested in developing PHPCap (i.e., actually making changes to the PHPCap code).
 
 Setup
 --------------------------------------------------------
 1. Install PHP 5.6 or greater with the following extensions:
   * cURL
+  * DOM/XML
   * mbstring
   * OpenSSL
 1. Install Git. The code for PHPCap is stored in GitHub, and Git is required to be able to download it for development.
-   See: [https://git-scm.com/downloads](https://git-scm.com/downloads)
+   See: https://git-scm.com/downloads
 2. Get PHPCap:
      
     ```shell
     git clone https://github.com/aarenson/PHPCap
     ```
     
-3. Get Composer. Composer is needed to download the development depedencies needed for PHPCap.
-   See: [https://getcomposer.org/download/](https://getcomposer.org/download/).
+3. Get Composer. Composer is needed to download the development depedencies for PHPCap.
+   See: https://getcomposer.org/download/.
    You can either install the composer.phar file to the root directory of PHPCap (the ..gitignore 
    file is set to ignore this file), or install it globally at the system or account level.
 4. Install PHPCap's development dependencies:
@@ -33,10 +34,19 @@ Setup
     # The dependencies should be installed into a "vendor" directory
     # (which will be ignored by Git).    
     ```
-  
-      
 
-
+Example Setup on Ubuntu 16
+-----------------------------------------
+To set up PHPCap on Ubuntu 16, execute the following commands:
+    
+```shell
+sudo apt-get install php php-curl php-xml php-mbstring
+sudo apt-get install git
+git clone https://github.com/aarenson/PHPCap
+sudo apt-get install composer
+cd PHPCap
+composer install
+```
 
 Usage
 -----------------------------------------
@@ -53,14 +63,14 @@ Note: PHPUnit uses the **phpunit.xml** configuration file in the root directory 
 
 ### Coding Standard Compliance
 PHPCap follows the PSR-1 and PSR-2 coding standards. See:
-* [http://www.php-fig.org/psr/psr-1/](http://www.php-fig.org/psr/psr-1/)
-* [http://www.php-fig.org/psr/psr-2/](http://www.php-fig.org/psr/psr-2/)
+* http://www.php-fig.org/psr/psr-1/
+* http://www.php-fig.org/psr/psr-2/
 
 To check for compliance, execute the following command in the root directory of the PHPCap:
 
     ./vendor/bin/phpcs --standard=PSR1,PSR2 src
 
-PHPCap also follows the PSR-4 (Autoloader) standard, see: [http://www.php-fig.org/psr/psr-4/](http://www.php-fig.org/psr/psr-4/)
+PHPCap also follows the PSR-4 (Autoloader) standard, see: http://www.php-fig.org/psr/psr-4/
 
 ### API Document Generation
 To generate the API documentation (stored in **./docs/api**), execute the following command in PHPCap's root directory:

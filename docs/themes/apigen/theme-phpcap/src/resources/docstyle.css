@@ -1,8 +1,14 @@
 /* CSS for PHPCap non-API documentation */
+
 blockquote {
 	padding: .6em;
 	background: #fcfcf7;
 	border-left: 8px solid #ecede5;
+}
+
+span#overview {
+	padding-bottom: 1.0em;
+	display: block;
 }
 
 #content .description {

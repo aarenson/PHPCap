@@ -10,7 +10,14 @@
 <div id="left">
 <div id="menu">
 <h1>PHPCap</h1>
-<a href="api/index.html">PHPCap API</a>
+<a href="index.html" title="Overview"><span id="overview">Overview</span></a>
+<ul>
+<li><a href="CACertificateFile.html">CA Certificate File</a></li>
+<li class="active"><a href="DeveloperGuide.html">Developer Guide</a></li>
+<li><a href="FirefoxCACert.html">CA Certificate File Instructions - Firefox</a></li>
+<li><a href="ubuntu16-tutorial.html">Tutorial for Ubuntu 16</a></li>
+</ul>
+<hr /><a href="api/index.html">PHPCap API</a>
 </div>
 </div>
 <div id="splitter"></div>
@@ -18,23 +25,24 @@
 <div id="rightInner">
 <div id="content">
 <h1>Developer Guide</h1>
-<p>This README is for people interested in developing PHPCap.</p>
+<p>This guide is for people interested in developing PHPCap (i.e., actually making changes to the PHPCap code).</p>
 <h2>Setup</h2>
 <ol>
 <li>Install PHP 5.6 or greater with the following extensions:
 <ul>
 <li>cURL</li>
+<li>DOM/XML</li>
 <li>mbstring</li>
 <li>OpenSSL</li>
 </ul></li>
 <li>Install Git. The code for PHPCap is stored in GitHub, and Git is required to be able to download it for development.
-See: <a href="https://git-scm.com/downloads"><a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></a></li>
+See: <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></li>
 <li>
 <p>Get PHPCap:</p>
 <div class="description"><pre><code class="language-shell">git clone https://github.com/aarenson/PHPCap</code></pre></div>
 </li>
-<li>Get Composer. Composer is needed to download the development depedencies needed for PHPCap.
-See: <a href="https://getcomposer.org/download/"><a href="https://getcomposer.org/download/">https://getcomposer.org/download/</a></a>.
+<li>Get Composer. Composer is needed to download the development depedencies for PHPCap.
+See: <a href="https://getcomposer.org/download/">https://getcomposer.org/download/</a>.
 You can either install the composer.phar file to the root directory of PHPCap (the ..gitignore
 file is set to ignore this file), or install it globally at the system or account level.</li>
 <li>
@@ -49,6 +57,14 @@ composer install
 # (which will be ignored by Git).    </code></pre></div>
 </li>
 </ol>
+<h2>Example Setup on Ubuntu 16</h2>
+<p>To set up PHPCap on Ubuntu 16, execute the following commands:</p>
+<div class="description"><pre><code class="language-shell">sudo apt-get install php php-curl php-xml php-mbstring
+sudo apt-get install git
+git clone https://github.com/aarenson/PHPCap
+sudo apt-get install composer
+cd PHPCap
+composer install</code></pre></div>
 <h2>Usage</h2>
 <h3>Automated Tests</h3>
 <p>Before the tests can be run, setup and configuration needs to be completed: see <a href="../tests/README.md">../tests/README.md</a>. </p>
@@ -58,12 +74,12 @@ composer install
 <h3>Coding Standard Compliance</h3>
 <p>PHPCap follows the PSR-1 and PSR-2 coding standards. See:</p>
 <ul>
-<li><a href="http://www.php-fig.org/psr/psr-1/"><a href="http://www.php-fig.org/psr/psr-1/">http://www.php-fig.org/psr/psr-1/</a></a></li>
-<li><a href="http://www.php-fig.org/psr/psr-2/"><a href="http://www.php-fig.org/psr/psr-2/">http://www.php-fig.org/psr/psr-2/</a></a></li>
+<li><a href="http://www.php-fig.org/psr/psr-1/">http://www.php-fig.org/psr/psr-1/</a></li>
+<li><a href="http://www.php-fig.org/psr/psr-2/">http://www.php-fig.org/psr/psr-2/</a></li>
 </ul>
 <p>To check for compliance, execute the following command in the root directory of the PHPCap:</p>
 <div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 src</code></pre></div>
-<p>PHPCap also follows the PSR-4 (Autoloader) standard, see: <a href="http://www.php-fig.org/psr/psr-4/"><a href="http://www.php-fig.org/psr/psr-4/">http://www.php-fig.org/psr/psr-4/</a></a></p>
+<p>PHPCap also follows the PSR-4 (Autoloader) standard, see: <a href="http://www.php-fig.org/psr/psr-4/">http://www.php-fig.org/psr/psr-4/</a></p>
 <h3>API Document Generation</h3>
 <p>To generate the API documentation (stored in <strong>./docs/api</strong>), execute the following command in PHPCap's root directory:</p>
 <div class="description"><pre><code>./vendor/bin/apigen generate</code></pre></div>

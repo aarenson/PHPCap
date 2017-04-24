@@ -41,7 +41,7 @@ class MyParsedown extends \Parsedown
 }
 
 
-function translateFile($file)
+function translateFile($file, $files)
 {
     $parsedown = new MyParsedown();
     
@@ -53,15 +53,27 @@ function translateFile($file)
     $content = str_replace('</pre>', '</pre></div>', $content);
     
     $html = "<!DOCTYPE html>\n" . "<html>\n" . "<head>\n" . '<meta charset="UTF-8">' . "\n"
-            . '<link rel="stylesheet" href="' . __DIR__ . '/docs/themes/apigen/theme-phpcap/src/resources/style.css">' . "\n"
-            . '<link rel="stylesheet" href="' . __DIR__ . '/docs/themes/apigen/theme-phpcap/src/resources/docstyle.css">' . "\n"
+            . '<link rel="stylesheet" href="' . 'themes/apigen/theme-phpcap/src/resources/style.css">' . "\n"
+            . '<link rel="stylesheet" href="' . 'themes/apigen/theme-phpcap/src/resources/docstyle.css">' . "\n"
             . "<title>PHPCap Documentation</title>\n" 
-            . "</head>\n" . "<body>\n" . '<div id="content">' . "\n"
+            . "</head>\n"
+            . "<body>\n"
+            . '<div id="left">'."\n"
+	        . '<div id="menu">'."\n"
+	        . "<h1>PHPCap</h1>\n"
+	        . createIndex($file, $files)
+            . '</div>'."\n"
+            . '</div>'."\n"
+            . '<div id="splitter"></div>'."\n"
+            . '<div id="right">'."\n"
+            . '<div id="rightInner">'."\n"
+            . '<div id="content">' . "\n"
             . $content
             . '</div>' . "\n" 
             . '<div id="footer">' 
             . "\n" . 'PHPCap documentation' . "\n" . '</div>' . "\n"
-            //. '<script src="' . __DIR__ . '/docs/api/resources/combined.js"></script>'. "\n" 
+            . "</div></div>\n"
+            . '<script src="' . 'api/resources/combined.js"></script>'. "\n" 
             //. '<script src="' . __DIR__ . '/docs/api/elementlist.js"></script>' . "\n"
             . "</body>\n" . "</html>\n";
     
@@ -74,6 +86,55 @@ function translateFile($file)
 }
 
 
+function createIndex($file, $files)
+{
+    $index = '';
+    
+    $fileName = pathinfo($file, PATHINFO_FILENAME).".html";
+    
+    if (strcmp($fileName,'index.html') === 0) {
+        $index = '<span id="overview">Overview</span>'."\n";
+    }
+    else {
+        $index .= '<a href="index.html" title="Overview"><span id="overview">Overview</span></a>'."\n";
+    }
+    
+    $index .= "<ul>\n";
+
+    foreach ($files as $indexFile) {
+        $indexFileName = pathinfo($indexFile, PATHINFO_FILENAME).".html";
+        
+        if (!(strcmp($indexFileName,"index.html") === 0)) {
+        
+            $parsedown = new MyParsedown();
+            $markdown = file_get_contents($indexFile);
+            $content = $parsedown->text($markdown);
+        
+            $html = new DOMDocument();
+        
+            $h1 = '';
+            $html->loadHTML($content);
+            foreach($html->getElementsByTagName('h1') as $h1) {
+                // print("------------HTML: ".$html->saveHTML($h1));
+                $h1 = $h1->nodeValue;
+                break;
+            }
+            
+            if (strcmp($fileName,$indexFileName) === 0) {
+                $index .= '<li class="active"><a href="'.$indexFileName.'">'.$h1.'</a></li>'."\n";
+            }
+            else {
+                $index .= '<li><a href="'.$indexFileName.'">'.$h1.'</a></li>'."\n";
+            }
+        }
+        
+    }
+    $index .= "</ul>\n";
+    
+    $index .= '<hr /><a href="api/index.html">PHPCap API</a>'."\n";
+            
+    return $index;
+}
 
 
 
@@ -97,10 +158,11 @@ foreach ($resources as $resource) {
 
 # Process each Markdown file
 $files = glob($inputDirectory . "*.md");
+sort($files);
 foreach($files as $file)
 {
     print "\nTranslating\n$file\n";
-    translateFile( $file );
+    translateFile( $file, $files );
 }
 
 print "\nDone.\n";
