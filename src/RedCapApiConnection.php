@@ -186,6 +186,23 @@ class RedCapApiConnection
      */
     public function setTimeoutInSeconds($timeoutInSeconds)
     {
+        curl_setopt($this->curlHandle, CURLOPT_TIMEOUT, $this->timeoutInSeconds);
         $this->timeoutInSeconds = $timeoutInSeconds;
+    }
+    
+    /**
+     * Sets the specified cURL option to the specified value.
+     * 
+     * @see http://php.net/manual/en/function.curl-setopt.php Information on cURL options. 
+     * 
+     * 
+     * @param integer $option the cURL option that is being set.
+     * @param mixed $value the value that the cURL option is being set to.
+     * @return boolean Returns true on success and false on failure.
+     */
+    public function setCurlOption($option, $value)
+    {
+        $result = curl_setopt($this->curlHandle, $option, $value);
+        return $result;
     }
 }
