@@ -57,12 +57,6 @@ class RedCapApiConnection
         $this->sslVerify = $sslVerify;
         $this->caCertificateFile = $caCertificateFile;
         $this->timeoutInSeconds = $timeoutInSeconds;
-        // Have fixed and variable data/time call timeout
-        // - fixed would be used for metadata, project info, etc.
-        // - variable data would be used export data
-        // exception this class has no knowledge of calling method??? So would need to set
-        // this in the class above this.
-        // need to be able to reset
         
         $this->curlHandle = curl_init();
         
@@ -193,7 +187,8 @@ class RedCapApiConnection
     /**
      * Sets the specified cURL option to the specified value.
      * 
-     * @see http://php.net/manual/en/function.curl-setopt.php Information on cURL options. 
+     * @see <a href="http://php.net/manual/en/function.curl-setopt.php">http://php.net/manual/en/function.curl-setopt.php</a>
+     *      for information on cURL options. 
      * 
      * 
      * @param integer $option the cURL option that is being set.
