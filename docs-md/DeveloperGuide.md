@@ -1,5 +1,5 @@
-Developer README
-==========================
+Developer Guide
+===================================================
 
 This README is for people interested in developing PHPCap.
 
