@@ -639,3 +639,25 @@ form#search {
 	right: 0px;
 	bottom: 0px;
 }
+
+
+div#topmenu {
+	text-align: center;
+	font-size: 120%;
+	color: #CCCCCC;
+}
+
+div#topmenu span {
+	color: #333333;
+	font-weight: bold;
+}
+
+div#topmenu a {
+	display: inline;
+}
+
+div#topmenu hr {
+	border-width: 2px;
+	margin-top: 0.5em;
+}
+

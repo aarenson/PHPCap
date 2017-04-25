@@ -11,6 +11,12 @@ span#overview {
 	display: block;
 }
 
+h3 {    /* Was coming out as the same size or bigger than h2 */
+	font-size: 134%;
+	font-weight: normal;
+	margin-bottom: 2px;
+}
+
 #content .description {
 	background: #ecede5;
 	padding: 1px 8px;

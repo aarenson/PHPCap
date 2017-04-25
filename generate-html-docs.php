@@ -60,7 +60,10 @@ function translateFile($file, $files)
             . "<body>\n"
             . '<div id="left">'."\n"
 	        . '<div id="menu">'."\n"
-	        . "<h1>PHPCap</h1>\n"
+	        . '<div id="topmenu">'."\n"
+	        . '<span>PHPCap Docs</span> | <a href="api/index.html">PHPCap API</a>'."\n"
+	        . '<hr />'."\n"
+	        . "</div>\n"
 	        . createIndex($file, $files)
             . '</div>'."\n"
             . '</div>'."\n"
@@ -130,8 +133,6 @@ function createIndex($file, $files)
         
     }
     $index .= "</ul>\n";
-    
-    $index .= '<hr /><a href="api/index.html">PHPCap API</a>'."\n";
             
     return $index;
 }
