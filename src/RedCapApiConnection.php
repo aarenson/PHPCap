@@ -186,11 +186,10 @@ class RedCapApiConnection
     
     /**
      * Sets the specified cURL option to the specified value.
-     * 
+     *
      * @see <a href="http://php.net/manual/en/function.curl-setopt.php">http://php.net/manual/en/function.curl-setopt.php</a>
-     *      for information on cURL options. 
-     * 
-     * 
+     *      for information on cURL options.
+     *
      * @param integer $option the cURL option that is being set.
      * @param mixed $value the value that the cURL option is being set to.
      * @return boolean Returns true on success and false on failure.

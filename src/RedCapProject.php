@@ -105,6 +105,14 @@ class RedCapProject
     /**
      * Exports the specified records.
      *
+     * @param string $format the format in which to export the records:
+     *     <ul>
+     *       <li> 'php' - array of maps of values [default]</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *       <li> 'odm' - CDISC ODM XML format, specifically ODM version 1.3.1</li>
+     *     </ul>
      * @param string $type the type of records exported: 'flat' or 'eav'.
      *         'flat' exports one record per row. 'eav' exports one data point per row, so,
      *         for non-longitudinal studies, each record will have the following
@@ -120,6 +128,7 @@ class RedCapProject
      * @return array of records
      */
     public function exportRecords(
+        $format = 'php',
         $type = 'flat',
         $recordIds = null,
         $fields = null,
@@ -133,6 +142,19 @@ class RedCapProject
                 'format'       => 'json',
                 'returnFormat' => 'json'
         );
+        
+        if ($format != null) {
+            $format = strtolower(trim($format));
+            
+            $legalFormats = array('php', 'csv', 'json', 'xml', 'odm');
+            
+            if (!in_array($format, $legalFormats)) {
+                throw new PhpCapException("Illegal format '".$format."' specified.", PhpCapException::INVALID_ARGUMENT);
+            }
+            if (!strcasecmp($format, 'php') === 0) {
+                $data['format'] = $format;
+            }
+        }
         
         if ($type == null) {
             $type = 'flat';
@@ -174,9 +196,11 @@ class RedCapProject
         }
         
         $callData = http_build_query($data, '', '&');
-        $jsonRecords = $this->connection->call($callData);
+        $records = $this->connection->call($callData);
         
-        $records = $this->processJsonExport($jsonRecords);
+        if (strcmp($format, 'php') === 0) {
+            $records = $this->processJsonExport($records);
+        }
         
         return $records;
     }
