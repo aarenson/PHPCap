@@ -70,6 +70,18 @@ To check for compliance, execute the following command in the root directory of 
 
     ./vendor/bin/phpcs --standard=PSR1,PSR2 src
 
+Note that if you are working on Windows and have the git property __core.autocrlf__ set to true, you may see errors similar to the following:
+
+    ----------------------------------------------------------------------
+    FOUND 1 ERROR AFFECTING 1 LINE
+    ----------------------------------------------------------------------
+    1 | ERROR | [x] End of line character is invalid; expected "\n" but
+      |       |     found "\r\n"
+    ----------------------------------------------------------------------
+    PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+    ----------------------------------------------------------------------
+These errors are not important, because the issue should be fixed when you commit your code.
+
 PHPCap also follows the PSR-4 (Autoloader) standard, see: http://www.php-fig.org/psr/psr-4/
 
 ### API Document Generation

@@ -81,6 +81,16 @@ composer install</code></pre></div>
 </ul>
 <p>To check for compliance, execute the following command in the root directory of the PHPCap:</p>
 <div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 src</code></pre></div>
+<p>Note that if you are working on Windows and have the git property <strong>core.autocrlf</strong> set to true, you may see errors similar to the following:</p>
+<div class="description"><pre><code>----------------------------------------------------------------------
+FOUND 1 ERROR AFFECTING 1 LINE
+----------------------------------------------------------------------
+1 | ERROR | [x] End of line character is invalid; expected "\n" but
+  |       |     found "\r\n"
+----------------------------------------------------------------------
+PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
+----------------------------------------------------------------------</code></pre></div>
+<p>These errors are not important, because the issue should be fixed when you commit your code.</p>
 <p>PHPCap also follows the PSR-4 (Autoloader) standard, see: <a href="http://www.php-fig.org/psr/psr-4/">http://www.php-fig.org/psr/psr-4/</a></p>
 <h3>API Document Generation</h3>
 <p>To generate the API documentation (stored in <strong>./docs/api</strong>), execute the following command in PHPCap's root directory:</p>
