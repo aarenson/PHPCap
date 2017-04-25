@@ -16,7 +16,6 @@
 composer.phar
 
 # tests configuration file
-/tests/config.php
 /tests/config.ini
 
 # local tests - ignore all local test files except for the README.md

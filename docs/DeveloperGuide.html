@@ -69,10 +69,24 @@ cd PHPCap
 composer install</code></pre></div>
 <h2>Usage</h2>
 <h3>Automated Tests</h3>
-<p>Before the tests can be run, setup and configuration needs to be completed: see <a href="../tests/README.md">../tests/README.md</a>. </p>
+<p>Before the tests can be run, setup and configuration needs to be completed:</p>
+<ol>
+<li>Log in to your REDCap site.</li>
+<li>Import the test REDCap project files in directory <strong>tests/projects/</strong>.</li>
+<li>In REDCap, request API tokens for the projects imported in the step above.</li>
+<li>Once you have your tokens, copy the &quot;config-example.ini&quot; file to a file
+named &quot;config.ini&quot; and then set the URL in that file to be the
+URL for the API of your REDCap instance, and set the tokens to be
+the tokens requested in the previous step.</li>
+</ol>
+<p>Note: the .gitignore file in PHPCap is set to ignore the <strong>tests/config.ini</strong> file, so that your
+personal API tokens will not be committed to Git. </p>
 <p>To run the automated tests, execute the following command in the top-level directory of your downloaded version of PHPCap:</p>
 <div class="description"><pre><code>./vendor/bin/phpunit</code></pre></div>
 <p>Note: PHPUnit uses the <strong>phpunit.xml</strong> configuration file in the root directory of PHPCap.</p>
+<h3>Local Tests</h3>
+<p>The directory <strong>tests/local/</strong> has been set up so that all files in it, except for the README file, will be ignored by Git.
+This directory is intended as a place for developers to places tests for changes they are working on.</p>
 <h3>Coding Standard Compliance</h3>
 <p>PHPCap follows the PSR-1 and PSR-2 coding standards. See:</p>
 <ul>
@@ -92,12 +106,20 @@ PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
 ----------------------------------------------------------------------</code></pre></div>
 <p>These errors are not important, because the issue should be fixed when you commit your code.</p>
 <p>PHPCap also follows the PSR-4 (Autoloader) standard, see: <a href="http://www.php-fig.org/psr/psr-4/">http://www.php-fig.org/psr/psr-4/</a></p>
-<h3>API Document Generation</h3>
+<h3>Documentation</h3>
+<p>Documentation consists of the following:</p>
+<ul>
+<li>Top-level README.md file</li>
+<li>Mardown documents that have been manually created in the <strong>docs-md/</strong> directory</li>
+<li>HTML API documentation generated from the PHPDoc comments in the code, which are stored in the <strong>docs/api/</strong> directory</li>
+<li>HTML versions of the Markdown documentation in the docs-md/ directory, which are generated programmatically, stored in the <strong>docs/</strong> directory, and use the same style as the API documentation.</li>
+</ul>
+<h4>API Document Generation</h4>
 <p>To generate the API documentation (stored in <strong>./docs/api</strong>), execute the following command in PHPCap's root directory:</p>
 <div class="description"><pre><code>./vendor/bin/apigen generate</code></pre></div>
 <p>Note: ApiGen uses the <strong>apigen.neon</strong> configuration file in the root directory of PHPCap.</p>
-<p>The API documentation is stored in Git to eliminate the need for non-developer users to install Composer and the developer depedencies.</p>
-<h3>HTML Document Generation</h3>
+<p>The API documentation is stored in Git to eliminate the need for non-developer users to install Composer and the developer dependencies.</p>
+<h4>HTML Document Generation</h4>
 <p>To generate an HTML version for the Markdown documents in the <strong>docs-md/</strong> directory, execute the following command in PHPCap's root directory:</p>
 <div class="description"><pre><code>php generate-html-docs.php</code></pre></div></div>
 <div id="footer">
