@@ -7,7 +7,7 @@ PHPCap Automated Tests
 
 
 ### Setup Steps
-1. Log in to REDCap
+1. Log in to your REDCap site
 2. Import the test REDCap project files in directory __tests/projects__.
 3. In REDCap, request API tokens for the projects imported in the step above
 4. Once you have your token, copy the "config-example.ini" file to a file
