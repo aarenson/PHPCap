@@ -62,12 +62,32 @@ class RedCapProjectTest extends TestCase {
         $this->assertEquals(count($result), 2);
         $firstNameMap = array_flip(array_column($result, 'first_name'));
         $this->assertArrayHasKey('Suzanne', $firstNameMap, 'Has first name test.');
-        $this->assertArrayHasKey('Kaia', $firstNameMap, 'Has first name test.');        
+        $this->assertArrayHasKey('Kaia', $firstNameMap, 'Has first name test.');
+    }
+
+    public function testExportRecordsAsCsv()
+    {
+        $recordIds = array ('1001');
+    
+        $records = self::$basicDemographyProject->exportRecords($format = 'csv', $type = null, $recordIds);
+    
+        $this->assertEquals(count($records), 1, 'Correct number of records returned test.');
+
+        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        $csv = $parser->parse();
+        
+        $firstDataRow = $csv[1];
+        
+        $csvRecordId = $firstDataRow[0];
+          
+        $this->assertEquals($recordIds[0], $csvRecordId, 'Correct record ID returned test.');
     }
     
-    public function testExportRecordsAsOdm() {
-        $recordIds = array('1001');
     
+    public function testExportRecordsAsOdm()
+    {
+        $recordIds = array ('1001');
+        
         $records = self::$basicDemographyProject->exportRecords($format = 'odm', $type = null, $recordIds);
         
         $this->assertEquals(count($records), 1, 'Correct number of records returned test.');
@@ -88,7 +108,8 @@ class RedCapProjectTest extends TestCase {
     }
     
     
-    public function testExportRecordsAsXml() {
+    public function testExportRecordsAsXml()
+    {
         $recordIds = array('1001');
         
         $records = self::$basicDemographyProject->exportRecords($format = 'xml', $type = null, $recordIds);
