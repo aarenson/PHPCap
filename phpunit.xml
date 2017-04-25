@@ -1,6 +1,6 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/4.5/phpunit.xsd"
-         bootstrap="autoloader.php">
+         bootstrap="vendor/autoload.php">
   <testsuites>
     <testsuite name="PHPCap">
       <file>tests/PhpCapExceptionTest.php</file>
