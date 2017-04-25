@@ -65,6 +65,44 @@ class RedCapProjectTest extends TestCase {
         $this->assertArrayHasKey('Kaia', $firstNameMap, 'Has first name test.');        
     }
     
+    public function testExportRecordsAsOdm() {
+        $recordIds = array('1001');
+    
+        $records = self::$basicDemographyProject->exportRecords($format = 'odm', $type = null, $recordIds);
+        
+        $this->assertEquals(count($records), 1, 'Correct number of records returned test.');
+    
+        $xml = new DomDocument();
+        $xml->loadXML($records);
+        
+        $xmlRecordId = null;
+        $itemData = $xml->getElementsByTagName("ItemData");
+        foreach ($itemData as $item) {
+            if ($item->getAttribute('ItemOID') === 'record_id') {
+                $xmlRecordId = $item->getAttribute('Value');
+                break;
+            }
+        }
+   
+        $this->assertEquals($recordIds[0], $xmlRecordId, 'Correct record ID returned test.');
+    }
+    
+    
+    public function testExportRecordsAsXml() {
+        $recordIds = array('1001');
+        
+        $records = self::$basicDemographyProject->exportRecords($format = 'xml', $type = null, $recordIds);
+        
+        $this->assertEquals(count($records), 1, 'Correct number of records returned test.');
+        
+        $xml = simplexml_load_string($records);
+        
+        $xmlRecordIdNodes = $xml->xpath("//record_id");
+        $xmlRecordId = (string) $xmlRecordIdNodes[0];
+        
+        $this->assertEquals($recordIds[0], $xmlRecordId, 'Correct record ID returned test.');
+    }
+    
     
     public function testExportRedcapVersion()
     {
