@@ -151,7 +151,7 @@ class RedCapProject
             if (!in_array($format, $legalFormats)) {
                 throw new PhpCapException("Illegal format '".$format."' specified.", PhpCapException::INVALID_ARGUMENT);
             }
-            if (!strcasecmp($format, 'php') === 0) {
+            if (!(strcasecmp($format, 'php') === 0)) {
                 $data['format'] = $format;
             }
         }
