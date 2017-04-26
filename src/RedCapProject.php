@@ -111,7 +111,7 @@ class RedCapProject
      *       <li> 'csv' - string of CSV (comma-separated values)</li>
      *       <li> 'json' - string of JSON encoded values</li>
      *       <li> 'xml' - string of XML encoded data</li>
-     *       <li> 'odm' - CDISC ODM XML format, specifically ODM version 1.3.1</li>
+     *       <li> 'odm' - string with CDISC ODM XML format, specifically ODM version 1.3.1</li>
      *     </ul>
      * @param string $type the type of records exported: 'flat' or 'eav'.
      *         'flat' exports one record per row. 'eav' exports one data point per row, so,
@@ -122,11 +122,20 @@ class RedCapProject
      * @param array $fields array of field names to export
      * @param array $forms array of form names for which fields should be exported
      * @param array $events array of event names for which fields should be exported
-     * @param string $rawOrLabel
-     * @param string $rawOrLabelHeaders
-     * @param boolean $checkBoxLabels
-     * @param boolean $surveyFields
-     * @param boolean $dataAccessGroups
+     * @param string $rawOrLabel indicates what should be exported for options of multiple choice fields:
+     *     <ul>
+     *       <li> 'raw' - export the raw coded values [default]</li>
+     *       <li> 'label' - export the labels</li>
+     *     </ul>
+     * @param string $rawOrLabelHeaders when exporting with 'csv' format 'flat' type, indicates what format
+     *         should be used for the CSV headers:
+     *         <ul>
+     *           <li> 'raw' - export the variable/field names [default]</li>
+     *           <li> 'label' - export the field labels</li>
+     *         </ul>
+     * @param boolean $exportCheckBoxLabel
+     * @param boolean $exportSurveyFields
+     * @param boolean $exportDataAccessGroups
      * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
      *         "[last_name] = 'Smith'".
      *
@@ -141,9 +150,9 @@ class RedCapProject
         $events = null,
         $rawOrLabel = 'raw',
         $rawOrLabelHeaders = 'raw',
-        $checkBoxLabels = false,
-        $surveyFields = false,
-        $dataAccessGroups = false,
+        $exportCheckBoxLabel = false,
+        $exportSurveyFields = false,
+        $exportDataAccessGroups = false,
         $filterLogic = null
     ) {
         $data = array(
@@ -272,6 +281,78 @@ class RedCapProject
         return $records;
     }
 
+    /**
+     * Export records using an array parameter, where the keys of the array
+     * passed to this method are the argument names, and the values are the
+     * argument values. The names to use should correspond to the variable
+     * names in the exportRecords method.
+     *
+     * @param array $argumentArray
+     */
+    public function exportRecordsAP($argumentArray)
+    {
+        foreach ($argumentArray as $name => $value) {
+            switch ($name) {
+                case 'format':
+                    $format = $value;
+                    break;
+                case 'type':
+                    $type = $value;
+                    break;
+                case 'recordIds':
+                    $type = $value;
+                    break;
+                case 'fields':
+                    $fields = $value;
+                    break;
+                case 'forms':
+                    $forms = $value;
+                    break;
+                case 'events':
+                    $events = $value;
+                    break;
+                case 'rawOrLabel':
+                    $rawOrLabel = $value;
+                    break;
+                case 'rawOrLabelHeaders':
+                    $rawOrLabelHeaders = $value;
+                    break;
+                case 'exportCheckBoxLabel':
+                    $exportCheckBoxLabel = $value;
+                    break;
+                case 'exportSurveyFields':
+                    $exportSurveyFields = $value;
+                    break;
+                case 'exportDataAccessGroups':
+                    $exportDataAccessGroups = $value;
+                    break;
+                case 'filterLogic':
+                    $filterLogic = $value;
+                    break;
+                default:
+                    throw new PhpCapException(
+                        'Unrecognized argument name "' . $name . '".',
+                        PhpCapException::INVALID_ARGUMENT
+                    );
+            }
+        }
+        
+        $this->exportRecords(
+            $format,
+            $type,
+            $recordIds,
+            $fields,
+            $forms,
+            $events,
+            $rawOrLabel,
+            $rawOrLabelHeaders,
+            $exportCheckBoxLabel,
+            $exportSurveyFields,
+            $exportDataAccessGroups,
+            $filterLogic
+        );
+    }
+            
     /**
      * Exports the numbers and names of the arms in the project.
      *
