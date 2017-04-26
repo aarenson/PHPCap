@@ -117,7 +117,7 @@ by PHPCap.</p>
 		<b>Namespace:</b> <a href="namespace-IU.html">IU</a>\<a href="namespace-IU.PHPCap.html">PHPCap</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapApiConnection.html#9-202" title="Go to source code">RedCapApiConnection.php</a>
+			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapApiConnection.html#9-218" title="Go to source code">RedCapApiConnection.php</a>
 		<br>
 	</div>
 
@@ -261,6 +261,57 @@ specified settings.</p>
 		</div>
 		</div></td>
 	</tr>
+	<tr data-order="callWithArray" id="_callWithArray">
+
+		<td class="attributes"><code>
+			 public 
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<!-- <a class="anchor" title="expand/collapse" href="#_callWithArray">+/-</a> -->
+		<a class="anchor" title="expand/collapse">+/-</a>
+				
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#145-159" title="Go to source code">callWithArray</a>( <span> <var>$dataArray</var></span> )</code>
+
+		<div class="description short">
+			<p>Calls REDCap's API using a with a correctly formatted string version
+of the specified array and returns the results.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Calls REDCap's API using a with a correctly formatted string version
+of the specified array and returns the results.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$dataArray</var></dt>
+					<dd><p>the array of data that is converted to a
+        string and then passed to the REDCap API.</p></dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br><p>the response returned by the REDCap API for the specified call data.
+        See the REDCap API documentation for more information.</p>
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					<code><a href="class-IU.PHPCap.PhpCapException.html">IU\PHPCap\PhpCapException</a></code>
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
 	<tr data-order="getCallInfo" id="_getCallInfo">
 
 		<td class="attributes"><code>
@@ -277,7 +328,7 @@ specified settings.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getCallInfo">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#146-163" title="Go to source code">getCallInfo</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#162-179" title="Go to source code">getCallInfo</a>( )</code>
 
 		<div class="description short">
 			<p>Returns call information for the most recent call.</p>
@@ -324,7 +375,7 @@ specified settings.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getTimeoutInSeconds">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#166-174" title="Go to source code">getTimeoutInSeconds</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#182-190" title="Go to source code">getTimeoutInSeconds</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the timeout in seconds for cURL calls.</p>
@@ -362,7 +413,7 @@ specified settings.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setTimeoutInSeconds">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#176-185" title="Go to source code">setTimeoutInSeconds</a>( <span>integer <var>$timeoutInSeconds</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#192-201" title="Go to source code">setTimeoutInSeconds</a>( <span>integer <var>$timeoutInSeconds</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the timeout for cURL calls to the specified amount of seconds.</p>
@@ -401,7 +452,7 @@ specified settings.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setCurlOption">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#187-201" title="Go to source code">setCurlOption</a>( <span>integer <var>$option</var></span>, <span>mixed <var>$value</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#203-217" title="Go to source code">setCurlOption</a>( <span>integer <var>$option</var></span>, <span>mixed <var>$value</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the specified cURL option to the specified value.</p>
