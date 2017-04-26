@@ -272,6 +272,30 @@ class RedCapProject
         return $records;
     }
 
+    /**
+     * Exports the numbers and names of the arms in the project.
+     *
+     * @return array an array of arrays that have the following keys:
+     *     <ul>
+     *       <li>'arm_num'</li>
+     *       <li>'name'</li>
+     *     </ul>
+     */
+    public function exportArms()
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'arm',
+                'format' => 'json',
+                'returnFormat' => 'json'
+        );
+        $arms = $this->connection->callWithArray($data);
+        $arms = $this->processJsonExport($arms);
+        
+        return $arms;
+    }
+    
+    
     
     /**
      * Exports information about the project, e.g., project ID, project title, creation time.
@@ -288,12 +312,7 @@ class RedCapProject
                 'returnFormat' => 'json'
         );
         $projectInfo = $this->connection->callWithArray($data);
-
-        if (empty($projectInfo)) {
-            $projectInfo = array ();
-        } else {
-            $projectInfo = json_decode($projectInfo, true);   // true => return as array instead of object
-        }
+        $projectInfo = $this->processJsonExport($projectInfo);
         
         return $projectInfo;
     }
@@ -317,12 +336,7 @@ class RedCapProject
                 'returnFormat' => 'json'
         );
         $metadata = $this->connection->callWithArray($data);
-    
-        if (empty($metadata)) {
-            $metadata = array ();
-        } else {
-            $metadata = json_decode($metadata, true);   // true => return as array instead of object
-        }
+        $metadata = $this->processJsonExport($metadata);
     
         return $metadata;
     }
@@ -338,8 +352,7 @@ class RedCapProject
                 'token' => $this->apiToken,
                 'content' => 'version'
         );
-        $callData = http_build_query($data, '', '&');
-        $redcapVersion = $this->connection->call($callData);
+        $redcapVersion = $this->connection->callWithArray($data);
         
         return $redcapVersion;
     }
@@ -368,12 +381,12 @@ class RedCapProject
         $callData = http_build_query($data, '', '&');
         $instrumentsData = $this->connection->call($callData);
         
-        if (empty($instrumentsData)) {
-            $instrumentsData = array ();
-        } else {
-            $instrumentsData = json_decode($instrumentsData, true);   // true => return as array instead of object
-        }
+        $instrumentData = $this->processJsonExport($instrumentsData);
         
+        #-------------------------------------------
+        # Reformat the data as a map from
+        # "instrument name" to "instrument label"
+        #-------------------------------------------
         $instruments = array();
         foreach ($instrumentsData as $instr) {
                 $instruments[$instr['instrument_name']] = $instr['instrument_label'];
@@ -416,13 +429,7 @@ class RedCapProject
                 'returnFormat' => 'json'
         );
         $instrumentEventMappings = $this->connection->callWithArray($data);
-        
-        if (empty($instrumentEventMappings)) {
-            $instrumentEventMapping = array ();
-        } else {
-            // true => return as array instead of object
-            $instrumentEventMappings = json_decode($instrumentEventMappings, true);
-        }
+        $instrumentEventMappings = $this->processJsonExport($instrumentEventMappings);
           
         return $instrumentEventMappings;
     }
