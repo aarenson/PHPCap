@@ -58,7 +58,9 @@ class RedCapProjectTest extends TestCase {
     
     public function testExportRecordsWithFilterLogic()
     {
-        $result = self::$basicDemographyProject->exportRecords('php', 'flat', null, null, null, null, "[last_name] = 'Thiel'");
+        $result = self::$basicDemographyProject->exportRecords(
+                'php', 'flat', null, null, null, null, null, null, null, null, null, "[last_name] = 'Thiel'"
+                );
         $this->assertEquals(count($result), 2);
         $firstNameMap = array_flip(array_column($result, 'first_name'));
         $this->assertArrayHasKey('Suzanne', $firstNameMap, 'Has first name test.');

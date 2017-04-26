@@ -122,6 +122,11 @@ class RedCapProject
      * @param array $fields array of field names to export
      * @param array $forms array of form names for which fields should be exported
      * @param array $events array of event names for which fields should be exported
+     * @param string $rawOrLabel
+     * @param string $rawOrLabelHeaders
+     * @param boolean $checkBoxLabels
+     * @param boolean $surveyFields
+     * @param boolean $dataAccessGroups
      * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
      *         "[last_name] = 'Smith'".
      *
@@ -134,6 +139,11 @@ class RedCapProject
         $fields = null,
         $forms = null,
         $events = null,
+        $rawOrLabel = 'raw',
+        $rawOrLabelHeaders = 'raw',
+        $checkBoxLabels = false,
+        $surveyFields = false,
+        $dataAccessGroups = false,
         $filterLogic = null
     ) {
         $data = array(
@@ -156,12 +166,11 @@ class RedCapProject
             }
         }
         
-        if ($type == null) {
-            $type = 'flat';
-        }
-        $type = strtolower($type);
-        
-        if (strcmp($type, 'flat') !== 0 && strcmp($type, 'eav') !== 0) {
+        #----------------------------------
+        # Process type
+        #----------------------------------
+        $type = strtolower(trim($type));
+        if ($type != null && strcmp($type, 'flat') !== 0 && strcmp($type, 'eav') !== 0) {
             throw new PhpCapException(
                 "Invalid type \"".$type."\". Type should be either 'flat' or 'eav'",
                 PhpCapException::INVALID_ARGUMENT
@@ -169,6 +178,9 @@ class RedCapProject
         }
         $data['type'] = $type;
         
+        #-----------------------------------------
+        # Process record IDs
+        #-----------------------------------------
         if ($recordIds != null) {
             if (!is_array($recordIds)) {
                 throw new PhpCapException(
@@ -179,24 +191,79 @@ class RedCapProject
             $data['records'] = $recordIds;
         }
         
+        #----------------------------------
+        # Process fields
+        #----------------------------------
         if ($fields != null) {
+            if (!is_array($fields)) {
+                throw new PhpCapException(
+                    'Argument "fields" has the wrong type; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
             $data['fields'] = $fields;
         }
         
+        #---------------------------------------
+        # Process forms
+        #---------------------------------------
         if ($forms != null) {
+            if (!is_array($forms)) {
+                throw new PhpCapException(
+                    'Argument "forms" has the wrong type; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
             $data['forms'] = $forms;
         }
         
+        #------------------------------------
+        # Process events
+        #------------------------------------
         if ($events != null) {
+            if (!is_array($events)) {
+                throw new PhpCapException(
+                    'Argument "events" has the wrong type; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
             $data['events'] = $events;
         }
+        
+        #------------------------------------------
+        # Process rawOrLabel
+        #------------------------------------------
+        if ($rawOrLabel != null) {
+            if ($rawOrLabel != 'raw' && $rawOrLabel != 'label') {
+                throw new PhpCapException(
+                    'Invalid value "'.$rawOrLabel.'" for specified for raw labels.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+            $data['rawOrLabel'] = $rawOrLabel;
+        }
 
+        #------------------------------------------
+        # Process rawOrLabelHeaders
+        #------------------------------------------
+        if ($rawOrLabelHeaders != null) {
+            if ($rawOrLabelHeaders != 'raw' && $rawOrLabelHeaders != 'label') {
+                throw new PhpCapException(
+                    'Invalid value "'.$rawOrLabelHeaders.'" for specified for raw labels.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+            $data['rawOrLabel'] = $rawOrLabelHeaders;
+        }
+        
+        #----------------------------------------
+        # Process filter logic
+        #----------------------------------------
         if ($filterLogic != null) {
             $data['filterLogic'] = $filterLogic;
         }
         
-        $callData = http_build_query($data, '', '&');
-        $records = $this->connection->call($callData);
+        $records = $this->connection->callWithArray($data);
         
         if (strcmp($format, 'php') === 0) {
             $records = $this->processJsonExport($records);
@@ -220,8 +287,7 @@ class RedCapProject
                 'format' => 'json',
                 'returnFormat' => 'json'
         );
-        $callData = http_build_query($data, '', '&');
-        $projectInfo = $this->connection->call($callData);
+        $projectInfo = $this->connection->callWithArray($data);
 
         if (empty($projectInfo)) {
             $projectInfo = array ();
@@ -250,8 +316,7 @@ class RedCapProject
                 'format' => 'json',
                 'returnFormat' => 'json'
         );
-        $callData = http_build_query($data, '', '&');
-        $metadata = $this->connection->call($callData);
+        $metadata = $this->connection->callWithArray($data);
     
         if (empty($metadata)) {
             $metadata = array ();
@@ -279,25 +344,89 @@ class RedCapProject
         return $redcapVersion;
     }
     
-    
+    /**
+     * Exports information about the instruments (data entry forms) for the project.
+     *
+     * Example usage:
+     * <code>
+     * $instruments = $project->getInstruments();
+     * foreach ($instruments as $instrumentName => $instrumentLabel) {
+     *     print "{$instrumentName} : {$instrumentLabel}\n";
+     * }
+     * </code>
+     *
+     * @return array map of instrument names to instrument labels.
+     */
+    public function exportInstruments()
+    {
+        $data = array(
+                'token'       => $this->apiToken,
+                'content'     => 'instrument',
+                'format'      => 'json',
+                'returnFormat' => 'json'
+        );
+        $callData = http_build_query($data, '', '&');
+        $instrumentsData = $this->connection->call($callData);
+        
+        if (empty($instrumentsData)) {
+            $instrumentsData = array ();
+        } else {
+            $instrumentsData = json_decode($instrumentsData, true);   // true => return as array instead of object
+        }
+        
+        $instruments = array();
+        foreach ($instrumentsData as $instr) {
+                $instruments[$instr['instrument_name']] = $instr['instrument_label'];
+        }
+        
+        return $instruments;
+    }
     
     /**
-     * Gets the call information for the last cURL call. PHPCap uses cURL to
-     * communicate with the REDCap API.
+     * Gets the instrument to event mapping for the project.
      *
-     * @return array cURL call information for last cURL call made.
+     * For example, the following code:
+     * <code>
+     * $map = $project->exportInstrumentEventMappings();
+     * print_r($map[0]); # print first element of map
+     * </code>
+     * might generate the following output:
+     * <pre>
+     * Array
+     * (
+     *     [arm_num] => 1
+     *     [unique_event_name] => enrollment_arm_1
+     *     [form] => demographics
+     * )
+     * </pre>
      *
-     * @see <a href="http://php.net/manual/en/function.curl-getinfo.php">
-     *      http://php.net/manual/en/function.curl-getinfo.php
-     *      </a>
-     *      for information on what values are returned.
+     * @return arrray an array of arrays that have the following keys:
+     *     <ul>
+     *       <li>'arm_num'</li>
+     *       <li>'unique_event_name'</li>
+     *       <li>'form'</li>
+     *     </ul>
      */
-    public function getCallInfo()
+    public function exportInstrumentEventMappings()
     {
-        $callInfo = $this->connection->getCallInfo();
-    
-        return $callInfo;
+        $data = array(
+                'token'       => $this->apiToken,
+                'content'     => 'formEventMapping',
+                'format'      => 'json',
+                'returnFormat' => 'json'
+        );
+        $instrumentEventMappings = $this->connection->callWithArray($data);
+        
+        if (empty($instrumentEventMappings)) {
+            $instrumentEventMapping = array ();
+        } else {
+            // true => return as array instead of object
+            $instrumentEventMappings = json_decode($instrumentEventMappings, true);
+        }
+          
+        return $instrumentEventMappings;
     }
+
 
     /**
      * Imports the specified records into the project.
@@ -485,6 +614,26 @@ class RedCapProject
         }
         
         return $result;
+    }
+    
+    
+
+    /**
+     * Gets the call information for the last cURL call. PHPCap uses cURL to
+     * communicate with the REDCap API.
+     *
+     * @return array cURL call information for last cURL call made.
+     *
+     * @see <a href="http://php.net/manual/en/function.curl-getinfo.php">
+     *      http://php.net/manual/en/function.curl-getinfo.php
+     *      </a>
+     *      for information on what values are returned.
+     */
+    public function getCallInfo()
+    {
+        $callInfo = $this->connection->getCallInfo();
+    
+        return $callInfo;
     }
     
     

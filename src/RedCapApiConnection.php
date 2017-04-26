@@ -141,6 +141,22 @@ class RedCapApiConnection
         
         return ($response);
     }
+    
+    /**
+     * Calls REDCap's API using a with a correctly formatted string version
+     * of the specified array and returns the results.
+     *
+     * @param $dataArray array the array of data that is converted to a
+     *         string and then passed to the REDCap API.
+     * @throws PhpCapException
+     * @return string the response returned by the REDCap API for the specified call data.
+     *         See the REDCap API documentation for more information.
+     */
+    public function callWithArray($dataArray)
+    {
+        $data = http_build_query($dataArray, '', '&');
+        return $this->call($data);
+    }
 
     
     /**
