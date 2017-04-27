@@ -1,9 +1,12 @@
 <?php
 
+namespace IU\PHPCap;
+
 use PHPUnit\Framework\TestCase;
 use IU\PHPCap\PhpCapException;
 
-class PhpCapExceptionTest extends TestCase {
+class PhpCapExceptionTest extends TestCase
+{
     
     public function testInvalidArgument()
     {
@@ -14,8 +17,7 @@ class PhpCapExceptionTest extends TestCase {
         
         try {
             throw new PhpCapException($message, $code);
-        }
-        catch (PhpCapException $exception) {
+        } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals($exception->getMessage(), $message, 'Message matches.');
             $this->assertEquals($exception->getCode(), $code, 'Code matches.');
@@ -34,8 +36,7 @@ class PhpCapExceptionTest extends TestCase {
         
         try {
             throw new PhpCapException($message, $code, $curlErrorNumber);
-        }
-        catch (PhpCapException $exception) {
+        } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals($exception->getMessage(), $message, 'Message matches.');
             $this->assertEquals($exception->getCode(), $code, 'Code matches.');
@@ -47,16 +48,15 @@ class PhpCapExceptionTest extends TestCase {
     
     public function testHttpError()
     {
-        $message = "Invalid URL.";
-        $code           = 
+        $message        = "Invalid URL.";
+        $code           = PhpCapException::INVALID_URL;
         $httpStatusCode = 404;
         
         $exceptionCaught = false;
         
         try {
             throw new PhpCapException($message, $code, null /* cURL error number */, $httpStatusCode);
-        }
-        catch (PHPCapException $exception) {
+        } catch (PHPCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals($exception->getMessage(), $message, 'Message matches.');
             $this->assertEquals($exception->getCode(), $code, 'Code matches.');
@@ -66,5 +66,4 @@ class PhpCapExceptionTest extends TestCase {
 
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
-
 }

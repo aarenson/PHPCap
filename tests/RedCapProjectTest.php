@@ -1,5 +1,7 @@
 <?php
 
+namespace IU\PHPCap;
+
 use PHPUnit\Framework\TestCase;
 
 use IU\PHPCap\RedCapProject;
@@ -8,7 +10,8 @@ use IU\PHPCap\PhpCapException;
 /**
  * PHPUnit tests for the RedCapProject class.
  */
-class RedCapProjectTest extends TestCase {
+class RedCapProjectTest extends TestCase
+{
     private static $config;
     private static $basicDemographyProject;
     private static $longitudinalDataProject;
@@ -16,21 +19,34 @@ class RedCapProjectTest extends TestCase {
     public static function setUpBeforeClass()
     {
         self::$config = parse_ini_file('config.ini');
-        self::$basicDemographyProject = new RedCapProject(self::$config['api.url'], self::$config['basic.demography.api.token']);
-        self::$longitudinalDataProject = new RedCapProject(self::$config['api.url'], self::$config['longitudinal.data.api.token']);
+        self::$basicDemographyProject = new RedCapProject(
+            self::$config['api.url'],
+            self::$config['basic.demography.api.token']
+        );
+        self::$longitudinalDataProject = new RedCapProject(
+            self::$config['api.url'],
+            self::$config['longitudinal.data.api.token']
+        );
     }
     
     /**
      * Note: need to have an actual test that creates a project, otherwise the constructor
      * won't show up in code coverage
      */
-    public function testProjectCreation() {
+    public function testProjectCreation()
+    {
         self::$config = parse_ini_file('config.ini');
         
-        $basicDemographyProject = new RedCapProject(self::$config['api.url'], self::$config['basic.demography.api.token']);
+        $basicDemographyProject = new RedCapProject(
+            self::$config['api.url'],
+            self::$config['basic.demography.api.token']
+        );
         $this->assertNotNull($basicDemographyProject, "Basic demography project not null.");
         
-        $longitudinalDataProject = new RedCapProject(self::$config['api.url'], self::$config['longitudinal.data.api.token']);
+        $longitudinalDataProject = new RedCapProject(
+            self::$config['api.url'],
+            self::$config['longitudinal.data.api.token']
+        );
         $this->assertNotNull($longitudinalDataProject, "Longitudinal data project not null.");
        
         #------------------------------
@@ -39,8 +55,7 @@ class RedCapProjectTest extends TestCase {
         $exceptionCaught = false;
         try {
             $project = new RedCapProject(null, self::$config['basic.demography.api.token']);
-        } 
-        catch (PhpCapException $exception) {
+        } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals($exception->getCode(), PhpCapException::INVALID_ARGUMENT);
         }
@@ -52,8 +67,7 @@ class RedCapProjectTest extends TestCase {
         $exceptionCaught = false;
         try {
             $project = new RedCapProject(123, self::$config['basic.demography.api.token']);
-        }
-        catch (PhpCapException $exception) {
+        } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals($exception->getCode(), PhpCapException::INVALID_ARGUMENT);
             $this->assertContains('integer', $exception->getMessage());
@@ -84,7 +98,8 @@ class RedCapProjectTest extends TestCase {
         $this->assertArrayHasKey('http_code', $callInfo, 'Metadata has HTTP code test.');
     }
     
-    public function testExportArms() {
+    public function testExportArms()
+    {
         $result = self::$longitudinalDataProject->exportArms();
         
         $this->assertEquals(count($result), 2, 'Number of arms test.');
@@ -108,9 +123,9 @@ class RedCapProjectTest extends TestCase {
         $this->assertEquals(max($recordIds), 1100, 'Max record_id test.');
         
         $lastNameMap = array_flip(array_column($result, 'last_name'));
-        $this->assertArrayHasKey('Braun',  $lastNameMap, 'Has last name test.');
+        $this->assertArrayHasKey('Braun', $lastNameMap, 'Has last name test.');
         $this->assertArrayHasKey('Carter', $lastNameMap, 'Has last name test.');
-        $this->assertArrayHasKey('Hayes',  $lastNameMap, 'Has last name test.');
+        $this->assertArrayHasKey('Hayes', $lastNameMap, 'Has last name test.');
     }
     
     public function testExportRecordsAp()
@@ -124,16 +139,27 @@ class RedCapProjectTest extends TestCase {
         $this->assertEquals(max($recordIds), 1100, 'Max record_id test.');
     
         $lastNameMap = array_flip(array_column($result, 'last_name'));
-        $this->assertArrayHasKey('Braun',  $lastNameMap, 'Has last name test.');
+        $this->assertArrayHasKey('Braun', $lastNameMap, 'Has last name test.');
         $this->assertArrayHasKey('Carter', $lastNameMap, 'Has last name test.');
-        $this->assertArrayHasKey('Hayes',  $lastNameMap, 'Has last name test.');
+        $this->assertArrayHasKey('Hayes', $lastNameMap, 'Has last name test.');
     }
     
     public function testExportRecordsWithFilterLogic()
     {
         $result = self::$basicDemographyProject->exportRecords(
-                'php', 'flat', null, null, null, null, null, null, null, null, null, "[last_name] = 'Thiel'"
-                );
+            'php',
+            'flat',
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            null,
+            "[last_name] = 'Thiel'"
+        );
         $this->assertEquals(count($result), 2);
         $firstNameMap = array_flip(array_column($result, 'first_name'));
         $this->assertArrayHasKey('Suzanne', $firstNameMap, 'Has first name test.');
@@ -205,7 +231,7 @@ class RedCapProjectTest extends TestCase {
         
         $this->assertEquals(count($records), 1, 'Correct number of records returned test.');
     
-        $xml = new DomDocument();
+        $xml = new \DomDocument();
         $xml->loadXML($records);
         
         $xmlRecordId = null;
@@ -243,5 +269,4 @@ class RedCapProjectTest extends TestCase {
         $result = self::$basicDemographyProject->exportRedcapVersion();
         $this->assertRegExp('/^[0-9]+\.[0-9]+\.[0-9]+$/', $result, 'REDCap version format test.');
     }
-
 }

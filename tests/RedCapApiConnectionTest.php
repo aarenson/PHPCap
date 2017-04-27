@@ -5,29 +5,29 @@ namespace IU\PHPCap;
 use PHPUnit\Framework\TestCase;
 use IU\PHPCap\RedCapApiConnection;
 
-
-function curl_errno($curlHandle) {
+function curl_errno($curlHandle)
+{
     if (RedCapApiConnectionTest::$curlErrorNumber != 0) {
         $errno = RedCapApiConnectionTest::$curlErrorNumber;
-    }
-    else {
+    } else {
         $errno = \curl_errno($curlHandle);
     }
     return $errno;
 }
 
-function curl_error($curlHandle) {
+function curl_error($curlHandle)
+{
     if (RedCapApiConnectionTest::$curlErrorNumber !== '') {
         $error = RedCapApiConnectionTest::$curlErrorMessage;
-    }
-    else {
+    } else {
         $errno = \curl_error($curlHandle);
     }
     return $error;
 }
 
 
-class RedCapApiConnectionTest extends TestCase {
+class RedCapApiConnectionTest extends TestCase
+{
     private static $config;
     private static $apiConnection;
     private static $caCertificateFile;
@@ -52,15 +52,18 @@ class RedCapApiConnectionTest extends TestCase {
         $caughtException = false;
         try {
             $apiConnection = new RedCapApiConnection(self::$config['api.url'], true, uniqid().".txt");
-        }
-        catch (PhpCapException $exception) {
+        } catch (PhpCapException $exception) {
             $caughtException = true;
             $this->assertEquals($exception->getCode(), PhpCapException::CA_CERTIFICATE_FILE_NOT_FOUND);
         }
         $this->assertTrue($caughtException);
         
         if (isset(self::$config['ca.certificate.file'])) {
-            $apiConnection = new RedCapApiConnection(self::$config['api.url'], true, self::$config['ca.certificate.file']);
+            $apiConnection = new RedCapApiConnection(
+                self::$config['api.url'],
+                true,
+                self::$config['ca.certificate.file']
+            );
             $this->assertNotNull($apiConnection);
         }
     }
@@ -93,8 +96,7 @@ class RedCapApiConnectionTest extends TestCase {
         $exceptionCaught = false;
         try {
             $callInfo = self::$apiConnection->getCallInfo();
-        }
-        catch (PHPCapException $exception) {
+        } catch (PHPCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals($exception->getCode(), PhpCapException::CURL_ERROR);
             $this->assertEquals($exception->getCurlErrorNumber(), self::$curlErrorNumber);
@@ -105,12 +107,12 @@ class RedCapApiConnectionTest extends TestCase {
         self::$curlErrorMessage = '';
     }
     
-    public function testCallWithNonStringData() {
+    public function testCallWithNonStringData()
+    {
         $exceptionCaught = false;
         try {
             self::$apiConnection->call([1, 2, 3]);
-        }
-        catch (PhpCapException $exception) {
+        } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals($exception->getCode(), PhpCapException::INVALID_ARGUMENT);
         }
@@ -135,5 +137,4 @@ class RedCapApiConnectionTest extends TestCase {
         $getTimeout = self::$apiConnection->getTimeoutInSeconds();
         $this->assertEquals($setTimeout, $getTimeout, "Timeout comparison 3");
     }
-
 }

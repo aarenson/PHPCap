@@ -94,6 +94,10 @@ To check for compliance, execute the following command in the root directory of 
 
     ./vendor/bin/phpcs --standard=PSR1,PSR2 src
 
+To check compliance for the automated tests, use:
+
+    ./vendor/bin/phpcs --standard=PSR1,PSR2 --ignore=tests/local tests
+    
 Note that if you are working on Windows and have the git property __core.autocrlf__ set to true, you may see errors similar to the following:
 
     ----------------------------------------------------------------------
