@@ -30,6 +30,7 @@ function curl_error($curlHandle) {
 class RedCapApiConnectionTest extends TestCase {
     private static $config;
     private static $apiConnection;
+    private static $caCertificateFile;
     
     public static $curlErrorNumber;
     public static $curlErrorMessage;
@@ -47,6 +48,21 @@ class RedCapApiConnectionTest extends TestCase {
     {
         $apiConnection = new RedCapApiConnection(self::$config['api.url']);
         $this->assertNotNull($apiConnection, 'Connection is not null.');
+        
+        $caughtException = false;
+        try {
+            $apiConnection = new RedCapApiConnection(self::$config['api.url'], true, uniqid().".txt");
+        }
+        catch (PhpCapException $exception) {
+            $caughtException = true;
+            $this->assertEquals($exception->getCode(), PhpCapException::CA_CERTIFICATE_FILE_NOT_FOUND);
+        }
+        $this->assertTrue($caughtException);
+        
+        if (isset(self::$config['ca.certificate.file'])) {
+            $apiConnection = new RedCapApiConnection(self::$config['api.url'], true, self::$config['ca.certificate.file']);
+            $this->assertNotNull($apiConnection);
+        }
     }
     
     public function testProjectInfo()
