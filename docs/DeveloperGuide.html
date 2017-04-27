@@ -37,6 +37,7 @@
 <li>mbstring</li>
 <li>OpenSSL</li>
 </ul></li>
+<li>(Optional) Install XDebug. This is needed for PHPUnit code coverage analysis.</li>
 <li>Install Git. The code for PHPCap is stored in GitHub, and Git is required to be able to download it for development.
 See: <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></li>
 <li>
@@ -62,6 +63,7 @@ composer install
 <h2>Example Setup on Ubuntu 16</h2>
 <p>To set up PHPCap on Ubuntu 16, execute the following commands:</p>
 <div class="description"><pre><code class="language-shell">sudo apt-get install php php-curl php-xml php-mbstring
+sudo apt-get install php-xdebug
 sudo apt-get install git
 git clone https://github.com/aarenson/PHPCap
 sudo apt-get install composer
@@ -84,6 +86,11 @@ personal API tokens will not be committed to Git. </p>
 <p>To run the automated tests, execute the following command in the top-level directory of your downloaded version of PHPCap:</p>
 <div class="description"><pre><code>./vendor/bin/phpunit</code></pre></div>
 <p>Note: PHPUnit uses the <strong>phpunit.xml</strong> configuration file in the root directory of PHPCap.</p>
+<h4>Code Coverage</h4>
+<p>If XDebug has been installed (and PHP is configured to use it), code coverage for the automated tests can
+be calculated by running the following command in the root directory of PHPCap:</p>
+<div class="description"><pre><code>./vendor/bin/phpunit --coverage-html tests/coverage</code></pre></div>
+<p>To see the results, open the file <strong>tests/coverage/index.html</strong> with a web browser.</p>
 <h3>Local Tests</h3>
 <p>The directory <strong>tests/local/</strong> has been set up so that all files in it, except for the README file, will be ignored by Git.
 This directory is intended as a place for developers to places tests for changes they are working on.</p>
