@@ -114,7 +114,7 @@
 		<b>Namespace:</b> <a href="namespace-IU.html">IU</a>\<a href="namespace-IU.PHPCap.html">PHPCap</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapProject.html#7-884" title="Go to source code">RedCapProject.php</a>
+			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapProject.html#7-886" title="Go to source code">RedCapProject.php</a>
 		<br>
 	</div>
 
@@ -138,7 +138,7 @@
 		<!-- <a class="anchor" title="expand/collapse" href="#___construct">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#32-103" title="Go to source code">__construct</a>( <span>string <var>$apiUrl</var></span>, <span>string <var>$apiToken</var></span>, <span>boolean <var>$sslVerify</var> = <span class="php-keyword1">false</span></span>, <span>string <var>$caCertificateFile</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#32-105" title="Go to source code">__construct</a>( <span>string <var>$apiUrl</var></span>, <span>string <var>$apiToken</var></span>, <span>boolean <var>$sslVerify</var> = <span class="php-keyword1">false</span></span>, <span>string <var>$caCertificateFile</var> = <span class="php-keyword1">null</span></span> )</code>
 
 		<div class="description short">
 			<p>Contructs a REDCap project for the specifed information.</p>
@@ -187,7 +187,7 @@
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportRecords">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#105-343" title="Go to source code">exportRecords</a>( <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>array <var>$recordIds</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$fields</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$forms</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$events</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$rawOrLabel</var> = <span class="php-quote">'raw'</span></span>, <span>string <var>$rawOrLabelHeaders</var> = <span class="php-quote">'raw'</span></span>, <span>boolean <var>$exportCheckBoxLabel</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$exportSurveyFields</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$exportDataAccessGroups</var> = <span class="php-keyword1">false</span></span>, <span>array <var>$filterLogic</var> = <span class="php-keyword1">null</span> </span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#107-345" title="Go to source code">exportRecords</a>( <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>array <var>$recordIds</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$fields</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$forms</var> = <span class="php-keyword1">null</span></span>, <span>array <var>$events</var> = <span class="php-keyword1">null</span></span>, <span>string <var>$rawOrLabel</var> = <span class="php-quote">'raw'</span></span>, <span>string <var>$rawOrLabelHeaders</var> = <span class="php-quote">'raw'</span></span>, <span>boolean <var>$exportCheckBoxLabel</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$exportSurveyFields</var> = <span class="php-keyword1">false</span></span>, <span>boolean <var>$exportDataAccessGroups</var> = <span class="php-keyword1">false</span></span>, <span>array <var>$filterLogic</var> = <span class="php-keyword1">null</span> </span> )</code>
 
 		<div class="description short">
 			<p>Exports the specified records.</p>
@@ -262,7 +262,7 @@
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="exportRecordsAP" id="_exportRecordsAP">
+	<tr data-order="exportRecordsAp" id="_exportRecordsAp">
 
 		<td class="attributes"><code>
 			 public 
@@ -275,10 +275,10 @@
 		<td class="name"><div>
 		
 		<!-- PHPCap change -->
-		<!-- <a class="anchor" title="expand/collapse" href="#_exportRecordsAP">+/-</a> -->
+		<!-- <a class="anchor" title="expand/collapse" href="#_exportRecordsAp">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#345-433" title="Go to source code">exportRecordsAP</a>( <span>array <var>$arrayParameter</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#347-435" title="Go to source code">exportRecordsAp</a>( <span>array <var>$arrayParameter</var></span> )</code>
 
 		<div class="description short">
 			<p>Export records using an array parameter, where the keys of the array
@@ -296,13 +296,13 @@ names in the exportRecords method.</p>
 <p>Example usage:</p>
 
 <pre><span class="php-comment"># return all records with last name &quot;Smith&quot; in CSV format</span>
-<span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportRecordsAP([<span class="php-quote">'format'</span> =&gt; <span class="php-quote">'csv'</span>, <span class="php-quote">'filterLogic'</span> =&gt; <span class="php-quote">&quot;[last_name] = 'Smith'&quot;</span>]);
+<span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportRecordsAp([<span class="php-quote">'format'</span> =&gt; <span class="php-quote">'csv'</span>, <span class="php-quote">'filterLogic'</span> =&gt; <span class="php-quote">&quot;[last_name] = 'Smith'&quot;</span>]);
 
 <span class="php-comment"># export only records that have record ID 1001, 1002, or 1003</span>
-<span class="php-var">$result</span> = <span class="php-var">$project</span>-&gt;exportRecordsAP([<span class="php-quote">'recordIds'</span> =&gt; [<span class="php-num">1001</span>, <span class="php-num">1002</span>, <span class="php-num">1003</span>]]);
+<span class="php-var">$result</span> = <span class="php-var">$project</span>-&gt;exportRecordsAp([<span class="php-quote">'recordIds'</span> =&gt; [<span class="php-num">1001</span>, <span class="php-num">1002</span>, <span class="php-num">1003</span>]]);
 
 <span class="php-comment"># export only the fields on the 'lab_data' form and field 'study_id'</span>
-<span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportRecordsAP([<span class="php-quote">'forms'</span> =&gt; [<span class="php-quote">'lab_data'</span>], <span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'study_id'</span>]]);</pre>
+<span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportRecordsAp([<span class="php-quote">'forms'</span> =&gt; [<span class="php-quote">'lab_data'</span>], <span class="php-quote">'fields'</span> =&gt; [<span class="php-quote">'study_id'</span>]]);</pre>
 
 
 				<h4>Parameters</h4>
@@ -342,7 +342,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportArms">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#435-456" title="Go to source code">exportArms</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#437-458" title="Go to source code">exportArms</a>( )</code>
 
 		<div class="description short">
 			<p>Exports the numbers and names of the arms in the project.</p>
@@ -385,7 +385,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportProjectInfo">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#460-478" title="Go to source code">exportProjectInfo</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#462-480" title="Go to source code">exportProjectInfo</a>( )</code>
 
 		<div class="description short">
 			<p>Exports information about the project, e.g., project ID, project title, creation time.</p>
@@ -424,7 +424,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportMetadata">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#481-502" title="Go to source code">exportMetadata</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#483-504" title="Go to source code">exportMetadata</a>( )</code>
 
 		<div class="description short">
 			<p>Exports metadata about the project, i.e., information about the fields in the project.</p>
@@ -466,7 +466,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportRedcapVersion">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#504-518" title="Go to source code">exportRedcapVersion</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#506-520" title="Go to source code">exportRedcapVersion</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the REDCap version number of the instance being used by the project.</p>
@@ -504,7 +504,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportInstruments">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#520-556" title="Go to source code">exportInstruments</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#522-558" title="Go to source code">exportInstruments</a>( )</code>
 
 		<div class="description short">
 			<p>Exports information about the instruments (data entry forms) for the project.</p>
@@ -549,7 +549,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportInstrumentEventMappings">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#558-595" title="Go to source code">exportInstrumentEventMappings</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#560-597" title="Go to source code">exportInstrumentEventMappings</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the instrument to event mapping for the project.</p>
@@ -607,7 +607,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_importRecords">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#598-671" title="Go to source code">importRecords</a>( <span>mixed <var>$records</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span> </span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#600-673" title="Go to source code">importRecords</a>( <span>mixed <var>$records</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span> </span> )</code>
 
 		<div class="description short">
 			<p>Imports the specified records into the project.</p>
@@ -681,7 +681,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_importRecordsFromFile">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#673-715" title="Go to source code">importRecordsFromFile</a>( <span>string <var>$filename</var></span>, <span>string <var>$format</var> = <span class="php-quote">'xml'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span> </span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#675-717" title="Go to source code">importRecordsFromFile</a>( <span>string <var>$filename</var></span>, <span>string <var>$format</var> = <span class="php-quote">'xml'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span> </span> )</code>
 
 		<div class="description short">
 			<p>Imports the records from the specified file into the project.</p>
@@ -751,7 +751,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_importFile">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#718-756" title="Go to source code">importFile</a>( <span>string <var>$filename</var></span>, <span>string <var>$recordId</var></span>, <span>string <var>$field</var></span>, <span>string <var>$event</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#720-758" title="Go to source code">importFile</a>( <span>string <var>$filename</var></span>, <span>string <var>$recordId</var></span>, <span>string <var>$field</var></span>, <span>string <var>$event</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Imports the file into the field of the record (with the specified event, if any).</p>
@@ -800,7 +800,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_deleteRecords">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#759-789" title="Go to source code">deleteRecords</a>( <span>array <var>$recordIds</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#761-791" title="Go to source code">deleteRecords</a>( <span>array <var>$recordIds</var></span> )</code>
 
 		<div class="description short">
 			<p>Deletes the specified records from the project.</p>
@@ -847,7 +847,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getCallInfo">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#793-809" title="Go to source code">getCallInfo</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#795-811" title="Go to source code">getCallInfo</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the call information for the last cURL call. PHPCap uses cURL to
@@ -894,7 +894,7 @@ communicate with the REDCap API.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getTimeoutInSeconds">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#813-821" title="Go to source code">getTimeoutInSeconds</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#815-823" title="Go to source code">getTimeoutInSeconds</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the timeout in seconds for calls to the REDCap API.</p>
@@ -932,7 +932,7 @@ communicate with the REDCap API.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setTimeoutInSeconds">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#823-831" title="Go to source code">setTimeoutInSeconds</a>( <span>integer <var>$timeoutInSeconds</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#825-833" title="Go to source code">setTimeoutInSeconds</a>( <span>integer <var>$timeoutInSeconds</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the timeout for calls to the REDCap API to the specified number of seconds.</p>
@@ -971,7 +971,7 @@ communicate with the REDCap API.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getConnection">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#833-844" title="Go to source code">getConnection</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#835-846" title="Go to source code">getConnection</a>( )</code>
 
 		<div class="description short">
 			<p>Returns the underlying REDCap API connection being used by the project.
