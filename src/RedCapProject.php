@@ -139,7 +139,9 @@ class RedCapProject
      * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
      *         "[last_name] = 'Smith'".
      *
-     * @return array of records
+     * @return mixed If 'php' format is specified, an array of records will be returned, where each record
+     *     is an array where the keys are the fields names, and the values are the field values. For other
+     *     formats, a string is returned that contains the records in the specified format.
      */
     public function exportRecords(
         $format = 'php',
@@ -161,18 +163,25 @@ class RedCapProject
                 'format'       => 'json',
                 'returnFormat' => 'json'
         );
-        
-        if ($format != null) {
-            $format = strtolower(trim($format));
+
+        #---------------------------------------
+        # Process format
+        #---------------------------------------
+        if ($format == null) {
+            $format = 'php';
+        }
+        $format = strtolower(trim($format));
             
-            $legalFormats = array('php', 'csv', 'json', 'xml', 'odm');
+        $legalFormats = array('php', 'csv', 'json', 'xml', 'odm');
             
-            if (!in_array($format, $legalFormats)) {
-                throw new PhpCapException("Illegal format '".$format."' specified.", PhpCapException::INVALID_ARGUMENT);
-            }
-            if (!(strcasecmp($format, 'php') === 0)) {
-                $data['format'] = $format;
-            }
+        if (!in_array($format, $legalFormats)) {
+            throw new PhpCapException("Illegal format '".$format."' specified.", PhpCapException::INVALID_ARGUMENT);
+        }
+ 
+        if (strcmp($format, 'php') === 0) {
+            $data['format'] = 'json';
+        } else {
+            $data['format'] = $format;
         }
         
         #----------------------------------
@@ -245,7 +254,7 @@ class RedCapProject
         if ($rawOrLabel != null) {
             if ($rawOrLabel != 'raw' && $rawOrLabel != 'label') {
                 throw new PhpCapException(
-                    'Invalid value "'.$rawOrLabel.'" for specified for raw labels.',
+                    'Invalid value "'.$rawOrLabel.'" specified for rawOrLabel.',
                     PhpCapException::INVALID_ARGUMENT
                 );
             }
@@ -258,40 +267,108 @@ class RedCapProject
         if ($rawOrLabelHeaders != null) {
             if ($rawOrLabelHeaders != 'raw' && $rawOrLabelHeaders != 'label') {
                 throw new PhpCapException(
-                    'Invalid value "'.$rawOrLabelHeaders.'" for specified for raw labels.',
+                    'Invalid value "'.$rawOrLabelHeaders.'" specified for rawOrLabelHeaders.',
                     PhpCapException::INVALID_ARGUMENT
                 );
             }
             $data['rawOrLabel'] = $rawOrLabelHeaders;
         }
         
+        #---------------------------------------
+        # Process exportCheckBoxLabel
+        #---------------------------------------
+        if ($exportCheckBoxLabel != null) {
+            if (gettype($exportCheckBoxLabel) != 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for filterLogic. It should be a boolean,'
+                    .' but has type: '.gettype($exportCheckBoxLabel).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+            $data['exportCheckBoxLabel'] = $exportCheckBoxLabel;
+        }
+        
+        #---------------------------------------
+        # Process exportSurveyFields
+        #---------------------------------------
+        if ($exportSurveyFields != null) {
+            if (gettype($exportSurveyFields) != 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for filterLogic. It should be a boolean,'
+                    .' but has type: '.gettype($exportSurveyFields).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+            $data['exportSurveyFields'] = $exportSurveyFields;
+        }
+             
+        #---------------------------------------
+        # Process exportDataAccessGroups
+        #---------------------------------------
+        if ($exportDataAccessGroups != null) {
+            if (gettype($exportDataAccessGroups) != 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for filterLogic. It should be a boolean,'
+                    .' but has type: '.gettype($exportDataAccessGroups).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+            $data['exportDataAccessGroups'] = $exportDataAccessGroups;
+        }
+        
+        
         #----------------------------------------
         # Process filter logic
         #----------------------------------------
         if ($filterLogic != null) {
+            if (gettype($filterLogic) != 'string') {
+                throw new PhpCapException(
+                    'Invalid type for filterLogic. It should be a string, but has type: '.gettype($filterlogic).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
             $data['filterLogic'] = $filterLogic;
         }
         
+        
+        # actually get the records
         $records = $this->connection->callWithArray($data);
         
+        # if the 'php' format was used, convert the JSON records returned into a PHP arrray
         if (strcmp($format, 'php') === 0) {
             $records = $this->processJsonExport($records);
         }
-        
+     
         return $records;
     }
 
     /**
      * Export records using an array parameter, where the keys of the array
      * passed to this method are the argument names, and the values are the
-     * argument values. The names to use should correspond to the variable
+     * argument values. The argument names to use correspond to the variable
      * names in the exportRecords method.
      *
-     * @param array $argumentArray
+     * Example usage:
+     *
+     * <code>
+     * # return all records with last name "Smith" in CSV format
+     * $records = $project->exportRecordsAP(['format' => 'csv', 'filterLogic' => "[last_name] = 'Smith'"]);
+     *
+     * # export only records that have record ID 1001, 1002, or 1003
+     * $result = $project->exportRecordsAP(['recordIds' => [1001, 1002, 1003]]);
+     *
+     * # export only the fields on the 'lab_data' form and field 'study_id'
+     * $records = $project->exportRecordsAP(['forms' => ['lab_data'], 'fields' => ['study_id']]);
+     * </code>
+     *
+     * @see exportRecords()
+     *
+     * @param array $argumentArray array of arguments.
+     * @return mixed the specified records.
      */
-    public function exportRecordsAP($argumentArray)
+    public function exportRecordsAP($arrayParameter)
     {
-        foreach ($argumentArray as $name => $value) {
+        foreach ($arrayParameter as $name => $value) {
             switch ($name) {
                 case 'format':
                     $format = $value;
@@ -571,6 +648,13 @@ class RedCapProject
                 'dateFormat'        => $dateFormat
         );
         
+        if ($records == null) {
+            throw new PhpCapException("No records specified for import.", PhpCapException::INVALID_ARGUMENT);
+        }
+        
+        #else {if (gettype($records) != 'string') {
+        
+        
         // If the PHP format was used, need to convert to JSON
         if ($format === 'php') {
             $records = json_encode($records);
@@ -579,9 +663,7 @@ class RedCapProject
         
         $data ['data'] = $records;
         
-        $callData = http_build_query($data, '', '&');
-        
-        $result = $this->connection->call($callData);
+        $result = $this->connection->callWithArray($data);
         
         // Check $result for errors ...
         
@@ -793,7 +875,7 @@ class RedCapProject
             }
             
             if (array_key_exists('error', $records)) {
-                throw new PhpCapException($records['error'], PhpCapException::REDCAP_API_EXCEPTION);
+                throw new PhpCapException($records['error'], PhpCapException::REDCAP_API_ERROR);
             }
         }
         
