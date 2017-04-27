@@ -300,7 +300,7 @@ class RedCapProject
                     $type = $value;
                     break;
                 case 'recordIds':
-                    $type = $value;
+                    $recordIds = $value;
                     break;
                 case 'fields':
                     $fields = $value;
@@ -337,20 +337,22 @@ class RedCapProject
             }
         }
         
-        $this->exportRecords(
-            $format,
-            $type,
-            $recordIds,
-            $fields,
-            $forms,
-            $events,
-            $rawOrLabel,
-            $rawOrLabelHeaders,
-            $exportCheckBoxLabel,
-            $exportSurveyFields,
-            $exportDataAccessGroups,
-            $filterLogic
+        $records = $this->exportRecords(
+            isset($format)                 ? $format                 : null,
+            isset($type)                   ? $type                   : null,
+            isset($recordIds)              ? $recordIds              : null,
+            isset($fields)                 ? $fields                 : null,
+            isset($forms)                  ? $forms                  : null,
+            isset($events)                 ? $events                 : null,
+            isset($rawOrLabel)             ? $rawOrLabel             : null,
+            isset($rawOrLabelHeaders)      ? $rawOrLabelHeaders      : null,
+            isset($exportCheckBoxLabel)    ? $exportCheckBoxLabel    : null,
+            isset($exportSurveyFields)     ? $exportSurveyFields     : null,
+            isset($exportDataAccessGroups) ? $exportDataAccessGroups : null,
+            isset($filterLogic)            ? $filterLogic            : null
         );
+        
+        return $records;
     }
             
     /**
