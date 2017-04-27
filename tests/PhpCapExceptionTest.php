@@ -10,13 +10,18 @@ class PhpCapExceptionTest extends TestCase {
         $message = 'Argument has wrong type.';
         $code    = PhpCapException::INVALID_ARGUMENT;
         
+        $exceptionCaught = false;
+        
         try {
-            throw new PHPCapException($message, $code);
+            throw new PhpCapException($message, $code);
         }
-        catch (PHPCapException $exception) {
+        catch (PhpCapException $exception) {
+            $exceptionCaught = true;
             $this->assertEquals($exception->getMessage(), $message, 'Message matches.');
             $this->assertEquals($exception->getCode(), $code, 'Code matches.');
         }
+        
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
     
     public function testCurlError()
@@ -24,15 +29,42 @@ class PhpCapExceptionTest extends TestCase {
         $message         = 'Unsupported protocol';
         $code            = PhpCapException::CURL_ERROR;
         $curlErrorNumber = 1;
-    
+
+        $exceptionCaught = false;
+        
         try {
-            throw new PHPCapException($message, $code, $curlErrorNumber);
+            throw new PhpCapException($message, $code, $curlErrorNumber);
         }
-        catch (PHPCapException $exception) {
+        catch (PhpCapException $exception) {
+            $exceptionCaught = true;
             $this->assertEquals($exception->getMessage(), $message, 'Message matches.');
             $this->assertEquals($exception->getCode(), $code, 'Code matches.');
             $this->assertEquals($exception->getCurlErrorNumber(), $curlErrorNumber, 'Curl error number matches.');
         }
+        
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testHttpError()
+    {
+        $message = "Invalid URL.";
+        $code           = 
+        $httpStatusCode = 404;
+        
+        $exceptionCaught = false;
+        
+        try {
+            throw new PhpCapException($message, $code, null /* cURL error number */, $httpStatusCode);
+        }
+        catch (PHPCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals($exception->getMessage(), $message, 'Message matches.');
+            $this->assertEquals($exception->getCode(), $code, 'Code matches.');
+            $this->assertNull($exception->getCurlErrorNumber());
+            $this->assertEquals($exception->getHttpStatusCode(), $httpStatusCode, 'HTTP status code matches.');
+        }
+
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
 
 }

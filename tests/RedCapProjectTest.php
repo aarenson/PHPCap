@@ -19,10 +19,24 @@ class RedCapProjectTest extends TestCase {
         self::$longitudinalDataProject = new RedCapProject(self::$config['api.url'], self::$config['longitudinal.data.api.token']);
     }
     
+    /**
+     * Note: need to have an actual test that creates a project, otherwise the constructor
+     * won't show up in code coverage
+     */
+    public function testProjectCreation() {
+        self::$config = parse_ini_file('config.ini');
+        
+        $basicDemographyProject = new RedCapProject(self::$config['api.url'], self::$config['basic.demography.api.token']);
+        $this->assertNotNull($basicDemographyProject, "Basic demography project not null.");
+        
+        $longitudinalDataProject = new RedCapProject(self::$config['api.url'], self::$config['longitudinal.data.api.token']);
+        $this->assertNotNull($longitudinalDataProject, "Longitudinal data project not null.");
+    }
+    
     public function testExportProjectInfo()
     {
         $callInfo = true;
-        $result = self::$basicDemographyProject->exportProjectInfo($callInfo);
+        $result = self::$basicDemographyProject->exportProjectInfo();
         
         $this->assertEquals($result['project_language'], 'English', 'Project info "project_language" test.');
         $this->assertEquals($result['purpose_other'], 'PHPCap testing', 'Project info "purpose_other" test.');
