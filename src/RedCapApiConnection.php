@@ -135,7 +135,7 @@ class RedCapApiConnection
             } elseif ($httpCode == 404) {
                 throw new PhpCapException('
                         The specified URL (' . $this->url . ') appears to be incorrect.'
-                        . ' Nothing was found at this URL.', PhpCapException::INVALID_UR, null, $httpCode);
+                        . ' Nothing was found at this URL.', PhpCapException::INVALID_URL, null, $httpCode);
             }
         }
         
