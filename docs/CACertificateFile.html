@@ -17,7 +17,6 @@
 <ul>
 <li class="active"><a href="CACertificateFile.html">CA Certificate File</a></li>
 <li><a href="DeveloperGuide.html">Developer Guide</a></li>
-<li><a href="FirefoxCACert.html">CA Certificate File Instructions - Firefox</a></li>
 <li><a href="ubuntu16-tutorial.html">Tutorial for Ubuntu 16</a></li>
 </ul>
 </div>
@@ -52,7 +51,28 @@ file. If it fails, and you get an error message about a security certificate, su
 <blockquote>
 <p>SSL certificate problem: self signed certificate in certificate chain</p>
 </blockquote>
-<p>then your system is not already set up.</p></div>
+<p>then your system is not already set up.</p>
+<h2>Creating a CA Certificate File with Firefox</h2>
+<p>To use the Firefox web browser to create a CA (Certificate Authority) certificate file for use with PHPCap, use the following steps:</p>
+<ol>
+<li>Access your REDCap site with Firefox.</li>
+<li>Click on the padlock icon, and then the connection, and then &quot;More Information&quot;.</li>
+<li>Click on the &quot;Security&quot; tab, if it is not already selected.<br />
+<img src="resources/page-info-security.png" alt="Page Information" />  </li>
+<li>Click on the &quot;View Certificate&quot; button</li>
+<li>Click on the &quot;Detail&quot; tab of the &quot;Certificate Viewer&quot; dialog.<br />
+<img src="resources/certificate-viewer.png" alt="Certificate Viewer" />  </li>
+<li>Select the top entry in the &quot;Certificate Hierarchy&quot; box.</li>
+<li>Click the &quot;Export...&quot; button.</li>
+<li>In the &quot;Save Certificate to File&quot; window that should appear:
+<ol>
+<li>navigate to where you want to save the file</li>
+<li>change the name of the file if you don't want to use the default name</li>
+<li>set &quot;Save as type&quot; to &quot;X.509 Certificate (PEM)&quot;</li>
+<li>click on the &quot;Save&quot; button.<br />
+<img src="resources/save-certificate-to-file.png" alt="Save Certificate to File" />   </li>
+</ol></li>
+</ol></div>
 <div id="footer">
 PHPCap documentation
 </div>
