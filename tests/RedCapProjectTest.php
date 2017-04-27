@@ -1,8 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use IU\PHPCap\RedCapApiConnection;
+
 use IU\PHPCap\RedCapProject;
+use IU\PHPCap\PhpCapException;
 
 /**
  * PHPUnit tests for the RedCapProject class.
@@ -31,6 +32,33 @@ class RedCapProjectTest extends TestCase {
         
         $longitudinalDataProject = new RedCapProject(self::$config['api.url'], self::$config['longitudinal.data.api.token']);
         $this->assertNotNull($longitudinalDataProject, "Longitudinal data project not null.");
+       
+        #------------------------------
+        # Null API URL
+        #------------------------------
+        $exceptionCaught = false;
+        try {
+            $project = new RedCapProject(null, self::$config['basic.demography.api.token']);
+        } 
+        catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals($exception->getCode(), PhpCapException::INVALID_ARGUMENT);
+        }
+        $this->assertTrue($exceptionCaught);
+        
+        #------------------------------
+        # Non-string API URL
+        #------------------------------
+        $exceptionCaught = false;
+        try {
+            $project = new RedCapProject(123, self::$config['basic.demography.api.token']);
+        }
+        catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals($exception->getCode(), PhpCapException::INVALID_ARGUMENT);
+            $this->assertContains('integer', $exception->getMessage());
+        }
+        $this->assertTrue($exceptionCaught);
     }
     
     public function testExportProjectInfo()
@@ -85,9 +113,9 @@ class RedCapProjectTest extends TestCase {
         $this->assertArrayHasKey('Hayes',  $lastNameMap, 'Has last name test.');
     }
     
-    public function testExportRecordsAP()
+    public function testExportRecordsAp()
     {
-        $result = self::$basicDemographyProject->exportRecordsAP([]);
+        $result = self::$basicDemographyProject->exportRecordsAp([]);
     
         $this->assertEquals(count($result), 100, 'Number of records test.');
     
@@ -112,9 +140,9 @@ class RedCapProjectTest extends TestCase {
         $this->assertArrayHasKey('Kaia', $firstNameMap, 'Has first name test.');
     }
 
-    public function testExportRecordsAPWithFilterLogic()
+    public function testExportRecordsApWithFilterLogic()
     {
-        $result = self::$basicDemographyProject->exportRecordsAP(['filterLogic' => "[last_name] = 'Thiel'"]);
+        $result = self::$basicDemographyProject->exportRecordsAp(['filterLogic' => "[last_name] = 'Thiel'"]);
         
         $this->assertEquals(count($result), 2);
         $firstNameMap = array_flip(array_column($result, 'first_name'));
@@ -122,9 +150,9 @@ class RedCapProjectTest extends TestCase {
         $this->assertArrayHasKey('Kaia', $firstNameMap, 'Has first name test.');
     }
     
-    public function testExportRecordsAPRecordIds()
+    public function testExportRecordsApRecordIds()
     {
-        $result = self::$basicDemographyProject->exportRecordsAP(['recordIds' => [1001, 1010, 1100]]);
+        $result = self::$basicDemographyProject->exportRecordsAp(['recordIds' => [1001, 1010, 1100]]);
     
         $this->assertEquals(count($result), 3);
         $recordIdMap = array_flip(array_column($result, 'record_id'));
@@ -151,11 +179,11 @@ class RedCapProjectTest extends TestCase {
         $this->assertEquals($recordIds[0], $csvRecordId, 'Correct record ID returned test.');
     }
     
-    public function testExportRecordsAPAsCsv()
+    public function testExportRecordsApAsCsv()
     {
         $recordIds = array ('1001');
     
-        $records = self::$basicDemographyProject->exportRecordsAP(['format' => 'csv', 'recordIds' => $recordIds]);
+        $records = self::$basicDemographyProject->exportRecordsAp(['format' => 'csv', 'recordIds' => $recordIds]);
     
         $this->assertEquals(count($records), 1, 'Correct number of records returned test.');
     

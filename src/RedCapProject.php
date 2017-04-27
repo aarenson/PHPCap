@@ -46,8 +46,10 @@ class RedCapProject
         # Note: standard PHP URL validation will fail for non-ASCII URLs (so it was not used)
         #----------------------------------------------------------------------------------------
         if (!isset($apiUrl)) {
-            throw new PhpCapException("The REDCap API URL spefied for the project was null or blank."
-                    . gettype($apiUrl), PhpCapException::INVALID_ARGUMENT);
+            throw new PhpCapException(
+                "The REDCap API URL specified for the project was null or blank.",
+                PhpCapException::INVALID_ARGUMENT
+            );
         } elseif (gettype($apiUrl) !== 'string') {
             throw new PhpCapException("The REDCap API URL provided (".$apiUrl.") should be a string, but has type: "
                     . gettype($apiUrl), PhpCapException::INVALID_ARGUMENT);
@@ -352,13 +354,13 @@ class RedCapProject
      *
      * <code>
      * # return all records with last name "Smith" in CSV format
-     * $records = $project->exportRecordsAP(['format' => 'csv', 'filterLogic' => "[last_name] = 'Smith'"]);
+     * $records = $project->exportRecordsAp(['format' => 'csv', 'filterLogic' => "[last_name] = 'Smith'"]);
      *
      * # export only records that have record ID 1001, 1002, or 1003
-     * $result = $project->exportRecordsAP(['recordIds' => [1001, 1002, 1003]]);
+     * $result = $project->exportRecordsAp(['recordIds' => [1001, 1002, 1003]]);
      *
      * # export only the fields on the 'lab_data' form and field 'study_id'
-     * $records = $project->exportRecordsAP(['forms' => ['lab_data'], 'fields' => ['study_id']]);
+     * $records = $project->exportRecordsAp(['forms' => ['lab_data'], 'fields' => ['study_id']]);
      * </code>
      *
      * @see exportRecords()
@@ -366,7 +368,7 @@ class RedCapProject
      * @param array $argumentArray array of arguments.
      * @return mixed the specified records.
      */
-    public function exportRecordsAP($arrayParameter)
+    public function exportRecordsAp($arrayParameter)
     {
         foreach ($arrayParameter as $name => $value) {
             switch ($name) {
