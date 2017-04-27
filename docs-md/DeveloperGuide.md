@@ -90,13 +90,17 @@ PHPCap follows the PSR-1 and PSR-2 coding standards. See:
 * http://www.php-fig.org/psr/psr-1/
 * http://www.php-fig.org/psr/psr-2/
 
-To check for compliance, execute the following command in the root directory of the PHPCap:
+To check for compliance for the PHPCap source code, execute the following command in the root directory of the PHPCap:
 
     ./vendor/bin/phpcs --standard=PSR1,PSR2 src
 
 To check compliance for the automated tests, use:
 
     ./vendor/bin/phpcs --standard=PSR1,PSR2 --ignore=tests/local tests
+
+To check for compliance for the PHPCap source code and the tests, use:
+
+    ./vendor/bin/phpcs --standard=PSR1,PSR2 --ignore=tests/local src tests
     
 Note that if you are working on Windows and have the git property __core.autocrlf__ set to true, you may see errors similar to the following:
 
