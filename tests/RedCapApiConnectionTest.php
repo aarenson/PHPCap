@@ -33,5 +33,23 @@ class RedCapApiConnectionTest extends TestCase {
         $this->assertEquals($result['purpose_other'], 'PHPCap testing', 'Project info "purpose_other" test.');
 
     }
+    
+    public function testTimeout()
+    {
+        $setTimeout = 10;
+        self::$apiConnection->setTimeoutInSeconds($setTimeout);
+        $getTimeout = self::$apiConnection->getTimeoutInSeconds();
+        $this->assertEquals($setTimeout, $getTimeout, "Timeout comparison 1");
+        
+        $setTimeout = 24;
+        self::$apiConnection->setTimeoutInSeconds($setTimeout);
+        $getTimeout = self::$apiConnection->getTimeoutInSeconds();
+        $this->assertEquals($setTimeout, $getTimeout, "Timeout comparison 2");
+        
+        $setTimeout = 32;
+        self::$apiConnection->setCurlOption(CURLOPT_TIMEOUT, $setTimeout);
+        $getTimeout = self::$apiConnection->getTimeoutInSeconds();
+        $this->assertEquals($setTimeout, $getTimeout, "Timeout comparison 3");
+    }
 
 }

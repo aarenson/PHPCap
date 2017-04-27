@@ -212,6 +212,9 @@ class RedCapApiConnection
      */
     public function setCurlOption($option, $value)
     {
+        if ($option === CURLOPT_TIMEOUT) {
+            $this->timeoutInSeconds = $value;
+        }
         $result = curl_setopt($this->curlHandle, $option, $value);
         return $result;
     }
