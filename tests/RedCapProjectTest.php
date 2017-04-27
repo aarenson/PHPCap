@@ -85,6 +85,22 @@ class RedCapProjectTest extends TestCase {
         $this->assertArrayHasKey('Hayes',  $lastNameMap, 'Has last name test.');
     }
     
+    public function testExportRecordsAP()
+    {
+        $result = self::$basicDemographyProject->exportRecordsAP([]);
+    
+        $this->assertEquals(count($result), 100, 'Number of records test.');
+    
+        $recordIds = array_column($result, 'record_id');
+        $this->assertEquals(min($recordIds), 1001, 'Min record_id test.');
+        $this->assertEquals(max($recordIds), 1100, 'Max record_id test.');
+    
+        $lastNameMap = array_flip(array_column($result, 'last_name'));
+        $this->assertArrayHasKey('Braun',  $lastNameMap, 'Has last name test.');
+        $this->assertArrayHasKey('Carter', $lastNameMap, 'Has last name test.');
+        $this->assertArrayHasKey('Hayes',  $lastNameMap, 'Has last name test.');
+    }
+    
     public function testExportRecordsWithFilterLogic()
     {
         $result = self::$basicDemographyProject->exportRecords(
@@ -96,6 +112,27 @@ class RedCapProjectTest extends TestCase {
         $this->assertArrayHasKey('Kaia', $firstNameMap, 'Has first name test.');
     }
 
+    public function testExportRecordsAPWithFilterLogic()
+    {
+        $result = self::$basicDemographyProject->exportRecordsAP(['filterLogic' => "[last_name] = 'Thiel'"]);
+        
+        $this->assertEquals(count($result), 2);
+        $firstNameMap = array_flip(array_column($result, 'first_name'));
+        $this->assertArrayHasKey('Suzanne', $firstNameMap, 'Has first name test.');
+        $this->assertArrayHasKey('Kaia', $firstNameMap, 'Has first name test.');
+    }
+    
+    public function testExportRecordsAPRecordIds()
+    {
+        $result = self::$basicDemographyProject->exportRecordsAP(['recordIds' => [1001, 1010, 1100]]);
+    
+        $this->assertEquals(count($result), 3);
+        $recordIdMap = array_flip(array_column($result, 'record_id'));
+        $this->assertArrayHasKey(1001, $recordIdMap, 'Has record ID 1001.');
+        $this->assertArrayHasKey(1001, $recordIdMap, 'Has record ID 1010.');
+        $this->assertArrayHasKey(1100, $recordIdMap, 'Has record ID 1100.');
+    }
+    
     public function testExportRecordsAsCsv()
     {
         $recordIds = array ('1001');
@@ -114,6 +151,23 @@ class RedCapProjectTest extends TestCase {
         $this->assertEquals($recordIds[0], $csvRecordId, 'Correct record ID returned test.');
     }
     
+    public function testExportRecordsAPAsCsv()
+    {
+        $recordIds = array ('1001');
+    
+        $records = self::$basicDemographyProject->exportRecordsAP(['format' => 'csv', 'recordIds' => $recordIds]);
+    
+        $this->assertEquals(count($records), 1, 'Correct number of records returned test.');
+    
+        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        $csv = $parser->parse();
+    
+        $firstDataRow = $csv[1];
+    
+        $csvRecordId = $firstDataRow[0];
+    
+        $this->assertEquals($recordIds[0], $csvRecordId, 'Correct record ID returned test.');
+    }
     
     public function testExportRecordsAsOdm()
     {
