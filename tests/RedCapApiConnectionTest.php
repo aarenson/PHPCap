@@ -89,6 +89,19 @@ class RedCapApiConnectionTest extends TestCase {
         self::$curlErrorMessage = '';
     }
     
+    public function testCallWithNonStringData() {
+        $exceptionCaught = false;
+        try {
+            self::$apiConnection->call([1, 2, 3]);
+        }
+        catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals($exception->getCode(), PhpCapException::INVALID_ARGUMENT);
+        }
+        $this->assertTrue($exceptionCaught);
+    }
+    
+    
     public function testTimeout()
     {
         $setTimeout = 10;

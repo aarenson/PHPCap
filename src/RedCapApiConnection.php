@@ -67,7 +67,6 @@ class RedCapApiConnection
             if (! file_exists($this->caCertificateFile)) {
                 throw new PhpCapException('The cert file "' . $this->caCertificateFile
                         . '" does not exist.', PhpCapException::CA_CERTIFICATE_FILE_NOT_FOUND);
-                // Try just letting curl catch this??? - or, check URL too (missing, wrong type)?
             } elseif (! is_readable($this->caCertificateFile)) {
                 throw new PhpCapException('The cert file "' . $this->caCertificateFile
                         . '" exists, but cannot be read.', PhpCapException::CA_CERTIFICATE_FILE_UNREADABLE);
