@@ -32,11 +32,11 @@ Get PHPCap from GitHub. If you have Git installed, you can use the following:
 
 If you don't have Git installed, you can get a Zip file of PHPCap by clicking on this link:
 
-<a href="https://github.com/aarenson/PHPCap/archive/master.zip">https://github.com/aarenson/PHPCap/archive/master.zip</a>
+https://github.com/aarenson/PHPCap/archive/master.zip
 
 Or go to this page and click on the "Clone of download" button, and then click on "Download ZIP":
 
-<a href="https://github.com/aarenson/PHPCap/">https://github.com/aarenson/PHPCap/</a>
+https://github.com/aarenson/PHPCap/
 
 Then unzip the file to your project directory.
     

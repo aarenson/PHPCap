@@ -19,6 +19,8 @@ no CA certificate file specified, for example:
 
 require('PHPCap/autoloader.php');
 
+use \IU\PHPCap\RedCapProject;
+
 $apiUrl = '';
 $apiToken = '1234567890A1234567890B1234567890';
 
