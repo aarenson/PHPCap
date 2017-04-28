@@ -76,9 +76,9 @@ Note: PHPUnit uses the **phpunit.xml** configuration file in the root directory 
 If XDebug has been installed (and PHP is configured to use it), code coverage for the automated tests can
 be calculated by running the following command in the root directory of PHPCap:
 
-    ./vendor/bin/phpunit --coverage-html tests/coverage
+    ./vendor/bin/phpunit --coverage-html test-coverage
     
-To see the results, open the file **tests/coverage/index.html** with a web browser.
+To see the results, open the file **test-coverage/index.html** with a web browser.
 
 
 ### Local Tests
