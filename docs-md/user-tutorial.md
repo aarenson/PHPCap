@@ -1,4 +1,4 @@
-Tutorial for Ubuntu 16
+User Tutorial
 ====================================
 
 * Prerequisites
@@ -6,10 +6,10 @@ Tutorial for Ubuntu 16
   * You need to have an API token for a project in REDCap. You would typically get this
     by creating a project in REDCap and then requesting an API token.
 
-* Execute the following commands to install the required software:
+* Install PHP 5.6+ and make sure that cURL is enabled, for example, in Ubuntu, use the following commands:
 
     ```shell
-    sudo apt install php7.0-cli php7.0-curl
+    sudo apt install php php-curl
     sudo apt install git
     ```
     
