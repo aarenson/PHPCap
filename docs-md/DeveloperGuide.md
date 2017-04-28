@@ -6,10 +6,10 @@ This guide is for people interested in developing PHPCap (i.e., actually making 
 Setup
 --------------------------------------------------------
 1. Install PHP 5.6 or greater with the following extensions:
-  * cURL
-  * DOM/XML
-  * mbstring
-  * OpenSSL
+    * cURL
+    * DOM/XML
+    * mbstring
+    * OpenSSL
 1. (Optional) Install XDebug. This is needed for PHPUnit code coverage analysis.
 1. Install Git. The code for PHPCap is stored in GitHub, and Git is required to be able to download it for development.
    See: https://git-scm.com/downloads
