@@ -3,7 +3,6 @@
 namespace IU\PHPCap;
 
 use PHPUnit\Framework\TestCase;
-use IU\PHPCap\RedCapApiConnection;
 
 function curl_errno($curlHandle)
 {
@@ -25,6 +24,28 @@ function curl_error($curlHandle)
     return $error;
 }
 
+function is_readable($file)
+{
+    $isReadable = RedCapApiConnectionTest::$isFileReadable ? \is_readable($file) : false;
+    return $isReadable;
+}
+
+function curl_getinfo($curlHandle, $curlOption = null)
+{
+    $result = 0;
+    if (isset(RedCapApiConnectionTest::$httpCode)) {
+        $result = RedCapApiConnectionTest::$httpCode;
+    } else {
+        if ($curlOption == null) {
+            $result = \curl_getinfo($curlHandle);
+        } else {
+            $result = \curl_getinfo($curlHandle, $curlOption);
+        }
+    }
+    return $result;
+}
+
+
 
 class RedCapApiConnectionTest extends TestCase
 {
@@ -34,6 +55,8 @@ class RedCapApiConnectionTest extends TestCase
     
     public static $curlErrorNumber;
     public static $curlErrorMessage;
+    public static $isFileReadable;
+    public static $httpCode;
     
     public static function setUpBeforeClass()
     {
@@ -42,6 +65,8 @@ class RedCapApiConnectionTest extends TestCase
         
         self::$curlErrorNumber  = 0;
         self::$curlErrorMessage = '';
+        self::$isFileReadable   = true;
+        self::$httpCode         = null;
     }
     
     public function testConnectionCreation()
@@ -49,14 +74,35 @@ class RedCapApiConnectionTest extends TestCase
         $apiConnection = new RedCapApiConnection(self::$config['api.url']);
         $this->assertNotNull($apiConnection, 'Connection is not null.');
         
+        # Test CA certificate file not found
         $caughtException = false;
         try {
             $apiConnection = new RedCapApiConnection(self::$config['api.url'], true, uniqid().".txt");
         } catch (PhpCapException $exception) {
             $caughtException = true;
-            $this->assertEquals($exception->getCode(), PhpCapException::CA_CERTIFICATE_FILE_NOT_FOUND);
+            $this->assertEquals(
+                $exception->getCode(),
+                PhpCapException::CA_CERTIFICATE_FILE_NOT_FOUND,
+                'CA cert file not found.'
+            );
         }
-        $this->assertTrue($caughtException);
+        $this->assertTrue($caughtException, 'Caught CA cert file not found exception.');
+        
+        # Test CA certificate file not readable
+        RedCapApiConnectionTest::$isFileReadable = false;
+        $caughtException = false;
+        try {
+            $apiConnection = new RedCapApiConnection(self::$config['api.url'], true, __FILE__);
+        } catch (PhpCapException $exception) {
+            $caughtException = true;
+            $this->assertEquals(
+                $exception->getCode(),
+                PhpCapException::CA_CERTIFICATE_FILE_UNREADABLE,
+                'CA cert file is unreadable.'
+            );
+        }
+        $this->assertTrue($caughtException, 'Caught CA cert file unreadable exception.');
+        RedCapApiConnectionTest::$isFileReadable = true;
         
         if (isset(self::$config['ca.certificate.file'])) {
             $apiConnection = new RedCapApiConnection(
@@ -117,6 +163,66 @@ class RedCapApiConnectionTest extends TestCase
             $this->assertEquals($exception->getCode(), PhpCapException::INVALID_ARGUMENT);
         }
         $this->assertTrue($exceptionCaught);
+    }
+    
+    public function testCallWithCurlErrors()
+    {
+        # Set up valid call data
+        $data = array(
+                'token' => self::$config['basic.demography.api.token'],
+                'content' => 'project',
+                'format' => 'json',
+                'returnFormat' => 'json'
+        );
+        $callData = http_build_query($data, '', '&');
+        
+        #---------------------------------------
+        # Test curl_exec error in call
+        #---------------------------------------
+        self::$curlErrorNumber = 3;
+        self::$curlErrorMessage = 'The URL was not properly formatted.';
+        $exceptionCaught = false;
+        try {
+            $result = self::$apiConnection->call($callData);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals($exception->getCode(), PhpCapException::CURL_ERROR);
+            $this->assertEquals($exception->getCurlErrorNumber(), self::$curlErrorNumber);
+            $this->assertEquals($exception->getMessage(), self::$curlErrorMessage);
+        }
+        $this->assertTrue($exceptionCaught);
+        self::$curlErrorNumber = 0;
+        self::$curlErrorMessage = '';
+        
+        #--------------------------------------
+        # Test http code 301 in call
+        #--------------------------------------
+        self::$httpCode = 301;
+        $exceptionCaught = false;
+        try {
+            $result = self::$apiConnection->call($callData);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals($exception->getCode(), PhpCapException::INVALID_URL);
+            $this->assertEquals($exception->getHttpStatusCode(), self::$httpCode);
+        }
+        $this->assertTrue($exceptionCaught);
+        self::$httpCode = null;
+        
+        #--------------------------------------
+        # Test http code 404 in call
+        #--------------------------------------
+        self::$httpCode = 404;
+        $exceptionCaught = false;
+        try {
+            $result = self::$apiConnection->call($callData);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals($exception->getCode(), PhpCapException::INVALID_URL);
+            $this->assertEquals($exception->getHttpStatusCode(), self::$httpCode);
+        }
+        $this->assertTrue($exceptionCaught);
+        self::$httpCode = null;
     }
     
     
