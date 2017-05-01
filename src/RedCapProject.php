@@ -154,7 +154,7 @@ class RedCapProject
         $events = null,
         $rawOrLabel = 'raw',
         $rawOrLabelHeaders = 'raw',
-        $exportCheckBoxLabel = false,
+        $exportCheckboxLabel = false,
         $exportSurveyFields = false,
         $exportDataAccessGroups = false,
         $filterLogic = null
@@ -256,7 +256,8 @@ class RedCapProject
         if ($rawOrLabel != null) {
             if ($rawOrLabel != 'raw' && $rawOrLabel != 'label') {
                 throw new PhpCapException(
-                    'Invalid value "'.$rawOrLabel.'" specified for rawOrLabel.',
+                    'Invalid value "'.$rawOrLabel.'" specified for rawOrLabel.'.
+                    " Valid values are 'raw' and 'label'.",
                     PhpCapException::INVALID_ARGUMENT
                 );
             }
@@ -269,7 +270,8 @@ class RedCapProject
         if ($rawOrLabelHeaders != null) {
             if ($rawOrLabelHeaders != 'raw' && $rawOrLabelHeaders != 'label') {
                 throw new PhpCapException(
-                    'Invalid value "'.$rawOrLabelHeaders.'" specified for rawOrLabelHeaders.',
+                    'Invalid value "'.$rawOrLabelHeaders.'" specified for rawOrLabelHeaders.'.
+                    " Valid values are 'raw' and 'label'.",
                     PhpCapException::INVALID_ARGUMENT
                 );
             }
@@ -277,17 +279,17 @@ class RedCapProject
         }
         
         #---------------------------------------
-        # Process exportCheckBoxLabel
+        # Process exportCheckboxLabel
         #---------------------------------------
-        if ($exportCheckBoxLabel != null) {
-            if (gettype($exportCheckBoxLabel) != 'boolean') {
+        if ($exportCheckboxLabel != null) {
+            if (gettype($exportCheckboxLabel) != 'boolean') {
                 throw new PhpCapException(
-                    'Invalid type for filterLogic. It should be a boolean,'
-                    .' but has type: '.gettype($exportCheckBoxLabel).'.',
+                    'Invalid type for exportCheckBoxLabel. It should be a boolean,'
+                    .' but has type: '.gettype($exportCheckboxLabel).'.',
                     PhpCapException::INVALID_ARGUMENT
                 );
             }
-            $data['exportCheckBoxLabel'] = $exportCheckBoxLabel;
+            $data['exportCheckboxLabel'] = $exportCheckboxLabel;
         }
         
         #---------------------------------------
@@ -433,7 +435,108 @@ class RedCapProject
         
         return $records;
     }
-            
+    
+    
+    public function exportReports(
+        $reportId,
+        $format = 'php',
+        $rawOrLabel = 'raw',
+        $rawOrLabelHeaders = 'raw',
+        $exportCheckboxLabel = false
+    ) {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'report',
+                'returnFormat' => 'json'
+        );
+        
+        #------------------------------------------------
+        # Process report ID
+        #------------------------------------------------
+        if (!isset($reportId)) {
+            throw new PhpCapException("No report ID specified for export.", PhpCapException::INVALID_ARGUMENT);
+        }
+        
+        if (is_string($reportId) && !preg_match('/^[0-9]+$/', $reportId)) {
+            throw new PhpCapException(
+                'Report ID "'.$reportId.'" is non-numeric string.',
+                PhpCapException::INVALID_ARGUMENT
+            );
+        } elseif (is_int($reportId) && $reportId < 0) {
+            throw new PhpCapException(
+                'Report ID "'.$reportId.'" is a negative integer.',
+                PhpCapException::INVALID_ARGUMENT
+            );
+        }
+        
+        $data['report_id'] = $reportId;
+        
+        #----------------------------------------------
+        # Process format
+        #----------------------------------------------
+        $legalFormats = array('php', 'csv', 'json', 'xml');
+
+        if (!in_array($format, $legalFormats)) {
+            throw new PhpCapException("Illegal format '".$format."' specified.", PhpCapException::INVALID_ARGUMENT);
+        } elseif ($format === 'php') {
+            $data['format'] = 'json';
+        } else {
+            $data['format'] = $format;
+        }
+        
+        #------------------------------------------
+        # Process rawOrLabel
+        #------------------------------------------
+        if ($rawOrLabel != null) {
+            if ($rawOrLabel != 'raw' && $rawOrLabel != 'label') {
+                throw new PhpCapException(
+                    'Invalid value "'.$rawOrLabel.'" specified for rawOrLabel.'.
+                    " Valid values are 'raw' and 'label'.",
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+            $data['rawOrLabel'] = $rawOrLabel;
+        }
+        
+        #------------------------------------------
+        # Process rawOrLabelHeaders
+        #------------------------------------------
+        if ($rawOrLabelHeaders != null) {
+            if ($rawOrLabelHeaders != 'raw' && $rawOrLabelHeaders != 'label') {
+                throw new PhpCapException(
+                    'Invalid value "'.$rawOrLabelHeaders.'" specified for rawOrLabelHeaders.'.
+                    " Valid values are 'raw' and 'label'.",
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+            $data['rawOrLabel'] = $rawOrLabelHeaders;
+        }
+        
+        #---------------------------------------
+        # Process exportCheckBoxLabel
+        #---------------------------------------
+        if ($exportCheckboxLabel != null) {
+            if (gettype($exportCheckboxLabel) != 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for exportCheckBoxLabel. It should be a boolean,'
+                    .' but has type: '.gettype($exportCheckboxLabel).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+            $data['exportCheckBoxLabel'] = $exportCheckboxLabel;
+        }
+        
+        $records = $this->connection->callWithArray($data);
+        
+        # if the 'php' format was used, convert the JSON records returned into a PHP arrray
+        if (strcmp($format, 'php') === 0) {
+            $records = $this->processJsonExport($records);
+        }
+         
+        return $records;
+    }
+    
+    
     /**
      * Exports the numbers and names of the arms in the project.
      *
@@ -550,6 +653,7 @@ class RedCapProject
                 'format'      => 'json',
                 'returnFormat' => 'json'
         );
+
         $instrumentsData = $this->connection->callWithArray($data);
         
         if (!in_array($format, $legalFormats)) {
@@ -559,6 +663,7 @@ class RedCapProject
         } else {
             $data['format'] = $format;
         }
+
         
         #-------------------------------------------
         # Reformat the data as a map from
