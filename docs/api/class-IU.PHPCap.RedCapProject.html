@@ -114,7 +114,7 @@
 		<b>Namespace:</b> <a href="namespace-IU.html">IU</a>\<a href="namespace-IU.PHPCap.html">PHPCap</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapProject.html#7-886" title="Go to source code">RedCapProject.php</a>
+			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapProject.html#7-980" title="Go to source code">RedCapProject.php</a>
 		<br>
 	</div>
 
@@ -493,7 +493,7 @@ names in the exportRecords method.</p>
 		<td class="attributes"><code>
 			 public 
 
-			array
+			mixed
 			
 			</code>
 		</td>
@@ -504,7 +504,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportInstruments">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#522-558" title="Go to source code">exportInstruments</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#522-573" title="Go to source code">exportInstruments</a>( <span> <var>$format</var> = <span class="php-quote">'php'</span></span> )</code>
 
 		<div class="description short">
 			<p>Exports information about the instruments (data entry forms) for the project.</p>
@@ -521,10 +521,23 @@ names in the exportRecords method.</p>
 }</pre>
 
 
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$format</var></dt>
+					<dd><p>format instruments are exported in:</p>
+
+<ul>
+      <li>'php' - returns data as a PHP array [default]</li>
+      <li>'csv' - string of CSV (comma-separated values)</li>
+      <li>'json' - string of JSON encoded data</li>
+      <li>'xml' - string of XML encoded data</li>
+    </ul></dd>
+				</dl></div>
 
 				<h4>Returns</h4>
 				<div class="list">
-					array<br>map of instrument names to instrument labels.
+					mixed<br><p>For the 'php' format, and array map of instrument names to instrument labels is returned.
+    For all other formats a string is returned.</p>
 				</div>
 
 
@@ -549,7 +562,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_exportInstrumentEventMappings">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#560-597" title="Go to source code">exportInstrumentEventMappings</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#575-612" title="Go to source code">exportInstrumentEventMappings</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the instrument to event mapping for the project.</p>
@@ -607,7 +620,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_importRecords">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#600-673" title="Go to source code">importRecords</a>( <span>mixed <var>$records</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span> </span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#615-715" title="Go to source code">importRecords</a>( <span>mixed <var>$records</var></span>, <span>string <var>$format</var> = <span class="php-quote">'php'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span> </span> )</code>
 
 		<div class="description short">
 			<p>Imports the specified records into the project.</p>
@@ -635,78 +648,10 @@ names in the exportRecords method.</p>
              <li> 'odm' - CDISC ODM XML format, specifically ODM version 1.3.1</li>
            </ul></dd>
 					<dt><var>$type</var></dt>
-					<dd><p>if set to 'flat' then each data element is a record, or
-           if 'eav' then each data element is one value.</p></dd>
-					<dt><var>$overwriteBehavior</var></dt>
 					<dd><ul>
-             <li>normal - blank/empty values will be ignored [default]</li>
-             <li>overwrite - blank/empty values are valid and will overwrite data</li>
+             <li> 'flat' - each data element is a record</li>
+             <li> 'eav' - each data element is one value</li>
            </ul></dd>
-					<dt><var>$returnContent</var></dt>
-					<dd>'count' (the default) or 'ids'.</dd>
-					<dt><var>$dateFormat</var></dt>
-					<dd><p>date format which can be one of the following:</p>
-
-<ul>
-             <li>'YMD' - Y-M-D format (e.g., 2016-12-31) [default]</li>
-             <li>'MDY' - M/D/Y format (e.g., 12/31/2016)</li>
-             <li>'DMY' - D/M/Y format (e.g., 31/12/2016)</li>
-          </ul></dd>
-				</dl></div>
-
-				<h4>Returns</h4>
-				<div class="list">
-					mixed
-				</div>
-
-
-
-
-		</div>
-		</div></td>
-	</tr>
-	<tr data-order="importRecordsFromFile" id="_importRecordsFromFile">
-
-		<td class="attributes"><code>
-			 public 
-
-			mixed
-			
-			</code>
-		</td>
-
-		<td class="name"><div>
-		
-		<!-- PHPCap change -->
-		<!-- <a class="anchor" title="expand/collapse" href="#_importRecordsFromFile">+/-</a> -->
-		<a class="anchor" title="expand/collapse">+/-</a>
-				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#675-717" title="Go to source code">importRecordsFromFile</a>( <span>string <var>$filename</var></span>, <span>string <var>$format</var> = <span class="php-quote">'xml'</span></span>, <span>string <var>$type</var> = <span class="php-quote">'flat'</span></span>, <span>string <var>$overwriteBehavior</var> = <span class="php-quote">'normal'</span></span>, <span>string <var>$returnContent</var> = <span class="php-quote">'count'</span></span>, <span>string <var>$dateFormat</var> = <span class="php-quote">'YMD'</span> </span> )</code>
-
-		<div class="description short">
-			<p>Imports the records from the specified file into the project.</p>
-		</div>
-
-		<div class="description detailed hidden">
-			<p>Imports the records from the specified file into the project.</p>
-
-
-				<h4>Parameters</h4>
-				<div class="list"><dl>
-					<dt><var>$filename</var></dt>
-					<dd>The name of the file containing the records to import.</dd>
-					<dt><var>$format</var></dt>
-					<dd><p>One of the following formats can be specified</p>
-
-<ul>
-             <li> 'csv' - string of CSV (comma-separated values)</li>
-             <li> 'json' - string of JSON encoded values</li>
-             <li> 'xml' - string of XML encoded data (default)</li>
-             <li> 'odm' - CDISC ODM XML format, specifically ODM version 1.3.1</li>
-           </ul></dd>
-					<dt><var>$type</var></dt>
-					<dd><p>if set to 'flat' then each data element is a record, or
-           if 'eav' then each data element is one value.</p></dd>
 					<dt><var>$overwriteBehavior</var></dt>
 					<dd><ul>
              <li>normal - blank/empty values will be ignored [default]</li>
@@ -751,7 +696,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_importFile">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#720-758" title="Go to source code">importFile</a>( <span>string <var>$filename</var></span>, <span>string <var>$recordId</var></span>, <span>string <var>$field</var></span>, <span>string <var>$event</var> = <span class="php-quote">''</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#718-767" title="Go to source code">importFile</a>( <span>string <var>$filename</var></span>, <span>string <var>$recordId</var></span>, <span>string <var>$field</var></span>, <span>string <var>$event</var> = <span class="php-quote">''</span></span> )</code>
 
 		<div class="description short">
 			<p>Imports the file into the field of the record (with the specified event, if any).</p>
@@ -800,7 +745,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_deleteRecords">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#761-791" title="Go to source code">deleteRecords</a>( <span>array <var>$recordIds</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#770-800" title="Go to source code">deleteRecords</a>( <span>array <var>$recordIds</var></span> )</code>
 
 		<div class="description short">
 			<p>Deletes the specified records from the project.</p>
@@ -847,7 +792,7 @@ names in the exportRecords method.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getCallInfo">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#795-811" title="Go to source code">getCallInfo</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#804-820" title="Go to source code">getCallInfo</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the call information for the last cURL call. PHPCap uses cURL to
@@ -894,7 +839,7 @@ communicate with the REDCap API.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getTimeoutInSeconds">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#815-823" title="Go to source code">getTimeoutInSeconds</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#824-832" title="Go to source code">getTimeoutInSeconds</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the timeout in seconds for calls to the REDCap API.</p>
@@ -932,7 +877,7 @@ communicate with the REDCap API.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setTimeoutInSeconds">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#825-833" title="Go to source code">setTimeoutInSeconds</a>( <span>integer <var>$timeoutInSeconds</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#834-842" title="Go to source code">setTimeoutInSeconds</a>( <span>integer <var>$timeoutInSeconds</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the timeout for calls to the REDCap API to the specified number of seconds.</p>
@@ -971,7 +916,7 @@ communicate with the REDCap API.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getConnection">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapProject.html#835-846" title="Go to source code">getConnection</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#844-855" title="Go to source code">getConnection</a>( )</code>
 
 		<div class="description short">
 			<p>Returns the underlying REDCap API connection being used by the project.
@@ -991,6 +936,121 @@ not supported by PHPCap.</p>
 					<code><a href="class-IU.PHPCap.RedCapApiConnection.html">IU\PHPCap\RedCapApiConnection</a></code><br><p>the underlying REDCap API connection being
         used by the project.</p>
 				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="fileToString" id="_fileToString">
+
+		<td class="attributes"><code>
+			 public static
+
+			string
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<!-- <a class="anchor" title="expand/collapse" href="#_fileToString">+/-</a> -->
+		<a class="anchor" title="expand/collapse">+/-</a>
+				
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#857-901" title="Go to source code">fileToString</a>( <span>string <var>$filename</var></span> )</code>
+
+		<div class="description short">
+			<p>Reads the contents of the specified file and returns it as a string.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Reads the contents of the specified file and returns it as a string.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$filename</var></dt>
+					<dd>the name of the file that is to be read.</dd>
+				</dl></div>
+
+				<h4>Returns</h4>
+				<div class="list">
+					string<br>the contents of the specified file.
+				</div>
+
+				<h4>Throws</h4>
+				<div class="list">
+					PHPCapException<br>if an error occurs while trying to read the file.
+				</div>
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="writeStringToFile" id="_writeStringToFile">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<!-- <a class="anchor" title="expand/collapse" href="#_writeStringToFile">+/-</a> -->
+		<a class="anchor" title="expand/collapse">+/-</a>
+				
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#904-934" title="Go to source code">writeStringToFile</a>( <span> <var>$string</var></span>, <span> <var>$filename</var></span>, <span> <var>$append</var> = <span class="php-keyword1">false</span></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="appendStringToFile" id="_appendStringToFile">
+
+		<td class="attributes"><code>
+			 public static
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<!-- <a class="anchor" title="expand/collapse" href="#_appendStringToFile">+/-</a> -->
+		<a class="anchor" title="expand/collapse">+/-</a>
+				
+		<code><a href="source-class-IU.PHPCap.RedCapProject.html#936-940" title="Go to source code">appendStringToFile</a>( <span> <var>$string</var></span>, <span> <var>$filename</var></span> )</code>
+
+		<div class="description short">
+			
+		</div>
+
+		<div class="description detailed hidden">
+			
+
+
+
 
 
 
