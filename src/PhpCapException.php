@@ -58,10 +58,19 @@ class PhpCapException extends \Exception
      */
     const JSON_ERROR = 7;
     
-    /** An error was caused by an input file. The file may not exists, or may not be readable. */
-    const INPUT_FILE_ERROR = 8;
+    /** The output file could not be found, or was found and could not be written */
+    const OUTPUT_FILE_ERROR     = 8;
     
+    /** The input file could not be found. */
+    const INPUT_FILE_NOT_FOUND  = 10;
     
+    /** The input file was found, but is unreadbale */
+    const INPUT_FILE_UNREADABLE = 11;
+    
+    /** The input file contents are invalid */
+    const INPUT_FILE_ERROR      = 12;
+    
+
     /** @var integer|null cURL error number */
     private $curlErrorNumber;
     

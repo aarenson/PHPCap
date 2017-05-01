@@ -530,27 +530,42 @@ class RedCapProject
      * }
      * </code>
      *
-     * @return array map of instrument names to instrument labels.
+     * @param $format string format instruments are exported in:
+     *     <ul>
+     *       <li>'php' - returns data as a PHP array [default]</li>
+     *       <li>'csv' - string of CSV (comma-separated values)</li>
+     *       <li>'json' - string of JSON encoded data</li>
+     *       <li>'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @return mixed For the 'php' format, and array map of instrument names to instrument labels is returned.
+     *     For all other formats a string is returned.
      */
-    public function exportInstruments()
+    public function exportInstruments($format = 'php')
     {
+        $legalFormats = array('php', 'csv', 'json', 'xml');
+        
         $data = array(
                 'token'       => $this->apiToken,
                 'content'     => 'instrument',
                 'format'      => 'json',
                 'returnFormat' => 'json'
         );
-        $callData = http_build_query($data, '', '&');
-        $instrumentsData = $this->connection->call($callData);
+        $instrumentsData = $this->connection->callWithArray($data);
         
-        $instrumentData = $this->processJsonExport($instrumentsData);
+        if (!in_array($format, $legalFormats)) {
+            throw new PhpCapException("Illegal format '".$format."' specified.", PhpCapException::INVALID_ARGUMENT);
+        } elseif ($format === 'php') {
+            $instrumentData = $this->processJsonExport($instrumentsData);
+        } else {
+            $data['format'] = $format;
+        }
         
         #-------------------------------------------
         # Reformat the data as a map from
         # "instrument name" to "instrument label"
         #-------------------------------------------
         $instruments = array();
-        foreach ($instrumentsData as $instr) {
+        foreach ($instrumentData as $instr) {
                 $instruments[$instr['instrument_name']] = $instr['instrument_label'];
         }
         
@@ -614,8 +629,10 @@ class RedCapProject
      *              <li> 'odm' - CDISC ODM XML format, specifically ODM version 1.3.1</li>
      *            </ul>
      * @param string $type
-     *            if set to 'flat' then each data element is a record, or
-     *            if 'eav' then each data element is one value.
+     *            <ul>
+     *              <li> 'flat' - each data element is a record</li>
+     *              <li> 'eav' - each data element is one value</li>
+     *            </ul>
      * @param string $overwriteBehavior
      *            <ul>
      *              <li>normal - blank/empty values will be ignored [default]</li>
@@ -654,7 +671,32 @@ class RedCapProject
             throw new PhpCapException("No records specified for import.", PhpCapException::INVALID_ARGUMENT);
         }
         
+        # Need to check format first, and this code will depend on format
         #else {if (gettype($records) != 'string') {
+        #    throw new PhpCapException("No records specified for import.", PhpCapException::INVALID_ARGUMENT);
+        #}
+        
+        #---------------------------------------
+        # Process format
+        #---------------------------------------
+        if ($format == null) {
+            $format = 'php';
+        }
+        $format = strtolower(trim($format));
+        
+        $legalFormats = array('php', 'csv', 'json', 'xml', 'odm');
+        
+        if (!in_array($format, $legalFormats)) {
+            throw new PhpCapException("Illegal format '".$format."' specified.", PhpCapException::INVALID_ARGUMENT);
+        }
+        
+        if (strcmp($format, 'php') === 0) {
+            $data['format'] = 'json';
+        } else {
+            $data['format'] = $format;
+        }
+        
+
         
         
         // If the PHP format was used, need to convert to JSON
@@ -672,51 +714,7 @@ class RedCapProject
         return $result;
     }
     
-    /**
-     * Imports the records from the specified file into the project.
-     *
-     * @param string $filename
-     *            The name of the file containing the records to import.
-     * @param string $format One of the following formats can be specified
-     *            <ul>
-     *              <li> 'csv' - string of CSV (comma-separated values)</li>
-     *              <li> 'json' - string of JSON encoded values</li>
-     *              <li> 'xml' - string of XML encoded data (default)</li>
-     *              <li> 'odm' - CDISC ODM XML format, specifically ODM version 1.3.1</li>
-     *            </ul>
-     * @param string $type
-     *            if set to 'flat' then each data element is a record, or
-     *            if 'eav' then each data element is one value.
-     * @param string $overwriteBehavior
-     *            <ul>
-     *              <li>normal - blank/empty values will be ignored [default]</li>
-     *              <li>overwrite - blank/empty values are valid and will overwrite data</li>
-     *            </ul>
-     * @param string $returnContent 'count' (the default) or 'ids'.
-     * @param string $dateFormat date format which can be one of the following:
-     *            <ul>
-     *              <li>'YMD' - Y-M-D format (e.g., 2016-12-31) [default]</li>
-     *              <li>'MDY' - M/D/Y format (e.g., 12/31/2016)</li>
-     *              <li>'DMY' - D/M/Y format (e.g., 31/12/2016)</li>
-     *           </ul>
-     * @return mixed
-     */
-    public function importRecordsFromFile(
-        $filename,
-        $format = 'xml',
-        $type = 'flat',
-        $overwriteBehavior = 'normal',
-        $returnContent = 'count',
-        $dateFormat = 'YMD'
-    ) {
-        $records = file_get_contents($filename);
-        
-        $result = $this->importRecords($records, $format, $type, $overwriteBehavior, $returnContent, $dateFormat);
-    
-        return $result;
-    }
-    
-    
+   
     /**
      * Imports the file into the field of the record (with the specified event, if any).
      *
@@ -729,7 +727,15 @@ class RedCapProject
     public function importFile($filename, $recordId, $field, $event = '')
     {
         if (!file_exists($filename)) {
-            throw new PHPCapException('The input file could not be found.', PhpCapException::INPUT_FILE_ERROR);
+            throw new PHPCapException(
+                'The input file "'.$filename.'" could not be found.',
+                PhpCapException::INPUT_FILE_NOT_FOUND
+            );
+        } elseif (!is_readble($filename)) {
+            throw new PHPCapException(
+                'The input file "'.$filename.'" was unreadable.',
+                PhpCapException::INPUT_FILE_NOT_FOUND
+            );
         }
         
         $data = array (
@@ -752,7 +758,10 @@ class RedCapProject
         if (isset($jsonResult)) {
             $result = json_decode($jsonResult, true);
             if (array_key_exists('error', $result)) {
-                throw new PHPCapException($result['error'], PhpCapException::INPUT_FILE_ERROR);
+                throw new PHPCapException(
+                    'The input file "'.$filename.'" cased the following error: '.$result['error'],
+                    PhpCapException::INPUT_FILE_ERROR
+                );
             }
         }
     }
@@ -845,6 +854,91 @@ class RedCapProject
         return $this->connection;
     }
  
+    /**
+     * Reads the contents of the specified file and returns it as a string.
+     *
+     * @param string $filename the name of the file that is to be read.
+     * @throws PHPCapException if an error occurs while trying to read the file.
+     * @return string the contents of the specified file.
+     */
+    public static function fileToString($filename)
+    {
+        if (!file_exists($filename)) {
+            throw new PHPCapException(
+                'The input file "'.$filename.'" could not be found.',
+                PhpCapException::INPUT_FILE_NOT_FOUND
+            );
+        } elseif (!is_readable($filename)) {
+            throw new PHPCapException(
+                'The input file "'.$filename.'" was unreadable.',
+                PhpCapException::INPUT_FILE_NOT_FOUND
+            );
+        }
+        
+        $contents = file_get_contents($filename);
+
+        if ($contents === false) {
+            $error = error_get_last();
+            $errorMessage = null;
+            if ($error != null && array_key_exists('message', $error)) {
+                $errorMessage = $error['message'];
+            }
+            
+            if (isset($errorMessage)) {
+                throw new PHPCapException(
+                    'An error occurred in input file "'.$filename.'": '.$errorMessage,
+                    PhpCapException::INPUT_FILE_ERROR
+                );
+            } else {
+                throw new PHPCapException(
+                    'An error occurred in input file "'.$filename.'"',
+                    PhpCapException::INPUT_FILE_ERROR
+                );
+            }
+        }
+        
+        return $contents;
+    }
+ 
+    
+    public static function writeStringToFile($string, $filename, $append = false)
+    {
+        $result = true;
+        if ($append === true) {
+            $result = file_put_contents($filename, $string, FILE_APPEND);
+        } else {
+            $result = file_put_contents($filename, $string);
+        }
+        
+        if ($result === false) {
+            $error = error_get_last();
+            $errorMessage = null;
+            if ($error != null && array_key_exists('message', $error)) {
+                $errorMessage = $error['message'];
+            }
+            
+            if (isset($errorMessage)) {
+                throw new PHPCapException(
+                    'An error occurred in output file "'.$filename.'": '.$errorMessage,
+                    PhpCapException::OUTPUT_FILE_ERROR
+                );
+            } else {
+                throw new PHPCapException(
+                    'An error occurred in output file "'.$filename.'"',
+                    PhpCapException::OUTPUT_FILE_ERROR
+                );
+            }
+        }
+            
+        return $result;
+    }
+    
+    public static function appendStringToFile($string, $filename)
+    {
+        $result = self::writeStringToFile($string, $filename, true);
+        return $result;
+    }
+    
     
     /**
      * Processes JSON exported from REDCap.
