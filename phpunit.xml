@@ -6,6 +6,8 @@
       <file>tests/PhpCapExceptionTest.php</file>
       <file>tests/RedCapApiConnectionTest.php</file>
       <file>tests/RedCapProjectTest.php</file>
+      <file>tests/RedCapProjectEventsTest.php</file>
+      <file>tests/RedCapProjectInstrumentsTest.php</file>
     </testsuite>
   </testsuites>
   <filter>

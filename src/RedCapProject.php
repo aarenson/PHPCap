@@ -398,7 +398,7 @@ class RedCapProject
         # Process arguments
         #---------------------------------------
         $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format'] = $this->processFormatAgument($format, $legalFormats);
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
         $data['arms'] = $this->processArmsArgument($arms);
 
         
@@ -541,7 +541,7 @@ class RedCapProject
                 $instruments [$instr ['instrument_name']] = $instr ['instrument_label'];
             }
         } else {
-            $instruments = $instrumentData;
+            $instruments = $instrumentsData;
         }
         
         return $instruments;

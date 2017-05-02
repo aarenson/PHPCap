@@ -270,21 +270,6 @@ class RedCapProjectTest extends TestCase
         $this->assertRegExp('/^[0-9]+\.[0-9]+\.[0-9]+$/', $result, 'REDCap version format test.');
     }
     
-    public function testExportInstrument()
-    {
-        $result = self::$longitudinalDataProject->exportInstruments();
-        
-        $expectedResult = [
-            'demographics' => 'Demographics',
-            'contact_info' => 'Contact Info',
-            'lab_data'     => 'Lab Data',
-            'patient_morale_questionnaire' => 'Patient Morale Questionnaire',
-            'completion_data' => 'Completion Data'
-        ];
-        
-        $this->assertEquals($result, $expectedResult, 'Results match expected.');
-    }
-    
     public function testFileReadnAndWrite()
     {
         $content = RedCapProject::fileToString(__DIR__."/data/file.txt");
