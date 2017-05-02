@@ -166,50 +166,16 @@ class RedCapProject
                 'returnFormat' => 'json'
         );
 
-
         #---------------------------------------
         # Process format
         #---------------------------------------
         $legalFormats = array('php', 'csv', 'json', 'xml', 'odm');
-        $data['format'] = $this->processExportFormatArgument($format, $legalFormats);
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
         
-        #----------------------------------
-        # Process type
-        #----------------------------------
-        $type = strtolower(trim($type));
-        if ($type != null && strcmp($type, 'flat') !== 0 && strcmp($type, 'eav') !== 0) {
-            throw new PhpCapException(
-                "Invalid type \"".$type."\". Type should be either 'flat' or 'eav'",
-                PhpCapException::INVALID_ARGUMENT
-            );
-        }
-        $data['type'] = $type;
-        
-        #-----------------------------------------
-        # Process record IDs
-        #-----------------------------------------
-        if ($recordIds != null) {
-            if (!is_array($recordIds)) {
-                throw new PhpCapException(
-                    "recordIds has the wrong type; it should be an array.",
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['records'] = $recordIds;
-        }
-        
-        #----------------------------------
-        # Process fields
-        #----------------------------------
-        if ($fields != null) {
-            if (!is_array($fields)) {
-                throw new PhpCapException(
-                    'Argument "fields" has the wrong type; it should be an array.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['fields'] = $fields;
-        }
+
+        $data['type']    = $this->processTypeArgument($type);
+        $data['records'] = $this->processRecordIdsArgument($recordIds);
+        $fata['fields']  = $this->processFieldsArgument($fields);
         
         #---------------------------------------
         # Process forms
@@ -325,11 +291,8 @@ class RedCapProject
         # actually get the records
         $records = $this->connection->callWithArray($data);
         
-        # if the 'php' format was used, convert the JSON records returned into a PHP arrray
-        if (strcmp($format, 'php') === 0) {
-            $records = $this->processJsonExport($records);
-        }
-     
+        $records = $this->processExport($records, $format);
+      
         return $records;
     }
 
@@ -461,15 +424,8 @@ class RedCapProject
         #----------------------------------------------
         # Process format
         #----------------------------------------------
-        $legalFormats = array('php', 'csv', 'json', 'xml');
-
-        if (!in_array($format, $legalFormats)) {
-            throw new PhpCapException("Illegal format '".$format."' specified.", PhpCapException::INVALID_ARGUMENT);
-        } elseif ($format === 'php') {
-            $data['format'] = 'json';
-        } else {
-            $data['format'] = $format;
-        }
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
         
         #------------------------------------------
         # Process rawOrLabel
@@ -515,10 +471,7 @@ class RedCapProject
         
         $records = $this->connection->callWithArray($data);
         
-        # if the 'php' format was used, convert the JSON records returned into a PHP arrray
-        if (strcmp($format, 'php') === 0) {
-            $records = $this->processJsonExport($records);
-        }
+        $records = $this->processExport($records, $format);
          
         return $records;
     }
@@ -535,7 +488,7 @@ class RedCapProject
      *       <li>'name'</li>
      *     </ul>
      */
-    public function exportArms($format = 'php')
+    public function exportArms($format = 'php') // add: , $arms = null)
     {
         $data = array(
                 'token' => $this->apiToken,
@@ -544,13 +497,11 @@ class RedCapProject
         );
         
         $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format'] = $this->processExportFormatArgument($format, $legalFormats);
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
         
         $arms = $this->connection->callWithArray($data);
         
-        if ($format == 'php') {
-            $arms = $this->processJsonExport($arms);
-        }
+        $arms = $this->processExport($arms, $format);
         
         return $arms;
     }
@@ -567,22 +518,8 @@ class RedCapProject
         #---------------------------------------
         # Process format
         #---------------------------------------
-        if ($format == null) {
-            $format = 'php';
-        }
-        $format = strtolower(trim($format));
-        
-        $legalFormats = array('php', 'csv', 'json', 'xml');
-        
-        if (!in_array($format, $legalFormats)) {
-            throw new PhpCapException("Illegal format '".$format."' specified.", PhpCapException::INVALID_ARGUMENT);
-        }
-        
-        if (strcmp($format, 'php') === 0) {
-            $data['format'] = 'json';
-        } else {
-            $data['format'] = $format;
-        }
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatAgument($format, $legalFormats);
         
         #---------------------------------------------
         # Process arms
@@ -597,13 +534,11 @@ class RedCapProject
             $data['arms'] = $arms;
         }
         
-        $arms = $this->connection->callWithArray($data);
+        $events = $this->connection->callWithArray($data);
         
-        if (strcmp($format, 'php') === 0) {
-            $arms = $this->processJsonExport($arms);
-        }
+        $events = $this->processExport($events, $format);
 
-        return $arms;
+        return $events;
     }
     
     
@@ -611,19 +546,28 @@ class RedCapProject
     /**
      * Exports information about the project, e.g., project ID, project title, creation time.
      *
+     * @param $format string
+     *
      * @return array associative array (map) of project information. See REDCap API documentation
      *         for a list of the fields, or use the print_r function on the results of this method.
      */
-    public function exportProjectInfo()
+    public function exportProjectInfo($format = 'php')
     {
         $data = array(
                 'token' => $this->apiToken,
                 'content' => 'project',
-                'format' => 'json',
                 'returnFormat' => 'json'
         );
+        
+        #---------------------------------------
+        # Process format
+        #---------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
         $projectInfo = $this->connection->callWithArray($data);
-        $projectInfo = $this->processJsonExport($projectInfo);
+        
+        $projectInfo = $this->processExport($projectInfo, $format);
         
         return $projectInfo;
     }
@@ -631,6 +575,8 @@ class RedCapProject
     
     /**
      * Exports metadata about the project, i.e., information about the fields in the project.
+     *
+     * @param $format string
      *
      * @return array associative array (map) of metatdata for the project, which consists of
      *         information about each field. Some examples of the information
@@ -643,12 +589,19 @@ class RedCapProject
         $data = array(
                 'token' => $this->apiToken,
                 'content' => 'metadata',
-                'format' => 'json',
                 'returnFormat' => 'json'
         );
+        
+        #---------------------------------------
+        # Process format
+        #---------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
         $metadata = $this->connection->callWithArray($data);
-        $metadata = $this->processJsonExport($metadata);
-    
+        
+        $metadata = $this->processExport($metadata, $format);
+        
         return $metadata;
     }
     
@@ -691,33 +644,30 @@ class RedCapProject
      */
     public function exportInstruments($format = 'php')
     {
-        $legalFormats = array('php', 'csv', 'json', 'xml');
-        
         $data = array(
                 'token'       => $this->apiToken,
                 'content'     => 'instrument',
-                'format'      => 'json',
                 'returnFormat' => 'json'
         );
 
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
         $instrumentsData = $this->connection->callWithArray($data);
-        
-        if (!in_array($format, $legalFormats)) {
-            throw new PhpCapException("Illegal format '".$format."' specified.", PhpCapException::INVALID_ARGUMENT);
-        } elseif ($format === 'php') {
-            $instrumentData = $this->processJsonExport($instrumentsData);
-        } else {
-            $data['format'] = $format;
-        }
 
-        
-        #-------------------------------------------
-        # Reformat the data as a map from
-        # "instrument name" to "instrument label"
-        #-------------------------------------------
-        $instruments = array();
-        foreach ($instrumentData as $instr) {
-                $instruments[$instr['instrument_name']] = $instr['instrument_label'];
+        $instrumentsData = $this->processExport($instrumentsData, $format);
+            
+            // ------------------------------------------------------
+            // If format is 'php', reformat the data as
+            // a map from "instrument name" to "instrument label"
+            // ------------------------------------------------------
+        if ($format == 'php') {
+            $instruments = array ();
+            foreach ($instrumentsData as $instr) {
+                $instruments [$instr ['instrument_name']] = $instr ['instrument_label'];
+            }
+        } else {
+            $instruments = $instrumentData;
         }
         
         return $instruments;
@@ -757,7 +707,8 @@ class RedCapProject
                 'returnFormat' => 'json'
         );
         $instrumentEventMappings = $this->connection->callWithArray($data);
-        $instrumentEventMappings = $this->processJsonExport($instrumentEventMappings);
+        
+        $instrumentEventMappings = $this->processExport($instrumentEventMappings, $format);
           
         return $instrumentEventMappings;
     }
@@ -1163,47 +1114,54 @@ class RedCapProject
     }
     
     
-    /**
-     * Processes JSON exported from REDCap.
-     *
-     * @param string $jsonRecords
-     * @return array processed JSON records.
-     * @throws PHPCapException if an error occurs.
-     */
-    private function processJsonExport($jsonRecords)
+    private function processExport(& $result, $format)
     {
-        if (empty($jsonRecords)) {
-            $records = array ();
-        } else {
-            $records = json_decode($jsonRecords, true); // true => return as array instead of object
-            
-            $jsonError = json_last_error();
-            
-            switch ($jsonError) {
-                case JSON_ERROR_NONE:
-                    break;
-                default:
-                    throw new PHPCapException(
-                        "JSON error (".$jsonError.") \""
-                        .json_last_error_msg()."\" in REDCap API output."
-                        ."\nThe first 1,000 characters of output returned from REDCap are:\n"
-                        .substr($jsonRecords, 0, 1000),
-                        PhpCapException::JSON_ERROR
-                    );
-                    break;
+        if ($format == 'php') {
+            if (empty($result)) {
+                $result = array ();
+            } else {
+                $result = json_decode($result, true); // true => return as array instead of object
+                
+                $jsonError = json_last_error();
+                
+                switch ($jsonError) {
+                    case JSON_ERROR_NONE:
+                        break;
+                    default:
+                        throw new PHPCapException(
+                            "JSON error (" . $jsonError . ") \"" . json_last_error_msg() .
+                            "\" in REDCap API output." .
+                            "\nThe first 1,000 characters of output returned from REDCap are:\n" .
+                            substr($jsonRecords, 0, 1000),
+                            PhpCapException::JSON_ERROR
+                        );
+                        break;
+                }
+                
+                if (array_key_exists('error', $result)) {
+                    throw new PhpCapException($result ['error'], PhpCapException::REDCAP_API_ERROR);
+                }
             }
-            
-            if (array_key_exists('error', $records)) {
-                throw new PhpCapException($records['error'], PhpCapException::REDCAP_API_ERROR);
+        } else {
+            // If this is a format other than 'php', look for a JSON error, because
+            // all formats return errors as JSON
+            $matches = array();
+            $hasMatch = preg_match('/^[\s]*{"error":"([^"]+)"}[\s]*$/', $result, $matches);
+            if ($hasMatch === 1) {
+                // note: $matches[0] is the complete string that matched
+                //       $matches[1] is just the error message part
+                $message = $matches[1];
+                throw new PhpCapException($message, PhpCapException::REDCAP_API_ERROR);
             }
         }
         
-        return $records;
+        return $result;
     }
     
-    private function processExportFormatArgument(& $format, $legalFormats)
+    
+    private function processFormatArgument(& $format, $legalFormats)
     {
-        if ($format == null) {
+        if (!isset($format)) {
             $format = 'php';
         }
         
@@ -1229,5 +1187,71 @@ class RedCapProject
         }
         
         return $dataFormat;
+    }
+    
+    private function processTypeArgument($type)
+    {
+        if (!isset($type)) {
+            $type = 'flat';
+        }
+        $type = strtolower(trim($type));
+        
+        if (strcmp($type, 'flat') !== 0 && strcmp($type, 'eav') !== 0) {
+            throw new PhpCapException(
+                "Invalid type '".$type."' specified. Type should be either 'flat' or 'eav'",
+                PhpCapException::INVALID_ARGUMENT
+            );
+        }
+        return $type;
+    }
+    
+    private function processRecordIdsArgument($recordIds)
+    {
+        if (!isset($recordIds)) {
+            $recordIds = array();
+        } else {
+            if (!is_array($recordIds)) {
+                throw new PhpCapException(
+                    'The record IDs argument has type "'.gettype($recordIds).'"; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            } else {
+                foreach ($recordIds as $recordId) {
+                    $type = gettype($recordId);
+                    if (strcmp($type, 'integer') !== 0 && strcmp($type, 'string') !== 0) {
+                        $message = 'A record ID with type "'.$type.'" was found.'.
+                                ' Record IDs should be integers or strings.';
+                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                    }
+                }
+            }
+        }
+        return $recordIds;
+    }
+    
+    
+    private function processFieldsArgument($fields)
+    {
+        if (!isset($fields)) {
+            $fields = array();
+        } else {
+            if (!is_array($fields)) {
+                throw new PhpCapException(
+                    'Argument "fields" has the wrong type; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            } else {
+                foreach ($fields as $field) {
+                    $type = gettype($recordId);
+                    if (strcmp($type, 'string') !== 0) {
+                        $message = 'A field with type "'.$type.'" was found in the fields array.'.
+                                ' Fields should be strings.';
+                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                    }
+                }
+            }
+        }
+        
+        return $fields;
     }
 }
