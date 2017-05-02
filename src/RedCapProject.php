@@ -784,7 +784,7 @@ class RedCapProject
         return $result;
     }
     
-    public function deleteFile($recordId, $field, $event = null)
+    public function deleteFile($recordId, $field, $event = null, $repeatInstance = null)
     {
         $data = array (
                 'token'        => $this->apiToken,
@@ -794,54 +794,12 @@ class RedCapProject
         );
         
         #----------------------------------------
-        # Process record ID
+        # Process arguments
         #----------------------------------------
-        if (!isset($recordId)) {
-            throw new PhpCapException('No record Id specified.', PhpCapException::INVALID_ARGUMENT);
-        } else {
-            $type = gettype($recordId);
-            if ($type != 'integer' and $type != 'stirng') {
-                throw new PhpCapException(
-                    'The record ID has type "'.gettype($recordId).
-                    '", but should be an integer or string.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['record_id'] = $recordId;
-        }
-        
-        #-------------------------------------------
-        # Process field
-        #-------------------------------------------
-        if (!isset($field)) {
-            if (!isset($recordId)) {
-                throw new PhpCapException('No field specified.', PhpCapException::INVALID_ARGUMENT);
-            } else {
-                if (gettype($field) != 'string') {
-                    throw new PhpCapException(
-                        'The field has type "'.gettype($field).
-                        '", but should be a string.',
-                        PhpCapException::INVALID_ARGUMENT
-                    );
-                }
-                $data['field'] = $field;
-            }
-        }
-        
-        
-        #-------------------------------------
-        # Process event
-        #-------------------------------------
-        if ($event != null) {
-            if (gettype($event) != 'stirng') {
-                throw new PhpCapException(
-                    'The event has type "'.gettype($event).
-                    '", but should be a string.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['event'] = $event;
-        }
+        $data['record']           = $this->processRecordIdArgument($recordId);
+        $data['field']            = $this->processFieldArgument($field);
+        $data['event']            = $this->processEventArgument($event);
+        $data['repeat_instance']  = $this->processEventArgument($repeatInstance);
         
         $result = $this->connection->callWithArray($data);
         
