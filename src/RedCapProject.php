@@ -330,6 +330,32 @@ class RedCapProject
     }
     
     
+    public function exportFile($recordId, $field, $event = null, $repeatInstance = null)
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'file',
+                'action'       => 'export',
+                'returnFormat' => 'json'
+        );
+        
+        #--------------------------------------------
+        # Process arguments
+        #--------------------------------------------
+        $data['record']           = $this->processRecordIdArgument($recordId);
+        $data['field']            = $this->processFieldArgument($field);
+        $data['event']            = $this->processEventArgument($event);
+        $data['repeat_instance']  = $this->processEventArgument($repeatInstance);
+        
+        #-------------------------------
+        # Get and process file
+        #-------------------------------
+        $file = $this->connection->callWithArray($data);
+        $file = $this->processExport($file, $format = 'file');
+        
+        return $file;
+    }
+    
     /**
      * Exports the numbers and names of the arms in the project.
      *
@@ -644,7 +670,7 @@ class RedCapProject
         }
         $format = strtolower(trim($format));
         
-        $legalFormats = array('php', 'csv', 'json', 'xml', 'odm');
+        $legalFormats = array('csv', 'json', 'odm', 'php', 'xml');
         
         if (!in_array($format, $legalFormats)) {
             throw new PhpCapException("Illegal format '".$format."' specified.", PhpCapException::INVALID_ARGUMENT);
@@ -791,7 +817,7 @@ class RedCapProject
             if (!isset($recordId)) {
                 throw new PhpCapException('No field specified.', PhpCapException::INVALID_ARGUMENT);
             } else {
-                if (gettype($field) != 'stirng') {
+                if (gettype($field) != 'string') {
                     throw new PhpCapException(
                         'The field has type "'.gettype($field).
                         '", but should be a string.',
@@ -1113,6 +1139,19 @@ class RedCapProject
         return $fields;
     }
     
+    private function processFieldArgument($field)
+    {
+        if (!isset($field)) {
+            $message = 'No field was specified.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        } elseif (gettype($field) != 'string') {
+            $message = 'Field has type "'.gettype($field).'", but should be a string.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        }
+        return $field;
+    }
+    
+    
     private function processFormsArgument($forms)
     {
         if (!isset($forms)) {
@@ -1161,6 +1200,18 @@ class RedCapProject
         }
     
         return $events;
+    }
+
+
+    private function processEventArgument($event)
+    {
+        if (!isset($event)) {
+            ; // This might be OK
+        } elseif (gettype($event) != 'string') {
+            $message = 'Event has type "'.gettype($field).'", but should be a string.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        }
+        return $event;
     }
     
     private function processRawOrLabelArgument($rawOrLabel)
@@ -1325,5 +1376,35 @@ class RedCapProject
         }
         
         return $arms;
+    }
+    
+    private function processRecordIdArgument($recordId)
+    {
+        if (!isset($recordId)) {
+            throw new PhpCapException("No record ID specified.", PhpCapException::INVALID_ARGUMENT);
+        }
+    
+        if (!is_string($recordId) && !is_int($recordId)) {
+            $message = 'The record ID has type "'.gettype($reportId).
+                '", but it should be a string or integer.';
+            throw new PhpCapException($message, PhpCap::INVALID_ARGUMENT);
+        }
+    
+        return $recordId;
+    }
+    
+    private function processRepeatInstanceArgument($repeatInstance)
+    {
+        if (!isset($repeatInstance)) {
+            ; // Might be OK
+        }
+    
+        if (!is_string($repeatInstance) && !is_int($repeatInstance)) {
+            $message = 'The repeat instance has type "'.gettype($reportId).
+            '", but it should be a string or integer.';
+            throw new PhpCapException($message, PhpCap::INVALID_ARGUMENT);
+        }
+    
+        return $repeatInstance;
     }
 }
