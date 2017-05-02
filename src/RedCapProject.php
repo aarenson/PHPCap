@@ -710,8 +710,15 @@ class RedCapProject
      * @param string $event the event of the record to import the file into.
      * @throws PHPCapException
      */
-    public function importFile($filename, $recordId, $field, $event = '')
+    public function importFile($filename, $recordId, $field, $event = null, $repeatInstance = null)
     {
+        $data = array (
+                'token'        => $this->apiToken,
+                'content'      => 'file',
+                'action'       => 'import',
+                'returnFormat' => 'json'
+        );
+        
         if (!file_exists($filename)) {
             throw new PHPCapException(
                 'The input file "'.$filename.'" could not be found.',
@@ -723,23 +730,17 @@ class RedCapProject
                 PhpCapException::INPUT_FILE_NOT_FOUND
             );
         }
-        
-        $data = array (
-                'token'        => $this->apiToken,
-                'content'      => 'file',
-                'action'       => 'import',
-                'returnFormat' => 'json'
-        );
-        
         $data['file']   = $filename;
-        $data['record'] = $recordId;
-        $data['field']  = $field;
-        if (isset($event)) {
-            $data['event']  = $event;
-        }
         
-        $callData = http_build_query($data, '', '&');
-        $jsonResult = $this->connection->call($callData);
+        #----------------------------------------
+        # Process non-file arguments
+        #----------------------------------------
+        $data['record']           = $this->processRecordIdArgument($recordId);
+        $data['field']            = $this->processFieldArgument($field);
+        $data['event']            = $this->processEventArgument($event);
+        $data['repeat_instance']  = $this->processEventArgument($repeatInstance);
+
+        $jsonResult = $this->connection->callWithArray($data);
         
         if (isset($jsonResult)) {
             $result = json_decode($jsonResult, true);
