@@ -167,130 +167,29 @@ class RedCapProject
         );
 
         #---------------------------------------
-        # Process format
+        # Process the arguments
         #---------------------------------------
         $legalFormats = array('php', 'csv', 'json', 'xml', 'odm');
         $data['format'] = $this->processFormatArgument($format, $legalFormats);
         
-
         $data['type']    = $this->processTypeArgument($type);
         $data['records'] = $this->processRecordIdsArgument($recordIds);
-        $fata['fields']  = $this->processFieldsArgument($fields);
+        $data['fields']  = $this->processFieldsArgument($fields);
+        $data['forms']   = $this->processFormsArgument($forms);
+        $data['events']  = $this->processEventsArgument($events);
+        
+        $data['rawOrLabel']             = $this->processRawOrLabelArgument($rawOrLabel);
+        $data['rawOrLabelHeaders']      = $this->processRawOrLabelHeadersArgument($rawOrLabelHeaders);
+        $data['exportCheckboxLabel']    = $this->processExportCheckboxLabelArgument($exportCheckboxLabel);
+        $data['exportSurveyFields']     = $this->processExportSurveyFieldsArgument($exportSurveyFields);
+        $data['exportDataAccessGroups'] = $this->processExportDataAccessGroupsArgument($exportDataAccessGroups);
+        
+        $data['filterLogic'] = $this->processFilterLogicArgument($filterLogic);
         
         #---------------------------------------
-        # Process forms
+        # Get the records and process them
         #---------------------------------------
-        if ($forms != null) {
-            if (!is_array($forms)) {
-                throw new PhpCapException(
-                    'Argument "forms" has the wrong type; it should be an array.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['forms'] = $forms;
-        }
-        
-        #------------------------------------
-        # Process events
-        #------------------------------------
-        if ($events != null) {
-            if (!is_array($events)) {
-                throw new PhpCapException(
-                    'Argument "events" has the wrong type; it should be an array.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['events'] = $events;
-        }
-        
-        #------------------------------------------
-        # Process rawOrLabel
-        #------------------------------------------
-        if ($rawOrLabel != null) {
-            if ($rawOrLabel != 'raw' && $rawOrLabel != 'label') {
-                throw new PhpCapException(
-                    'Invalid value "'.$rawOrLabel.'" specified for rawOrLabel.'.
-                    " Valid values are 'raw' and 'label'.",
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['rawOrLabel'] = $rawOrLabel;
-        }
-
-        #------------------------------------------
-        # Process rawOrLabelHeaders
-        #------------------------------------------
-        if ($rawOrLabelHeaders != null) {
-            if ($rawOrLabelHeaders != 'raw' && $rawOrLabelHeaders != 'label') {
-                throw new PhpCapException(
-                    'Invalid value "'.$rawOrLabelHeaders.'" specified for rawOrLabelHeaders.'.
-                    " Valid values are 'raw' and 'label'.",
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['rawOrLabel'] = $rawOrLabelHeaders;
-        }
-        
-        #---------------------------------------
-        # Process exportCheckboxLabel
-        #---------------------------------------
-        if ($exportCheckboxLabel != null) {
-            if (gettype($exportCheckboxLabel) != 'boolean') {
-                throw new PhpCapException(
-                    'Invalid type for exportCheckBoxLabel. It should be a boolean,'
-                    .' but has type: '.gettype($exportCheckboxLabel).'.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['exportCheckboxLabel'] = $exportCheckboxLabel;
-        }
-        
-        #---------------------------------------
-        # Process exportSurveyFields
-        #---------------------------------------
-        if ($exportSurveyFields != null) {
-            if (gettype($exportSurveyFields) != 'boolean') {
-                throw new PhpCapException(
-                    'Invalid type for filterLogic. It should be a boolean,'
-                    .' but has type: '.gettype($exportSurveyFields).'.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['exportSurveyFields'] = $exportSurveyFields;
-        }
-             
-        #---------------------------------------
-        # Process exportDataAccessGroups
-        #---------------------------------------
-        if ($exportDataAccessGroups != null) {
-            if (gettype($exportDataAccessGroups) != 'boolean') {
-                throw new PhpCapException(
-                    'Invalid type for filterLogic. It should be a boolean,'
-                    .' but has type: '.gettype($exportDataAccessGroups).'.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['exportDataAccessGroups'] = $exportDataAccessGroups;
-        }
-        
-        
-        #----------------------------------------
-        # Process filter logic
-        #----------------------------------------
-        if ($filterLogic != null) {
-            if (gettype($filterLogic) != 'string') {
-                throw new PhpCapException(
-                    'Invalid type for filterLogic. It should be a string, but has type: '.gettype($filterlogic).'.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['filterLogic'] = $filterLogic;
-        }
-        
-        
-        # actually get the records
         $records = $this->connection->callWithArray($data);
-        
         $records = $this->processExport($records, $format);
       
         return $records;
@@ -386,7 +285,16 @@ class RedCapProject
         return $records;
     }
     
-    
+    /**
+     * Exports the records produced by the specified report.
+     *
+     * @param mixed $reportId integer or numeric string ID of the report to use.
+     * @param string $format output data format.
+     * @param string $rawOrLabel
+     * @param string $rawOrLabelHeaders
+     * @param string $exportCheckboxLabel
+     * @return mixed the records generated by the speficied report in the specified format.
+     */
     public function exportReports(
         $reportId,
         $format = 'php',
@@ -401,76 +309,21 @@ class RedCapProject
         );
         
         #------------------------------------------------
-        # Process report ID
+        # Process arguments
         #------------------------------------------------
-        if (!isset($reportId)) {
-            throw new PhpCapException("No report ID specified for export.", PhpCapException::INVALID_ARGUMENT);
-        }
-        
-        if (is_string($reportId) && !preg_match('/^[0-9]+$/', $reportId)) {
-            throw new PhpCapException(
-                'Report ID "'.$reportId.'" is non-numeric string.',
-                PhpCapException::INVALID_ARGUMENT
-            );
-        } elseif (is_int($reportId) && $reportId < 0) {
-            throw new PhpCapException(
-                'Report ID "'.$reportId.'" is a negative integer.',
-                PhpCapException::INVALID_ARGUMENT
-            );
-        }
-        
-        $data['report_id'] = $reportId;
-        
-        #----------------------------------------------
-        # Process format
-        #----------------------------------------------
+        $data['report_id'] = $this->processReportIdArgument($reportId);
+
         $legalFormats = array('csv', 'json', 'php', 'xml');
         $data['format'] = $this->processFormatArgument($format, $legalFormats);
+
+        $data['rawOrLabel']          = $this->processRawOrLabelArgument($rawOrLabel);
+        $data['rawOrLabelHeaders']   = $this->processRawOrLabelHeadersArgument($rawOrLabelHeaders);
+        $data['exportCheckboxLabel'] = $this->processExportCheckboxLabel($exportCheckboxLabel);
         
-        #------------------------------------------
-        # Process rawOrLabel
-        #------------------------------------------
-        if ($rawOrLabel != null) {
-            if ($rawOrLabel != 'raw' && $rawOrLabel != 'label') {
-                throw new PhpCapException(
-                    'Invalid value "'.$rawOrLabel.'" specified for rawOrLabel.'.
-                    " Valid values are 'raw' and 'label'.",
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['rawOrLabel'] = $rawOrLabel;
-        }
-        
-        #------------------------------------------
-        # Process rawOrLabelHeaders
-        #------------------------------------------
-        if ($rawOrLabelHeaders != null) {
-            if ($rawOrLabelHeaders != 'raw' && $rawOrLabelHeaders != 'label') {
-                throw new PhpCapException(
-                    'Invalid value "'.$rawOrLabelHeaders.'" specified for rawOrLabelHeaders.'.
-                    " Valid values are 'raw' and 'label'.",
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['rawOrLabel'] = $rawOrLabelHeaders;
-        }
-        
-        #---------------------------------------
-        # Process exportCheckBoxLabel
-        #---------------------------------------
-        if ($exportCheckboxLabel != null) {
-            if (gettype($exportCheckboxLabel) != 'boolean') {
-                throw new PhpCapException(
-                    'Invalid type for exportCheckBoxLabel. It should be a boolean,'
-                    .' but has type: '.gettype($exportCheckboxLabel).'.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-            $data['exportCheckBoxLabel'] = $exportCheckboxLabel;
-        }
-        
+        #---------------------------------------------------
+        # Get and process records
+        #---------------------------------------------------
         $records = $this->connection->callWithArray($data);
-        
         $records = $this->processExport($records, $format);
          
         return $records;
@@ -488,7 +341,7 @@ class RedCapProject
      *       <li>'name'</li>
      *     </ul>
      */
-    public function exportArms($format = 'php') // add: , $arms = null)
+    public function exportArms($format = 'php', $arms = [])
     {
         $data = array(
                 'token' => $this->apiToken,
@@ -498,16 +351,16 @@ class RedCapProject
         
         $legalFormats = array('csv', 'json', 'php', 'xml');
         $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['arms']   = $this->processArmsArgument($arms);
         
         $arms = $this->connection->callWithArray($data);
-        
         $arms = $this->processExport($arms, $format);
         
         return $arms;
     }
     
     
-    public function exportEvents($format = 'php', $arms = null)
+    public function exportEvents($format = 'php', $arms = [])
     {
         $data = array(
                 'token' => $this->apiToken,
@@ -516,26 +369,17 @@ class RedCapProject
         );
         
         #---------------------------------------
-        # Process format
+        # Process arguments
         #---------------------------------------
         $legalFormats = array('csv', 'json', 'php', 'xml');
         $data['format'] = $this->processFormatAgument($format, $legalFormats);
+        $data['arms'] = $this->processArmsArgument($arms);
+
         
-        #---------------------------------------------
-        # Process arms
-        #---------------------------------------------
-        if ($arms != null) {
-            if (!is_array($arms)) {
-                throw new PhpCapException(
-                    "Argument 'arms' has type '".gettype($arms)."', but it should be an array.",
-                    PhpCapException::INVALID_ARGUMENTS
-                );
-            }
-            $data['arms'] = $arms;
-        }
-        
+        #------------------------------------------------------
+        # Get and process events
+        #------------------------------------------------------
         $events = $this->connection->callWithArray($data);
-        
         $events = $this->processExport($events, $format);
 
         return $events;
@@ -565,8 +409,10 @@ class RedCapProject
         $legalFormats = array('csv', 'json', 'php', 'xml');
         $data['format'] = $this->processFormatArgument($format, $legalFormats);
         
+        #---------------------------------------
+        # Get and process project information
+        #---------------------------------------
         $projectInfo = $this->connection->callWithArray($data);
-        
         $projectInfo = $this->processExport($projectInfo, $format);
         
         return $projectInfo;
@@ -598,8 +444,10 @@ class RedCapProject
         $legalFormats = array('csv', 'json', 'php', 'xml');
         $data['format'] = $this->processFormatArgument($format, $legalFormats);
         
+        #-------------------------------------------
+        # Get and process metadata
+        #-------------------------------------------
         $metadata = $this->connection->callWithArray($data);
-        
         $metadata = $this->processExport($metadata, $format);
         
         return $metadata;
@@ -657,10 +505,10 @@ class RedCapProject
 
         $instrumentsData = $this->processExport($instrumentsData, $format);
             
-            // ------------------------------------------------------
-            // If format is 'php', reformat the data as
-            // a map from "instrument name" to "instrument label"
-            // ------------------------------------------------------
+        #------------------------------------------------------
+        # If format is 'php', reformat the data as
+        # a map from "instrument name" to "instrument label"
+        #------------------------------------------------------
         if ($format == 'php') {
             $instruments = array ();
             foreach ($instrumentsData as $instr) {
@@ -698,7 +546,7 @@ class RedCapProject
      *       <li>'form'</li>
      *     </ul>
      */
-    public function exportInstrumentEventMappings()
+    public function exportInstrumentEventMappings($format = 'php', $arms = [])
     {
         $data = array(
                 'token'       => $this->apiToken,
@@ -706,8 +554,18 @@ class RedCapProject
                 'format'      => 'json',
                 'returnFormat' => 'json'
         );
-        $instrumentEventMappings = $this->connection->callWithArray($data);
         
+        #------------------------------------------
+        # Process arguments
+        #------------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatAgument($format, $legalFormats);
+        $data['arms'] = $this->processArmsArgument($arms);
+        
+        #---------------------------------------------
+        # Get and process instrument-event mappings
+        #---------------------------------------------
+        $instrumentEventMappings = $this->connection->callWithArray($data);
         $instrumentEventMappings = $this->processExport($instrumentEventMappings, $format);
           
         return $instrumentEventMappings;
@@ -1242,7 +1100,7 @@ class RedCapProject
                 );
             } else {
                 foreach ($fields as $field) {
-                    $type = gettype($recordId);
+                    $type = gettype($field);
                     if (strcmp($type, 'string') !== 0) {
                         $message = 'A field with type "'.$type.'" was found in the fields array.'.
                                 ' Fields should be strings.';
@@ -1253,5 +1111,219 @@ class RedCapProject
         }
         
         return $fields;
+    }
+    
+    private function processFormsArgument($forms)
+    {
+        if (!isset($forms)) {
+            $forms = array();
+        } else {
+            if (!is_array($forms)) {
+                throw new PhpCapException(
+                    'The forms argument has invalid type "'.gettype($forms).'"; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            } else {
+                foreach ($forms as $form) {
+                    $type = gettype($form);
+                    if (strcmp($type, 'string') !== 0) {
+                        $message = 'A form with type "'.$type.'" was found in the forms array.'.
+                                ' Forms should be strings.';
+                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                    }
+                }
+            }
+        }
+    
+        return $forms;
+    }
+    
+    private function processEventsArgument($events)
+    {
+        if (!isset($events)) {
+            $events = array();
+        } else {
+            if (!is_array($events)) {
+                throw new PhpCapException(
+                    'The events argument has invalid type "'.gettype($events).'"; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            } else {
+                foreach ($events as $event) {
+                    $type = gettype($event);
+                    if (strcmp($type, 'string') !== 0) {
+                        $message = 'An event with type "'.$type.'" was found in the events array.'.
+                                ' Events should be strings.';
+                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                    }
+                }
+            }
+        }
+    
+        return $events;
+    }
+    
+    private function processRawOrLabelArgument($rawOrLabel)
+    {
+        if (!isset($rawOrLabel)) {
+            $rawOrLabel = 'raw';
+        } else {
+            if ($rawOrLabel != 'raw' && $rawOrLabel != 'label') {
+                throw new PhpCapException(
+                    'Invalid value "'.$rawOrLabel.'" specified for rawOrLabel.'.
+                    " Valid values are 'raw' and 'label'.",
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $rawOrLabel;
+    }
+    
+
+    private function processRawOrLabelHeadersArgument($rawOrLabelHeaders)
+    {
+        if (!isset($rawOrLabelHeaders)) {
+            $rawOrLabelHeaders = 'raw';
+        } else {
+            if ($rawOrLabelHeaders != 'raw' && $rawOrLabelHeaders != 'label') {
+                throw new PhpCapException(
+                    'Invalid value "'.$rawOrLabelHeaders.'" specified for rawOrLabelHeaders.'.
+                    " Valid values are 'raw' and 'label'.",
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $rawOrLabelHeaders;
+    }
+    
+    private function processExportCheckboxLabelArgument($exportCheckboxLabel)
+    {
+        if ($exportCheckboxLabel == null) {
+            $exportCheckboxLabel = false;
+        } else {
+            if (gettype($exportCheckboxLabel) != 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for exportCheckboxLabel. It should be a boolean (true or false),'
+                    .' but has type: '.gettype($exportCheckboxLabel).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $exportCheckboxLabel;
+    }
+    
+
+    private function processExportSurveyFieldsArgument($exportSurveyFields)
+    {
+        if ($exportSurveyFields == null) {
+            $exportSurveyFields = false;
+        } else {
+            if (gettype($exportSurveyFields) != 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for exportSurveyFields. It should be a boolean (true or false),'
+                    .' but has type: '.gettype($exportSurveyFields).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $exportSurveyFields;
+    }
+    
+    private function processExportDataAccessGroupsArgument($exportDataAccessGroups)
+    {
+        if ($exportDataAccessGroups == null) {
+            $exportDataAccessGroups = false;
+        } else {
+            if (gettype($exportDataAccessGroups) != 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for exportDataAccessGroups. It should be a boolean (true or false),'
+                    .' but has type: '.gettype($exportDataAccessGroups).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $exportDataAccessGroups;
+    }
+    
+    private function processFilterLogicArgument($filterLogic)
+    {
+        if ($filterLogic == null) {
+            $filterLogic = '';
+        } else {
+            if (gettype($filterLogic) != 'string') {
+                throw new PhpCapException(
+                    'Invalid type for filterLogic. It should be a string, but has type "'.gettype($filterlogic).'".',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $filterLogic;
+    }
+    
+    private function processReportIdArgument($reportId)
+    {
+        if (!isset($reportId)) {
+            throw new PhpCapException("No report ID specified for export.", PhpCapException::INVALID_ARGUMENT);
+        }
+        
+        if (is_string($reportId)) {
+            if (!preg_match('/^[0-9]+$/', $reportId)) {
+                throw new PhpCapException(
+                    'Report ID "'.$reportId.'" is non-numeric string.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        } elseif (is_int($reportId)) {
+            if ($reportId < 0) {
+                throw new PhpCapException(
+                    'Report ID "'.$reportId.'" is a negative integer.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        } else {
+            $message = 'The report ID has type "'.gettype($reportId).
+                '", but it should be an integer or a (numeric) string.';
+            throw new PhpCapException($message, PhpCap::INVALID_ARGUMENT);
+        }
+        
+        return $reportId;
+    }
+    
+    private function processArmsArgument($arms)
+    {
+        if (!isset($arms)) {
+            $arms = arrray();
+        } else {
+            if (!is_array($arms)) {
+                throw new PhpCapException(
+                    'The arms argument has invalid type "'.gettype($events).'"; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        
+        foreach ($arms as $arm) {
+            if (is_string($arm)) {
+                if (! preg_match('/^[0-9]+$/', $arm)) {
+                    throw new PhpCapException(
+                        'Arm number "' . $arm . '" is non-numeric string.',
+                        PhpCapException::INVALID_ARGUMENT
+                    );
+                }
+            } elseif (is_int($arm)) {
+                if ($arm < 0) {
+                    throw new PhpCapException(
+                        'Arm number "' . $arm . '" is a negative integer.',
+                        PhpCapException::INVALID_ARGUMENT
+                    );
+                }
+            } else {
+                $message = 'An arm was found in the arms array that has type "'.gettype($reportId).
+                    '"; it should be an integer or a (numeric) string.';
+                throw new PhpCapException($message, PhpCap::INVALID_ARGUMENT);
+            }
+        }
+        
+        return $arms;
     }
 }
