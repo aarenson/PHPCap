@@ -78,7 +78,14 @@ composer install</code></pre></div>
 <li>Once you have your tokens, copy the &quot;config-example.ini&quot; file to a file
 named &quot;config.ini&quot; and then set the URL in that file to be the
 URL for the API of your REDCap instance, and set the tokens to be
-the tokens requested in the previous step.</li>
+the tokens requested in the previous step.
+<ul>
+<li>To run tests involving the CA certificate file, you will need to set up
+a valid CA certificate file, and set the <strong>ca.certificate.file</strong> property
+in the <strong>config.ini</strong> file to the path to that file. See
+<a href="CACertificateFile.html">CA Certificate file</a> for more information on how to
+do this.</li>
+</ul></li>
 </ol>
 <p>Note: the .gitignore file in PHPCap is set to ignore the <strong>tests/config.ini</strong> file, so that your
 personal API tokens will not be committed to Git. </p>

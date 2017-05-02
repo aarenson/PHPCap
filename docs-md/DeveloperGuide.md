@@ -62,6 +62,11 @@ Before the tests can be run, setup and configuration needs to be completed:
    named "config.ini" and then set the URL in that file to be the
    URL for the API of your REDCap instance, and set the tokens to be
    the tokens requested in the previous step.
+    * To run tests involving the CA certificate file, you will need to set up
+      a valid CA certificate file, and set the __ca.certificate.file__ property
+      in the __config.ini__ file to the path to that file.
+      See [CA Certificate file](CACertificateFile.md) for more information on how to
+      do this.
    
 Note: the .gitignore file in PHPCap is set to ignore the __tests/config.ini__ file, so that your
 personal API tokens will not be committed to Git. 
