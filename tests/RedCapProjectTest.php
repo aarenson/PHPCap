@@ -160,7 +160,7 @@ class RedCapProjectTest extends TestCase
             null,
             "[last_name] = 'Thiel'"
         );
-        $this->assertEquals(count($result), 2);
+        $this->assertEquals(2, count($result), 'Got expected number of records.');
         $firstNameMap = array_flip(array_column($result, 'first_name'));
         $this->assertArrayHasKey('Suzanne', $firstNameMap, 'Has first name test.');
         $this->assertArrayHasKey('Kaia', $firstNameMap, 'Has first name test.');
@@ -170,7 +170,7 @@ class RedCapProjectTest extends TestCase
     {
         $result = self::$basicDemographyProject->exportRecordsAp(['filterLogic' => "[last_name] = 'Thiel'"]);
         
-        $this->assertEquals(count($result), 2);
+        $this->assertEquals(2, count($result));
         $firstNameMap = array_flip(array_column($result, 'first_name'));
         $this->assertArrayHasKey('Suzanne', $firstNameMap, 'Has first name test.');
         $this->assertArrayHasKey('Kaia', $firstNameMap, 'Has first name test.');
@@ -180,7 +180,7 @@ class RedCapProjectTest extends TestCase
     {
         $result = self::$basicDemographyProject->exportRecordsAp(['recordIds' => [1001, 1010, 1100]]);
     
-        $this->assertEquals(count($result), 3);
+        $this->assertEquals(3, count($result));
         $recordIdMap = array_flip(array_column($result, 'record_id'));
         $this->assertArrayHasKey(1001, $recordIdMap, 'Has record ID 1001.');
         $this->assertArrayHasKey(1001, $recordIdMap, 'Has record ID 1010.');
