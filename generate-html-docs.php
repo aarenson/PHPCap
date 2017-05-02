@@ -52,6 +52,9 @@ function translateFile($file, $files)
     $content = str_replace('<pre>', '<div class="description"><pre>', $content);
     $content = str_replace('</pre>', '</pre></div>', $content);
     
+    # Convert links to Markdown documents to links to HTML documents
+    $content = str_replace('.md">', '.html">', $content);
+    
     $html = "<!DOCTYPE html>\n" . "<html>\n" . "<head>\n" . '<meta charset="UTF-8">' . "\n"
             . '<link rel="stylesheet" href="' . 'themes/apigen/theme-phpcap/src/resources/style.css">' . "\n"
             . '<link rel="stylesheet" href="' . 'themes/apigen/theme-phpcap/src/resources/docstyle.css">' . "\n"
