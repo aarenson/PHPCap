@@ -456,7 +456,7 @@ class RedCapProject
      *         See REDCap API documentation
      *         for more information, or use the print_r function on the results of this method.
      */
-    public function exportMetadata()
+    public function exportMetadata($format = 'php')
     {
         $data = array(
                 'token' => $this->apiToken,
