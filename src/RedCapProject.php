@@ -1330,9 +1330,9 @@ class RedCapProject
                     );
                 }
             } else {
-                $message = 'An arm was found in the arms array that has type "'.gettype($reportId).
+                $message = 'An arm was found in the arms array that has type "'.gettype($arm).
                     '"; it should be an integer or a (numeric) string.';
-                throw new PhpCapException($message, PhpCap::INVALID_ARGUMENT);
+                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
             }
         }
         
