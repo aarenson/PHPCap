@@ -726,13 +726,13 @@ class RedCapProject
                 'The input file "'.$filename.'" could not be found.',
                 PhpCapException::INPUT_FILE_NOT_FOUND
             );
-        } elseif (!is_readble($filename)) {
+        } elseif (!is_readable($filename)) {
             throw new PHPCapException(
                 'The input file "'.$filename.'" was unreadable.',
                 PhpCapException::INPUT_FILE_NOT_FOUND
             );
         }
-        $data['file']   = $filename;
+
         
         #----------------------------------------
         # Process non-file arguments
@@ -742,13 +742,23 @@ class RedCapProject
         $data['event']            = $this->processEventArgument($event);
         $data['repeat_instance']  = $this->processEventArgument($repeatInstance);
 
-        $jsonResult = $this->connection->callWithArray($data);
+
+        $basename = pathinfo($filename, PATHINFO_BASENAME);
+        $data['file'] = curl_file_create($filename, 'text/plain', $basename);
         
-        if (isset($jsonResult)) {
+        #---------------------------------------------------------------------
+        # For unknown reasons, "call" (instead of "callWithArray") needs to
+        # be used here (probably something to do with the 'file' data).
+        # REDCap's "API Playground" (also) makes no data conversion for this
+        # method.
+        #---------------------------------------------------------------------
+        $jsonResult = $this->connection->call($data);
+        
+        if (isset($jsonResult) && is_string($jsonResult) && trim($jsonResult) != '') {
             $result = json_decode($jsonResult, true);
             if (array_key_exists('error', $result)) {
                 throw new PHPCapException(
-                    'The input file "'.$filename.'" cased the following error: '.$result['error'],
+                    'The input file "'.$filename.'" caused the following error: '.$result['error'],
                     PhpCapException::INPUT_FILE_ERROR
                 );
             }
@@ -1169,7 +1179,7 @@ class RedCapProject
         if (!isset($event)) {
             ; // This might be OK
         } elseif (gettype($event) != 'string') {
-            $message = 'Event has type "'.gettype($field).'", but should be a string.';
+            $message = 'Event has type "'.gettype($event).'", but should be a string.';
             throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
         }
         return $event;

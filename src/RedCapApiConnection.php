@@ -103,10 +103,10 @@ class RedCapApiConnection
      */
     public function call($data)
     {
-        if (!is_string($data)) {
+        if (!is_string($data) && !is_array($data)) {
             throw new PhpCapException(
                 "Data passed to ".__METHOD__
-                ." has type ".gettype($data). ", but should be a string.",
+                ." has type ".gettype($data). ", but should be a string or an array.",
                 PhpCapException::INVALID_ARGUMENT
             );
         }
@@ -117,6 +117,7 @@ class RedCapApiConnection
         // Post speficied data
         curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, $data);
         $response = curl_exec($this->curlHandle);
+        
         if ($errno = curl_errno($this->curlHandle)) {
             throw new PhpCapException(curl_error($this->curlHandle), PhpCapException::CURL_ERROR, $errno);
         } else {

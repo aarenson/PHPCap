@@ -57,9 +57,9 @@ class RedCapProjectTest extends TestCase
             $project = new RedCapProject(null, self::$config['basic.demography.api.token']);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
-            $this->assertEquals($exception->getCode(), PhpCapException::INVALID_ARGUMENT);
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode());
         }
-        $this->assertTrue($exceptionCaught);
+        $this->assertTrue($exceptionCaught, 'Null API URL exception caught.');
         
         #------------------------------
         # Non-string API URL
@@ -69,10 +69,108 @@ class RedCapProjectTest extends TestCase
             $project = new RedCapProject(123, self::$config['basic.demography.api.token']);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
-            $this->assertEquals($exception->getCode(), PhpCapException::INVALID_ARGUMENT);
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode());
             $this->assertContains('integer', $exception->getMessage());
         }
         $this->assertTrue($exceptionCaught);
+        
+        
+        #----------------------------------
+        # Null API token
+        #----------------------------------
+        $exceptionCaught = false;
+        try {
+            $project = new RedCapProject(self::$config['api.url'], null);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                PhpCapException::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'Null API token exception code check.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'Null API token exception caught.');
+        
+        #----------------------------------
+        # API token with wrong type
+        #----------------------------------
+        $exceptionCaught = false;
+        try {
+            $project = new RedCapProject(self::$config['api.url'], 123);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                PhpCapException::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'API token with wrong type.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'API token with wrong type.');
+        
+        
+        #----------------------------------
+        # API token with invalid character
+        #----------------------------------
+        $exceptionCaught = false;
+        try {
+            $project = new RedCapProject(self::$config['api.url'], '1234567890123456789012345678901G');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                PhpCapException::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'API token with invalid character exception code check.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'API token with invalid character exception caught.');
+        
+        #----------------------------------
+        # API token with incorrect length
+        #----------------------------------
+        $exceptionCaught = false;
+        try {
+            $project = new RedCapProject(self::$config['api.url'], '1234567890123456789012345678901');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                PhpCapException::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'API token with incorrect length exception code check.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'API token with incorrect length exception caught.');
+        
+        #----------------------------------
+        # SSL verify with wrong type
+        #----------------------------------
+        $exceptionCaught = false;
+        try {
+            $project = new RedCapProject(self::$config['api.url'], '12345678901234567890123456789012', 123);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                PhpCapException::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'SSL verify with wrong type exception code check.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'SSL verify with wrong type exception caught.');
+        
+        #--------------------------------------
+        # CA certificate file with wrong type
+        #--------------------------------------
+        $exceptionCaught = false;
+        try {
+            $project = new RedCapProject(self::$config['api.url'], '12345678901234567890123456789012', true, 123);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                PhpCapException::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'CA certificate file with wrong type exception code check.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'CA certificate file with wrong type exception caught.');
     }
     
     public function testExportProjectInfo()

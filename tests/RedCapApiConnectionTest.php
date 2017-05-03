@@ -153,11 +153,11 @@ class RedCapApiConnectionTest extends TestCase
         self::$curlErrorMessage = '';
     }
     
-    public function testCallWithNonStringData()
+    public function testCallWithInvalidData()
     {
         $exceptionCaught = false;
         try {
-            self::$apiConnection->call([1, 2, 3]);
+            self::$apiConnection->call(123);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals($exception->getCode(), PhpCapException::INVALID_ARGUMENT);
