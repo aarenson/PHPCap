@@ -44,11 +44,12 @@ class ArmsTest extends TestCase
     
     public function testExportArmsNonArrayArms()
     {
+        $arms = 'invalid';
         
         # Invalid non-array arm type
         $exceptionCaught = false;
         try {
-            $result = self::$longitudinalDataProject->exportArms('invalid');
+            $result = self::$longitudinalDataProject->exportArms($format = 'php', $arms);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
@@ -68,7 +69,7 @@ class ArmsTest extends TestCase
         # Invalid non-array arm type
         $exceptionCaught = false;
         try {
-            $result = self::$longitudinalDataProject->exportArms($arms);
+            $result = self::$longitudinalDataProject->exportArms($format = 'php', $arms);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
@@ -88,7 +89,7 @@ class ArmsTest extends TestCase
         # Invalid non-array arm type
         $exceptionCaught = false;
         try {
-            $result = self::$longitudinalDataProject->exportArms($arms);
+            $result = self::$longitudinalDataProject->exportArms($format = 'php', $arms);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
