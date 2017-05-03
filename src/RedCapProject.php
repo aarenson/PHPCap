@@ -708,6 +708,8 @@ class RedCapProject
      * @param string $recordId the record ID of the record to import the file into.
      * @param string $field the field of the record to import the file into.
      * @param string $event the event of the record to import the file into.
+     * @param string $repeatInstance
+     *
      * @throws PHPCapException
      */
     public function importFile($filename, $recordId, $field, $event = null, $repeatInstance = null)
@@ -1018,7 +1020,7 @@ class RedCapProject
         if (!in_array($format, $legalFormats)) {
             $message = 'Invalid format "'.$format.'" specified.'
                 .' The format should be one of the following: "'.
-                implode('", "', $legalFormats).'"."';
+                implode('", "', $legalFormats).'".';
             throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
         }
         

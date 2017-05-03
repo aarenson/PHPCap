@@ -38,6 +38,30 @@ class RedCapProjectEventsTest extends TestCase
         
         $result = self::$longitudinalDataProject->exportEvents($format = 'php', $arms = [2]);
         $this->assertEquals(6, count($result), 'Number of results matchedfor arm 2.');
+        
+        # Invalid format
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->exportEvents($format = 'txt');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode(), 'Invalid format argument.');
+        }
+        $this->assertTrue($exceptionCaught, 'Invalid format exception caught.');
+
+        # Invalid format type
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->exportEvents($format = [1,2,3]);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                PhpCapException::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'Invalid format type argument.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'Invalid format type exception caught.');
     }
 
     /**
@@ -47,19 +71,30 @@ class RedCapProjectEventsTest extends TestCase
     {
         $result = self::$longitudinalDataProject->exportEvents($format = 'csv');
         
-        ### print $result."\n";
-        
         $parser = \KzykHys\CsvParser\CsvParser::fromString($result);
         $csv = $parser->parse();
         
+        # csv should have 15 rows (1 header row, and 14 data rows)
+        $this->assertEquals(15, count($csv), 'Correct number of rows');
+        
+        $expectedHeader = [
+            'event_name', 'arm_num', 'day_offset', 'offset_min', 'offset_max', 'unique_event_name', 'custom_event_label'
+        ];
+        $header = $csv[0];
+        $this->assertEquals($expectedHeader, $header, 'CSV headers match.');
+        
         $firstDataRow = $csv[1];
         
-        /**
-        $instrumentName  = $firstDataRow[0];
-        $instrumentLabel = $firstDataRow[1];
-
-        $this->assertEquals('demographics', $instrumentName, 'Instrument name match.');
-        $this->assertEquals('Basic Demography Form', $instrumentLabel, 'Instrument label match.');
-        **/
+        $eventNames = array_column($csv, 0);
+        array_shift($eventNames);
+        
+        $expectedEventNames = [
+            'Enrollment', 'Dose 1', 'Visit 1', 'Dose 2', 'Visit 2',
+            'Dose 3', 'Visit 3', 'Final visit',
+            'Enrollment', 'First dose', 'First visit',
+            'Second dose', 'Second visit', 'Final visit'
+        ];
+        
+        $this->assertEquals($expectedEventNames, $eventNames, 'Event names comparison.');
     }
 }
