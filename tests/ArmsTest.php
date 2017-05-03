@@ -79,4 +79,24 @@ class ArmsTest extends TestCase
         }
         $this->assertTrue($exceptionCaught, 'Non-numeric string arm exception caught.');
     }
+    
+    public function testExportArmsNegativeArm()
+    {
+    
+        $arms = [-1];
+    
+        # Invalid non-array arm type
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->exportArms($arms);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                PhpCapException::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'Negative arm returned INVALID_ARGUMENT.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'Negative arm exception caught.');
+    }
 }
