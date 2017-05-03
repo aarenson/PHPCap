@@ -10,7 +10,7 @@ use IU\PHPCap\PhpCapException;
 /**
  * PHPUnit tests for the RedCapProject class.
  */
-class RedCapProjectTest extends TestCase
+class ArmsTest extends TestCase
 {
     private static $config;
     private static $basicDemographyProject;
@@ -40,5 +40,43 @@ class RedCapProjectTest extends TestCase
         
         $this->assertEquals($result[0]['name'], 'Drug A');
         $this->assertEquals($result[1]['name'], 'Drug B');
+    }
+    
+    public function testExportArmsNonArrayArms()
+    {
+        
+        # Invalid non-array arm type
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->exportArms('invalid');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                PhpCapException::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'Non-array arm type returned INVALID_ARGUMENT.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'Non-array arm type exception caught.');
+    }
+    
+    public function testExportArmsNonNumericStringArm()
+    {
+    
+        $arms = ['abc'];
+        
+        # Invalid non-array arm type
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->exportArms($arms);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                PhpCapException::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'Non-numeric string arm returned INVALID_ARGUMENT.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'Non-numeric string arm exception caught.');
     }
 }
