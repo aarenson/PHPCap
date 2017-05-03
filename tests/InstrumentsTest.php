@@ -10,7 +10,7 @@ use IU\PHPCap\PhpCapException;
 /**
  * PHPUnit tests for the RedCapProject class.
  */
-class RedCapProjectInstrumentsTest extends TestCase
+class InstrumentsTest extends TestCase
 {
     private static $config;
     private static $basicDemographyProject;

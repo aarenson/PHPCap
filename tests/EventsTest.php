@@ -9,7 +9,7 @@ use IU\PHPCap\RedCapProject;
 /**
  * PHPUnit tests for events for the RedCapProject class.
  */
-class RedCapProjectEventsTest extends TestCase
+class EventsTest extends TestCase
 {
     private static $config;
     private static $basicDemographyProject;
