@@ -1308,7 +1308,7 @@ class RedCapProject
         } else {
             if (!is_array($arms)) {
                 throw new PhpCapException(
-                    'The arms argument has invalid type "'.gettype($events).'"; it should be an array.',
+                    'The arms argument has invalid type "'.gettype($arms).'"; it should be an array.',
                     PhpCapException::INVALID_ARGUMENT
                 );
             }
