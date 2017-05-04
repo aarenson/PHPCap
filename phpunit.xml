@@ -9,6 +9,7 @@
       <file>tests/ArmsTest.php</file>
       <file>tests/EventsTest.php</file>
       <file>tests/FilesTest.php</file>
+      <file>tests/InstrumentEventMappingsTest.php</file>
       <file>tests/InstrumentsTest.php</file>
     </testsuite>
   </testsuites>

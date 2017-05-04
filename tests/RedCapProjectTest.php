@@ -261,6 +261,78 @@ class RedCapProjectTest extends TestCase
         $this->assertArrayHasKey('Kaia', $firstNameMap, 'Has first name test.');
     }
     
+    public function testExportRecordsApWithNullArgument()
+    {
+        $result = self::$basicDemographyProject->exportRecordsAp(null);
+    }
+    
+    public function testExportRecordsApWithTooManyArguments()
+    {
+        $caughtException = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['format' => 'php'], ['type' => 'eav']);
+        } catch (PhpCapException $exception) {
+            $caughtException = true;
+            $this->assertEquals(PhpCapException::TOO_MANY_ARGUMENTS, $exception->getCode(), 'Too many arguments.');
+        }
+        $this->assertTrue($caughtException, 'Caught exception.');
+    }
+    
+    public function testExportRecordsApWithNonArrayArgument()
+    {
+        $caughtException = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp('php');
+        } catch (PhpCapException $exception) {
+            $caughtException = true;
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode(), 'Invalid argument.');
+        }
+        $this->assertTrue($caughtException, 'Caught exception.');
+    }
+    
+    public function testExportRecordsApWithNonStringArgumentName()
+    {
+        $caughtException = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp([123 => 'php']);
+        } catch (PhpCapException $exception) {
+            $caughtException = true;
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode(), 'Invalid argument.');
+        }
+        $this->assertTrue($caughtException, 'Caught exception.');
+    }
+    
+    public function testExportRecordsApWithInvalidArgumentName()
+    {
+        $caughtException = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['typ' => 'eav']);
+        } catch (PhpCapException $exception) {
+            $caughtException = true;
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode(), 'Invalid argument.');
+        }
+        $this->assertTrue($caughtException, 'Caught exception.');
+    }
+    
+    
+    public function testExportRecordsApWithFormsAndEvents()
+    {
+        $result = self::$longitudinalDataProject->exportRecordsAp(
+            ['forms' => ['completion_data'], 'events' => ['final_visit_arm_1', 'final_visit_arm_2']]
+        );
+        
+        $this->assertEquals(100, count($result), 'Number of records check.');
+    
+        $expectedFields = [
+            'study_comments', 'completed_study', 'withdraw_date', 'last_visit_date',
+             'withdraw_reason', 'completion_data_complete'
+        ];
+        $actualFields = array_keys($result[0]);
+        
+        $this->assertEquals($expectedFields, $actualFields, 'Fields check.');
+    }
+    
+    
     public function testExportRecordsApRecordIds()
     {
         $result = self::$basicDemographyProject->exportRecordsAp(['recordIds' => [1001, 1010, 1100]]);
@@ -271,6 +343,28 @@ class RedCapProjectTest extends TestCase
         $this->assertArrayHasKey(1001, $recordIdMap, 'Has record ID 1010.');
         $this->assertArrayHasKey(1100, $recordIdMap, 'Has record ID 1100.');
     }
+    
+    public function testExportRecordsApRecordIdsAsEav()
+    {
+        $result = self::$basicDemographyProject->exportRecordsAp(
+            ['recordIds' => [1001, 1010, 1100], 'fields' => ['age', 'bmi'], 'type' => 'eav']
+        );
+        
+        # 3 rows X 2 fields = 6 records (since EAV type is being used).
+        $this->assertEquals(6, count($result), 'Correct number of records.');
+        
+        $expectedResult = [
+            ['record' => 1001, 'field_name' => 'age', 'value' => 48],
+            ['record' => 1001, 'field_name' => 'bmi', 'value' => 27.7],
+            ['record' => 1010, 'field_name' => 'age', 'value' => 32],
+            ['record' => 1010, 'field_name' => 'bmi', 'value' => 18.3],
+            ['record' => 1100, 'field_name' => 'age', 'value' => 71],
+            ['record' => 1100, 'field_name' => 'bmi', 'value' => 18.6]
+        ];
+        
+        $this->assertEquals($expectedResult, $result, 'Results check.');
+    }
+    
     
     public function testExportRecordsAsCsv()
     {
@@ -290,23 +384,9 @@ class RedCapProjectTest extends TestCase
         $this->assertEquals($recordIds[0], $csvRecordId, 'Correct record ID returned test.');
     }
     
-    public function testExportRecordsApAsCsv()
-    {
-        $recordIds = array ('1001');
+
     
-        $records = self::$basicDemographyProject->exportRecordsAp(['format' => 'csv', 'recordIds' => $recordIds]);
     
-        $this->assertEquals(count($records), 1, 'Correct number of records returned test.');
-    
-        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
-        $csv = $parser->parse();
-    
-        $firstDataRow = $csv[1];
-    
-        $csvRecordId = $firstDataRow[0];
-    
-        $this->assertEquals($recordIds[0], $csvRecordId, 'Correct record ID returned test.');
-    }
     
     public function testExportRecordsAsOdm()
     {
@@ -346,6 +426,170 @@ class RedCapProjectTest extends TestCase
         $xmlRecordId = (string) $xmlRecordIdNodes[0];
         
         $this->assertEquals($recordIds[0], $xmlRecordId, 'Correct record ID returned test.');
+    }
+   
+    
+    public function testExportRecordsApAsCsv()
+    {
+        $recordIds = array ('1001');
+    
+        #----------------------------------------------------------------------
+        # Test checkbox export using defaults ('raw') for headers and labels
+        #----------------------------------------------------------------------
+        $records = self::$longitudinalDataProject->exportRecordsAp(
+            [
+                'format'     => 'csv',
+                'fields'     => ['race'],
+                'events'     => ['enrollment_arm_1', 'enrollment_arm_2']
+            ]
+        );
+        
+        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        $csv = $parser->parse();
+
+        $header = $csv[0];
+        
+        $this->assertEquals(101, count($csv), 'Header plus data rows count check.');
+        
+        $this->assertEquals(1, count($header), 'Header column count check.');
+        $this->assertEquals($header[0], 'race', 'Header column name check.');
+        
+        for ($index = 1; $index <= 100; $index++) {
+            $row = $csv[$index];
+            $this->assertEquals(1, count($row), 'Column count check for row '.$index.'.');
+            $this->assertContains($row[0], [0,1,2,3,4,5,6], 'Column value check for row '.$index.'.');
+        }
+    }
+    
+    public function testExportRecordsApAsCsvWithLabels()
+    {
+        $records = self::$longitudinalDataProject->exportRecordsAp(
+            [
+                'format'            => 'csv',
+                'fields'            => ['race'],
+                'events'            => ['enrollment_arm_1', 'enrollment_arm_2'],
+                'rawOrLabel'        => 'label',
+                'rawOrLabelHeaders' => 'label'
+            ]
+        );
+        
+        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        $csv = $parser->parse();
+        
+        $header = $csv[0];
+        
+        $this->assertEquals(101, count($csv), 'Header plus data rows count check.');
+        
+        $this->assertEquals(1, count($header), 'Header column count check.');
+        $this->assertEquals($header[0], 'Race', 'Header column name check.');
+        
+        $expectedLabels = [
+            'American Indian/Alaska Native',
+            'Asian',
+            'Native Hawaiian or Other Pacific Islander',
+            'Black or African American',
+            'White',
+            'More Than One Race',
+            'Unknown / Not Reported'
+        ];
+        
+
+        for ($index = 1; $index <= 100; $index++) {
+            $row = $csv[$index];
+            $this->assertEquals(1, count($row), 'Column count check for row '.$index.'.');
+            $this->assertContains($row[0], $expectedLabels, 'Column value check for row '.$index.'.');
+        }
+    }
+    
+    /**
+     * Test export records using labels with 'exportCheckboxLabel' unset
+     * (which should set it to a default value of false).
+     */
+    public function testExportRecordsApAsCsvWithExportCheckboxLabelFalse()
+    {
+        $records = self::$longitudinalDataProject->exportRecordsAp(
+            [
+                'format'              => 'csv',
+                'fields'              => ['gym'],
+                'events'              => ['enrollment_arm_1', 'enrollment_arm_2'],
+                'rawOrLabel'          => 'label',
+                'rawOrLabelHeaders'   => 'label'
+            ]
+        );
+        
+        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        $csv = $parser->parse();
+    
+        $header = $csv[0];
+        
+        $this->assertEquals(101, count($csv), 'Header plus data rows count check.');
+    
+        $this->assertEquals(5, count($header), 'Header column count check.');
+            
+        for ($index = 1; $index <= 100; $index++) {
+            $row = $csv[$index];
+            $this->assertEquals(5, count($row), 'Column count check for row '.$index.'.');
+            for ($col = 0; $col < 5; $col++) {
+                $this->assertContains(
+                    $row[$col],
+                    ['Unchecked','Checked'],
+                    'Column value check for row '.$index.', column '.$col.'.'
+                );
+            }
+        }
+    }
+    
+    public function testExportRecordsApAsCsvWithExportCheckboxLabelTrue()
+    {
+        $records = self::$longitudinalDataProject->exportRecordsAp(
+            [
+                'format'              => 'csv',
+                'fields'              => ['gym'],
+                'events'              => ['enrollment_arm_1', 'enrollment_arm_2'],
+                'rawOrLabel'          => 'label',
+                'rawOrLabelHeaders'   => 'label',
+                'exportCheckboxLabel' => true
+            ]
+        );
+        
+        $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
+        $csv = $parser->parse();
+    
+        $header = $csv[0];
+    
+        $this->assertEquals(101, count($csv), 'Header plus data rows count check.');
+    
+        $this->assertEquals(5, count($header), 'Header column count check.');
+    
+        for ($index = 1; $index <= 100; $index++) {
+            $row = $csv[$index];
+            $this->assertEquals(5, count($row), 'Column count check for row '.$index.'.');
+            $this->assertContains(
+                $row[0],
+                ['','Monday'],
+                'Column value check for row '.$index.', column 0.'
+            );
+            $this->assertContains(
+                $row[1],
+                ['','Tuesday'],
+                'Column value check for row '.$index.', column 1.'
+            );
+            $this->assertContains(
+                $row[2],
+                ['','Wednesday'],
+                'Column value check for row '.$index.', column 2.'
+            );
+            $this->assertContains(
+                $row[3],
+                ['','Thursday'],
+                'Column value check for row '.$index.', column 3.'
+            );
+            $this->assertContains(
+                $row[4],
+                ['','Friday'],
+                'Column value check for row '.$index.', column 4.'
+            );
+        }
     }
     
     

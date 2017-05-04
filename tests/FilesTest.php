@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use IU\PHPCap\RedCapProject;
 
 /**
- * PHPUnit tests for events for the RedCapProject class.
+ * PHPUnit tests for files for the RedCapProject class.
  */
 class FilesTest extends TestCase
 {

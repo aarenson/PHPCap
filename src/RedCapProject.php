@@ -135,7 +135,7 @@ class RedCapProject
      *           <li> 'raw' - export the variable/field names [default]</li>
      *           <li> 'label' - export the field labels</li>
      *         </ul>
-     * @param boolean $exportCheckBoxLabel
+     * @param boolean $exportCheckboxLabel
      * @param boolean $exportSurveyFields
      * @param boolean $exportDataAccessGroups
      * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
@@ -221,7 +221,27 @@ class RedCapProject
      */
     public function exportRecordsAp($arrayParameter = [])
     {
+        if (func_num_args() > 1) {
+            $message = __METHOD__.'() was called with '.func_num_args().' arguments, but '
+                    .' it accepts at most 1 argument.';
+            throw new PhpCapException($message, PhpCapException::TOO_MANY_ARGUMENTS);
+        } elseif (!isset($arrayParameter)) {
+            $arrayParameter = [];
+        } elseif (!is_array($arrayParameter)) {
+            $message = 'The argument has type "'
+                    .gettype($arrayParameter)
+                    .'", but it needs to be an array.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        }
+        
+        $num = 1;
         foreach ($arrayParameter as $name => $value) {
+            if (gettype($name) != 'string') {
+                $message = 'Argument name number '.$num.' in the array argument has type '
+                        .gettype($name).', but it needs to be a string.';
+                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            }
+            
             switch ($name) {
                 case 'format':
                     $format = $value;
@@ -247,8 +267,8 @@ class RedCapProject
                 case 'rawOrLabelHeaders':
                     $rawOrLabelHeaders = $value;
                     break;
-                case 'exportCheckBoxLabel':
-                    $exportCheckBoxLabel = $value;
+                case 'exportCheckboxLabel':
+                    $exportCheckboxLabel = $value;
                     break;
                 case 'exportSurveyFields':
                     $exportSurveyFields = $value;
@@ -265,6 +285,7 @@ class RedCapProject
                         PhpCapException::INVALID_ARGUMENT
                     );
             }
+            $num++;
         }
         
         $records = $this->exportRecords(
@@ -276,7 +297,7 @@ class RedCapProject
             isset($events)                 ? $events                 : null,
             isset($rawOrLabel)             ? $rawOrLabel             : 'raw',
             isset($rawOrLabelHeaders)      ? $rawOrLabelHeaders      : 'raw',
-            isset($exportCheckBoxLabel)    ? $exportCheckBoxLabel    : false,
+            isset($exportCheckboxLabel)    ? $exportCheckboxLabel    : false,
             isset($exportSurveyFields)     ? $exportSurveyFields     : false,
             isset($exportDataAccessGroups) ? $exportDataAccessGroups : false,
             isset($filterLogic)            ? $filterLogic            : null
@@ -318,7 +339,7 @@ class RedCapProject
 
         $data['rawOrLabel']          = $this->processRawOrLabelArgument($rawOrLabel);
         $data['rawOrLabelHeaders']   = $this->processRawOrLabelHeadersArgument($rawOrLabelHeaders);
-        $data['exportCheckboxLabel'] = $this->processExportCheckboxLabel($exportCheckboxLabel);
+        $data['exportCheckboxLabel'] = $this->processExportCheckboxLabelArgument($exportCheckboxLabel);
         
         #---------------------------------------------------
         # Get and process records
@@ -585,7 +606,7 @@ class RedCapProject
         # Process arguments
         #------------------------------------------
         $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format'] = $this->processFormatAgument($format, $legalFormats);
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
         $data['arms'] = $this->processArmsArgument($arms);
         
         #---------------------------------------------

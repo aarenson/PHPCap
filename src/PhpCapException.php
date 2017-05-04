@@ -61,6 +61,8 @@ class PhpCapException extends \Exception
     /** The output file could not be found, or was found and could not be written */
     const OUTPUT_FILE_ERROR     = 8;
     
+    const TOO_MANY_ARGUMENTS    = 9;
+    
     /** The input file could not be found. */
     const INPUT_FILE_NOT_FOUND  = 10;
     
