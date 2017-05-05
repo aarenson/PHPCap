@@ -116,9 +116,9 @@ class FilesTest extends TestCase
                 $event = 'enrollment_arm_1'
             );
         } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
             $code = $exception->getCode();
             $this->assertEquals(PhpCapException::INPUT_FILE_UNREADABLE, $code, 'File unreadable check.');
-            $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
         SystemFunctions::resetIsReadable();
@@ -210,6 +210,43 @@ class FilesTest extends TestCase
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
             $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument.');
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testImportFileWithInvalidRepeatInstance()
+    {
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->importFile(
+                $file = __DIR__.'/data/file.txt',
+                $recordId = '1001',
+                $field = 'patient_document',
+                $event = 'enrollment_arm_1',
+                $repeatInstance = true
+            );
+        } catch (PhpCapException $exception) {
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument.');
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testImportFileWithNonExistentField()
+    {
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->importFile(
+                $file = __DIR__.'/data/file.txt',
+                $recordId = '1001',
+                $field = 'patient_doc',
+                $event = 'enrollment_arm_1'
+            );
+        } catch (PhpCapException $exception) {
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::REDCAP_API_ERROR, $code, 'Invalid argument.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');

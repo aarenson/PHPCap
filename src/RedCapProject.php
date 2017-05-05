@@ -366,7 +366,7 @@ class RedCapProject
         $data['record']           = $this->processRecordIdArgument($recordId);
         $data['field']            = $this->processFieldArgument($field);
         $data['event']            = $this->processEventArgument($event);
-        $data['repeat_instance']  = $this->processEventArgument($repeatInstance);
+        $data['repeat_instance']  = $this->processRepeatInstanceArgument($repeatInstance);
         
         #-------------------------------
         # Get and process file
@@ -728,7 +728,7 @@ class RedCapProject
                 'action'       => 'import',
                 'returnFormat' => 'json'
         );
-        
+
         if (!file_exists($filename)) {
             throw new PHPCapException(
                 'The input file "'.$filename.'" could not be found.',
@@ -748,7 +748,7 @@ class RedCapProject
         $data['record']           = $this->processRecordIdArgument($recordId);
         $data['field']            = $this->processFieldArgument($field);
         $data['event']            = $this->processEventArgument($event);
-        $data['repeat_instance']  = $this->processEventArgument($repeatInstance);
+        $data['repeat_instance']  = $this->processRepeatInstanceArgument($repeatInstance);
 
 
         $basename = pathinfo($filename, PATHINFO_BASENAME);
@@ -805,7 +805,7 @@ class RedCapProject
         $data['record']           = $this->processRecordIdArgument($recordId);
         $data['field']            = $this->processFieldArgument($field);
         $data['event']            = $this->processEventArgument($event);
-        $data['repeat_instance']  = $this->processEventArgument($repeatInstance);
+        $data['repeat_instance']  = $this->processRepeatInstanceArgument($repeatInstance);
         
         $result = $this->connection->callWithArray($data);
         
@@ -1324,7 +1324,7 @@ class RedCapProject
         } else {
             $message = 'The report ID has type "'.gettype($reportId).
                 '", but it should be an integer or a (numeric) string.';
-            throw new PhpCapException($message, PhpCap::INVALID_ARGUMENT);
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
         }
         
         return $reportId;
@@ -1387,12 +1387,10 @@ class RedCapProject
     {
         if (!isset($repeatInstance)) {
             ; // Might be OK
-        }
-    
-        if (!is_string($repeatInstance) && !is_int($repeatInstance)) {
-            $message = 'The repeat instance has type "'.gettype($reportId).
+        } elseif (!is_string($repeatInstance) && !is_int($repeatInstance)) {
+            $message = 'The repeat instance has type "'.gettype($repeatInstance).
             '", but it should be a string or integer.';
-            throw new PhpCapException($message, PhpCap::INVALID_ARGUMENT);
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
         }
     
         return $repeatInstance;

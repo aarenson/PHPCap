@@ -112,7 +112,12 @@ function curl_error($curlHandle)
 
 function is_readable($file)
 {
-    $isReadable = SystemFunctions::getIsReadable() ? \is_readable($file) : false;
+    $isReadable = SystemFunctions::getIsReadable();
+    
+    if ($isReadable === true) {
+        \is_readable($file);
+    }
+    
     return $isReadable;
 }
 
