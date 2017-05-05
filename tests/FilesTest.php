@@ -34,7 +34,7 @@ class FilesTest extends TestCase
         # Test importing a file
         #------------------------------------
         $result = self::$longitudinalDataProject->importFile(
-            $file = __DIR__.'\data\import-file.txt',
+            $file = __DIR__.'/data/import-file.txt',
             $recordId = '1001',
             $field = 'patient_document',
             $event = 'enrollment_arm_1'
@@ -84,5 +84,134 @@ class FilesTest extends TestCase
         }
         
         $this->assertTrue($exceptionCaught, 'Export non-existant file exception caught.');
+    }
+    
+    public function testImportFileNotFound()
+    {
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->importFile(
+                $file = __DIR__.'/data/'.uniqid().'.txt',
+                $recordId = '1001',
+                $field = 'patient_document',
+                $event = 'enrollment_arm_1'
+            );
+        } catch (PhpCapException $exception) {
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INPUT_FILE_NOT_FOUND, $code, 'File not found check.');
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testImportFileUnreadable()
+    {
+        $exceptionCaught = false;
+        SystemFunctions::setIsReadableToFail();
+        try {
+            $result = self::$longitudinalDataProject->importFile(
+                $file = __DIR__.'/data/file.txt',
+                $recordId = '1001',
+                $field = 'patient_document',
+                $event = 'enrollment_arm_1'
+            );
+        } catch (PhpCapException $exception) {
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INPUT_FILE_UNREADABLE, $code, 'File unreadable check.');
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+        SystemFunctions::resetIsReadable();
+    }
+ 
+    public function testImportFileWithNullRecordId()
+    {
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->importFile(
+                $file = __DIR__.'/data/file.txt',
+                $recordId = null,
+                $field = 'patient_document',
+                $event = 'enrollment_arm_1'
+            );
+        } catch (PhpCapException $exception) {
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+ 
+    public function testImportFileWithInvalidRecordId()
+    {
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->importFile(
+                $file = __DIR__.'/data/file.txt',
+                $recordId = true,
+                $field = 'patient_document',
+                $event = 'enrollment_arm_1'
+            );
+        } catch (PhpCapException $exception) {
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    
+    public function testImportFileWithNullField()
+    {
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->importFile(
+                $file = __DIR__.'/data/file.txt',
+                $recordId = '1001',
+                $field = null,
+                $event = 'enrollment_arm_1'
+            );
+        } catch (PhpCapException $exception) {
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument.');
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testImportFileWithNonStringField()
+    {
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->importFile(
+                $file = __DIR__.'/data/file.txt',
+                $recordId = '1001',
+                $field = 1,
+                $event = 'enrollment_arm_1'
+            );
+        } catch (PhpCapException $exception) {
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument.');
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testImportFileWithNonStringEvent()
+    {
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->importFile(
+                $file = __DIR__.'/data/file.txt',
+                $recordId = '1001',
+                $field = 'patient_document',
+                $event = 1
+            );
+        } catch (PhpCapException $exception) {
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument.');
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
 }

@@ -737,7 +737,7 @@ class RedCapProject
         } elseif (!is_readable($filename)) {
             throw new PHPCapException(
                 'The input file "'.$filename.'" was unreadable.',
-                PhpCapException::INPUT_FILE_NOT_FOUND
+                PhpCapException::INPUT_FILE_UNREADABLE
             );
         }
 
@@ -886,7 +886,7 @@ class RedCapProject
         } elseif (!is_readable($filename)) {
             throw new PHPCapException(
                 'The input file "'.$filename.'" was unreadable.',
-                PhpCapException::INPUT_FILE_NOT_FOUND
+                PhpCapException::INPUT_FILE_UNREADABLE
             );
         }
         
@@ -1375,9 +1375,9 @@ class RedCapProject
         }
     
         if (!is_string($recordId) && !is_int($recordId)) {
-            $message = 'The record ID has type "'.gettype($reportId).
+            $message = 'The record ID has type "'.gettype($recordId).
                 '", but it should be a string or integer.';
-            throw new PhpCapException($message, PhpCap::INVALID_ARGUMENT);
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
         }
     
         return $recordId;
