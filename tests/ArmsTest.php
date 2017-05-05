@@ -33,13 +33,20 @@ class ArmsTest extends TestCase
     {
         $result = self::$longitudinalDataProject->exportArms();
         
-        $this->assertEquals(count($result), 2, 'Number of arms test.');
+        $this->assertEquals(2, count($result), 'Number of arms test.');
         
         $this->assertEquals($result[0]['arm_num'], 1);
         $this->assertEquals($result[1]['arm_num'], 2);
         
         $this->assertEquals($result[0]['name'], 'Drug A');
         $this->assertEquals($result[1]['name'], 'Drug B');
+    }
+    
+    public function testExportArmsWithNullArms()
+    {
+        $result = self::$longitudinalDataProject->exportArms($format = 'php', $arms = null);
+    
+        $this->assertEquals(count($result), 2, 'Number of arms test.');
     }
     
     public function testExportArmsNonArrayArms()

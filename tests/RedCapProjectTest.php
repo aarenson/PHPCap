@@ -173,13 +173,233 @@ class RedCapProjectTest extends TestCase
         $this->assertTrue($exceptionCaught, 'CA certificate file with wrong type exception caught.');
     }
     
+    public function testExportRecordsWithNullFormat()
+    {
+        $callInfo = true;
+        $result = self::$basicDemographyProject->exportRecords($format = null);
+        $this->assertEquals(100, count($result), 'Number of records returned check.');
+    }
+    
+    public function testExportRecordsWithInvalidType()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecords($format = 'php', $type = 'flt');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testExportRecordsApWithNonArrayRecordIds()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['recordIds' => 1001]);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+
+    public function testExportRecordsApWithInvalidRecordIds()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['recordIds' => [false, true]]);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testExportRecordsApWithNonArrayFields()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['fields' => 'last_name']);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testExportRecordsApWithInvalidFields()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['fields' => [123, true]]);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+ 
+    public function testExportRecordsApWithNonArrayForms()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['forms' => 'basic_demography']);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testExportRecordsApWithInvalidForms()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['forms' => [100, false]]);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+
+
+    public function testExportRecordsApWithNonArrayEvents()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['events' => 'enrollment']);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testExportRecordsApWithInvalidEvents()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['events' => [100, false]]);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testExportRecordsApWithInvalidRawOrLabel()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['rawOrLabel' => 'labels']);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+
+    public function testExportRecordsApWithInvalidRawOrLabelHeaders()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['rawOrLabelHeaders' => true]);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+
+
+    public function testExportRecordsApWithInvalidExportCheckboxLabel()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['exportCheckboxLabel' => 'true']);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+
+    public function testExportRecordsApWithInvalidExportSurveyFields()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['exportSurveyFields' => 100]);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testExportRecordsApWithInvalidExportDataAccessGroups()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['exportDataAccessGroups' => [true]]);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+
+    public function testExportRecordsApWithInvalidFilterLogic()
+    {
+        $callInfo = true;
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->exportRecordsAp(['filterLogic' => 123]);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
     public function testExportProjectInfo()
     {
         $callInfo = true;
         $result = self::$basicDemographyProject->exportProjectInfo();
         
         $this->assertEquals($result['project_language'], 'English', 'Project info "project_language" test.');
-        $this->assertEquals($result['purpose_other'], 'PHPCap testing', 'Project info "purpose_other" test.');
     }
     
     public function testExportMetadata()
@@ -597,22 +817,5 @@ class RedCapProjectTest extends TestCase
     {
         $result = self::$basicDemographyProject->exportRedcapVersion();
         $this->assertRegExp('/^[0-9]+\.[0-9]+\.[0-9]+$/', $result, 'REDCap version format test.');
-    }
-    
-    public function testFileReadnAndWrite()
-    {
-        $content = RedCapProject::fileToString(__DIR__."/data/file.txt");
-        $this->assertEquals($content, "Test data file.", 'file.txt content match.');
-        
-        $outputFile = __DIR__."/data/output.txt";
-        $text1 = "This is a test.";
-        RedCapProject::writeStringToFile($text1, $outputFile);
-        $content = RedCapProject::fileToString($outputFile);
-        $this->assertEquals($content, $text1, 'String write check.');
-        
-        $text2 = " Another test.";
-        RedCapProject::appendStringToFile($text2, $outputFile);
-        $content = RedCapProject::fileToString($outputFile);
-        $this->assertEquals($content, $text1 . $text2, 'String append check.');
     }
 }
