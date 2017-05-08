@@ -196,7 +196,7 @@ class RedCapApiConnection
      */
     public function setTimeoutInSeconds($timeoutInSeconds)
     {
-        curl_setopt($this->curlHandle, CURLOPT_TIMEOUT, $this->timeoutInSeconds);
+        curl_setopt($this->curlHandle, CURLOPT_TIMEOUT, $timeoutInSeconds);
         $this->timeoutInSeconds = $timeoutInSeconds;
     }
     

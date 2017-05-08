@@ -165,7 +165,7 @@ class RedCapProject
                 'format'       => 'json',
                 'returnFormat' => 'json'
         );
-
+        
         #---------------------------------------
         # Process the arguments
         #---------------------------------------
@@ -843,7 +843,7 @@ class RedCapProject
      */
     public function getTimeoutInSeconds()
     {
-        return $this->connection->getTimeoutInSeconds;
+        return $this->connection->getTimeoutInSeconds();
     }
     
     /**
@@ -853,7 +853,7 @@ class RedCapProject
      */
     public function setTimeoutInSeconds($timeoutInSeconds)
     {
-        $this->connection->setTimeoutInSeconds = $timeoutInSeconds;
+        $this->connection->setTimeoutInSeconds($timeoutInSeconds);
     }
     
     /**

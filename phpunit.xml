@@ -7,6 +7,7 @@
       <file>tests/RedCapApiConnectionTest.php</file>
       <file>tests/RedCapProjectTest.php</file>
       <file>tests/ArmsTest.php</file>
+      <file>tests/ConnectionsTest.php</file>
       <file>tests/EventsTest.php</file>
       <file>tests/ExternalFilesTest.php</file>
       <file>tests/FilesTest.php</file>
