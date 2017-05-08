@@ -107,6 +107,13 @@ class RedCapProject
     /**
      * Exports the specified records.
      *
+     * Example usage:
+     * <code>
+     * $records = $project->exportRecords($format = 'csv', $type = 'flat');
+     * $recordIds = [1001, 1002, 1003];
+     * $records = $project->exportRecords('xml', 'eav', $recordIds);
+     * </code>
+     *
      * @param string $format the format in which to export the records:
      *     <ul>
      *       <li> 'php' - array of maps of values [default]</li>
@@ -115,11 +122,15 @@ class RedCapProject
      *       <li> 'xml' - string of XML encoded data</li>
      *       <li> 'odm' - string with CDISC ODM XML format, specifically ODM version 1.3.1</li>
      *     </ul>
-     * @param string $type the type of records exported: 'flat' or 'eav'.
-     *         'flat' exports one record per row. 'eav' exports one data point per row, so,
+     * @param string $type the type of records exported:
+     *     <ul>
+     *       <li>'flat' - exports one record per row.</li>
+     *       <li>'eav'  - exports one data point per row:, so,
      *         for non-longitudinal studies, each record will have the following
      *         fields: record_id, field_name, value. For longitudinal studies, each record
      *         will have the fields: record_id, field_name, value, redcap_event_name.
+     *       </li>
+     *     </ul>
      * @param array $recordIds array of strings with record id's that are to be retrieved.
      * @param array $fields array of field names to export
      * @param array $forms array of form names for which fields should be exported
@@ -350,7 +361,15 @@ class RedCapProject
         return $records;
     }
     
-    
+    /**
+     * Exports the specified file.
+     *
+     * @param string $recordId the record ID for the file to be exported.
+     * @param string $field the name of the field containing the file to export.
+     * @param string $event name of event for file export (for longitudinal studies).
+     * @param string $repeatInstance
+     * @return string the contents of the file that was exported.
+     */
     public function exportFile($recordId, $field, $event = null, $repeatInstance = null)
     {
         $data = array(
@@ -406,7 +425,19 @@ class RedCapProject
         return $arms;
     }
     
-    
+    /**
+     * Exports information about the specified events.
+     *
+     * Example usage:
+     * <code>
+     * #export information about all events in CSV (Comma-Separated Values) format.
+     * $eventInfo = $project->exportEvents('csv');
+     * </code>
+     *
+     * @param string $format the format for the export.
+     * @param array $arms the arms to export.
+     * @return array information about the specified events.
+     */
     public function exportEvents($format = 'php', $arms = [])
     {
         $data = array(
@@ -792,6 +823,14 @@ class RedCapProject
         return $result;
     }
     
+    /**
+     * Deletes the specified file.
+     *
+     * @param string $recordId the record ID of the file to delete.
+     * @param string $field the field name of the file to delete.
+     * @param string $event the event of the file to delete.
+     * @param string $repeatInstance
+     */
     public function deleteFile($recordId, $field, $event = null, $repeatInstance = null)
     {
         $data = array (
@@ -917,10 +956,19 @@ class RedCapProject
         return $contents;
     }
  
-    
+    /**
+     * Writes the specified string to the specified file.
+     *
+     * @param string $string the string to write to the file.
+     * @param string $filename the name of the file to write the string.
+     * @param boolean $append if true, the file is appended if it already exists. If false,
+     *        the file is created if it doesn't exist, and overwritten if it does.
+     * @throws PHPCapException if an error occurs.
+     * @return mixed false on failure, and the number of bytes written on success.
+     */
     public static function writeStringToFile($string, $filename, $append = false)
     {
-        $result = true;
+        $result = false;
         if ($append === true) {
             $result = file_put_contents($filename, $string, FILE_APPEND);
         } else {
@@ -950,6 +998,13 @@ class RedCapProject
         return $result;
     }
     
+    /**
+     * Appends the specified string to the specified file.
+     *
+     * @param string $string the string to append.
+     * @param string $filename the name of the file that is appended.
+     * @return mixed false on failure, and the number of bytes appended on success.
+     */
     public static function appendStringToFile($string, $filename)
     {
         $result = self::writeStringToFile($string, $filename, true);
