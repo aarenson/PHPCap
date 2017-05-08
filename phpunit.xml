@@ -12,6 +12,7 @@
       <file>tests/FilesTest.php</file>
       <file>tests/InstrumentEventMappingsTest.php</file>
       <file>tests/InstrumentsTest.php</file>
+      <file>tests/RecordsTest.php</file>
       <file>tests/ReportsTest.php</file>
     </testsuite>
   </testsuites>

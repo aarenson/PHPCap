@@ -13,6 +13,11 @@ class SystemFunctions
     private static $filePutContents = true;
     private static $errorGetLast    = null;
     
+    private static $jsonErrorNumber  = null;
+    private static $jsonErrorMessage = null;
+    
+    private static $jsonDecode = null;
+    
     
     public static function setIsReadableToFail()
     {
@@ -81,6 +86,44 @@ class SystemFunctions
     public static function resetErrorGetLast()
     {
         self::$errorGetLast = null;
+    }
+    
+    
+    public static function setJsonError()
+    {
+        self::$jsonErrorNumber  = JSON_ERROR_STATE_MISMATCH;
+        self::$jsonErrorMessage = 'Invalid or malformed JSON';
+    }
+    
+    public static function clearJsonError()
+    {
+        self::$jsonErrorNumber  = null;
+        self::$jsonErrorMessage = null;
+    }
+    
+    public static function getJsonErrorNumber()
+    {
+        return self::$jsonErrorNumber;
+    }
+    
+    public static function getJsonErrorMessage()
+    {
+        return self::$jsonErrorMessage;
+    }
+    
+    public static function setJsonDecodeToError()
+    {
+        self::$jsonDecode = ['error' => 'REDCap could not process the request.'];
+    }
+    
+    public static function getJsonDecode()
+    {
+        return self::$jsonDecode;
+    }
+    
+    public static function resetJsonDecode()
+    {
+        self::$jsonDecode = null;
     }
 }
 
@@ -166,4 +209,32 @@ function error_get_last()
     }
     
     return $error;
+}
+
+function json_last_error()
+{
+    $error = SystemFunctions::getJsonErrorNumber();
+    if (!isset($error)) {
+        $error = \json_last_error();
+    }
+    return $error;
+}
+
+function json_last_error_msg()
+{
+    $errorMessage = SystemFunctions::getJsonErrorMessage();
+    if (!isset($errorMessage)) {
+        $errorMessage = \json_last_error();
+    }
+    return $errorMessage;
+}
+
+function json_decode($json, $assoc = false, $depth = 512, $options = 0)
+{
+    $jsonDecode = SystemFunctions::getJsonDecode();
+    if (!isset($jsonDecode)) {
+        $jsonDecode = \json_decode($json, $assoc, $depth, $options);
+    }
+    
+    return $jsonDecode;
 }

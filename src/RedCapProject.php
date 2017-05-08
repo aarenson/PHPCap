@@ -964,30 +964,27 @@ class RedCapProject
     private function processExportResult(& $result, $format)
     {
         if ($format == 'php') {
-            if (empty($result)) {
-                $result = array ();
-            } else {
-                $result = json_decode($result, true); // true => return as array instead of object
+            $phpResult = json_decode($result, true); // true => return as array instead of object
                 
-                $jsonError = json_last_error();
+            $jsonError = json_last_error();
                 
-                switch ($jsonError) {
-                    case JSON_ERROR_NONE:
-                        break;
-                    default:
-                        throw new PHPCapException(
-                            "JSON error (" . $jsonError . ") \"" . json_last_error_msg() .
-                            "\" in REDCap API output." .
-                            "\nThe first 1,000 characters of output returned from REDCap are:\n" .
-                            substr($jsonRecords, 0, 1000),
-                            PhpCapException::JSON_ERROR
-                        );
-                        break;
-                }
+            switch ($jsonError) {
+                case JSON_ERROR_NONE:
+                    $result = $phpResult;
+                    break;
+                default:
+                    throw new PHPCapException(
+                        "JSON error (" . $jsonError . ") \"" . json_last_error_msg() .
+                        "\" in REDCap API output." .
+                        "\nThe first 1,000 characters of output returned from REDCap are:\n" .
+                        substr($result, 0, 1000),
+                        PhpCapException::JSON_ERROR
+                    );
+                    break;
+            }
                 
-                if (array_key_exists('error', $result)) {
-                    throw new PhpCapException($result ['error'], PhpCapException::REDCAP_API_ERROR);
-                }
+            if (array_key_exists('error', $result)) {
+                throw new PhpCapException($result ['error'], PhpCapException::REDCAP_API_ERROR);
             }
         } else {
             // If this is a format other than 'php', look for a JSON error, because
@@ -1007,29 +1004,13 @@ class RedCapProject
     
     private function processNonExportResult(& $result)
     {
-        // format for all non-export method results should be JSON
-        if (!empty($result)) {
-            $result = json_decode($result, true); // true => return as array instead of object
-        
-            $jsonError = json_last_error();
-        
-            switch ($jsonError) {
-                case JSON_ERROR_NONE:
-                    break;
-                default:
-                    throw new PHPCapException(
-                        "JSON error (" . $jsonError . ") \"" . json_last_error_msg() .
-                        "\" in REDCap API output." .
-                        "\nThe first 1,000 characters of output returned from REDCap are:\n" .
-                        substr($jsonRecords, 0, 1000),
-                        PhpCapException::JSON_ERROR
-                    );
-                    break;
-            }
-        
-            if (array_key_exists('error', $result)) {
-                throw new PhpCapException($result ['error'], PhpCapException::REDCAP_API_ERROR);
-            }
+        $matches = array();
+        $hasMatch = preg_match('/^[\s]*{"error":"([^"]+)"}[\s]*$/', $result, $matches);
+        if ($hasMatch === 1) {
+            // note: $matches[0] is the complete string that matched
+            //       $matches[1] is just the error message part
+            $message = $matches[1];
+            throw new PhpCapException($message, PhpCapException::REDCAP_API_ERROR);
         }
     }
     
@@ -1306,7 +1287,7 @@ class RedCapProject
         if (!isset($reportId)) {
             throw new PhpCapException("No report ID specified for export.", PhpCapException::INVALID_ARGUMENT);
         }
-        
+
         if (is_string($reportId)) {
             if (!preg_match('/^[0-9]+$/', $reportId)) {
                 throw new PhpCapException(
@@ -1316,14 +1297,12 @@ class RedCapProject
             }
         } elseif (is_int($reportId)) {
             if ($reportId < 0) {
-                throw new PhpCapException(
-                    'Report ID "'.$reportId.'" is a negative integer.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
+                $message = 'Report ID "'.$reportId.'" is a negative integer.';
+                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
             }
         } else {
             $message = 'The report ID has type "'.gettype($reportId).
-                '", but it should be an integer or a (numeric) string.';
+            '", but it should be an integer or a (numeric) string.';
             throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
         }
         
