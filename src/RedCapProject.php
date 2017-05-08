@@ -477,7 +477,7 @@ class RedCapProject
      *         See REDCap API documentation
      *         for more information, or use the print_r function on the results of this method.
      */
-    public function exportMetadata($format = 'php')
+    public function exportMetadata($format = 'php', $forms = [], $fields = [])
     {
         $data = array(
                 'token' => $this->apiToken,
@@ -490,6 +490,8 @@ class RedCapProject
         #---------------------------------------
         $legalFormats = array('csv', 'json', 'php', 'xml');
         $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['forms']  = $this->processFormsArgument($forms);
+        $data['fields'] = $this->processFieldsArgument($fields);
         
         #-------------------------------------------
         # Get and process metadata

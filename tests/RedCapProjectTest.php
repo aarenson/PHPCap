@@ -195,32 +195,13 @@ class RedCapProjectTest extends TestCase
         $this->assertTrue($exceptionCaught, 'CA certificate file with wrong type exception caught.');
     }
 
-
-
-
-
-
-    
+  
     public function testExportProjectInfo()
     {
         $callInfo = true;
         $result = self::$basicDemographyProject->exportProjectInfo();
         
         $this->assertEquals($result['project_language'], 'English', 'Project info "project_language" test.');
-    }
-    
-    public function testExportMetadata()
-    {
-        $result = self::$basicDemographyProject->exportMetadata();
-         
-        $this->assertArrayHasKey('field_name', $result[0], 'Metadata has field_name field test.');
-        $this->assertEquals($result[0]['field_name'], 'record_id', 'Metadata has study_id field test.');
-    
-        $callInfo = self::$basicDemographyProject->getCallInfo();
-     
-        $this->assertEquals($callInfo['url'], self::$config['api.url'], 'Metadata url test.');
-        $this->assertArrayHasKey('content_type', $callInfo, 'Metadata has content type test.');
-        $this->assertArrayHasKey('http_code', $callInfo, 'Metadata has HTTP code test.');
     }
 
     
