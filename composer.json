@@ -17,6 +17,9 @@
 	"autoload-dev" : {
 		"psr-4" : {
 			"IU\\PHPCap\\" : "tests/"
-		}
+		},
+		"files" : [
+			"tests/SystemFunctions.php"
+		]
 	}
 }
