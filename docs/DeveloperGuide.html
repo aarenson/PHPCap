@@ -70,7 +70,13 @@ cd PHPCap
 composer install</code></pre></div>
 <h2>Usage</h2>
 <h3>Automated Tests</h3>
-<p>Before the tests can be run, setup and configuration needs to be completed:</p>
+<p>PHPCap uses PHPUnit for running automated test. PHPUnit should get installed as a dependency
+for your PHPCap project when you run the &quot;composer install&quot; command.</p>
+<p>You can test your PHPUnit installation by running the following in the root PHPCap directory:</p>
+<div class="description"><pre><code>    ./vendor/bin/phpunit --testsuite unit</code></pre></div>
+<p>If this succeeds, you should see an &quot;OK&quot; message with the number of tests and assertions that were run,
+and you should see no errors of failures.</p>
+<p>To run <em>all</em> the automated tests, setup and configuration needs to be completed:</p>
 <ol>
 <li>Log in to your REDCap site.</li>
 <li>Import the test REDCap project files in directory <strong>tests/projects/</strong>.</li>
@@ -82,7 +88,8 @@ the tokens requested in the previous step.
 <ul>
 <li>To run tests involving the CA certificate file, you will need to set up
 a valid CA certificate file, and set the <strong>ca.certificate.file</strong> property
-in the <strong>config.ini</strong> file to the path to that file.
+in the <strong>config.ini</strong> file to the path to that file. If this property
+isn't set, the tests for this will be skipped.
 See <a href="CACertificateFile.html">CA Certificate file</a> for more information on how to
 do this.</li>
 </ul></li>
@@ -92,11 +99,23 @@ personal API tokens will not be committed to Git. </p>
 <p>To run the automated tests, execute the following command in the top-level directory of your downloaded version of PHPCap:</p>
 <div class="description"><pre><code>./vendor/bin/phpunit</code></pre></div>
 <p>Note: PHPUnit uses the <strong>phpunit.xml</strong> configuration file in the root directory of PHPCap.</p>
+<h4>Running Selected Tests</h4>
+<p>You can run just the integration tests using:</p>
+<div class="description"><pre><code>./vendor/bin/phpunit --testsuite integration</code></pre></div>
+<p>You can run a specific test class by specifying the path to its file, for example:</p>
+<div class="description"><pre><code>./vendor/bin/phpunit tests/unit/PhpCapExceptionTest.php</code></pre></div>
+<p>You can use the <strong>--filter</strong> option to run specific test methods, for example, the following
+would run only tests methods that contain 'Unreadable' in their name:</p>
+<div class="description"><pre><code>./vendor/bin/phpunit --filter 'Unreadable'</code></pre></div>
+<p>And you can combine class files and filters together. For example, the following command would only run
+methods with 'Curl' in their name that belong to the PhpCapExceptionTest class:</p>
+<div class="description"><pre><code>./vendor/bin/phpunit tests/unit/PhpCapExceptionTest.php --filter 'Curl'</code></pre></div>
 <h4>Code Coverage</h4>
 <p>If XDebug has been installed (and PHP is configured to use it), code coverage for the automated tests can
 be calculated by running the following command in the root directory of PHPCap:</p>
-<div class="description"><pre><code>./vendor/bin/phpunit --coverage-html test-coverage</code></pre></div>
-<p>To see the results, open the file <strong>test-coverage/index.html</strong> with a web browser.</p>
+<div class="description"><pre><code>./vendor/bin/phpunit --coverage-html tests/coverage</code></pre></div>
+<p>To see the results, open the file <strong>tests/coverage/index.html</strong> with a web browser. The .gitignore file is set to
+ignore the tests/coverage directory.</p>
 <h3>Local Tests</h3>
 <p>The directory <strong>tests/local/</strong> has been set up so that all files in it, except for the README file, will be ignored by Git.
 This directory is intended as a place for developers to places tests for changes they are working on.</p>
@@ -109,9 +128,11 @@ This directory is intended as a place for developers to places tests for changes
 <p>To check for compliance for the PHPCap source code, execute the following command in the root directory of the PHPCap:</p>
 <div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 src</code></pre></div>
 <p>To check compliance for the automated tests, use:</p>
-<div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 --ignore=tests/local tests</code></pre></div>
+<div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 tests/unit tests/integration</code></pre></div>
 <p>To check for compliance for the PHPCap source code and the tests, use:</p>
-<div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 --ignore=tests/local src tests</code></pre></div>
+<div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 src tests/unit tests/integration</code></pre></div>
+<p>You can check specific files for compliance by specifying the path to the file, for example:</p>
+<div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 src/RedCapProject.php  </code></pre></div>
 <p>Note that if you are working on Windows and have the git property <strong>core.autocrlf</strong> set to true, you may see errors similar to the following:</p>
 <div class="description"><pre><code>----------------------------------------------------------------------
 FOUND 1 ERROR AFFECTING 1 LINE
@@ -127,7 +148,7 @@ PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
 <p>Documentation consists of the following:</p>
 <ul>
 <li>Top-level README.md file</li>
-<li>Mardown documents that have been manually created in the <strong>docs-md/</strong> directory</li>
+<li>Markdown documents that have been manually created in the <strong>docs-md/</strong> directory</li>
 <li>HTML API documentation generated from the PHPDoc comments in the code, which are stored in the <strong>docs/api/</strong> directory</li>
 <li>HTML versions of the Markdown documentation in the docs-md/ directory, which are generated programmatically, stored in the <strong>docs/</strong> directory, and use the same style as the API documentation.</li>
 </ul>

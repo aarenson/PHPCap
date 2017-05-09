@@ -54,7 +54,18 @@ Usage
 -----------------------------------------
 
 ### Automated Tests
-Before the tests can be run, setup and configuration needs to be completed:
+
+PHPCap uses PHPUnit for running automated test. PHPUnit should get installed as a dependency
+for your PHPCap project when you run the "composer install" command.
+
+You can test your PHPUnit installation by running the following in the root PHPCap directory:
+
+	    ./vendor/bin/phpunit --testsuite unit
+    
+If this succeeds, you should see an "OK" message with the number of tests and assertions that were run, 
+and you should see no errors of failures.
+    
+To run _all_ the automated tests, setup and configuration needs to be completed:
 1. Log in to your REDCap site.
 2. Import the test REDCap project files in directory __tests/projects/__.
 3. In REDCap, request API tokens for the projects imported in the step above.
@@ -64,7 +75,8 @@ Before the tests can be run, setup and configuration needs to be completed:
    the tokens requested in the previous step.
     * To run tests involving the CA certificate file, you will need to set up
       a valid CA certificate file, and set the __ca.certificate.file__ property
-      in the __config.ini__ file to the path to that file.
+      in the __config.ini__ file to the path to that file. If this property
+      isn't set, the tests for this will be skipped.
       See [CA Certificate file](CACertificateFile.md) for more information on how to
       do this.
    
@@ -77,13 +89,33 @@ To run the automated tests, execute the following command in the top-level direc
     
 Note: PHPUnit uses the **phpunit.xml** configuration file in the root directory of PHPCap.
 
+#### Running Selected Tests
+You can run just the integration tests using:
+
+    ./vendor/bin/phpunit --testsuite integration
+
+You can run a specific test class by specifying the path to its file, for example:
+
+    ./vendor/bin/phpunit tests/unit/PhpCapExceptionTest.php
+
+You can use the **--filter** option to run specific test methods, for example, the following
+would run only tests methods that contain 'Unreadable' in their name:
+
+    ./vendor/bin/phpunit --filter 'Unreadable'
+
+And you can combine class files and filters together. For example, the following command would only run
+methods with 'Curl' in their name that belong to the PhpCapExceptionTest class:
+
+    ./vendor/bin/phpunit tests/unit/PhpCapExceptionTest.php --filter 'Curl'
+    
 #### Code Coverage
 If XDebug has been installed (and PHP is configured to use it), code coverage for the automated tests can
 be calculated by running the following command in the root directory of PHPCap:
 
-    ./vendor/bin/phpunit --coverage-html test-coverage
+    ./vendor/bin/phpunit --coverage-html tests/coverage
     
-To see the results, open the file **test-coverage/index.html** with a web browser.
+To see the results, open the file **tests/coverage/index.html** with a web browser. The .gitignore file is set to
+ignore the tests/coverage directory.
 
 
 ### Local Tests
@@ -101,12 +133,16 @@ To check for compliance for the PHPCap source code, execute the following comman
 
 To check compliance for the automated tests, use:
 
-    ./vendor/bin/phpcs --standard=PSR1,PSR2 --ignore=tests/local tests
+    ./vendor/bin/phpcs --standard=PSR1,PSR2 tests/unit tests/integration
 
 To check for compliance for the PHPCap source code and the tests, use:
 
-    ./vendor/bin/phpcs --standard=PSR1,PSR2 --ignore=tests/local src tests
-    
+    ./vendor/bin/phpcs --standard=PSR1,PSR2 src tests/unit tests/integration
+
+You can check specific files for compliance by specifying the path to the file, for example:
+
+    ./vendor/bin/phpcs --standard=PSR1,PSR2 src/RedCapProject.php  
+     
 Note that if you are working on Windows and have the git property __core.autocrlf__ set to true, you may see errors similar to the following:
 
     ----------------------------------------------------------------------
@@ -126,7 +162,7 @@ PHPCap also follows the PSR-4 (Autoloader) standard, see: http://www.php-fig.org
 
 Documentation consists of the following:
 * Top-level README.md file
-* Mardown documents that have been manually created in the __docs-md/__ directory
+* Markdown documents that have been manually created in the __docs-md/__ directory
 * HTML API documentation generated from the PHPDoc comments in the code, which are stored in the __docs/api/__ directory
 * HTML versions of the Markdown documentation in the docs-md/ directory, which are generated programmatically, stored in the __docs/__ directory, and use the same style as the API documentation.
 
