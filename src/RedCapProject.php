@@ -761,32 +761,17 @@ class RedCapProject
                 'action'       => 'import',
                 'returnFormat' => 'json'
         );
-
-        if (!file_exists($filename)) {
-            throw new PhpCapException(
-                'The input file "'.$filename.'" could not be found.',
-                PhpCapException::INPUT_FILE_NOT_FOUND
-            );
-        } elseif (!is_readable($filename)) {
-            throw new PhpCapException(
-                'The input file "'.$filename.'" was unreadable.',
-                PhpCapException::INPUT_FILE_UNREADABLE
-            );
-        }
-
         
         #----------------------------------------
         # Process non-file arguments
         #----------------------------------------
+        $data['file']             = $this->processFilenameArgument($filename);
         $data['record']           = $this->processRecordIdArgument($recordId);
         $data['field']            = $this->processFieldArgument($field);
         $data['event']            = $this->processEventArgument($event);
         $data['repeat_instance']  = $this->processRepeatInstanceArgument($repeatInstance);
 
-
-        $basename = pathinfo($filename, PATHINFO_BASENAME);
-        $data['file'] = curl_file_create($filename, 'text/plain', $basename);
-        
+ 
         #---------------------------------------------------------------------
         # For unknown reasons, "call" (instead of "callWithArray") needs to
         # be used here (probably something to do with the 'file' data).
@@ -1430,5 +1415,31 @@ class RedCapProject
         }
     
         return $repeatInstance;
+    }
+    
+    private function processFilenameArgument($filename)
+    {
+        if (!isset($filename)) {
+            $message = 'No filename specified.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        } elseif (gettype($filename) !== 'string') {
+            $message = "Argument 'filename' has type '".gettype($filename)."', but should be a string.";
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        } elseif (!file_exists($filename)) {
+            throw new PhpCapException(
+                'The input file "'.$filename.'" could not be found.',
+                PhpCapException::INPUT_FILE_NOT_FOUND
+            );
+        } elseif (!is_readable($filename)) {
+            throw new PhpCapException(
+                'The input file "'.$filename.'" was unreadable.',
+                PhpCapException::INPUT_FILE_UNREADABLE
+            );
+        }
+       
+        $basename = pathinfo($filename, PATHINFO_BASENAME);
+        $curlFile = curl_file_create($filename, 'text/plain', $basename);
+        
+        return $curlFile;
     }
 }

@@ -86,6 +86,42 @@ class FilesTest extends TestCase
         $this->assertTrue($exceptionCaught, 'Export non-existant file exception caught.');
     }
     
+    public function testImportFileWithNullFilename()
+    {
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->importFile(
+                $file = null,
+                $recordId = '1001',
+                $field = 'patient_document',
+                $event = 'enrollment_arm_1'
+            );
+        } catch (PhpCapException $exception) {
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+ 
+    public function testImportFileWithFilenameWithInvalidType()
+    {
+        $exceptionCaught = false;
+        try {
+            $result = self::$longitudinalDataProject->importFile(
+                $file = 123,
+                $recordId = '1001',
+                $field = 'patient_document',
+                $event = 'enrollment_arm_1'
+            );
+        } catch (PhpCapException $exception) {
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
     public function testImportFileNotFound()
     {
         $exceptionCaught = false;
