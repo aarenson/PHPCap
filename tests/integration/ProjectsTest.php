@@ -10,7 +10,7 @@ use IU\PHPCap\PhpCapException;
 /**
  * PHPUnit tests for the RedCapProject class.
  */
-class RedCapProjectTest extends TestCase
+class ProjectsTest extends TestCase
 {
     private static $config;
     private static $basicDemographyProject;
@@ -191,21 +191,5 @@ class RedCapProjectTest extends TestCase
             );
         }
         $this->assertTrue($exceptionCaught, 'CA certificate file with wrong type exception caught.');
-    }
-
-  
-    public function testExportProjectInfo()
-    {
-        $callInfo = true;
-        $result = self::$basicDemographyProject->exportProjectInfo();
-        
-        $this->assertEquals($result['project_language'], 'English', 'Project info "project_language" test.');
-    }
-
-    
-    public function testExportRedcapVersion()
-    {
-        $result = self::$basicDemographyProject->exportRedcapVersion();
-        $this->assertRegExp('/^[0-9]+\.[0-9]+\.[0-9]+$/', $result, 'REDCap version format test.');
     }
 }

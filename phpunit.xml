@@ -6,8 +6,6 @@
       <file>tests/unit/PhpCapExceptionTest.php</file>
     </testsuite>
     <testsuite name="integration">
-      <file>tests/integration/RedCapApiConnectionTest.php</file>
-      <file>tests/integration/RedCapProjectTest.php</file>
       <file>tests/integration/ArmsTest.php</file>
       <file>tests/integration/ConnectionsTest.php</file>
       <file>tests/integration/EventsTest.php</file>
@@ -16,7 +14,10 @@
       <file>tests/integration/InstrumentEventMappingsTest.php</file>
       <file>tests/integration/InstrumentsTest.php</file>
       <file>tests/integration/MetadataTest.php</file>
+      <file>tests/integration/ProjectInfoTest.php</file>
+      <file>tests/integration/ProjectsTest.php</file>
       <file>tests/integration/RecordsTest.php</file>
+      <file>tests/integration/RedCapVersionTest.php</file>
       <file>tests/integration/ReportsTest.php</file>
     </testsuite>
   </testsuites>
