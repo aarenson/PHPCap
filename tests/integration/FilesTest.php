@@ -17,7 +17,7 @@ class FilesTest extends TestCase
     
     public static function setUpBeforeClass()
     {
-        self::$config = parse_ini_file('config.ini');
+        self::$config = parse_ini_file(__DIR__.'/../config.ini');
         self::$basicDemographyProject = new RedCapProject(
             self::$config['api.url'],
             self::$config['basic.demography.api.token']
@@ -34,7 +34,7 @@ class FilesTest extends TestCase
         # Test importing a file
         #------------------------------------
         $result = self::$longitudinalDataProject->importFile(
-            $file = __DIR__.'/data/import-file.txt',
+            $file = __DIR__.'/../data/import-file.txt',
             $recordId = '1001',
             $field = 'patient_document',
             $event = 'enrollment_arm_1'
@@ -91,7 +91,7 @@ class FilesTest extends TestCase
         $exceptionCaught = false;
         try {
             $result = self::$longitudinalDataProject->importFile(
-                $file = __DIR__.'/data/'.uniqid().'.txt',
+                $file = __DIR__.'/../data/'.uniqid().'.txt',
                 $recordId = '1001',
                 $field = 'patient_document',
                 $event = 'enrollment_arm_1'
@@ -110,7 +110,7 @@ class FilesTest extends TestCase
         SystemFunctions::setIsReadableToFail();
         try {
             $result = self::$longitudinalDataProject->importFile(
-                $file = __DIR__.'/data/file.txt',
+                $file = __DIR__.'/../data/file.txt',
                 $recordId = '1001',
                 $field = 'patient_document',
                 $event = 'enrollment_arm_1'
@@ -129,7 +129,7 @@ class FilesTest extends TestCase
         $exceptionCaught = false;
         try {
             $result = self::$longitudinalDataProject->importFile(
-                $file = __DIR__.'/data/file.txt',
+                $file = __DIR__.'/../data/file.txt',
                 $recordId = null,
                 $field = 'patient_document',
                 $event = 'enrollment_arm_1'
@@ -147,7 +147,7 @@ class FilesTest extends TestCase
         $exceptionCaught = false;
         try {
             $result = self::$longitudinalDataProject->importFile(
-                $file = __DIR__.'/data/file.txt',
+                $file = __DIR__.'/../data/file.txt',
                 $recordId = true,
                 $field = 'patient_document',
                 $event = 'enrollment_arm_1'
@@ -166,7 +166,7 @@ class FilesTest extends TestCase
         $exceptionCaught = false;
         try {
             $result = self::$longitudinalDataProject->importFile(
-                $file = __DIR__.'/data/file.txt',
+                $file = __DIR__.'/../data/file.txt',
                 $recordId = '1001',
                 $field = null,
                 $event = 'enrollment_arm_1'
@@ -184,7 +184,7 @@ class FilesTest extends TestCase
         $exceptionCaught = false;
         try {
             $result = self::$longitudinalDataProject->importFile(
-                $file = __DIR__.'/data/file.txt',
+                $file = __DIR__.'/../data/file.txt',
                 $recordId = '1001',
                 $field = 1,
                 $event = 'enrollment_arm_1'
@@ -202,7 +202,7 @@ class FilesTest extends TestCase
         $exceptionCaught = false;
         try {
             $result = self::$longitudinalDataProject->importFile(
-                $file = __DIR__.'/data/file.txt',
+                $file = __DIR__.'/../data/file.txt',
                 $recordId = '1001',
                 $field = 'patient_document',
                 $event = 1
@@ -220,7 +220,7 @@ class FilesTest extends TestCase
         $exceptionCaught = false;
         try {
             $result = self::$longitudinalDataProject->importFile(
-                $file = __DIR__.'/data/file.txt',
+                $file = __DIR__.'/../data/file.txt',
                 $recordId = '1001',
                 $field = 'patient_document',
                 $event = 'enrollment_arm_1',
@@ -239,7 +239,7 @@ class FilesTest extends TestCase
         $exceptionCaught = false;
         try {
             $result = self::$longitudinalDataProject->importFile(
-                $file = __DIR__.'/data/file.txt',
+                $file = __DIR__.'/../data/file.txt',
                 $recordId = '1001',
                 $field = 'patient_doc',
                 $event = 'enrollment_arm_1'

@@ -18,7 +18,7 @@ class RedCapProjectTest extends TestCase
     
     public static function setUpBeforeClass()
     {
-        self::$config = parse_ini_file('config.ini');
+        self::$config = parse_ini_file(__DIR__.'/../config.ini');
         self::$basicDemographyProject = new RedCapProject(
             self::$config['api.url'],
             self::$config['basic.demography.api.token']
@@ -35,8 +35,6 @@ class RedCapProjectTest extends TestCase
      */
     public function testCreateProject()
     {
-        self::$config = parse_ini_file('config.ini');
-        
         $basicDemographyProject = new RedCapProject(
             self::$config['api.url'],
             self::$config['basic.demography.api.token']

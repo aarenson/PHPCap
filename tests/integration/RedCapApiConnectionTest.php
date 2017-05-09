@@ -13,7 +13,7 @@ class RedCapApiConnectionTest extends TestCase
     
     public static function setUpBeforeClass()
     {
-        self::$config = parse_ini_file('config.ini');
+        self::$config = parse_ini_file(__DIR__.'/../config.ini');
         self::$apiConnection = new RedCapApiConnection(self::$config['api.url']);
     }
     

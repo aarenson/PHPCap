@@ -16,7 +16,7 @@
 composer.phar
 
 # tests coverage directory
-/test-coverage
+/tests/coverage
 
 # certificate files
 *.crt

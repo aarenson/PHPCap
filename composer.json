@@ -16,10 +16,10 @@
 	},
 	"autoload-dev" : {
 		"psr-4" : {
-			"IU\\PHPCap\\" : "tests/"
+			"IU\\PHPCap\\" : ["tests/unit", "tests/integration"]
 		},
 		"files" : [
-			"tests/SystemFunctions.php"
+			"tests/integration/SystemFunctions.php"
 		]
 	}
 }

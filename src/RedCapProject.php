@@ -37,7 +37,7 @@ class RedCapProject
      * @param boolean $sslVerify indicates if SSL connection to REDCap web site should be verified.
      * @param string $caCertificateFile the full path name of the CA (Certificate Authority) certificate file.
      *
-     * @throws PHPCapException if any of the arguments are invalid
+     * @throws PhpCapException if any of the arguments are invalid
      */
     public function __construct($apiUrl, $apiToken, $sslVerify = false, $caCertificateFile = null)
     {
@@ -751,7 +751,7 @@ class RedCapProject
      * @param string $event the event of the record to import the file into.
      * @param string $repeatInstance
      *
-     * @throws PHPCapException
+     * @throws PhpCapException
      */
     public function importFile($filename, $recordId, $field, $event = null, $repeatInstance = null)
     {
@@ -763,12 +763,12 @@ class RedCapProject
         );
 
         if (!file_exists($filename)) {
-            throw new PHPCapException(
+            throw new PhpCapException(
                 'The input file "'.$filename.'" could not be found.',
                 PhpCapException::INPUT_FILE_NOT_FOUND
             );
         } elseif (!is_readable($filename)) {
-            throw new PHPCapException(
+            throw new PhpCapException(
                 'The input file "'.$filename.'" was unreadable.',
                 PhpCapException::INPUT_FILE_UNREADABLE
             );
@@ -914,18 +914,18 @@ class RedCapProject
      * Reads the contents of the specified file and returns it as a string.
      *
      * @param string $filename the name of the file that is to be read.
-     * @throws PHPCapException if an error occurs while trying to read the file.
+     * @throws PhpCapException if an error occurs while trying to read the file.
      * @return string the contents of the specified file.
      */
     public static function fileToString($filename)
     {
         if (!file_exists($filename)) {
-            throw new PHPCapException(
+            throw new PhpCapException(
                 'The input file "'.$filename.'" could not be found.',
                 PhpCapException::INPUT_FILE_NOT_FOUND
             );
         } elseif (!is_readable($filename)) {
-            throw new PHPCapException(
+            throw new PhpCapException(
                 'The input file "'.$filename.'" was unreadable.',
                 PhpCapException::INPUT_FILE_UNREADABLE
             );
@@ -941,12 +941,12 @@ class RedCapProject
             }
             
             if (isset($errorMessage)) {
-                throw new PHPCapException(
+                throw new PhpCapException(
                     'An error occurred in input file "'.$filename.'": '.$errorMessage,
                     PhpCapException::INPUT_FILE_ERROR
                 );
             } else {
-                throw new PHPCapException(
+                throw new PhpCapException(
                     'An error occurred in input file "'.$filename.'"',
                     PhpCapException::INPUT_FILE_ERROR
                 );
@@ -963,7 +963,7 @@ class RedCapProject
      * @param string $filename the name of the file to write the string.
      * @param boolean $append if true, the file is appended if it already exists. If false,
      *        the file is created if it doesn't exist, and overwritten if it does.
-     * @throws PHPCapException if an error occurs.
+     * @throws PhpCapException if an error occurs.
      * @return mixed false on failure, and the number of bytes written on success.
      */
     public static function writeStringToFile($string, $filename, $append = false)
@@ -983,12 +983,12 @@ class RedCapProject
             }
             
             if (isset($errorMessage)) {
-                throw new PHPCapException(
+                throw new PhpCapException(
                     'An error occurred in output file "'.$filename.'": '.$errorMessage,
                     PhpCapException::OUTPUT_FILE_ERROR
                 );
             } else {
-                throw new PHPCapException(
+                throw new PhpCapException(
                     'An error occurred in output file "'.$filename.'"',
                     PhpCapException::OUTPUT_FILE_ERROR
                 );
@@ -1016,7 +1016,7 @@ class RedCapProject
      *
      * @param string $result
      * @param unknown $format
-     * @throws PHPCapException
+     * @throws PhpCapException
      */
     private function processExportResult(& $result, $format)
     {
@@ -1030,7 +1030,7 @@ class RedCapProject
                     $result = $phpResult;
                     break;
                 default:
-                    throw new PHPCapException(
+                    throw new PhpCapException(
                         "JSON error (" . $jsonError . ") \"" . json_last_error_msg() .
                         "\" in REDCap API output." .
                         "\nThe first 1,000 characters of output returned from REDCap are:\n" .
