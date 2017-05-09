@@ -92,6 +92,16 @@ in the <strong>config.ini</strong> file to the path to that file. If this proper
 isn't set, the tests for this will be skipped.
 See <a href="CACertificateFile.html">CA Certificate file</a> for more information on how to
 do this.</li>
+<li>To run all of the report tests, you will need to manually set up a report for the
+longitudinal data project and then set the
+<strong>longitudinal.data.report.id</strong> property in your <strong>tests/config.ini</strong> file
+to the ID of the report. If the ID property is not set, then the tests
+that use the report will not be run. You need to set up an &quot;Exercise&quot; report
+as follows:
+<ul>
+<li>Include these fields in this order: study_id, age, ethnicity, race, sex, gym, aerobics</li>
+<li>Filter (only) by the following events: &quot;Enrollment (Arm 1: Drug A)&quot;, &quot;Enrollment (Arm 2: Drug B)&quot; </li>
+</ul></li>
 </ul></li>
 </ol>
 <p>Note: the .gitignore file in PHPCap is set to ignore the <strong>tests/config.ini</strong> file, so that your

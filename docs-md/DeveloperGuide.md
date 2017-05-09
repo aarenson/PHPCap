@@ -79,6 +79,14 @@ To run _all_ the automated tests, setup and configuration needs to be completed:
       isn't set, the tests for this will be skipped.
       See [CA Certificate file](CACertificateFile.md) for more information on how to
       do this.
+    * To run all of the report tests, you will need to manually set up a report for the
+      longitudinal data project and then set the 
+      __longitudinal.data.report.id__ property in your __tests/config.ini__ file
+      to the ID of the report. If the ID property is not set, then the tests
+      that use the report will not be run. You need to set up an "Exercise" report
+      as follows:
+        * Include these fields in this order: study_id, age, ethnicity, race, sex, gym, aerobics
+        * Filter (only) by the following events: "Enrollment (Arm 1: Drug A)", "Enrollment (Arm 2: Drug B)" 
    
 Note: the .gitignore file in PHPCap is set to ignore the __tests/config.ini__ file, so that your
 personal API tokens will not be committed to Git. 
