@@ -476,8 +476,8 @@ class RedCapProject
     public function exportProjectInfo($format = 'php')
     {
         $data = array(
-                'token' => $this->apiToken,
-                'content' => 'project',
+                'token'        => $this->apiToken,
+                'content'      => 'project',
                 'returnFormat' => 'json'
         );
         
@@ -629,9 +629,9 @@ class RedCapProject
     public function exportInstrumentEventMappings($format = 'php', $arms = [])
     {
         $data = array(
-                'token'       => $this->apiToken,
-                'content'     => 'formEventMapping',
-                'format'      => 'json',
+                'token'        => $this->apiToken,
+                'content'      => 'formEventMapping',
+                'format'       => 'json',
                 'returnFormat' => 'json'
         );
         
@@ -640,7 +640,7 @@ class RedCapProject
         #------------------------------------------
         $legalFormats = array('csv', 'json', 'php', 'xml');
         $data['format'] = $this->processFormatArgument($format, $legalFormats);
-        $data['arms'] = $this->processArmsArgument($arms);
+        $data['arms']   = $this->processArmsArgument($arms);
         
         #---------------------------------------------
         # Get and process instrument-event mappings
@@ -685,7 +685,10 @@ class RedCapProject
      *              <li>'MDY' - M/D/Y format (e.g., 12/31/2016)</li>
      *              <li>'DMY' - D/M/Y format (e.g., 31/12/2016)</li>
      *           </ul>
-     * @return mixed
+     * @return mixed if 'count' was specified for 'returnContent', then an integer will
+     *         be returned that is the number of records imported.
+     *         If 'ids' was specified, then an array of record IDs that were imported will
+     *         be returned.
      */
     public function importRecords(
         $records,
@@ -697,47 +700,58 @@ class RedCapProject
     ) {
         
         $data = array (
-                'token'   => $this->apiToken,
-                'content' => 'record',
-                'format'  => $format,
-                'type'    => $type,
-                
-                'overwriteBehavior' => $overwriteBehavior,
-                'returnFormat'      => 'json',
-                'dateFormat'        => $dateFormat
+                'token'         => $this->apiToken,
+                'content'       => 'record',
+                'returnFormat'  => 'json'
         );
-        
-        if ($records == null) {
-            throw new PhpCapException("No records specified for import.", PhpCapException::INVALID_ARGUMENT);
-        }
-        
-        # Need process records - for 'php' format should be PHP array, for others, should be string.
-        
-        # Need to check format first, and this code will depend on format
-        #else {if (gettype($records) !== 'string') {
-        #    throw new PhpCapException("No records specified for import.", PhpCapException::INVALID_ARGUMENT);
-        #}
         
         #---------------------------------------
         # Process format
         #---------------------------------------
         $legalFormats = array('csv', 'json', 'odm', 'php', 'xml');
         $data['format'] = $this->processFormatArgument($format, $legalFormats);
-
+        $data['data']   = $this->processRecordsArgument($records, $format);
+        $data['type']   = $this->processTypeArgument($type);
         
-        
-        // If the PHP format was used, need to convert to JSON
-        if ($format === 'php') {
-            $records = json_encode($records);
-            $data['format'] = 'json';
-        }
-        
-        $data ['data'] = $records;
+        $data['overwriteBehavior'] = $this->processOverwriteBehaviorArgument($overwriteBehavior);
+        $data['returnContent']     = $this->processReturnContentArgument($returnContent);
+        $data['dateFormat']        = $this->processDateFormatArgument($dateFormat);
         
         $result = $this->connection->callWithArray($data);
         
         $this->processNonExportResult($result);
         
+
+        #--------------------------------------------------------------------------
+        # Process result, which should either be a count of the records imported,
+        # or a list of the record IDs that were imported
+        #
+        # The result should be a string in JSON for all formats.
+        # Need to convert the result to a PHP data structure.
+        #--------------------------------------------------------------------------
+        $phpResult = json_decode($result, true); // true => return as array instead of object
+            
+        $jsonError = json_last_error();
+            
+        switch ($jsonError) {
+            case JSON_ERROR_NONE:
+                $result = $phpResult;
+                # If this is a count, then just return the count, and not an
+                # array that has a count index with the count
+                if (isset($result) && is_array($result) && array_key_exists('count', $result)) {
+                    $result = $result['count'];
+                }
+                break;
+            default:
+                # Hopefully the REDCap API will always return valid JSON, and this
+                # will never happen.
+                $message =  'JSON error ('.$jsonError.') "'.json_last_error_msg().
+                    '" while processing import return value: "'.
+                    $result.'".';
+                throw new PhpCapException($message, PhpCapException::JSON_ERROR);
+                break;
+        }
+                
         return $result;
     }
     
@@ -1441,5 +1455,86 @@ class RedCapProject
         $curlFile = curl_file_create($filename, 'text/plain', $basename);
         
         return $curlFile;
+    }
+    
+    private function processRecordsArgument($records, $format)
+    {
+        if (!isset($records)) {
+            $message = 'No records specified.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        } elseif ($format === 'php') {
+            if (!is_array($records)) {
+                $message = "Argument 'records' has type '".gettype($records)."', but should be an array.";
+                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            }
+            $records = json_encode($records);
+            
+            $jsonError = json_last_error();
+            
+            switch ($jsonError) {
+                case JSON_ERROR_NONE:
+                    break;
+                default:
+                    $message =  'JSON error ('.$jsonError.') "'. json_last_error_msg().
+                            '" while processing records argument.';
+                    throw new PhpCapException($message, PhpCapException::JSON_ERROR);
+                    break;
+            }
+        } else { // All other formats
+            if (gettype($records) !== 'string') {
+                $message = "Argument 'records' has type '".gettype($records)."', but should be a string.";
+                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            }
+        }
+    
+        return $records;
+    }
+    
+    private function processOverwriteBehaviorArgument($overwriteBehavior)
+    {
+        if (!isset($overwriteBehavior)) {
+            $overwriteBehavior = 'normal';
+        } elseif ($overwriteBehavior !== 'normal' && $overwriteBehavior !== 'overwrite') {
+            $message = 'Invalid value "'.$overwriteBehavior.'" specified for overwriteBehavior.'.
+                    " Valid values are 'normal' and 'overwrite'.";
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        }
+    
+        return $overwriteBehavior;
+    }
+    
+    private function processDateFormatArgument($dateFormat)
+    {
+        if (!isset($dateFormat)) {
+            $dateFormat = 'YMD';
+        } else {
+            if (gettype($dateFormat) === 'string') {
+                $dateFormat = strtoupper($dateFormat);
+            }
+            
+            $legalDateFormats = ['MDY', 'DMY', 'YMD'];
+            if (!in_array($dateFormat, $legalDateFormats)) {
+                $message = 'Invalid date format "'.$dateFormat.'" specified.'
+                        .' The date format should be one of the following: "'.
+                        implode('", "', $legalDateFormats).'".';
+                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            }
+        }
+    
+        return $dateFormat;
+    }
+    
+
+    private function processReturnContentArgument($returnContent)
+    {
+        if (!isset($returnContent)) {
+            $overwriteBehavior = 'count';
+        } elseif ($returnContent !== 'count' && $returnContent !== 'ids') {
+            $message = 'Invalid value "'.$returnContent.'" specified for overwriteBehavior.'.
+                    " Valid values are 'count' and 'ids'.";
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        }
+    
+        return $returnContent;
     }
 }

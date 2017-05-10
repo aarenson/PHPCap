@@ -657,7 +657,7 @@ class RecordsTest extends TestCase
             $code = $exception->getCode();
             $this->assertEquals(PhpCapException::JSON_ERROR, $code, 'Exception code check.');
         }
-        $this->assertTrue($exceptionCaught, 'Exception gaught.');
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
         SystemFunctions::clearJsonError();
     }
     
@@ -720,13 +720,234 @@ class RecordsTest extends TestCase
         
         $records = [$record];
         
-        $result = self::$basicDemographyProject->importRecords($records);
-        $this->assertEquals(1, count($result), 'Record count.');
+        $result = self::$basicDemographyProject->importRecords($records, null, null, null, 'count');
+        $this->assertEquals(1, $result, 'Record count.');
         
         $result = self::$basicDemographyProject->exportRecords();
-        $this->assertEquals(101, count($result), 'Record count.');
+        $this->assertEquals(101, count($result), 'Record count after import.');
         
         $recordIds = [$record['record_id']];
         $result = self::$basicDemographyProject->deleteRecords($recordIds);
+        
+        $result = self::$basicDemographyProject->exportRecords();
+        $this->assertEquals(100, count($result), 'Record count after delete.');
+    }
+    
+    
+    public function testImportAndDeleteRecordsCsvFormat()
+    {
+        $records = REDCapProject::fileToString(__DIR__.'/../data/basic-demography-import.csv');
+   
+        $result = self::$basicDemographyProject->importRecords(
+            $records,
+            $format = 'csv',
+            $type = null,
+            $overwriteBehavior = null,
+            $returnContent = 'ids',
+            $dateFormat = null
+        );
+        $this->assertEquals(1, count($result), 'Record count.');
+
+        $recordIds = [1101];
+        
+        $this->assertEquals($recordIds, $result, 'Import IDs check.');
+        
+        $result = self::$basicDemographyProject->exportRecords();
+        $this->assertEquals(101, count($result), 'Record count after import.');
+    
+        $result = self::$basicDemographyProject->deleteRecords($recordIds);
+    
+        $result = self::$basicDemographyProject->exportRecords();
+        $this->assertEquals(100, count($result), 'Record count after delete.');
+    }
+
+    public function testImportRecordsCsvFormatWithJsonError()
+    {
+        $records = REDCapProject::fileToString(__DIR__.'/../data/basic-demography-import.csv');
+   
+        SystemFunctions::setJsonError();
+        
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->importRecords($records, $format = 'csv');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::JSON_ERROR, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+        SystemFunctions::clearJsonError();
+    }
+    
+    
+    public function testImportAndDeleteRecordsXmlFormat()
+    {
+        $records = '<?xml version="1.0" encoding="UTF-8" ?>'
+            .'<records> <item>'
+            .'<record_id><![CDATA[1101]]></record_id>'
+            .'<first_name><![CDATA[Joe]]></first_name>'
+            .'<last_name><![CDATA[Schmidt]]></last_name>'
+            .'<address><![CDATA[72133 Joelle Grove Suite 055 Hayesburgh, AZ 84047-5437]]></address>'
+            .'<telephone><![CDATA[(753) 406-4137]]></telephone>'
+            .'<email><![CDATA[joe.schmidt@mailinator.com]]></email>'
+            .'<dob><![CDATA[1944-01-17]]></dob>'
+            .'<ethnicity><![CDATA[1]]></ethnicity>'
+            .'<race><![CDATA[4]]></race>'
+            .'<sex><![CDATA[1]]></sex>'
+            .'<height><![CDATA[194]]></height>'
+            .'<weight><![CDATA[88]]></weight>'
+            .'<comments><![CDATA[]]></comments>'
+            .'<demographics_complete><![CDATA[2]]></demographics_complete>'
+            .'</item> </records>';
+        
+        $result = self::$basicDemographyProject->importRecords($records, $format = 'xml');
+        $this->assertEquals(1, count($result), 'Record count.');
+            
+        $result = self::$basicDemographyProject->exportRecords();
+        $this->assertEquals(101, count($result), 'Record count after import.');
+            
+        $recordIds = [1101];
+        $result = self::$basicDemographyProject->deleteRecords($recordIds);
+            
+        $result = self::$basicDemographyProject->exportRecords();
+        $this->assertEquals(100, count($result), 'Record count after delete.');
+    }
+    
+    public function testImportRecordsWithNonArrayRecords()
+    {
+        $records = 1234;
+
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->importRecords($records, $format = 'php');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testImportRecordsWithNonStringRecords()
+    {
+        $records = [1234, 'test'];
+    
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->importRecords($records, $format = 'csv');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testImportRecordsPhpFormatWithJsonError()
+    {
+        $record = [
+                'record_id'  => '1101',
+                'first_name' => 'Joe',
+                'last_name'  => 'Schmidt',
+                'address'    => '72133 Joelle Grove Suite 055\nHayesburgh, AZ 84047-5437',
+                'telephone'  => '(753) 406-4137',
+                'email'      => 'joe.schmidt@mailinator.com',
+                'dob'        => '1944-01-17',
+                'ethnicity'  => 1,
+                'race'       => 4,
+                'sex'        => 1,
+                'height'     => 197,
+                'weight'     => 88,
+                'comments'   => '',
+                'demographics_complete' => 2
+        ];
+    
+        $records = [$record];
+
+        SystemFunctions::setJsonError();
+        
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->importRecords($records, $format = 'php');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::JSON_ERROR, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+        SystemFunctions::clearJsonError();
+    }
+    
+    public function testImportRecordsWithInvalidOverwriteBehavior()
+    {
+        $records = 'record_id,first_name,last_name,address,telephone,email,dob,'
+                .'ethnicity,race,sex,height,weight,comments,demographics_complete'."\n"
+                .'1101,Joe,Schmidt,"72133 Joelle Grove Suite 055 Hayesburgh, AZ 84047-5437",'
+                .'(753) 406-4137,joe.schmidt@mailinator.com,1945-07-15,0,4,1,191,88,,2';
+
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->importRecords(
+                $records,
+                $format = 'csv',
+                null,
+                $overwriteBehavior = 'delete'
+            );
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+
+    public function testImportRecordsWithInvalidDateFormat()
+    {
+        $records = 'record_id,first_name,last_name,address,telephone,email,dob,'
+                .'ethnicity,race,sex,height,weight,comments,demographics_complete'."\n"
+                .'1101,Joe,Schmidt,"72133 Joelle Grove Suite 055 Hayesburgh, AZ 84047-5437",'
+                .'(753) 406-4137,joe.schmidt@mailinator.com,1945-07-15,0,4,1,191,88,,2';
+        
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->importRecords(
+                $records,
+                $format = 'csv',
+                $type = null,
+                $overwriteBehavior = null,
+                $returnContent = null,
+                $dateFormat = 'MMDY'    # invalid format
+            );
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+
+    public function testImportRecordsWithInvalidReturnContent()
+    {
+        $records = 'record_id,first_name,last_name,address,telephone,email,dob,'
+                .'ethnicity,race,sex,height,weight,comments,demographics_complete'."\n"
+                .'1101,Joe,Schmidt,"72133 Joelle Grove Suite 055 Hayesburgh, AZ 84047-5437",'
+                .'(753) 406-4137,joe.schmidt@mailinator.com,1945-07-15,0,4,1,191,88,,2';
+        $exceptionCaught = false;
+        try {
+            $result = self::$basicDemographyProject->importRecords(
+                $records,
+                $format = 'csv',
+                $type = null,
+                $overwriteBehavior = null,
+                $returnContent = 'total'     # invalid return content
+            );
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
 }
