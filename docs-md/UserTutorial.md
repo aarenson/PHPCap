@@ -13,6 +13,8 @@ Prerequisites
 Example PHP Setup on Ubuntu 16:
     
     sudo apt-get install php php-curl
+
+Information on installing PHP on Windows: http://php.net/manual/en/install.windows.php
     
 Creating a PHPCap Project
 ------------------------------
@@ -57,6 +59,8 @@ Create a file __test.php__ in your project directory:
             docs/
             src/
             ...
+            autoloader.php
+            ...
         test.php
 
 Enter the following into the __test.php__ file, modifying the API URL and token to match those for your REDCap project:
@@ -64,7 +68,7 @@ Enter the following into the __test.php__ file, modifying the API URL and token 
 ```php
 <?php
 
-require('PHPCap/autoloader.php');  # Adjust the path as necessary
+require('PHPCap/autoloader.php');
 
 use \IU\PHPCap\RedCapProject;
 
@@ -84,3 +88,71 @@ Run the test program using the following command in your project directory:
     php test.php
     
 You should see output generated with information about your project.
+
+### Making your test program secure.
+
+The program above is not secure, because it does not use SSL verification to verify that the
+REDCap site accessed is the one actually intended. To make the program more secure, it
+should use SSL verification. 
+
+To do this you need to add the SSL verify flag and set it to true:
+
+```php
+...
+$sslVerify = true;
+$project = new RedCapProject($apiUrl, $apiToken, $sslVerify);
+...
+```
+
+But unless your system has already been set up to verify connections, you will need to create a
+certificate file
+for this, and add it also. Information on creating the file
+can be found here: [CA Certificate file](CACertificateFile.md)
+
+Assuming the file was created with the name 'USERTrustRSACertificationAuthority.crt' and is in
+you top-level project directory, the project creation would now be modified to the following:
+
+```php
+...
+$sslVerify = true;
+$caCertificateFile = 'USERTrustRSACertificationAuthority.crt';
+$project = new RedCapProject($apiUrl, $apiToken, $sslVerify, $caCertificateFile);
+...
+```
+
+So, at this point, your project directory should look as follows:
+
+    phpcap-project/
+        PHPCap/
+            docs/
+            src/
+            ...
+            autoloader.php
+            ...
+        test.php
+        USERTrustRSACertificationAuthority.crt
+        
+And your test program should look similar to the following:
+
+
+```php
+<?php
+
+require('PHPCap/autoloader.php');
+
+use \IU\PHPCap\RedCapProject;
+
+$apiUrl = 'https://redcap.xxxxx.edu/api/';  # replace this URL with your institution's
+                                            # REDCap API URL.
+                                                 
+$apiToken = '1234567890A1234567890B1234567890';    # replace with your actual API token
+
+$sslVerify = true;
+$caCertificateFile = 'USERTrustRSACertificationAuthority.crt';
+$project = new RedCapProject($apiUrl, $apiToken, $sslVerify, $caCertificateFile);
+$projectInfo = $project->exportProjectInfo();
+
+print_r($projectInfo);
+```    
+
+If everything is working correctly, the test program should (still) output information about your project.
