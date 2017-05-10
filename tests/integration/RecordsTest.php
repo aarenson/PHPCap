@@ -950,4 +950,85 @@ class RecordsTest extends TestCase
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
+    
+
+    public function testDeleteRecordsWithArm()
+    {
+        $records = REDCapProject::fileToString(__DIR__.'/../data/longitudinal-data-import.csv');
+         
+        $result = self::$longitudinalDataProject->importRecords(
+            $records,
+            $format = 'csv',
+            null,
+            null,
+            null,
+            $dateFormat = 'MDY'
+        );
+        print_r($result);
+        
+        $records = self::$longitudinalDataProject->exportRecordsAp(
+            ['events' => ['enrollment_arm_1', 'enrollment_arm_2']]
+        );
+        
+        $this->assertEquals(102, count($records), 'Record count check after import.');
+        
+        # delete the records that were just added that are in arm 1,
+        # which should be only records with ID 1102
+        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1101,1102], $arm = 1);
+        
+        # Note: as of May 10, 2017, this assertion fails (apparently) because of a REDCap API bug
+        #$this->assertEquals(1, $recordsDeleted, 'Records deleted check after first delete.');
+        
+        $records = self::$longitudinalDataProject->exportRecordsAp(
+            ['events' => ['enrollment_arm_1', 'enrollment_arm_2']]
+        );
+        $this->assertEquals(101, count($records), 'Record count after arm 1 delete');
+        
+        # delete remaining imported record
+        $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1101]);
+        $this->assertEquals(1, $recordsDeleted, 'Records deleted check after first delete.');
+    }
+    
+    public function testDeleteRecordsWithNonNumericStringArm()
+    {
+        $exceptionCaught = false;
+        try {
+            $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1101,1102], $arm = 'A');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+
+    public function testDeleteRecordsWithNegativeIntArm()
+    {
+        $exceptionCaught = false;
+        try {
+            $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1101,1102], $arm = -1);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+    
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    public function testDeleteRecordsWithArmWithInvalidType()
+    {
+        $exceptionCaught = false;
+        try {
+            $recordsDeleted = self::$longitudinalDataProject->deleteRecords([1101,1102], $arm = true);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+    
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
 }

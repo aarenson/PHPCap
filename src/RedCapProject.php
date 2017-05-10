@@ -805,16 +805,18 @@ class RedCapProject
      * @throws PhpCapException
      * @return integer the number of records deleted.
      */
-    public function deleteRecords($recordIds)
+    public function deleteRecords($recordIds, $arm = null)
     {
         $data = array (
                 'token'        => $this->apiToken,
                 'content'      => 'record',
                 'action'       => 'delete',
                 'returnFormat' => 'json',
-                'records'      => $recordIds
         );
 
+        $data['records'] = $this->processRecordIdsArgument($recordIds);
+        $data['arm']     = $this->processArmArgument($arm);
+        
         $result = $this->connection->callWithArray($data);
         
         $this->processNonExportResult($result);
@@ -1401,6 +1403,33 @@ class RedCapProject
         }
         
         return $arms;
+    }
+    
+    private function processArmArgument($arm)
+    {
+        if (!isset($arm)) {
+            ;  // That's OK
+        } elseif (is_string($arm)) {
+            if (! preg_match('/^[0-9]+$/', $arm)) {
+                throw new PhpCapException(
+                    'Arm number "' . $arm . '" is non-numeric string.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        } elseif (is_int($arm)) {
+            if ($arm < 0) {
+                throw new PhpCapException(
+                    'Arm number "' . $arm . '" is a negative integer.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        } else {
+            $message = 'The arm argument has type "'.gettype($arm).
+                '"; it should be an integer or a (numeric) string.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        }
+            
+        return $arm;
     }
     
     private function processRecordIdArgument($recordId)
