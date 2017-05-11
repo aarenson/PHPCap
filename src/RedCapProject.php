@@ -34,11 +34,6 @@ class RedCapProject
      *
      * Example Usage:
      * <code>
-     * <?php
-     * require('PHPCap/autoloader.php');
-     *
-     * use \IU\PHPCap\RedCapProject;
-     *
      * $apiUrl = 'https://redcap.someplace.edu/api/'; # replace with your API URL
      * $apiToken = '11111111112222222222333333333344'; # replace with your API token
      * $sslVerify = true;
@@ -49,7 +44,7 @@ class RedCapProject
      * $project = new RedCapProject($apiUrl, $apiToken, $sslVerify, $caCertificateFile);
      * </code>
      *
-     * @param string $apiUrl the URL for the API for the REDCap that has the project.
+     * @param string $apiUrl the URL for the API for the REDCap Site that has the project.
      * @param string $apiToken the API token for this project.
      * @param boolean $sslVerify indicates if SSL connection to REDCap web site should be verified.
      * @param string $caCertificateFile the full path name of the CA (Certificate Authority) certificate file.
@@ -133,7 +128,7 @@ class RedCapProject
      *
      * @param string $format the format in which to export the records:
      *     <ul>
-     *       <li> 'php' - array of maps of values [default]</li>
+     *       <li> 'php' - [default] array of maps of values</li>
      *       <li> 'csv' - string of CSV (comma-separated values)</li>
      *       <li> 'json' - string of JSON encoded values</li>
      *       <li> 'xml' - string of XML encoded data</li>
@@ -141,7 +136,7 @@ class RedCapProject
      *     </ul>
      * @param string $type the type of records exported:
      *     <ul>
-     *       <li>'flat' - exports one record per row.</li>
+     *       <li>'flat' - [default] exports one record per row.</li>
      *       <li>'eav'  - exports one data point per row:, so,
      *         for non-longitudinal studies, each record will have the following
      *         fields: record_id, field_name, value. For longitudinal studies, each record
@@ -156,13 +151,13 @@ class RedCapProject
      *         "[last_name] = 'Smith'".
      * @param string $rawOrLabel indicates what should be exported for options of multiple choice fields:
      *     <ul>
-     *       <li> 'raw' - export the raw coded values [default]</li>
+     *       <li> 'raw' - [default] export the raw coded values</li>
      *       <li> 'label' - export the labels</li>
      *     </ul>
      * @param string $rawOrLabelHeaders when exporting with 'csv' format 'flat' type, indicates what format
      *         should be used for the CSV headers:
      *         <ul>
-     *           <li> 'raw' - export the variable/field names [default]</li>
+     *           <li> 'raw' - [default] export the variable/field names</li>
      *           <li> 'label' - export the field labels</li>
      *         </ul>
      * @param boolean $exportCheckboxLabel specifies the format for checkbox fields for the case where
@@ -176,11 +171,27 @@ class RedCapProject
      *            unchecked checkboxes will have a value of 'Unchecked'.
      *       </li>
      *     </ul>
-     * @param boolean $exportSurveyFields
-     * @param boolean $exportDataAccessGroups
+     * @param boolean $exportSurveyFields specifies whether survey fields should be exported.
+     *     <ul>
+     *       <li> true - export the following survey fields:
+     *         <ul>
+     *           <li> survey identifier field ('redcap_survey_identifier') </li>
+     *           <li> survey timestamp fields (instrument+'_timestamp') </li>
+     *         </ul>
+     *       </li>
+     *       <li> false - [default] survey fields are not exported.</li>
+     *     </ul>
+     * @param boolean $exportDataAccessGroups specifies whether the data access group field
+     *      ('redcap_data_access_group') should be exported.
+     *     <ul>
+     *       <li> true - export the data access group field if there is at least one data access group, and
+     *                   the user calling the method (as identified by the API token) is not
+     *                   in a data access group.</li>
+     *       <li> false - [default] don't export the data access group field.</li>
+     *     </ul>
      *
-     * @return mixed If 'php' format is specified, an array of records will be returned, where each record
-     *     is an array where the keys are the fields names, and the values are the field values. For other
+     * @return mixed If 'php' format is specified, an array of records will be returned where the format
+     *     of the records depends on the 'type'parameter (see above). For other
      *     formats, a string is returned that contains the records in the specified format.
      */
     public function exportRecords(
@@ -349,10 +360,36 @@ class RedCapProject
      *
      * @param mixed $reportId integer or numeric string ID of the report to use.
      * @param string $format output data format.
-     * @param string $rawOrLabel
-     * @param string $rawOrLabelHeaders
-     * @param string $exportCheckboxLabel
-     * @return mixed the records generated by the speficied report in the specified format.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param string $rawOrLabel indicates what should be exported for options of multiple choice fields:
+     *     <ul>
+     *       <li> 'raw' - [default] export the raw coded values</li>
+     *       <li> 'label' - export the labels</li>
+     *     </ul>
+     * @param string $rawOrLabelHeaders when exporting with 'csv' format 'flat' type, indicates what format
+     *         should be used for the CSV headers:
+     *         <ul>
+     *           <li> 'raw' - [default] export the variable/field names</li>
+     *           <li> 'label' - export the field labels</li>
+     *         </ul>
+     * @param boolean $exportCheckboxLabel specifies the format for checkbox fields for the case where
+     *         $format = 'csv', $rawOrLabel = true, and $type = 'flat'. For other cases this
+     *         parameter is effectively ignored.
+     *     <ul>
+     *       <li> true - checked checkboxes will have a value equal to the checkbox option's label
+     *           (e.g., 'Choice 1'), and unchecked checkboxes will have a blank value.
+     *       </li>
+     *       <li> false - [default] checked checkboxes will have a value of 'Checked', and
+     *            unchecked checkboxes will have a value of 'Unchecked'.
+     *       </li>
+     *     </ul>
+     *
+     * @return mixed the records generated by the specefied report in the specified format.
      */
     public function exportReports(
         $reportId,
@@ -395,6 +432,7 @@ class RedCapProject
      * @param string $field the name of the field containing the file to export.
      * @param string $event name of event for file export (for longitudinal studies).
      * @param string $repeatInstance
+     *
      * @return string the contents of the file that was exported.
      */
     public function exportFile($recordId, $field, $event = null, $repeatInstance = null)
@@ -427,6 +465,14 @@ class RedCapProject
      * Exports the numbers and names of the arms in the project.
      *
      * @param $format string the format used to export the arm data.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param array $arms array of integers or numeric strings that are the numbers of the arms to export.
+     *     If no arms are specified, then information for all arms will be returned.
      *
      * @return mixed For 'php' format, array of arrays that have the following keys:
      *     <ul>
@@ -459,11 +505,25 @@ class RedCapProject
      * <code>
      * #export information about all events in CSV (Comma-Separated Values) format.
      * $eventInfo = $project->exportEvents('csv');
+     *
+     * # export events in XML format for arms 1 and 2.
+     * $eventInfo = $project->exportEvents('xml', [1, 2]);
      * </code>
      *
      * @param string $format the format for the export.
-     * @param array $arms the arms to export.
-     * @return array information about the specified events.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param array $arms array of integers or numeric strings that are the arm numbers for
+     *     which events should be exported.
+     *     If no arms are specified, then all events will be returned.
+     *
+     * @return array information about the specified events. Each element of the
+     *     array is an associative array with the following keys: 'event_name', 'arm_num',
+     *         'day_offset', 'offset_min', 'offset_max', 'unique_event_name', 'custom_event_label'
      */
     public function exportEvents($format = 'php', $arms = [])
     {
@@ -495,7 +555,13 @@ class RedCapProject
     /**
      * Exports information about the project, e.g., project ID, project title, creation time.
      *
-     * @param $format string
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
      *
      * @return array associative array (map) of project information. See REDCap API documentation
      *         for a list of the fields, or use the print_r function on the results of this method.
@@ -527,7 +593,16 @@ class RedCapProject
     /**
      * Exports metadata about the project, i.e., information about the fields in the project.
      *
-     * @param $format string
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param array $fields array of field names for which metadata should be exported
+     * @param array $forms array of form names. Metadata will be exported for all fields in the
+     *     specified forms.
      *
      * @return array associative array (map) of metatdata for the project, which consists of
      *         information about each field. Some examples of the information
@@ -561,9 +636,9 @@ class RedCapProject
     }
     
     /**
-     * Gets the REDCap version number of the instance being used by the project.
+     * Gets the REDCap version number of the REDCap instance being used by the project.
      *
-     * @return string the REDCap version number of the instance being used by the project.
+     * @return string the REDCap version number of the REDCap instance being used by the project.
      */
     public function exportRedcapVersion()
     {
@@ -589,11 +664,12 @@ class RedCapProject
      *
      * @param $format string format instruments are exported in:
      *     <ul>
-     *       <li>'php' - returns data as a PHP array [default]</li>
+     *       <li>'php' - [default] returns data as a PHP array</li>
      *       <li>'csv' - string of CSV (comma-separated values)</li>
      *       <li>'json' - string of JSON encoded data</li>
      *       <li>'xml' - string of XML encoded data</li>
      *     </ul>
+     *
      * @return mixed For the 'php' format, and array map of instrument names to instrument labels is returned.
      *     For all other formats a string is returned.
      */
@@ -646,6 +722,17 @@ class RedCapProject
      * )
      * </pre>
      *
+     * @param string $format the format in which to export the records:
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param array $arms array of integers or numeric strings that are the numbers of the arms
+     *     for which instrument/event mapping infomation should be exported.
+     *     If no arms are specified, then information for all arms will be exported.
+     *
      * @return arrray an array of arrays that have the following keys:
      *     <ul>
      *       <li>'arm_num'</li>
@@ -689,7 +776,7 @@ class RedCapProject
      *            the records are represented by a string.
      * @param string $format One of the following formats can be specified
      *            <ul>
-     *              <li> 'php' - array of maps of values [default]</li>
+     *              <li> 'php' - [default] array of maps of values</li>
      *              <li> 'csv' - string of CSV (comma-separated values)</li>
      *              <li> 'json' - string of JSON encoded values</li>
      *              <li> 'xml' - string of XML encoded data</li>
@@ -697,21 +784,26 @@ class RedCapProject
      *            </ul>
      * @param string $type
      *            <ul>
-     *              <li> 'flat' - each data element is a record</li>
+     *              <li> 'flat' - [default] each data element is a record</li>
      *              <li> 'eav' - each data element is one value</li>
      *            </ul>
      * @param string $overwriteBehavior
      *            <ul>
-     *              <li>normal - blank/empty values will be ignored [default]</li>
+     *              <li>normal - [default] blank/empty values will be ignored</li>
      *              <li>overwrite - blank/empty values are valid and will overwrite data</li>
      *            </ul>
-     * @param string $returnContent 'count' (the default) or 'ids'.
      * @param string $dateFormat date format which can be one of the following:
      *            <ul>
-     *              <li>'YMD' - Y-M-D format (e.g., 2016-12-31) [default]</li>
+     *              <li>'YMD' - [default] Y-M-D format (e.g., 2016-12-31)</li>
      *              <li>'MDY' - M/D/Y format (e.g., 12/31/2016)</li>
      *              <li>'DMY' - D/M/Y format (e.g., 31/12/2016)</li>
      *           </ul>
+     * @param string $returnContent specifies what should be returned:
+     *           <ul>
+     *             <li>'count' - [default] the number of records imported</li>
+     *             <li> ids' - an array of the record IDs imported is returned</li>
+     *           </ul>
+     *
      * @return mixed if 'count' was specified for 'returnContent', then an integer will
      *         be returned that is the number of records imported.
      *         If 'ids' was specified, then an array of record IDs that were imported will
@@ -722,8 +814,8 @@ class RedCapProject
         $format = 'php',
         $type = 'flat',
         $overwriteBehavior = 'normal',
-        $returnContent = 'count',
-        $dateFormat = 'YMD'
+        $dateFormat = 'YMD',
+        $returnContent = 'count'
     ) {
         
         $data = array (

@@ -720,7 +720,7 @@ class RecordsTest extends TestCase
         
         $records = [$record];
         
-        $result = self::$basicDemographyProject->importRecords($records, null, null, null, 'count');
+        $result = self::$basicDemographyProject->importRecords($records, null, null, null, null, 'count');
         $this->assertEquals(1, $result, 'Record count.');
         
         $result = self::$basicDemographyProject->exportRecords();
@@ -743,8 +743,8 @@ class RecordsTest extends TestCase
             $format = 'csv',
             $type = null,
             $overwriteBehavior = null,
-            $returnContent = 'ids',
-            $dateFormat = null
+            $dateFormat = null,
+            $returnContent = 'ids'
         );
         $this->assertEquals(1, count($result), 'Record count.');
 
@@ -916,8 +916,8 @@ class RecordsTest extends TestCase
                 $format = 'csv',
                 $type = null,
                 $overwriteBehavior = null,
-                $returnContent = null,
-                $dateFormat = 'MMDY'    # invalid format
+                $dateFormat = 'MMDY',    # invalid format
+                $returnContent = null
             );
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
@@ -941,6 +941,7 @@ class RecordsTest extends TestCase
                 $format = 'csv',
                 $type = null,
                 $overwriteBehavior = null,
+                $dateFormat = null,
                 $returnContent = 'total'     # invalid return content
             );
         } catch (PhpCapException $exception) {
@@ -959,7 +960,6 @@ class RecordsTest extends TestCase
         $result = self::$longitudinalDataProject->importRecords(
             $records,
             $format = 'csv',
-            null,
             null,
             null,
             $dateFormat = 'MDY'
