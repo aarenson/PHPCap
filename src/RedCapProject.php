@@ -30,7 +30,24 @@ class RedCapProject
  
     
     /**
-     * Contructs a REDCap project for the specifed information.
+     * Creates a REDCapProject object for the specifed project.
+     *
+     * Example Usage:
+     * <code>
+     * <?php
+     * require('PHPCap/autoloader.php');
+     *
+     * use \IU\PHPCap\RedCapProject;
+     *
+     * $apiUrl = 'https://redcap.someplace.edu/api/'; # replace with your API URL
+     * $apiToken = '11111111112222222222333333333344'; # replace with your API token
+     * $sslVerify = true;
+     *
+     * # See the PHPCap documentation for information on how to set this file up
+     * $caCertificateFile = 'USERTrustRSACertificationAuthority.crt';
+     *
+     * $project = new RedCapProject($apiUrl, $apiToken, $sslVerify, $caCertificateFile);
+     * </code>
      *
      * @param string $apiUrl the URL for the API for the REDCap that has the project.
      * @param string $apiToken the API token for this project.
@@ -146,7 +163,17 @@ class RedCapProject
      *           <li> 'raw' - export the variable/field names [default]</li>
      *           <li> 'label' - export the field labels</li>
      *         </ul>
-     * @param boolean $exportCheckboxLabel
+     * @param boolean $exportCheckboxLabel specifies the format for checkbox fields for the case where
+     *         $format = 'csv', $rawOrLabel = true, and $type = 'flat'. For other cases this
+     *         parameter is effectively ignored.
+     *     <ul>
+     *       <li> true - checked checkboxes will have a value equal to the checkbox option's label
+     *           (e.g., 'Choice 1'), and unchecked checkboxes will have a blank value.
+     *       </li>
+     *       <li> false - [default] checked checkboxes will have a value of 'Checked', and
+     *            unchecked checkboxes will have a value of 'Unchecked'.
+     *       </li>
+     *     </ul>
      * @param boolean $exportSurveyFields
      * @param boolean $exportDataAccessGroups
      * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
