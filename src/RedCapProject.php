@@ -152,6 +152,8 @@ class RedCapProject
      * @param array $fields array of field names to export
      * @param array $forms array of form names for which fields should be exported
      * @param array $events array of event names for which fields should be exported
+     * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
+     *         "[last_name] = 'Smith'".
      * @param string $rawOrLabel indicates what should be exported for options of multiple choice fields:
      *     <ul>
      *       <li> 'raw' - export the raw coded values [default]</li>
@@ -176,8 +178,6 @@ class RedCapProject
      *     </ul>
      * @param boolean $exportSurveyFields
      * @param boolean $exportDataAccessGroups
-     * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
-     *         "[last_name] = 'Smith'".
      *
      * @return mixed If 'php' format is specified, an array of records will be returned, where each record
      *     is an array where the keys are the fields names, and the values are the field values. For other
@@ -190,12 +190,12 @@ class RedCapProject
         $fields = null,
         $forms = null,
         $events = null,
+        $filterLogic = null,
         $rawOrLabel = 'raw',
         $rawOrLabelHeaders = 'raw',
         $exportCheckboxLabel = false,
         $exportSurveyFields = false,
-        $exportDataAccessGroups = false,
-        $filterLogic = null
+        $exportDataAccessGroups = false
     ) {
         $data = array(
                 'token'        => $this->apiToken,
@@ -299,6 +299,9 @@ class RedCapProject
                 case 'events':
                     $events = $value;
                     break;
+                case 'filterLogic':
+                    $filterLogic = $value;
+                    break;
                 case 'rawOrLabel':
                     $rawOrLabel = $value;
                     break;
@@ -313,9 +316,6 @@ class RedCapProject
                     break;
                 case 'exportDataAccessGroups':
                     $exportDataAccessGroups = $value;
-                    break;
-                case 'filterLogic':
-                    $filterLogic = $value;
                     break;
                 default:
                     throw new PhpCapException(
@@ -333,12 +333,12 @@ class RedCapProject
             isset($fields)                 ? $fields                 : null,
             isset($forms)                  ? $forms                  : null,
             isset($events)                 ? $events                 : null,
+            isset($filterLogic)            ? $filterLogic            : null,
             isset($rawOrLabel)             ? $rawOrLabel             : 'raw',
             isset($rawOrLabelHeaders)      ? $rawOrLabelHeaders      : 'raw',
             isset($exportCheckboxLabel)    ? $exportCheckboxLabel    : false,
             isset($exportSurveyFields)     ? $exportSurveyFields     : false,
-            isset($exportDataAccessGroups) ? $exportDataAccessGroups : false,
-            isset($filterLogic)            ? $filterLogic            : null
+            isset($exportDataAccessGroups) ? $exportDataAccessGroups : false
         );
         
         return $records;
@@ -535,7 +535,7 @@ class RedCapProject
      *         See REDCap API documentation
      *         for more information, or use the print_r function on the results of this method.
      */
-    public function exportMetadata($format = 'php', $forms = [], $fields = [])
+    public function exportMetadata($format = 'php', $fields = [], $forms = [])
     {
         $data = array(
                 'token' => $this->apiToken,

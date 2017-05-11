@@ -293,12 +293,12 @@ class RecordsTest extends TestCase
             null,
             null,
             null,
+            "[last_name] = 'Thiel'",
             null,
             null,
             null,
             null,
-            null,
-            "[last_name] = 'Thiel'"
+            null
         );
         $this->assertEquals(2, count($result), 'Got expected number of records.');
         $firstNameMap = array_flip(array_column($result, 'first_name'));

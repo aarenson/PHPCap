@@ -45,7 +45,11 @@ class MetadataTest extends TestCase
     
     public function testExportMetadataWithForms()
     {
-        $result = self::$longitudinalDataProject->exportMetadata($format = 'php', $forms = ['lab_data']);
+        $result = self::$longitudinalDataProject->exportMetadata(
+            $format = 'php',
+            $fields = [],
+            $forms = ['lab_data']
+        );
         
         $this->assertEquals(5, count($result), 'Number of fields check.');
         
@@ -60,7 +64,7 @@ class MetadataTest extends TestCase
     {
         $fields = ['study_id', 'age', 'bmi'];
         
-        $result = self::$longitudinalDataProject->exportMetadata($format = 'php', $forms = [], $fields);
+        $result = self::$longitudinalDataProject->exportMetadata($format = 'php', $fields);
     
         $this->assertEquals(count($fields), count($result), 'Number of fields check.');
      
