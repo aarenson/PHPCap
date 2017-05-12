@@ -736,7 +736,7 @@ class RecordsTest extends TestCase
     
     public function testImportAndDeleteRecordsCsvFormat()
     {
-        $records = REDCapProject::fileToString(__DIR__.'/../data/basic-demography-import.csv');
+        $records = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import.csv');
    
         $result = self::$basicDemographyProject->importRecords(
             $records,
@@ -763,7 +763,7 @@ class RecordsTest extends TestCase
 
     public function testImportRecordsCsvFormatWithJsonError()
     {
-        $records = REDCapProject::fileToString(__DIR__.'/../data/basic-demography-import.csv');
+        $records = FileUtil::fileToString(__DIR__.'/../data/basic-demography-import.csv');
    
         SystemFunctions::setJsonError();
         
@@ -955,7 +955,7 @@ class RecordsTest extends TestCase
 
     public function testDeleteRecordsWithArm()
     {
-        $records = REDCapProject::fileToString(__DIR__.'/../data/longitudinal-data-import.csv');
+        $records = FileUtil::fileToString(__DIR__.'/../data/longitudinal-data-import.csv');
          
         $result = self::$longitudinalDataProject->importRecords(
             $records,

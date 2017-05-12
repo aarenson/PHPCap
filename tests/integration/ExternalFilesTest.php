@@ -7,7 +7,7 @@ use PHPUnit\Framework\TestCase;
 use IU\PHPCap\SystemFunctions;
 
 /**
- * PHPUnit tests for external files for the RedCapProject class.
+ * PHPUnit tests for external files for the FileUtil class.
  */
 class ExternalFilesTest extends TestCase
 {
@@ -19,18 +19,18 @@ class ExternalFilesTest extends TestCase
     
     public function testFileReadAndWrite()
     {
-        $content = RedCapProject::fileToString(self::DATA_DIR.'file.txt');
+        $content = FileUtil::fileToString(self::DATA_DIR.'file.txt');
         $this->assertEquals($content, "Test data file.", 'file.txt content match.');
         
         $outputFile = self::DATA_DIR.'output.txt';
         $text1 = "This is a test.";
-        RedCapProject::writeStringToFile($text1, $outputFile);
-        $content = RedCapProject::fileToString($outputFile);
+        FileUtil::writeStringToFile($text1, $outputFile);
+        $content = FileUtil::fileToString($outputFile);
         $this->assertEquals($content, $text1, 'String write check.');
         
         $text2 = " Another test.";
-        RedCapProject::appendStringToFile($text2, $outputFile);
-        $content = RedCapProject::fileToString($outputFile);
+        FileUtil::appendStringToFile($text2, $outputFile);
+        $content = FileUtil::fileToString($outputFile);
         $this->assertEquals($content, $text1 . $text2, 'String append check.');
     }
     
@@ -38,7 +38,7 @@ class ExternalFilesTest extends TestCase
     {
         $exceptionCaught = false;
         try {
-            $content = RedCapProject::fileToString(self::DATA_DIR.uniqid().'.txt');
+            $content = FileUtil::fileToString(self::DATA_DIR.uniqid().'.txt');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
             $this->assertEquals(PhpCapException::INPUT_FILE_NOT_FOUND, $code, 'Exception code check.');
@@ -52,7 +52,7 @@ class ExternalFilesTest extends TestCase
         $exceptionCaught = false;
         SystemFunctions::setIsReadableToFail();
         try {
-            $content = RedCapProject::fileToString(self::DATA_DIR.'file.txt');
+            $content = FileUtil::fileToString(self::DATA_DIR.'file.txt');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
             $this->assertEquals(PhpCapException::INPUT_FILE_UNREADABLE, $code, 'Exception code check.');
@@ -69,7 +69,7 @@ class ExternalFilesTest extends TestCase
         $error = ['message' => 'System file error.'];
         SystemFunctions::setErrorGetLast($error);
         try {
-            $content = RedCapProject::fileToString(self::DATA_DIR.'file.txt');
+            $content = FileUtil::fileToString(self::DATA_DIR.'file.txt');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
             $this->assertEquals(PhpCapException::INPUT_FILE_ERROR, $code, 'Exception code check.');
@@ -86,7 +86,7 @@ class ExternalFilesTest extends TestCase
         $exceptionCaught = false;
         SystemFunctions::setFileGetContentsToFail();
         try {
-            $content = RedCapProject::fileToString(self::DATA_DIR.'file.txt');
+            $content = FileUtil::fileToString(self::DATA_DIR.'file.txt');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
             $this->assertEquals(PhpCapException::INPUT_FILE_ERROR, $code, 'Exception code check.');
@@ -104,7 +104,7 @@ class ExternalFilesTest extends TestCase
         $error = ['message' => 'System file error.'];
         SystemFunctions::setErrorGetLast($error);
         try {
-            RedCapProject::writeStringToFile('test', self::DATA_DIR.'output.txt');
+            FileUtil::writeStringToFile('test', self::DATA_DIR.'output.txt');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
             $this->assertEquals(PhpCapException::OUTPUT_FILE_ERROR, $code, 'Exception code check.');
@@ -120,7 +120,7 @@ class ExternalFilesTest extends TestCase
         $exceptionCaught = false;
         SystemFunctions::setFilePutContentsToFail();
         try {
-            RedCapProject::writeStringToFile('test', self::DATA_DIR.'output.txt');
+            FileUtil::writeStringToFile('test', self::DATA_DIR.'output.txt');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
             $this->assertEquals(PhpCapException::OUTPUT_FILE_ERROR, $code, 'Exception code check.');
