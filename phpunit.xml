@@ -4,12 +4,12 @@
   <testsuites>
     <testsuite name="unit">
       <file>tests/unit/PhpCapExceptionTest.php</file>
+      <file>tests/unit/FileUtilTest.php</file>
     </testsuite>
     <testsuite name="integration">
       <file>tests/integration/ArmsTest.php</file>
       <file>tests/integration/ConnectionsTest.php</file>
       <file>tests/integration/EventsTest.php</file>
-      <file>tests/integration/ExternalFilesTest.php</file>
       <file>tests/integration/FilesTest.php</file>
       <file>tests/integration/InstrumentEventMappingsTest.php</file>
       <file>tests/integration/InstrumentsTest.php</file>

@@ -9,7 +9,7 @@ use IU\PHPCap\SystemFunctions;
 /**
  * PHPUnit tests for external files for the FileUtil class.
  */
-class ExternalFilesTest extends TestCase
+class FileUtilTest extends TestCase
 {
     const DATA_DIR = __DIR__.'/../data/';
     
