@@ -107,7 +107,7 @@ class FileUtil
      */
     public static function appendStringToFile($string, $filename)
     {
-        $result = self::writeStringToFile($string, $filename, true);
+        $result = static::writeStringToFile($string, $filename, true);
         return $result;
     }
 }
