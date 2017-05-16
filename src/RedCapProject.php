@@ -115,6 +115,45 @@ class RedCapProject
         
         $this->connection = new RedCapApiConnection($apiUrl, $sslVerify, $caCertificateFile);
     }
+
+    
+    /**
+     * Exports the numbers and names of the arms in the project.
+     *
+     * @param $format string the format used to export the arm data.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param array $arms array of integers or numeric strings that are the numbers of the arms to export.
+     *     If no arms are specified, then information for all arms will be returned.
+     *
+     * @return mixed For 'php' format, array of arrays that have the following keys:
+     *     <ul>
+     *       <li>'arm_num'</li>
+     *       <li>'name'</li>
+     *     </ul>
+     */
+    public function exportArms($format = 'php', $arms = [])
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'arm',
+                'returnFormat' => 'json'
+        );
+        
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['arms']   = $this->processArmsArgument($arms);
+        
+        $arms = $this->connection->callWithArray($data);
+        $arms = $this->processExportResult($arms, $format);
+        
+        return $arms;
+    }
+    
     
     /**
      * Exports the specified records.
@@ -461,42 +500,6 @@ class RedCapProject
         return $file;
     }
     
-    /**
-     * Exports the numbers and names of the arms in the project.
-     *
-     * @param $format string the format used to export the arm data.
-     *     <ul>
-     *       <li> 'php' - [default] array of maps of values</li>
-     *       <li> 'csv' - string of CSV (comma-separated values)</li>
-     *       <li> 'json' - string of JSON encoded values</li>
-     *       <li> 'xml' - string of XML encoded data</li>
-     *     </ul>
-     * @param array $arms array of integers or numeric strings that are the numbers of the arms to export.
-     *     If no arms are specified, then information for all arms will be returned.
-     *
-     * @return mixed For 'php' format, array of arrays that have the following keys:
-     *     <ul>
-     *       <li>'arm_num'</li>
-     *       <li>'name'</li>
-     *     </ul>
-     */
-    public function exportArms($format = 'php', $arms = [])
-    {
-        $data = array(
-                'token' => $this->apiToken,
-                'content' => 'arm',
-                'returnFormat' => 'json'
-        );
-        
-        $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format'] = $this->processFormatArgument($format, $legalFormats);
-        $data['arms']   = $this->processArmsArgument($arms);
-        
-        $arms = $this->connection->callWithArray($data);
-        $arms = $this->processExportResult($arms, $format);
-        
-        return $arms;
-    }
     
     /**
      * Exports information about the specified events.
@@ -882,8 +885,11 @@ class RedCapProject
      * @param string $filename the name of the file to import.
      * @param string $recordId the record ID of the record to import the file into.
      * @param string $field the field of the record to import the file into.
-     * @param string $event the event of the record to import the file into.
-     * @param string $repeatInstance
+     * @param string $event the event of the record to import the file into
+     *     (only for longitudinal studies).
+     * @param string $repeatInstance the repeat instance of the record to import
+     *     the file into (only for studies that have repeating events
+     *     and/or instruments).
      *
      * @throws PhpCapException
      */
