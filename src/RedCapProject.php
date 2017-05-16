@@ -156,6 +156,386 @@ class RedCapProject
     
     
     /**
+     * Exports information about the specified events.
+     *
+     * Example usage:
+     * <code>
+     * #export information about all events in CSV (Comma-Separated Values) format.
+     * $eventInfo = $project->exportEvents('csv');
+     *
+     * # export events in XML format for arms 1 and 2.
+     * $eventInfo = $project->exportEvents('xml', [1, 2]);
+     * </code>
+     *
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param array $arms array of integers or numeric strings that are the arm numbers for
+     *     which events should be exported.
+     *     If no arms are specified, then all events will be returned.
+     *
+     * @return array information about the specified events. Each element of the
+     *     array is an associative array with the following keys: 'event_name', 'arm_num',
+     *         'day_offset', 'offset_min', 'offset_max', 'unique_event_name', 'custom_event_label'
+     */
+    public function exportEvents($format = 'php', $arms = [])
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'event',
+                'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process arguments
+        #---------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['arms'] = $this->processArmsArgument($arms);
+        
+        
+        #------------------------------------------------------
+        # Get and process events
+        #------------------------------------------------------
+        $events = $this->connection->callWithArray($data);
+        $events = $this->processExportResult($events, $format);
+        
+        return $events;
+    }
+
+    
+    /**
+     * Exports the specified file.
+     *
+     * @param string $recordId the record ID for the file to be exported.
+     * @param string $field the name of the field containing the file to export.
+     * @param string $event name of event for file export (for longitudinal studies).
+     * @param string $repeatInstance
+     *
+     * @return string the contents of the file that was exported.
+     */
+    public function exportFile($recordId, $field, $event = null, $repeatInstance = null)
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'file',
+                'action'       => 'export',
+                'returnFormat' => 'json'
+        );
+        
+        #--------------------------------------------
+        # Process arguments
+        #--------------------------------------------
+        $data['record']           = $this->processRecordIdArgument($recordId);
+        $data['field']            = $this->processFieldArgument($field);
+        $data['event']            = $this->processEventArgument($event);
+        $data['repeat_instance']  = $this->processRepeatInstanceArgument($repeatInstance);
+        
+        #-------------------------------
+        # Get and process file
+        #-------------------------------
+        $file = $this->connection->callWithArray($data);
+        $file = $this->processExportResult($file, $format = 'file');
+        
+        return $file;
+    }
+    
+    
+    /**
+     * Imports the file into the field of the record
+     * with the specified event and/or repeat istance, if any.
+     *
+     * Example usage:
+     * <code>
+     * ...
+     * $file     = '../data/consent1001.txt';
+     * $recordId = '1001';
+     * $field    = 'patient_document';
+     * $event    = 'enrollment_arm_1';
+     * $project->importFile($file, $recordId, $field, 'enrollment_arm_1');
+     * ...
+     * </code>
+     *
+     * @param string $filename the name of the file to import.
+     * @param string $recordId the record ID of the record to import the file into.
+     * @param string $field the field of the record to import the file into.
+     * @param string $event the event of the record to import the file into
+     *     (only for longitudinal studies).
+     * @param string $repeatInstance the repeat instance of the record to import
+     *     the file into (only for studies that have repeating events
+     *     and/or instruments).
+     *
+     * @throws PhpCapException
+     */
+    public function importFile($filename, $recordId, $field, $event = null, $repeatInstance = null)
+    {
+        $data = array (
+                'token'        => $this->apiToken,
+                'content'      => 'file',
+                'action'       => 'import',
+                'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------
+        # Process non-file arguments
+        #----------------------------------------
+        $data['file']             = $this->processFilenameArgument($filename);
+        $data['record']           = $this->processRecordIdArgument($recordId);
+        $data['field']            = $this->processFieldArgument($field);
+        $data['event']            = $this->processEventArgument($event);
+        $data['repeat_instance']  = $this->processRepeatInstanceArgument($repeatInstance);
+        
+        
+        #---------------------------------------------------------------------
+        # For unknown reasons, "call" (instead of "callWithArray") needs to
+        # be used here (probably something to do with the 'file' data).
+        # REDCap's "API Playground" (also) makes no data conversion for this
+        # method.
+        #---------------------------------------------------------------------
+        $result = $this->connection->call($data);
+        
+        $this->processNonExportResult($result);
+    }
+    
+    /**
+     * Deletes the specified file.
+     *
+     * @param string $recordId the record ID of the file to delete.
+     * @param string $field the field name of the file to delete.
+     * @param string $event the event of the file to delete
+     *     (only for longitudinal studies).
+     * @param string $repeatInstance repeat instance of the file to delete
+     *     (only for studies that have repeating events
+     *     and/or instruments).
+     */
+    public function deleteFile($recordId, $field, $event = null, $repeatInstance = null)
+    {
+        $data = array (
+                'token'        => $this->apiToken,
+                'content'      => 'file',
+                'action'       => 'delete',
+                'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------
+        # Process arguments
+        #----------------------------------------
+        $data['record']           = $this->processRecordIdArgument($recordId);
+        $data['field']            = $this->processFieldArgument($field);
+        $data['event']            = $this->processEventArgument($event);
+        $data['repeat_instance']  = $this->processRepeatInstanceArgument($repeatInstance);
+        
+        $result = $this->connection->callWithArray($data);
+        
+        $this->processNonExportResult($result);
+        
+        return $result;
+    }
+    
+    
+    /**
+     * Exports information about the instruments (data entry forms) for the project.
+     *
+     * Example usage:
+     * <code>
+     * $instruments = $project->getInstruments();
+     * foreach ($instruments as $instrumentName => $instrumentLabel) {
+     *     print "{$instrumentName} : {$instrumentLabel}\n";
+     * }
+     * </code>
+     *
+     * @param $format string format instruments are exported in:
+     *     <ul>
+     *       <li>'php' - [default] returns data as a PHP array</li>
+     *       <li>'csv' - string of CSV (comma-separated values)</li>
+     *       <li>'json' - string of JSON encoded data</li>
+     *       <li>'xml' - string of XML encoded data</li>
+     *     </ul>
+     *
+     * @return mixed For the 'php' format, and array map of instrument names to instrument labels is returned.
+     *     For all other formats a string is returned.
+     */
+    public function exportInstruments($format = 'php')
+    {
+        $data = array(
+                'token'       => $this->apiToken,
+                'content'     => 'instrument',
+                'returnFormat' => 'json'
+        );
+        
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
+        $instrumentsData = $this->connection->callWithArray($data);
+        
+        $instrumentsData = $this->processExportResult($instrumentsData, $format);
+        
+        #------------------------------------------------------
+        # If format is 'php', reformat the data as
+        # a map from "instrument name" to "instrument label"
+        #------------------------------------------------------
+        if ($format == 'php') {
+            $instruments = array ();
+            foreach ($instrumentsData as $instr) {
+                $instruments [$instr ['instrument_name']] = $instr ['instrument_label'];
+            }
+        } else {
+            $instruments = $instrumentsData;
+        }
+        
+        return $instruments;
+    }
+    
+    /**
+     * Gets the instrument to event mapping for the project.
+     *
+     * For example, the following code:
+     * <code>
+     * $map = $project->exportInstrumentEventMappings();
+     * print_r($map[0]); # print first element of map
+     * </code>
+     * might generate the following output:
+     * <pre>
+     * Array
+     * (
+     *     [arm_num] => 1
+     *     [unique_event_name] => enrollment_arm_1
+     *     [form] => demographics
+     * )
+     * </pre>
+     *
+     * @param string $format the format in which to export the records:
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param array $arms array of integers or numeric strings that are the numbers of the arms
+     *     for which instrument/event mapping infomation should be exported.
+     *     If no arms are specified, then information for all arms will be exported.
+     *
+     * @return arrray an array of arrays that have the following keys:
+     *     <ul>
+     *       <li>'arm_num'</li>
+     *       <li>'unique_event_name'</li>
+     *       <li>'form'</li>
+     *     </ul>
+     */
+    public function exportInstrumentEventMappings($format = 'php', $arms = [])
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'formEventMapping',
+                'format'       => 'json',
+                'returnFormat' => 'json'
+        );
+        
+        #------------------------------------------
+        # Process arguments
+        #------------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['arms']   = $this->processArmsArgument($arms);
+        
+        #---------------------------------------------
+        # Get and process instrument-event mappings
+        #---------------------------------------------
+        $instrumentEventMappings = $this->connection->callWithArray($data);
+        $instrumentEventMappings = $this->processExportResult($instrumentEventMappings, $format);
+        
+        return $instrumentEventMappings;
+    }
+
+    
+    /**
+     * Exports metadata about the project, i.e., information about the fields in the project.
+     *
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param array $fields array of field names for which metadata should be exported
+     * @param array $forms array of form names. Metadata will be exported for all fields in the
+     *     specified forms.
+     *
+     * @return array associative array (map) of metatdata for the project, which consists of
+     *         information about each field. Some examples of the information
+     *         provided are: 'field_name', 'form_name', 'field_type', 'field_label'.
+     *         See REDCap API documentation
+     *         for more information, or use the print_r function on the results of this method.
+     */
+    public function exportMetadata($format = 'php', $fields = [], $forms = [])
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'metadata',
+                'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process format
+        #---------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['forms']  = $this->processFormsArgument($forms);
+        $data['fields'] = $this->processFieldsArgument($fields);
+        
+        #-------------------------------------------
+        # Get and process metadata
+        #-------------------------------------------
+        $metadata = $this->connection->callWithArray($data);
+        $metadata = $this->processExportResult($metadata, $format);
+        
+        return $metadata;
+    }
+    
+    
+    /**
+     * Exports information about the project, e.g., project ID, project title, creation time.
+     *
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     *
+     * @return array associative array (map) of project information. See REDCap API documentation
+     *         for a list of the fields, or use the print_r function on the results of this method.
+     */
+    public function exportProjectInfo($format = 'php')
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'project',
+                'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process format
+        #---------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
+        #---------------------------------------
+        # Get and process project information
+        #---------------------------------------
+        $projectInfo = $this->connection->callWithArray($data);
+        $projectInfo = $this->processExportResult($projectInfo, $format);
+        
+        return $projectInfo;
+    }
+    
+    /**
      * Exports the specified records.
      *
      * Example usage:
@@ -393,6 +773,117 @@ class RedCapProject
         
         return $records;
     }
+
+    
+    /**
+     * Imports the specified records into the project.
+     *
+     * @param mixed $records
+     *            If the 'php' (default) format is being used, an array of associated arrays (maps)
+     *            where each key is a field name,
+     *            and its value is the value to store in that field. If any other format is being used, then
+     *            the records are represented by a string.
+     * @param string $format One of the following formats can be specified
+     *            <ul>
+     *              <li> 'php' - [default] array of maps of values</li>
+     *              <li> 'csv' - string of CSV (comma-separated values)</li>
+     *              <li> 'json' - string of JSON encoded values</li>
+     *              <li> 'xml' - string of XML encoded data</li>
+     *              <li> 'odm' - CDISC ODM XML format, specifically ODM version 1.3.1</li>
+     *            </ul>
+     * @param string $type
+     *            <ul>
+     *              <li> 'flat' - [default] each data element is a record</li>
+     *              <li> 'eav' - each data element is one value</li>
+     *            </ul>
+     * @param string $overwriteBehavior
+     *            <ul>
+     *              <li>normal - [default] blank/empty values will be ignored</li>
+     *              <li>overwrite - blank/empty values are valid and will overwrite data</li>
+     *            </ul>
+     * @param string $dateFormat date format which can be one of the following:
+     *            <ul>
+     *              <li>'YMD' - [default] Y-M-D format (e.g., 2016-12-31)</li>
+     *              <li>'MDY' - M/D/Y format (e.g., 12/31/2016)</li>
+     *              <li>'DMY' - D/M/Y format (e.g., 31/12/2016)</li>
+     *           </ul>
+     * @param string $returnContent specifies what should be returned:
+     *           <ul>
+     *             <li>'count' - [default] the number of records imported</li>
+     *             <li> ids' - an array of the record IDs imported is returned</li>
+     *           </ul>
+     *
+     * @return mixed if 'count' was specified for 'returnContent', then an integer will
+     *         be returned that is the number of records imported.
+     *         If 'ids' was specified, then an array of record IDs that were imported will
+     *         be returned.
+     */
+    public function importRecords(
+        $records,
+        $format = 'php',
+        $type = 'flat',
+        $overwriteBehavior = 'normal',
+        $dateFormat = 'YMD',
+        $returnContent = 'count'
+    ) {
+            
+        $data = array (
+            'token'         => $this->apiToken,
+            'content'       => 'record',
+            'returnFormat'  => 'json'
+        );
+            
+        #---------------------------------------
+        # Process format
+        #---------------------------------------
+        $legalFormats = array('csv', 'json', 'odm', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['data']   = $this->processRecordsArgument($records, $format);
+        $data['type']   = $this->processTypeArgument($type);
+            
+        $data['overwriteBehavior'] = $this->processOverwriteBehaviorArgument($overwriteBehavior);
+        $data['returnContent']     = $this->processReturnContentArgument($returnContent);
+        $data['dateFormat']        = $this->processDateFormatArgument($dateFormat);
+            
+        $result = $this->connection->callWithArray($data);
+            
+        $this->processNonExportResult($result);
+        
+        
+        #--------------------------------------------------------------------------
+        # Process result, which should either be a count of the records imported,
+        # or a list of the record IDs that were imported
+        #
+        # The result should be a string in JSON for all formats.
+        # Need to convert the result to a PHP data structure.
+        #--------------------------------------------------------------------------
+        $phpResult = json_decode($result, true); // true => return as array instead of object
+        
+        $jsonError = json_last_error();
+        
+        switch ($jsonError) {
+            case JSON_ERROR_NONE:
+                $result = $phpResult;
+                # If this is a count, then just return the count, and not an
+                # array that has a count index with the count
+                if (isset($result) && is_array($result) && array_key_exists('count', $result)) {
+                    $result = $result['count'];
+                }
+                break;
+            default:
+                # Hopefully the REDCap API will always return valid JSON, and this
+                # will never happen.
+                $message =  'JSON error ('.$jsonError.') "'.json_last_error_msg().
+                    '" while processing import return value: "'.
+                $result.'".';
+                throw new PhpCapException($message, PhpCapException::JSON_ERROR);
+                break;
+        }
+        
+        return $result;
+    }
+    
+    
     
     /**
      * Exports the records produced by the specified report.
@@ -463,181 +954,10 @@ class RedCapProject
          
         return $records;
     }
-    
-    /**
-     * Exports the specified file.
-     *
-     * @param string $recordId the record ID for the file to be exported.
-     * @param string $field the name of the field containing the file to export.
-     * @param string $event name of event for file export (for longitudinal studies).
-     * @param string $repeatInstance
-     *
-     * @return string the contents of the file that was exported.
-     */
-    public function exportFile($recordId, $field, $event = null, $repeatInstance = null)
-    {
-        $data = array(
-                'token'        => $this->apiToken,
-                'content'      => 'file',
-                'action'       => 'export',
-                'returnFormat' => 'json'
-        );
-        
-        #--------------------------------------------
-        # Process arguments
-        #--------------------------------------------
-        $data['record']           = $this->processRecordIdArgument($recordId);
-        $data['field']            = $this->processFieldArgument($field);
-        $data['event']            = $this->processEventArgument($event);
-        $data['repeat_instance']  = $this->processRepeatInstanceArgument($repeatInstance);
-        
-        #-------------------------------
-        # Get and process file
-        #-------------------------------
-        $file = $this->connection->callWithArray($data);
-        $file = $this->processExportResult($file, $format = 'file');
-        
-        return $file;
-    }
-    
-    
-    /**
-     * Exports information about the specified events.
-     *
-     * Example usage:
-     * <code>
-     * #export information about all events in CSV (Comma-Separated Values) format.
-     * $eventInfo = $project->exportEvents('csv');
-     *
-     * # export events in XML format for arms 1 and 2.
-     * $eventInfo = $project->exportEvents('xml', [1, 2]);
-     * </code>
-     *
-     * @param string $format the format for the export.
-     *     <ul>
-     *       <li> 'php' - [default] array of maps of values</li>
-     *       <li> 'csv' - string of CSV (comma-separated values)</li>
-     *       <li> 'json' - string of JSON encoded values</li>
-     *       <li> 'xml' - string of XML encoded data</li>
-     *     </ul>
-     * @param array $arms array of integers or numeric strings that are the arm numbers for
-     *     which events should be exported.
-     *     If no arms are specified, then all events will be returned.
-     *
-     * @return array information about the specified events. Each element of the
-     *     array is an associative array with the following keys: 'event_name', 'arm_num',
-     *         'day_offset', 'offset_min', 'offset_max', 'unique_event_name', 'custom_event_label'
-     */
-    public function exportEvents($format = 'php', $arms = [])
-    {
-        $data = array(
-                'token' => $this->apiToken,
-                'content' => 'event',
-                'returnFormat' => 'json'
-        );
-        
-        #---------------------------------------
-        # Process arguments
-        #---------------------------------------
-        $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format'] = $this->processFormatArgument($format, $legalFormats);
-        $data['arms'] = $this->processArmsArgument($arms);
-
-        
-        #------------------------------------------------------
-        # Get and process events
-        #------------------------------------------------------
-        $events = $this->connection->callWithArray($data);
-        $events = $this->processExportResult($events, $format);
-
-        return $events;
-    }
-    
-    
-    
-    /**
-     * Exports information about the project, e.g., project ID, project title, creation time.
-     *
-     * @param string $format the format for the export.
-     *     <ul>
-     *       <li> 'php' - [default] array of maps of values</li>
-     *       <li> 'csv' - string of CSV (comma-separated values)</li>
-     *       <li> 'json' - string of JSON encoded values</li>
-     *       <li> 'xml' - string of XML encoded data</li>
-     *     </ul>
-     *
-     * @return array associative array (map) of project information. See REDCap API documentation
-     *         for a list of the fields, or use the print_r function on the results of this method.
-     */
-    public function exportProjectInfo($format = 'php')
-    {
-        $data = array(
-                'token'        => $this->apiToken,
-                'content'      => 'project',
-                'returnFormat' => 'json'
-        );
-        
-        #---------------------------------------
-        # Process format
-        #---------------------------------------
-        $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format'] = $this->processFormatArgument($format, $legalFormats);
-        
-        #---------------------------------------
-        # Get and process project information
-        #---------------------------------------
-        $projectInfo = $this->connection->callWithArray($data);
-        $projectInfo = $this->processExportResult($projectInfo, $format);
-        
-        return $projectInfo;
-    }
 
     
-    /**
-     * Exports metadata about the project, i.e., information about the fields in the project.
-     *
-     * @param string $format the format for the export.
-     *     <ul>
-     *       <li> 'php' - [default] array of maps of values</li>
-     *       <li> 'csv' - string of CSV (comma-separated values)</li>
-     *       <li> 'json' - string of JSON encoded values</li>
-     *       <li> 'xml' - string of XML encoded data</li>
-     *     </ul>
-     * @param array $fields array of field names for which metadata should be exported
-     * @param array $forms array of form names. Metadata will be exported for all fields in the
-     *     specified forms.
-     *
-     * @return array associative array (map) of metatdata for the project, which consists of
-     *         information about each field. Some examples of the information
-     *         provided are: 'field_name', 'form_name', 'field_type', 'field_label'.
-     *         See REDCap API documentation
-     *         for more information, or use the print_r function on the results of this method.
-     */
-    public function exportMetadata($format = 'php', $fields = [], $forms = [])
-    {
-        $data = array(
-                'token' => $this->apiToken,
-                'content' => 'metadata',
-                'returnFormat' => 'json'
-        );
-        
-        #---------------------------------------
-        # Process format
-        #---------------------------------------
-        $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format'] = $this->processFormatArgument($format, $legalFormats);
-        $data['forms']  = $this->processFormsArgument($forms);
-        $data['fields'] = $this->processFieldsArgument($fields);
-        
-        #-------------------------------------------
-        # Get and process metadata
-        #-------------------------------------------
-        $metadata = $this->connection->callWithArray($data);
-        $metadata = $this->processExportResult($metadata, $format);
-        
-        return $metadata;
-    }
-    
+
+
     /**
      * Gets the REDCap version number of the REDCap instance being used by the project.
      *
@@ -653,284 +973,25 @@ class RedCapProject
         
         return $redcapVersion;
     }
-    
-    /**
-     * Exports information about the instruments (data entry forms) for the project.
-     *
-     * Example usage:
-     * <code>
-     * $instruments = $project->getInstruments();
-     * foreach ($instruments as $instrumentName => $instrumentLabel) {
-     *     print "{$instrumentName} : {$instrumentLabel}\n";
-     * }
-     * </code>
-     *
-     * @param $format string format instruments are exported in:
-     *     <ul>
-     *       <li>'php' - [default] returns data as a PHP array</li>
-     *       <li>'csv' - string of CSV (comma-separated values)</li>
-     *       <li>'json' - string of JSON encoded data</li>
-     *       <li>'xml' - string of XML encoded data</li>
-     *     </ul>
-     *
-     * @return mixed For the 'php' format, and array map of instrument names to instrument labels is returned.
-     *     For all other formats a string is returned.
-     */
-    public function exportInstruments($format = 'php')
-    {
-        $data = array(
-                'token'       => $this->apiToken,
-                'content'     => 'instrument',
-                'returnFormat' => 'json'
-        );
-
-        $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format'] = $this->processFormatArgument($format, $legalFormats);
-        
-        $instrumentsData = $this->connection->callWithArray($data);
-
-        $instrumentsData = $this->processExportResult($instrumentsData, $format);
-            
-        #------------------------------------------------------
-        # If format is 'php', reformat the data as
-        # a map from "instrument name" to "instrument label"
-        #------------------------------------------------------
-        if ($format == 'php') {
-            $instruments = array ();
-            foreach ($instrumentsData as $instr) {
-                $instruments [$instr ['instrument_name']] = $instr ['instrument_label'];
-            }
-        } else {
-            $instruments = $instrumentsData;
-        }
-        
-        return $instruments;
-    }
-    
-    /**
-     * Gets the instrument to event mapping for the project.
-     *
-     * For example, the following code:
-     * <code>
-     * $map = $project->exportInstrumentEventMappings();
-     * print_r($map[0]); # print first element of map
-     * </code>
-     * might generate the following output:
-     * <pre>
-     * Array
-     * (
-     *     [arm_num] => 1
-     *     [unique_event_name] => enrollment_arm_1
-     *     [form] => demographics
-     * )
-     * </pre>
-     *
-     * @param string $format the format in which to export the records:
-     *     <ul>
-     *       <li> 'php' - [default] array of maps of values</li>
-     *       <li> 'csv' - string of CSV (comma-separated values)</li>
-     *       <li> 'json' - string of JSON encoded values</li>
-     *       <li> 'xml' - string of XML encoded data</li>
-     *     </ul>
-     * @param array $arms array of integers or numeric strings that are the numbers of the arms
-     *     for which instrument/event mapping infomation should be exported.
-     *     If no arms are specified, then information for all arms will be exported.
-     *
-     * @return arrray an array of arrays that have the following keys:
-     *     <ul>
-     *       <li>'arm_num'</li>
-     *       <li>'unique_event_name'</li>
-     *       <li>'form'</li>
-     *     </ul>
-     */
-    public function exportInstrumentEventMappings($format = 'php', $arms = [])
-    {
-        $data = array(
-                'token'        => $this->apiToken,
-                'content'      => 'formEventMapping',
-                'format'       => 'json',
-                'returnFormat' => 'json'
-        );
-        
-        #------------------------------------------
-        # Process arguments
-        #------------------------------------------
-        $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format'] = $this->processFormatArgument($format, $legalFormats);
-        $data['arms']   = $this->processArmsArgument($arms);
-        
-        #---------------------------------------------
-        # Get and process instrument-event mappings
-        #---------------------------------------------
-        $instrumentEventMappings = $this->connection->callWithArray($data);
-        $instrumentEventMappings = $this->processExportResult($instrumentEventMappings, $format);
-          
-        return $instrumentEventMappings;
-    }
 
 
-    /**
-     * Imports the specified records into the project.
-     *
-     * @param mixed $records
-     *            If the 'php' (default) format is being used, an array of associated arrays (maps)
-     *            where each key is a field name,
-     *            and its value is the value to store in that field. If any other format is being used, then
-     *            the records are represented by a string.
-     * @param string $format One of the following formats can be specified
-     *            <ul>
-     *              <li> 'php' - [default] array of maps of values</li>
-     *              <li> 'csv' - string of CSV (comma-separated values)</li>
-     *              <li> 'json' - string of JSON encoded values</li>
-     *              <li> 'xml' - string of XML encoded data</li>
-     *              <li> 'odm' - CDISC ODM XML format, specifically ODM version 1.3.1</li>
-     *            </ul>
-     * @param string $type
-     *            <ul>
-     *              <li> 'flat' - [default] each data element is a record</li>
-     *              <li> 'eav' - each data element is one value</li>
-     *            </ul>
-     * @param string $overwriteBehavior
-     *            <ul>
-     *              <li>normal - [default] blank/empty values will be ignored</li>
-     *              <li>overwrite - blank/empty values are valid and will overwrite data</li>
-     *            </ul>
-     * @param string $dateFormat date format which can be one of the following:
-     *            <ul>
-     *              <li>'YMD' - [default] Y-M-D format (e.g., 2016-12-31)</li>
-     *              <li>'MDY' - M/D/Y format (e.g., 12/31/2016)</li>
-     *              <li>'DMY' - D/M/Y format (e.g., 31/12/2016)</li>
-     *           </ul>
-     * @param string $returnContent specifies what should be returned:
-     *           <ul>
-     *             <li>'count' - [default] the number of records imported</li>
-     *             <li> ids' - an array of the record IDs imported is returned</li>
-     *           </ul>
-     *
-     * @return mixed if 'count' was specified for 'returnContent', then an integer will
-     *         be returned that is the number of records imported.
-     *         If 'ids' was specified, then an array of record IDs that were imported will
-     *         be returned.
-     */
-    public function importRecords(
-        $records,
-        $format = 'php',
-        $type = 'flat',
-        $overwriteBehavior = 'normal',
-        $dateFormat = 'YMD',
-        $returnContent = 'count'
-    ) {
-        
-        $data = array (
-                'token'         => $this->apiToken,
-                'content'       => 'record',
-                'returnFormat'  => 'json'
-        );
-        
-        #---------------------------------------
-        # Process format
-        #---------------------------------------
-        $legalFormats = array('csv', 'json', 'odm', 'php', 'xml');
-        $data['format'] = $this->processFormatArgument($format, $legalFormats);
-        $data['data']   = $this->processRecordsArgument($records, $format);
-        $data['type']   = $this->processTypeArgument($type);
-        
-        $data['overwriteBehavior'] = $this->processOverwriteBehaviorArgument($overwriteBehavior);
-        $data['returnContent']     = $this->processReturnContentArgument($returnContent);
-        $data['dateFormat']        = $this->processDateFormatArgument($dateFormat);
-        
-        $result = $this->connection->callWithArray($data);
-        
-        $this->processNonExportResult($result);
-        
 
-        #--------------------------------------------------------------------------
-        # Process result, which should either be a count of the records imported,
-        # or a list of the record IDs that were imported
-        #
-        # The result should be a string in JSON for all formats.
-        # Need to convert the result to a PHP data structure.
-        #--------------------------------------------------------------------------
-        $phpResult = json_decode($result, true); // true => return as array instead of object
-            
-        $jsonError = json_last_error();
-            
-        switch ($jsonError) {
-            case JSON_ERROR_NONE:
-                $result = $phpResult;
-                # If this is a count, then just return the count, and not an
-                # array that has a count index with the count
-                if (isset($result) && is_array($result) && array_key_exists('count', $result)) {
-                    $result = $result['count'];
-                }
-                break;
-            default:
-                # Hopefully the REDCap API will always return valid JSON, and this
-                # will never happen.
-                $message =  'JSON error ('.$jsonError.') "'.json_last_error_msg().
-                    '" while processing import return value: "'.
-                    $result.'".';
-                throw new PhpCapException($message, PhpCapException::JSON_ERROR);
-                break;
-        }
-                
-        return $result;
-    }
-    
-   
-    /**
-     * Imports the file into the field of the record
-     * with the specified event and/or repeat istance, if any.
-     *
-     * @param string $filename the name of the file to import.
-     * @param string $recordId the record ID of the record to import the file into.
-     * @param string $field the field of the record to import the file into.
-     * @param string $event the event of the record to import the file into
-     *     (only for longitudinal studies).
-     * @param string $repeatInstance the repeat instance of the record to import
-     *     the file into (only for studies that have repeating events
-     *     and/or instruments).
-     *
-     * @throws PhpCapException
-     */
-    public function importFile($filename, $recordId, $field, $event = null, $repeatInstance = null)
-    {
-        $data = array (
-                'token'        => $this->apiToken,
-                'content'      => 'file',
-                'action'       => 'import',
-                'returnFormat' => 'json'
-        );
-        
-        #----------------------------------------
-        # Process non-file arguments
-        #----------------------------------------
-        $data['file']             = $this->processFilenameArgument($filename);
-        $data['record']           = $this->processRecordIdArgument($recordId);
-        $data['field']            = $this->processFieldArgument($field);
-        $data['event']            = $this->processEventArgument($event);
-        $data['repeat_instance']  = $this->processRepeatInstanceArgument($repeatInstance);
-
- 
-        #---------------------------------------------------------------------
-        # For unknown reasons, "call" (instead of "callWithArray") needs to
-        # be used here (probably something to do with the 'file' data).
-        # REDCap's "API Playground" (also) makes no data conversion for this
-        # method.
-        #---------------------------------------------------------------------
-        $result = $this->connection->call($data);
-        
-        $this->processNonExportResult($result);
-    }
-    
 
     /**
      * Deletes the specified records from the project.
      *
      * @param array $recordIds array of record IDs to delete
+     * @param string $arm if an arm is specified, only records that have
+     *     one of the specified record IDs that are in that arm will
+     *     be deleted.
      *
      * @throws PhpCapException
-     * @return integer the number of records deleted.
+     *
+     * @return integer the number of records deleted. Note that as of
+     *     REDCap version 7.0.15 (at least) the number of records
+     *     deleted will not be correct for the case where an arm
+     *     is specified and some of the record IDs specified are
+     *     not in that arm.
      */
     public function deleteRecords($recordIds, $arm = null)
     {
@@ -951,39 +1012,7 @@ class RedCapProject
         return $result;
     }
     
-    /**
-     * Deletes the specified file.
-     *
-     * @param string $recordId the record ID of the file to delete.
-     * @param string $field the field name of the file to delete.
-     * @param string $event the event of the file to delete.
-     * @param string $repeatInstance
-     */
-    public function deleteFile($recordId, $field, $event = null, $repeatInstance = null)
-    {
-        $data = array (
-                'token'        => $this->apiToken,
-                'content'      => 'file',
-                'action'       => 'delete',
-                'returnFormat' => 'json'
-        );
-        
-        #----------------------------------------
-        # Process arguments
-        #----------------------------------------
-        $data['record']           = $this->processRecordIdArgument($recordId);
-        $data['field']            = $this->processFieldArgument($field);
-        $data['event']            = $this->processEventArgument($event);
-        $data['repeat_instance']  = $this->processRepeatInstanceArgument($repeatInstance);
-        
-        $result = $this->connection->callWithArray($data);
-        
-        $this->processNonExportResult($result);
-       
-        return $result;
-    }
-    
-    
+
 
     /**
      * Gets the call information for the last cURL call. PHPCap uses cURL to
