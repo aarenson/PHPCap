@@ -62,42 +62,7 @@ class ProjectsTest extends TestCase
         }
         $this->assertTrue($exceptionCaught, 'Null API URL exception caught.');
     }
-    
-    public function testCreateProjectWithNonStringApiUrl()
-    {
-        #------------------------------
-        # Non-string API URL
-        #------------------------------
-        $exceptionCaught = false;
-        try {
-            $project = new RedCapProject(123, self::$config['basic.demography.api.token']);
-        } catch (PhpCapException $exception) {
-            $exceptionCaught = true;
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode());
-            $this->assertContains('integer', $exception->getMessage());
-        }
-        $this->assertTrue($exceptionCaught);
-    }
-    
-    public function testCreateProjectWithNullApiToken()
-    {
-        #----------------------------------
-        # Null API token
-        #----------------------------------
-        $exceptionCaught = false;
-        try {
-            $project = new RedCapProject(self::$config['api.url'], null);
-        } catch (PhpCapException $exception) {
-            $exceptionCaught = true;
-            $this->assertEquals(
-                PhpCapException::INVALID_ARGUMENT,
-                $exception->getCode(),
-                'Null API token exception code check.'
-            );
-        }
-        $this->assertTrue($exceptionCaught, 'Null API token exception caught.');
-    }
-    
+
     public function testCreateProjectWithApiTokenWithInvalidType()
     {
         #----------------------------------

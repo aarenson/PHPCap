@@ -3,8 +3,9 @@
          bootstrap="vendor/autoload.php">
   <testsuites>
     <testsuite name="unit">
-      <file>tests/unit/PhpCapExceptionTest.php</file>
       <file>tests/unit/FileUtilTest.php</file>
+      <file>tests/unit/PhpCapExceptionTest.php</file>
+      <file>tests/unit/RedCapProjectTest.php</file>
     </testsuite>
     <testsuite name="integration">
       <file>tests/integration/ArmsTest.php</file>
