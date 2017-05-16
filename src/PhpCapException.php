@@ -61,6 +61,7 @@ class PhpCapException extends \Exception
     /** The output file could not be found, or was found and could not be written */
     const OUTPUT_FILE_ERROR     = 8;
     
+    /** Too many arguments were passed to the method. */
     const TOO_MANY_ARGUMENTS    = 9;
     
     /** The input file could not be found. */
