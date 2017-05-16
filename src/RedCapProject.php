@@ -1040,6 +1040,163 @@ class RedCapProject
      * @param unknown $format
      * @throws PhpCapException
      */
+    
+    
+    private function processArmArgument($arm)
+    {
+        if (!isset($arm)) {
+            ;  // That's OK
+        } elseif (is_string($arm)) {
+            if (! preg_match('/^[0-9]+$/', $arm)) {
+                throw new PhpCapException(
+                    'Arm number "' . $arm . '" is non-numeric string.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        } elseif (is_int($arm)) {
+            if ($arm < 0) {
+                throw new PhpCapException(
+                    'Arm number "' . $arm . '" is a negative integer.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        } else {
+            $message = 'The arm argument has type "'.gettype($arm).
+            '"; it should be an integer or a (numeric) string.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        }
+        
+        return $arm;
+    }
+    
+    private function processArmsArgument($arms)
+    {
+        if (!isset($arms)) {
+            $arms = array();
+        } else {
+            if (!is_array($arms)) {
+                throw new PhpCapException(
+                    'The arms argument has invalid type "'.gettype($arms).'"; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        
+        foreach ($arms as $arm) {
+            if (is_string($arm)) {
+                if (! preg_match('/^[0-9]+$/', $arm)) {
+                    throw new PhpCapException(
+                        'Arm number "' . $arm . '" is non-numeric string.',
+                        PhpCapException::INVALID_ARGUMENT
+                    );
+                }
+            } elseif (is_int($arm)) {
+                if ($arm < 0) {
+                    throw new PhpCapException(
+                        'Arm number "' . $arm . '" is a negative integer.',
+                        PhpCapException::INVALID_ARGUMENT
+                    );
+                }
+            } else {
+                $message = 'An arm was found in the arms array that has type "'.gettype($arm).
+                '"; it should be an integer or a (numeric) string.';
+                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            }
+        }
+        
+        return $arms;
+    }
+    
+    private function processDateFormatArgument($dateFormat)
+    {
+        if (!isset($dateFormat)) {
+            $dateFormat = 'YMD';
+        } else {
+            if (gettype($dateFormat) === 'string') {
+                $dateFormat = strtoupper($dateFormat);
+            }
+            
+            $legalDateFormats = ['MDY', 'DMY', 'YMD'];
+            if (!in_array($dateFormat, $legalDateFormats)) {
+                $message = 'Invalid date format "'.$dateFormat.'" specified.'
+                        .' The date format should be one of the following: "'.
+                implode('", "', $legalDateFormats).'".';
+                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            }
+        }
+        
+        return $dateFormat;
+    }
+    
+    private function processEventArgument($event)
+    {
+        if (!isset($event)) {
+            ; // This might be OK
+        } elseif (gettype($event) !== 'string') {
+            $message = 'Event has type "'.gettype($event).'", but should be a string.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        }
+        return $event;
+    }
+    
+    private function processEventsArgument($events)
+    {
+        if (!isset($events)) {
+            $events = array();
+        } else {
+            if (!is_array($events)) {
+                throw new PhpCapException(
+                    'The events argument has invalid type "'.gettype($events).'"; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            } else {
+                foreach ($events as $event) {
+                    $type = gettype($event);
+                    if (strcmp($type, 'string') !== 0) {
+                        $message = 'An event with type "'.$type.'" was found in the events array.'.
+                            ' Events should be strings.';
+                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                    }
+                }
+            }
+        }
+        
+        return $events;
+    }
+    
+    
+    private function processExportCheckboxLabelArgument($exportCheckboxLabel)
+    {
+        if ($exportCheckboxLabel == null) {
+            $exportCheckboxLabel = false;
+        } else {
+            if (gettype($exportCheckboxLabel) !== 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for exportCheckboxLabel. It should be a boolean (true or false),'
+                    .' but has type: '.gettype($exportCheckboxLabel).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $exportCheckboxLabel;
+    }
+    
+    private function processExportDataAccessGroupsArgument($exportDataAccessGroups)
+    {
+        if ($exportDataAccessGroups == null) {
+            $exportDataAccessGroups = false;
+        } else {
+            if (gettype($exportDataAccessGroups) !== 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for exportDataAccessGroups. It should be a boolean (true or false),'
+                    .' but has type: '.gettype($exportDataAccessGroups).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $exportDataAccessGroups;
+    }
+    
     private function processExportResult(& $result, $format)
     {
         if ($format == 'php') {
@@ -1081,16 +1238,101 @@ class RedCapProject
         return $result;
     }
     
-    private function processNonExportResult(& $result)
+    private function processExportSurveyFieldsArgument($exportSurveyFields)
     {
-        $matches = array();
-        $hasMatch = preg_match('/^[\s]*{"error":"([^"]+)"}[\s]*$/', $result, $matches);
-        if ($hasMatch === 1) {
-            // note: $matches[0] is the complete string that matched
-            //       $matches[1] is just the error message part
-            $message = $matches[1];
-            throw new PhpCapException($message, PhpCapException::REDCAP_API_ERROR);
+        if ($exportSurveyFields == null) {
+            $exportSurveyFields = false;
+        } else {
+            if (gettype($exportSurveyFields) !== 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for exportSurveyFields. It should be a boolean (true or false),'
+                    .' but has type: '.gettype($exportSurveyFields).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
         }
+        return $exportSurveyFields;
+    }
+    
+    private function processFieldArgument($field)
+    {
+        if (!isset($field)) {
+            $message = 'No field was specified.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        } elseif (gettype($field) !== 'string') {
+            $message = 'Field has type "'.gettype($field).'", but should be a string.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        }
+        return $field;
+    }
+    
+    
+    private function processFieldsArgument($fields)
+    {
+        if (!isset($fields)) {
+            $fields = array();
+        } else {
+            if (!is_array($fields)) {
+                throw new PhpCapException(
+                    'Argument "fields" has the wrong type; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            } else {
+                foreach ($fields as $field) {
+                    $type = gettype($field);
+                    if (strcmp($type, 'string') !== 0) {
+                        $message = 'A field with type "'.$type.'" was found in the fields array.'.
+                            ' Fields should be strings.';
+                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                    }
+                }
+            }
+        }
+        
+        return $fields;
+    }
+
+    
+    private function processFilenameArgument($filename)
+    {
+        if (!isset($filename)) {
+            $message = 'No filename specified.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        } elseif (gettype($filename) !== 'string') {
+            $message = "Argument 'filename' has type '".gettype($filename)."', but should be a string.";
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        } elseif (!file_exists($filename)) {
+            throw new PhpCapException(
+                'The input file "'.$filename.'" could not be found.',
+                PhpCapException::INPUT_FILE_NOT_FOUND
+            );
+        } elseif (!is_readable($filename)) {
+            throw new PhpCapException(
+                'The input file "'.$filename.'" was unreadable.',
+                PhpCapException::INPUT_FILE_UNREADABLE
+            );
+        }
+        
+        $basename = pathinfo($filename, PATHINFO_BASENAME);
+        $curlFile = curl_file_create($filename, 'text/plain', $basename);
+        
+        return $curlFile;
+    }
+    
+    
+    private function processFilterLogicArgument($filterLogic)
+    {
+        if ($filterLogic == null) {
+            $filterLogic = '';
+        } else {
+            if (gettype($filterLogic) !== 'string') {
+                throw new PhpCapException(
+                    'Invalid type for filterLogic. It should be a string, but has type "'.gettype($filterLogic).'".',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $filterLogic;
     }
     
     private function processFormatArgument(& $format, $legalFormats)
@@ -1123,20 +1365,103 @@ class RedCapProject
         return $dataFormat;
     }
     
-    private function processTypeArgument($type)
+    private function processFormsArgument($forms)
     {
-        if (!isset($type)) {
-            $type = 'flat';
+        if (!isset($forms)) {
+            $forms = array();
+        } else {
+            if (!is_array($forms)) {
+                throw new PhpCapException(
+                    'The forms argument has invalid type "'.gettype($forms).'"; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            } else {
+                foreach ($forms as $form) {
+                    $type = gettype($form);
+                    if (strcmp($type, 'string') !== 0) {
+                        $message = 'A form with type "'.$type.'" was found in the forms array.'.
+                            ' Forms should be strings.';
+                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                    }
+                }
+            }
         }
-        $type = strtolower(trim($type));
         
-        if (strcmp($type, 'flat') !== 0 && strcmp($type, 'eav') !== 0) {
-            throw new PhpCapException(
-                "Invalid type '".$type."' specified. Type should be either 'flat' or 'eav'",
-                PhpCapException::INVALID_ARGUMENT
-            );
+        return $forms;
+    }
+    
+    private function processNonExportResult(& $result)
+    {
+        $matches = array();
+        $hasMatch = preg_match('/^[\s]*{"error":"([^"]+)"}[\s]*$/', $result, $matches);
+        if ($hasMatch === 1) {
+            // note: $matches[0] is the complete string that matched
+            //       $matches[1] is just the error message part
+            $message = $matches[1];
+            throw new PhpCapException($message, PhpCapException::REDCAP_API_ERROR);
         }
-        return $type;
+    }
+    
+    private function processOverwriteBehaviorArgument($overwriteBehavior)
+    {
+        if (!isset($overwriteBehavior)) {
+            $overwriteBehavior = 'normal';
+        } elseif ($overwriteBehavior !== 'normal' && $overwriteBehavior !== 'overwrite') {
+            $message = 'Invalid value "'.$overwriteBehavior.'" specified for overwriteBehavior.'.
+                " Valid values are 'normal' and 'overwrite'.";
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        }
+        
+        return $overwriteBehavior;
+    }
+    
+    private function processRawOrLabelArgument($rawOrLabel)
+    {
+        if (!isset($rawOrLabel)) {
+            $rawOrLabel = 'raw';
+        } else {
+            if ($rawOrLabel !== 'raw' && $rawOrLabel !== 'label') {
+                throw new PhpCapException(
+                    'Invalid value "'.$rawOrLabel.'" specified for rawOrLabel.'.
+                    " Valid values are 'raw' and 'label'.",
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $rawOrLabel;
+    }
+    
+    
+    private function processRawOrLabelHeadersArgument($rawOrLabelHeaders)
+    {
+        if (!isset($rawOrLabelHeaders)) {
+            $rawOrLabelHeaders = 'raw';
+        } else {
+            if ($rawOrLabelHeaders !== 'raw' && $rawOrLabelHeaders !== 'label') {
+                throw new PhpCapException(
+                    'Invalid value "'.$rawOrLabelHeaders.'" specified for rawOrLabelHeaders.'.
+                    " Valid values are 'raw' and 'label'.",
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $rawOrLabelHeaders;
+    }
+    
+    
+    private function processRecordIdArgument($recordId)
+    {
+        if (!isset($recordId)) {
+            throw new PhpCapException("No record ID specified.", PhpCapException::INVALID_ARGUMENT);
+        }
+        
+        if (!is_string($recordId) && !is_int($recordId)) {
+            $message = 'The record ID has type "'.gettype($recordId).
+            '", but it should be a string or integer.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        }
+        
+        return $recordId;
     }
     
     private function processRecordIdsArgument($recordIds)
@@ -1163,204 +1488,54 @@ class RedCapProject
         return $recordIds;
     }
     
-    
-    private function processFieldsArgument($fields)
+    private function processRecordsArgument($records, $format)
     {
-        if (!isset($fields)) {
-            $fields = array();
-        } else {
-            if (!is_array($fields)) {
-                throw new PhpCapException(
-                    'Argument "fields" has the wrong type; it should be an array.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            } else {
-                foreach ($fields as $field) {
-                    $type = gettype($field);
-                    if (strcmp($type, 'string') !== 0) {
-                        $message = 'A field with type "'.$type.'" was found in the fields array.'.
-                                ' Fields should be strings.';
-                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-                    }
-                }
+        if (!isset($records)) {
+            $message = 'No records specified.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        } elseif ($format === 'php') {
+            if (!is_array($records)) {
+                $message = "Argument 'records' has type '".gettype($records)."', but should be an array.";
+                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            }
+            $records = json_encode($records);
+            
+            $jsonError = json_last_error();
+            
+            switch ($jsonError) {
+                case JSON_ERROR_NONE:
+                    break;
+                default:
+                    $message =  'JSON error ('.$jsonError.') "'. json_last_error_msg().
+                    '" while processing records argument.';
+                    throw new PhpCapException($message, PhpCapException::JSON_ERROR);
+                    break;
+            }
+        } else { // All other formats
+            if (gettype($records) !== 'string') {
+                $message = "Argument 'records' has type '".gettype($records)."', but should be a string.";
+                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
             }
         }
         
-        return $fields;
-    }
-    
-    private function processFieldArgument($field)
-    {
-        if (!isset($field)) {
-            $message = 'No field was specified.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-        } elseif (gettype($field) !== 'string') {
-            $message = 'Field has type "'.gettype($field).'", but should be a string.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-        }
-        return $field;
-    }
-    
-    
-    private function processFormsArgument($forms)
-    {
-        if (!isset($forms)) {
-            $forms = array();
-        } else {
-            if (!is_array($forms)) {
-                throw new PhpCapException(
-                    'The forms argument has invalid type "'.gettype($forms).'"; it should be an array.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            } else {
-                foreach ($forms as $form) {
-                    $type = gettype($form);
-                    if (strcmp($type, 'string') !== 0) {
-                        $message = 'A form with type "'.$type.'" was found in the forms array.'.
-                                ' Forms should be strings.';
-                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-                    }
-                }
-            }
-        }
-    
-        return $forms;
-    }
-    
-    private function processEventsArgument($events)
-    {
-        if (!isset($events)) {
-            $events = array();
-        } else {
-            if (!is_array($events)) {
-                throw new PhpCapException(
-                    'The events argument has invalid type "'.gettype($events).'"; it should be an array.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            } else {
-                foreach ($events as $event) {
-                    $type = gettype($event);
-                    if (strcmp($type, 'string') !== 0) {
-                        $message = 'An event with type "'.$type.'" was found in the events array.'.
-                                ' Events should be strings.';
-                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-                    }
-                }
-            }
-        }
-    
-        return $events;
+        return $records;
     }
 
-
-    private function processEventArgument($event)
+    
+    private function processRepeatInstanceArgument($repeatInstance)
     {
-        if (!isset($event)) {
-            ; // This might be OK
-        } elseif (gettype($event) !== 'string') {
-            $message = 'Event has type "'.gettype($event).'", but should be a string.';
+        if (!isset($repeatInstance)) {
+            ; // Might be OK
+        } elseif (!is_string($repeatInstance) && !is_int($repeatInstance)) {
+            $message = 'The repeat instance has type "'.gettype($repeatInstance).
+            '", but it should be a string or integer.';
             throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
         }
-        return $event;
-    }
-    
-    private function processRawOrLabelArgument($rawOrLabel)
-    {
-        if (!isset($rawOrLabel)) {
-            $rawOrLabel = 'raw';
-        } else {
-            if ($rawOrLabel !== 'raw' && $rawOrLabel !== 'label') {
-                throw new PhpCapException(
-                    'Invalid value "'.$rawOrLabel.'" specified for rawOrLabel.'.
-                    " Valid values are 'raw' and 'label'.",
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-        }
-        return $rawOrLabel;
+        
+        return $repeatInstance;
     }
     
 
-    private function processRawOrLabelHeadersArgument($rawOrLabelHeaders)
-    {
-        if (!isset($rawOrLabelHeaders)) {
-            $rawOrLabelHeaders = 'raw';
-        } else {
-            if ($rawOrLabelHeaders !== 'raw' && $rawOrLabelHeaders !== 'label') {
-                throw new PhpCapException(
-                    'Invalid value "'.$rawOrLabelHeaders.'" specified for rawOrLabelHeaders.'.
-                    " Valid values are 'raw' and 'label'.",
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-        }
-        return $rawOrLabelHeaders;
-    }
-    
-    private function processExportCheckboxLabelArgument($exportCheckboxLabel)
-    {
-        if ($exportCheckboxLabel == null) {
-            $exportCheckboxLabel = false;
-        } else {
-            if (gettype($exportCheckboxLabel) !== 'boolean') {
-                throw new PhpCapException(
-                    'Invalid type for exportCheckboxLabel. It should be a boolean (true or false),'
-                    .' but has type: '.gettype($exportCheckboxLabel).'.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-        }
-        return $exportCheckboxLabel;
-    }
-    
-
-    private function processExportSurveyFieldsArgument($exportSurveyFields)
-    {
-        if ($exportSurveyFields == null) {
-            $exportSurveyFields = false;
-        } else {
-            if (gettype($exportSurveyFields) !== 'boolean') {
-                throw new PhpCapException(
-                    'Invalid type for exportSurveyFields. It should be a boolean (true or false),'
-                    .' but has type: '.gettype($exportSurveyFields).'.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-        }
-        return $exportSurveyFields;
-    }
-    
-    private function processExportDataAccessGroupsArgument($exportDataAccessGroups)
-    {
-        if ($exportDataAccessGroups == null) {
-            $exportDataAccessGroups = false;
-        } else {
-            if (gettype($exportDataAccessGroups) !== 'boolean') {
-                throw new PhpCapException(
-                    'Invalid type for exportDataAccessGroups. It should be a boolean (true or false),'
-                    .' but has type: '.gettype($exportDataAccessGroups).'.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-        }
-        return $exportDataAccessGroups;
-    }
-    
-    private function processFilterLogicArgument($filterLogic)
-    {
-        if ($filterLogic == null) {
-            $filterLogic = '';
-        } else {
-            if (gettype($filterLogic) !== 'string') {
-                throw new PhpCapException(
-                    'Invalid type for filterLogic. It should be a string, but has type "'.gettype($filterLogic).'".',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-        }
-        return $filterLogic;
-    }
-    
     private function processReportIdArgument($reportId)
     {
         if (!isset($reportId)) {
@@ -1388,192 +1563,6 @@ class RedCapProject
         return $reportId;
     }
     
-    private function processArmsArgument($arms)
-    {
-        if (!isset($arms)) {
-            $arms = array();
-        } else {
-            if (!is_array($arms)) {
-                throw new PhpCapException(
-                    'The arms argument has invalid type "'.gettype($arms).'"; it should be an array.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-        }
-        
-        foreach ($arms as $arm) {
-            if (is_string($arm)) {
-                if (! preg_match('/^[0-9]+$/', $arm)) {
-                    throw new PhpCapException(
-                        'Arm number "' . $arm . '" is non-numeric string.',
-                        PhpCapException::INVALID_ARGUMENT
-                    );
-                }
-            } elseif (is_int($arm)) {
-                if ($arm < 0) {
-                    throw new PhpCapException(
-                        'Arm number "' . $arm . '" is a negative integer.',
-                        PhpCapException::INVALID_ARGUMENT
-                    );
-                }
-            } else {
-                $message = 'An arm was found in the arms array that has type "'.gettype($arm).
-                    '"; it should be an integer or a (numeric) string.';
-                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-            }
-        }
-        
-        return $arms;
-    }
-    
-    private function processArmArgument($arm)
-    {
-        if (!isset($arm)) {
-            ;  // That's OK
-        } elseif (is_string($arm)) {
-            if (! preg_match('/^[0-9]+$/', $arm)) {
-                throw new PhpCapException(
-                    'Arm number "' . $arm . '" is non-numeric string.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-        } elseif (is_int($arm)) {
-            if ($arm < 0) {
-                throw new PhpCapException(
-                    'Arm number "' . $arm . '" is a negative integer.',
-                    PhpCapException::INVALID_ARGUMENT
-                );
-            }
-        } else {
-            $message = 'The arm argument has type "'.gettype($arm).
-                '"; it should be an integer or a (numeric) string.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-        }
-            
-        return $arm;
-    }
-    
-    private function processRecordIdArgument($recordId)
-    {
-        if (!isset($recordId)) {
-            throw new PhpCapException("No record ID specified.", PhpCapException::INVALID_ARGUMENT);
-        }
-    
-        if (!is_string($recordId) && !is_int($recordId)) {
-            $message = 'The record ID has type "'.gettype($recordId).
-                '", but it should be a string or integer.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-        }
-    
-        return $recordId;
-    }
-    
-    private function processRepeatInstanceArgument($repeatInstance)
-    {
-        if (!isset($repeatInstance)) {
-            ; // Might be OK
-        } elseif (!is_string($repeatInstance) && !is_int($repeatInstance)) {
-            $message = 'The repeat instance has type "'.gettype($repeatInstance).
-            '", but it should be a string or integer.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-        }
-    
-        return $repeatInstance;
-    }
-    
-    private function processFilenameArgument($filename)
-    {
-        if (!isset($filename)) {
-            $message = 'No filename specified.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-        } elseif (gettype($filename) !== 'string') {
-            $message = "Argument 'filename' has type '".gettype($filename)."', but should be a string.";
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-        } elseif (!file_exists($filename)) {
-            throw new PhpCapException(
-                'The input file "'.$filename.'" could not be found.',
-                PhpCapException::INPUT_FILE_NOT_FOUND
-            );
-        } elseif (!is_readable($filename)) {
-            throw new PhpCapException(
-                'The input file "'.$filename.'" was unreadable.',
-                PhpCapException::INPUT_FILE_UNREADABLE
-            );
-        }
-       
-        $basename = pathinfo($filename, PATHINFO_BASENAME);
-        $curlFile = curl_file_create($filename, 'text/plain', $basename);
-        
-        return $curlFile;
-    }
-    
-    private function processRecordsArgument($records, $format)
-    {
-        if (!isset($records)) {
-            $message = 'No records specified.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-        } elseif ($format === 'php') {
-            if (!is_array($records)) {
-                $message = "Argument 'records' has type '".gettype($records)."', but should be an array.";
-                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-            }
-            $records = json_encode($records);
-            
-            $jsonError = json_last_error();
-            
-            switch ($jsonError) {
-                case JSON_ERROR_NONE:
-                    break;
-                default:
-                    $message =  'JSON error ('.$jsonError.') "'. json_last_error_msg().
-                            '" while processing records argument.';
-                    throw new PhpCapException($message, PhpCapException::JSON_ERROR);
-                    break;
-            }
-        } else { // All other formats
-            if (gettype($records) !== 'string') {
-                $message = "Argument 'records' has type '".gettype($records)."', but should be a string.";
-                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-            }
-        }
-    
-        return $records;
-    }
-    
-    private function processOverwriteBehaviorArgument($overwriteBehavior)
-    {
-        if (!isset($overwriteBehavior)) {
-            $overwriteBehavior = 'normal';
-        } elseif ($overwriteBehavior !== 'normal' && $overwriteBehavior !== 'overwrite') {
-            $message = 'Invalid value "'.$overwriteBehavior.'" specified for overwriteBehavior.'.
-                    " Valid values are 'normal' and 'overwrite'.";
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-        }
-    
-        return $overwriteBehavior;
-    }
-    
-    private function processDateFormatArgument($dateFormat)
-    {
-        if (!isset($dateFormat)) {
-            $dateFormat = 'YMD';
-        } else {
-            if (gettype($dateFormat) === 'string') {
-                $dateFormat = strtoupper($dateFormat);
-            }
-            
-            $legalDateFormats = ['MDY', 'DMY', 'YMD'];
-            if (!in_array($dateFormat, $legalDateFormats)) {
-                $message = 'Invalid date format "'.$dateFormat.'" specified.'
-                        .' The date format should be one of the following: "'.
-                        implode('", "', $legalDateFormats).'".';
-                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-            }
-        }
-    
-        return $dateFormat;
-    }
-    
 
     private function processReturnContentArgument($returnContent)
     {
@@ -1586,5 +1575,21 @@ class RedCapProject
         }
     
         return $returnContent;
+    }
+    
+    private function processTypeArgument($type)
+    {
+        if (!isset($type)) {
+            $type = 'flat';
+        }
+        $type = strtolower(trim($type));
+        
+        if (strcmp($type, 'flat') !== 0 && strcmp($type, 'eav') !== 0) {
+            throw new PhpCapException(
+                "Invalid type '".$type."' specified. Type should be either 'flat' or 'eav'",
+                PhpCapException::INVALID_ARGUMENT
+            );
+        }
+        return $type;
     }
 }
