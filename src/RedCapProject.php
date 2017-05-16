@@ -256,7 +256,7 @@ class RedCapProject
      * $recordId = '1001';
      * $field    = 'patient_document';
      * $event    = 'enrollment_arm_1';
-     * $project->importFile($file, $recordId, $field, 'enrollment_arm_1');
+     * $project->importFile($file, $recordId, $field, $event);
      * ...
      * </code>
      *
@@ -884,6 +884,59 @@ class RedCapProject
     }
     
     
+    /**
+     * Deletes the specified records from the project.
+     *
+     * @param array $recordIds array of record IDs to delete
+     * @param string $arm if an arm is specified, only records that have
+     *     one of the specified record IDs that are in that arm will
+     *     be deleted.
+     *
+     * @throws PhpCapException
+     *
+     * @return integer the number of records deleted. Note that as of
+     *     REDCap version 7.0.15 (at least) the number of records
+     *     deleted will not be correct for the case where an arm
+     *     is specified and some of the record IDs specified are
+     *     not in that arm.
+     */
+    public function deleteRecords($recordIds, $arm = null)
+    {
+        $data = array (
+                'token'        => $this->apiToken,
+                'content'      => 'record',
+                'action'       => 'delete',
+                'returnFormat' => 'json',
+        );
+        
+        $data['records'] = $this->processRecordIdsArgument($recordIds);
+        $data['arm']     = $this->processArmArgument($arm);
+        
+        $result = $this->connection->callWithArray($data);
+        
+        $this->processNonExportResult($result);
+        
+        return $result;
+    }
+
+    
+    /**
+     * Gets the REDCap version number of the REDCap instance being used by the project.
+     *
+     * @return string the REDCap version number of the REDCap instance being used by the project.
+     */
+    public function exportRedcapVersion()
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'version'
+        );
+        $redcapVersion = $this->connection->callWithArray($data);
+        
+        return $redcapVersion;
+    }
+    
+    
     
     /**
      * Exports the records produced by the specified report.
@@ -957,61 +1010,6 @@ class RedCapProject
 
     
 
-
-    /**
-     * Gets the REDCap version number of the REDCap instance being used by the project.
-     *
-     * @return string the REDCap version number of the REDCap instance being used by the project.
-     */
-    public function exportRedcapVersion()
-    {
-        $data = array(
-                'token' => $this->apiToken,
-                'content' => 'version'
-        );
-        $redcapVersion = $this->connection->callWithArray($data);
-        
-        return $redcapVersion;
-    }
-
-
-
-
-    /**
-     * Deletes the specified records from the project.
-     *
-     * @param array $recordIds array of record IDs to delete
-     * @param string $arm if an arm is specified, only records that have
-     *     one of the specified record IDs that are in that arm will
-     *     be deleted.
-     *
-     * @throws PhpCapException
-     *
-     * @return integer the number of records deleted. Note that as of
-     *     REDCap version 7.0.15 (at least) the number of records
-     *     deleted will not be correct for the case where an arm
-     *     is specified and some of the record IDs specified are
-     *     not in that arm.
-     */
-    public function deleteRecords($recordIds, $arm = null)
-    {
-        $data = array (
-                'token'        => $this->apiToken,
-                'content'      => 'record',
-                'action'       => 'delete',
-                'returnFormat' => 'json',
-        );
-
-        $data['records'] = $this->processRecordIdsArgument($recordIds);
-        $data['arm']     = $this->processArmArgument($arm);
-        
-        $result = $this->connection->callWithArray($data);
-        
-        $this->processNonExportResult($result);
-        
-        return $result;
-    }
-    
 
 
     /**
