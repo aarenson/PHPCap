@@ -24,9 +24,6 @@ class RedCapProject
     
     /** @var RedCapApiConnection connection to the REDCap API at the $apiURL. */
     private $connection;
-    
-    //private $projectInfo;
-    //private $metadata;
  
     
     /**
@@ -1075,7 +1072,7 @@ class RedCapProject
      */
     
     
-    private function processArmArgument($arm)
+    protected function processArmArgument($arm)
     {
         if (!isset($arm)) {
             ;  // That's OK
@@ -1102,7 +1099,7 @@ class RedCapProject
         return $arm;
     }
     
-    private function processArmsArgument($arms)
+    protected function processArmsArgument($arms)
     {
         if (!isset($arms)) {
             $arms = array();
@@ -1140,7 +1137,7 @@ class RedCapProject
         return $arms;
     }
     
-    private function processDateFormatArgument($dateFormat)
+    protected function processDateFormatArgument($dateFormat)
     {
         if (!isset($dateFormat)) {
             $dateFormat = 'YMD';
@@ -1161,7 +1158,7 @@ class RedCapProject
         return $dateFormat;
     }
     
-    private function processEventArgument($event)
+    protected function processEventArgument($event)
     {
         if (!isset($event)) {
             ; // This might be OK
@@ -1172,7 +1169,7 @@ class RedCapProject
         return $event;
     }
     
-    private function processEventsArgument($events)
+    protected function processEventsArgument($events)
     {
         if (!isset($events)) {
             $events = array();
@@ -1198,7 +1195,7 @@ class RedCapProject
     }
     
     
-    private function processExportCheckboxLabelArgument($exportCheckboxLabel)
+    protected function processExportCheckboxLabelArgument($exportCheckboxLabel)
     {
         if ($exportCheckboxLabel == null) {
             $exportCheckboxLabel = false;
@@ -1214,7 +1211,7 @@ class RedCapProject
         return $exportCheckboxLabel;
     }
     
-    private function processExportDataAccessGroupsArgument($exportDataAccessGroups)
+    protected function processExportDataAccessGroupsArgument($exportDataAccessGroups)
     {
         if ($exportDataAccessGroups == null) {
             $exportDataAccessGroups = false;
@@ -1230,7 +1227,7 @@ class RedCapProject
         return $exportDataAccessGroups;
     }
     
-    private function processExportResult(& $result, $format)
+    protected function processExportResult(& $result, $format)
     {
         if ($format == 'php') {
             $phpResult = json_decode($result, true); // true => return as array instead of object
@@ -1271,7 +1268,7 @@ class RedCapProject
         return $result;
     }
     
-    private function processExportSurveyFieldsArgument($exportSurveyFields)
+    protected function processExportSurveyFieldsArgument($exportSurveyFields)
     {
         if ($exportSurveyFields == null) {
             $exportSurveyFields = false;
@@ -1287,7 +1284,7 @@ class RedCapProject
         return $exportSurveyFields;
     }
     
-    private function processFieldArgument($field)
+    protected function processFieldArgument($field)
     {
         if (!isset($field)) {
             $message = 'No field was specified.';
@@ -1300,7 +1297,7 @@ class RedCapProject
     }
     
     
-    private function processFieldsArgument($fields)
+    protected function processFieldsArgument($fields)
     {
         if (!isset($fields)) {
             $fields = array();
@@ -1326,7 +1323,7 @@ class RedCapProject
     }
 
     
-    private function processFilenameArgument($filename)
+    protected function processFilenameArgument($filename)
     {
         if (!isset($filename)) {
             $message = 'No filename specified.';
@@ -1353,7 +1350,7 @@ class RedCapProject
     }
     
     
-    private function processFilterLogicArgument($filterLogic)
+    protected function processFilterLogicArgument($filterLogic)
     {
         if ($filterLogic == null) {
             $filterLogic = '';
@@ -1368,7 +1365,7 @@ class RedCapProject
         return $filterLogic;
     }
     
-    private function processFormatArgument(& $format, $legalFormats)
+    protected function processFormatArgument(& $format, $legalFormats)
     {
         if (!isset($format)) {
             $format = 'php';
@@ -1398,7 +1395,7 @@ class RedCapProject
         return $dataFormat;
     }
     
-    private function processFormsArgument($forms)
+    protected function processFormsArgument($forms)
     {
         if (!isset($forms)) {
             $forms = array();
@@ -1423,7 +1420,7 @@ class RedCapProject
         return $forms;
     }
     
-    private function processNonExportResult(& $result)
+    protected function processNonExportResult(& $result)
     {
         $matches = array();
         $hasMatch = preg_match('/^[\s]*{"error":"([^"]+)"}[\s]*$/', $result, $matches);
@@ -1435,7 +1432,7 @@ class RedCapProject
         }
     }
     
-    private function processOverwriteBehaviorArgument($overwriteBehavior)
+    protected function processOverwriteBehaviorArgument($overwriteBehavior)
     {
         if (!isset($overwriteBehavior)) {
             $overwriteBehavior = 'normal';
@@ -1448,7 +1445,7 @@ class RedCapProject
         return $overwriteBehavior;
     }
     
-    private function processRawOrLabelArgument($rawOrLabel)
+    protected function processRawOrLabelArgument($rawOrLabel)
     {
         if (!isset($rawOrLabel)) {
             $rawOrLabel = 'raw';
@@ -1465,7 +1462,7 @@ class RedCapProject
     }
     
     
-    private function processRawOrLabelHeadersArgument($rawOrLabelHeaders)
+    protected function processRawOrLabelHeadersArgument($rawOrLabelHeaders)
     {
         if (!isset($rawOrLabelHeaders)) {
             $rawOrLabelHeaders = 'raw';
@@ -1482,7 +1479,7 @@ class RedCapProject
     }
     
     
-    private function processRecordIdArgument($recordId)
+    protected function processRecordIdArgument($recordId)
     {
         if (!isset($recordId)) {
             throw new PhpCapException("No record ID specified.", PhpCapException::INVALID_ARGUMENT);
@@ -1497,7 +1494,7 @@ class RedCapProject
         return $recordId;
     }
     
-    private function processRecordIdsArgument($recordIds)
+    protected function processRecordIdsArgument($recordIds)
     {
         if (!isset($recordIds)) {
             $recordIds = array();
@@ -1521,7 +1518,7 @@ class RedCapProject
         return $recordIds;
     }
     
-    private function processRecordsArgument($records, $format)
+    protected function processRecordsArgument($records, $format)
     {
         if (!isset($records)) {
             $message = 'No records specified.';
@@ -1555,7 +1552,7 @@ class RedCapProject
     }
 
     
-    private function processRepeatInstanceArgument($repeatInstance)
+    protected function processRepeatInstanceArgument($repeatInstance)
     {
         if (!isset($repeatInstance)) {
             ; // Might be OK
@@ -1569,7 +1566,7 @@ class RedCapProject
     }
     
 
-    private function processReportIdArgument($reportId)
+    protected function processReportIdArgument($reportId)
     {
         if (!isset($reportId)) {
             throw new PhpCapException("No report ID specified for export.", PhpCapException::INVALID_ARGUMENT);
@@ -1597,7 +1594,7 @@ class RedCapProject
     }
     
 
-    private function processReturnContentArgument($returnContent)
+    protected function processReturnContentArgument($returnContent)
     {
         if (!isset($returnContent)) {
             $overwriteBehavior = 'count';
@@ -1610,7 +1607,7 @@ class RedCapProject
         return $returnContent;
     }
     
-    private function processTypeArgument($type)
+    protected function processTypeArgument($type)
     {
         if (!isset($type)) {
             $type = 'flat';
