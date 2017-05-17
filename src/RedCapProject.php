@@ -9,20 +9,10 @@ namespace IU\PHPCap;
  */
 class RedCapProject
 {
-    
-    /** @var string URL for the REDCap API for the project. */
-    private $apiURL;
-    
-    /** @var string REDCap API token for the project */
+    /** string REDCap API token for the project */
     private $apiToken;
     
-    /** @var boolean indicates if SSL verification is done for the REDCap site being used. */
-    private $sslVerify;
-    
-    /** @var string the full path of the CA (Certificate Authority) certificate file used for SSL verification. */
-    private $caCertificateFile;
-    
-    /** @var RedCapApiConnection connection to the REDCap API at the $apiURL. */
+    /** RedCapApiConnection connection to the REDCap API at the $apiURL. */
     private $connection;
  
     
@@ -63,14 +53,12 @@ class RedCapProject
             throw new PhpCapException("The REDCap API URL provided (".$apiUrl.") should be a string, but has type: "
                     . gettype($apiUrl), PhpCapException::INVALID_ARGUMENT);
         }
-        $this->apiURL = $apiUrl;
-        
         
         #------------------------------------------------------------
         # Process the REDCap API token
         #------------------------------------------------------------
         if (!isset($apiToken)) {
-            throw new PhpCapException("The REDCap API token spefied for the project was null or blank."
+            throw new PhpCapException("The REDCap API token specified for the project was null or blank."
                     . gettype($apiToken), PhpCapException::INVALID_ARGUMENT);
         } elseif (gettype($apiToken) !== 'string') {
             throw new PhpCapException("The REDCap API token provided should be a string, but has type: "
@@ -94,7 +82,6 @@ class RedCapProject
         #----------------------------------------------------
         # Process SSL verify
         #----------------------------------------------------
-        $this->sslVerify         = $sslVerify;
         if (isset($sslVerify) && gettype($sslVerify) !== 'boolean') {
             throw new PhpCapException('The value for $sslVerify be a boolean (true/false), but has type: '
                     . gettype($sslVerify), PhpCapException::INVALID_ARGUMENT);
@@ -107,7 +94,6 @@ class RedCapProject
             throw new PhpCapException('The value for $sslVerify be a string, but has type: '
                     . gettype($caCertificateFile), PhpCapException::INVALID_ARGUMENT);
         }
-        $this->caCertificateFile = $caCertificateFile;
 
         
         $this->connection = new RedCapApiConnection($apiUrl, $sslVerify, $caCertificateFile);
@@ -1061,17 +1047,8 @@ class RedCapProject
     {
         return $this->connection;
     }
- 
- 
-    /**
-     * Processes an export result from the REDCap API.
-     *
-     * @param string $result
-     * @param unknown $format
-     * @throws PhpCapException
-     */
-    
-    
+
+   
     protected function processArmArgument($arm)
     {
         if (!isset($arm)) {
@@ -1227,6 +1204,14 @@ class RedCapProject
         return $exportDataAccessGroups;
     }
     
+    
+    /**
+     * Processes an export result from the REDCap API.
+     *
+     * @param string $result
+     * @param string $format
+     * @throws PhpCapException
+     */
     protected function processExportResult(& $result, $format)
     {
         if ($format == 'php') {
