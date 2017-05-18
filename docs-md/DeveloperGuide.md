@@ -1,7 +1,8 @@
 Developer Guide
 ===================================================
 
-This guide is for people interested in developing PHPCap (i.e., actually making changes to the PHPCap code).
+This guide is for people interested in developing PHPCap (i.e., actually making changes to the PHPCap code). If you just want to use PHPCap to access REDCap from PHP, please see the
+user guides.
 
 Setup
 --------------------------------------------------------

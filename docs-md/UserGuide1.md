@@ -1,4 +1,4 @@
-User Tutorial
+User Guide 1 - Getting Started
 ====================================
 
 Prerequisites
