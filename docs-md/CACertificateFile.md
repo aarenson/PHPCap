@@ -19,10 +19,10 @@ no CA certificate file specified, for example:
 
 require('PHPCap/autoloader.php');
 
-use \IU\PHPCap\RedCapProject;
+use IU\PHPCap\RedCapProject;
 
-$apiUrl = '';
-$apiToken = '1234567890A1234567890B1234567890';
+$apiUrl = 'https://redcap.someplace.edu/api/'; # Replace with your REDCap's API URL
+$apiToken = '1234567890A1234567890B1234567890';  # Replace with your API token
 
 $sslVerify = true;
 $project = RedCapProject($apiUrl, $apiToken, $sslVerify);
@@ -43,8 +43,10 @@ Creating a CA Certificate File with Firefox
 To use the Firefox web browser to create a CA (Certificate Authority) certificate file for use with PHPCap, use the following steps:
 
 1. Access your REDCap site with Firefox.
-2. Click on the padlock icon, and then the connection, and then "More Information".
-3. Click on the "Security" tab, if it is not already selected.  
+2. Click on the padlock icon to the left of the URL displayed in Firefox, and then the connection, and then "More Information".
+    ![Page Information](resources/secure-connection.png)  
+3. If the previous step succeeded, a "Page Info" window should open up. In this window, 
+click on the "Security" tab, if it is not already selected.  
     ![Page Information](resources/page-info-security.png)  
 4. Click on the "View Certificate" button
 5. Click on the "Detail" tab of the "Certificate Viewer" dialog.  

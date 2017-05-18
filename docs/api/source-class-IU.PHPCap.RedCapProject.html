@@ -1172,7 +1172,7 @@
 </span></span><span id="1075" class="l"><span class="php-comment">     */</span>
 </span><span id="1076" class="l">    
 </span><span id="1077" class="l">    
-</span><span id="1078" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processArmArgument(<span class="php-var">$arm</span>)
+</span><span id="1078" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processArmArgument(<span class="php-var">$arm</span>)
 </span><span id="1079" class="l">    {
 </span><span id="1080" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$arm</span>)) {
 </span><span id="1081" class="l">            ;  <span class="php-comment">// That's OK</span>
@@ -1199,7 +1199,7 @@
 </span><span id="1102" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$arm</span>;
 </span><span id="1103" class="l">    }
 </span><span id="1104" class="l">    
-</span><span id="1105" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processArmsArgument(<span class="php-var">$arms</span>)
+</span><span id="1105" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processArmsArgument(<span class="php-var">$arms</span>)
 </span><span id="1106" class="l">    {
 </span><span id="1107" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$arms</span>)) {
 </span><span id="1108" class="l">            <span class="php-var">$arms</span> = <span class="php-keyword1">array</span>();
@@ -1237,7 +1237,7 @@
 </span><span id="1140" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$arms</span>;
 </span><span id="1141" class="l">    }
 </span><span id="1142" class="l">    
-</span><span id="1143" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processDateFormatArgument(<span class="php-var">$dateFormat</span>)
+</span><span id="1143" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processDateFormatArgument(<span class="php-var">$dateFormat</span>)
 </span><span id="1144" class="l">    {
 </span><span id="1145" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$dateFormat</span>)) {
 </span><span id="1146" class="l">            <span class="php-var">$dateFormat</span> = <span class="php-quote">'YMD'</span>;
@@ -1258,7 +1258,7 @@
 </span><span id="1161" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$dateFormat</span>;
 </span><span id="1162" class="l">    }
 </span><span id="1163" class="l">    
-</span><span id="1164" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processEventArgument(<span class="php-var">$event</span>)
+</span><span id="1164" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processEventArgument(<span class="php-var">$event</span>)
 </span><span id="1165" class="l">    {
 </span><span id="1166" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$event</span>)) {
 </span><span id="1167" class="l">            ; <span class="php-comment">// This might be OK</span>
@@ -1269,7 +1269,7 @@
 </span><span id="1172" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$event</span>;
 </span><span id="1173" class="l">    }
 </span><span id="1174" class="l">    
-</span><span id="1175" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processEventsArgument(<span class="php-var">$events</span>)
+</span><span id="1175" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processEventsArgument(<span class="php-var">$events</span>)
 </span><span id="1176" class="l">    {
 </span><span id="1177" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$events</span>)) {
 </span><span id="1178" class="l">            <span class="php-var">$events</span> = <span class="php-keyword1">array</span>();
@@ -1295,7 +1295,7 @@
 </span><span id="1198" class="l">    }
 </span><span id="1199" class="l">    
 </span><span id="1200" class="l">    
-</span><span id="1201" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processExportCheckboxLabelArgument(<span class="php-var">$exportCheckboxLabel</span>)
+</span><span id="1201" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processExportCheckboxLabelArgument(<span class="php-var">$exportCheckboxLabel</span>)
 </span><span id="1202" class="l">    {
 </span><span id="1203" class="l">        <span class="php-keyword1">if</span> (<span class="php-var">$exportCheckboxLabel</span> == <span class="php-keyword1">null</span>) {
 </span><span id="1204" class="l">            <span class="php-var">$exportCheckboxLabel</span> = <span class="php-keyword1">false</span>;
@@ -1311,7 +1311,7 @@
 </span><span id="1214" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$exportCheckboxLabel</span>;
 </span><span id="1215" class="l">    }
 </span><span id="1216" class="l">    
-</span><span id="1217" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processExportDataAccessGroupsArgument(<span class="php-var">$exportDataAccessGroups</span>)
+</span><span id="1217" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processExportDataAccessGroupsArgument(<span class="php-var">$exportDataAccessGroups</span>)
 </span><span id="1218" class="l">    {
 </span><span id="1219" class="l">        <span class="php-keyword1">if</span> (<span class="php-var">$exportDataAccessGroups</span> == <span class="php-keyword1">null</span>) {
 </span><span id="1220" class="l">            <span class="php-var">$exportDataAccessGroups</span> = <span class="php-keyword1">false</span>;
@@ -1327,7 +1327,7 @@
 </span><span id="1230" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$exportDataAccessGroups</span>;
 </span><span id="1231" class="l">    }
 </span><span id="1232" class="l">    
-</span><span id="1233" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processExportResult(&amp; <span class="php-var">$result</span>, <span class="php-var">$format</span>)
+</span><span id="1233" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processExportResult(&amp; <span class="php-var">$result</span>, <span class="php-var">$format</span>)
 </span><span id="1234" class="l">    {
 </span><span id="1235" class="l">        <span class="php-keyword1">if</span> (<span class="php-var">$format</span> == <span class="php-quote">'php'</span>) {
 </span><span id="1236" class="l">            <span class="php-var">$phpResult</span> = <span class="php-keyword2">json_decode</span>(<span class="php-var">$result</span>, <span class="php-keyword1">true</span>); <span class="php-comment">// true =&gt; return as array instead of object</span>
@@ -1368,7 +1368,7 @@
 </span><span id="1271" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$result</span>;
 </span><span id="1272" class="l">    }
 </span><span id="1273" class="l">    
-</span><span id="1274" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processExportSurveyFieldsArgument(<span class="php-var">$exportSurveyFields</span>)
+</span><span id="1274" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processExportSurveyFieldsArgument(<span class="php-var">$exportSurveyFields</span>)
 </span><span id="1275" class="l">    {
 </span><span id="1276" class="l">        <span class="php-keyword1">if</span> (<span class="php-var">$exportSurveyFields</span> == <span class="php-keyword1">null</span>) {
 </span><span id="1277" class="l">            <span class="php-var">$exportSurveyFields</span> = <span class="php-keyword1">false</span>;
@@ -1384,7 +1384,7 @@
 </span><span id="1287" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$exportSurveyFields</span>;
 </span><span id="1288" class="l">    }
 </span><span id="1289" class="l">    
-</span><span id="1290" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processFieldArgument(<span class="php-var">$field</span>)
+</span><span id="1290" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processFieldArgument(<span class="php-var">$field</span>)
 </span><span id="1291" class="l">    {
 </span><span id="1292" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$field</span>)) {
 </span><span id="1293" class="l">            <span class="php-var">$message</span> = <span class="php-quote">'No field was specified.'</span>;
@@ -1397,7 +1397,7 @@
 </span><span id="1300" class="l">    }
 </span><span id="1301" class="l">    
 </span><span id="1302" class="l">    
-</span><span id="1303" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processFieldsArgument(<span class="php-var">$fields</span>)
+</span><span id="1303" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processFieldsArgument(<span class="php-var">$fields</span>)
 </span><span id="1304" class="l">    {
 </span><span id="1305" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$fields</span>)) {
 </span><span id="1306" class="l">            <span class="php-var">$fields</span> = <span class="php-keyword1">array</span>();
@@ -1423,7 +1423,7 @@
 </span><span id="1326" class="l">    }
 </span><span id="1327" class="l">
 </span><span id="1328" class="l">    
-</span><span id="1329" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processFilenameArgument(<span class="php-var">$filename</span>)
+</span><span id="1329" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processFilenameArgument(<span class="php-var">$filename</span>)
 </span><span id="1330" class="l">    {
 </span><span id="1331" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$filename</span>)) {
 </span><span id="1332" class="l">            <span class="php-var">$message</span> = <span class="php-quote">'No filename specified.'</span>;
@@ -1450,7 +1450,7 @@
 </span><span id="1353" class="l">    }
 </span><span id="1354" class="l">    
 </span><span id="1355" class="l">    
-</span><span id="1356" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processFilterLogicArgument(<span class="php-var">$filterLogic</span>)
+</span><span id="1356" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processFilterLogicArgument(<span class="php-var">$filterLogic</span>)
 </span><span id="1357" class="l">    {
 </span><span id="1358" class="l">        <span class="php-keyword1">if</span> (<span class="php-var">$filterLogic</span> == <span class="php-keyword1">null</span>) {
 </span><span id="1359" class="l">            <span class="php-var">$filterLogic</span> = <span class="php-quote">''</span>;
@@ -1465,7 +1465,7 @@
 </span><span id="1368" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$filterLogic</span>;
 </span><span id="1369" class="l">    }
 </span><span id="1370" class="l">    
-</span><span id="1371" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processFormatArgument(&amp; <span class="php-var">$format</span>, <span class="php-var">$legalFormats</span>)
+</span><span id="1371" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processFormatArgument(&amp; <span class="php-var">$format</span>, <span class="php-var">$legalFormats</span>)
 </span><span id="1372" class="l">    {
 </span><span id="1373" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$format</span>)) {
 </span><span id="1374" class="l">            <span class="php-var">$format</span> = <span class="php-quote">'php'</span>;
@@ -1495,7 +1495,7 @@
 </span><span id="1398" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$dataFormat</span>;
 </span><span id="1399" class="l">    }
 </span><span id="1400" class="l">    
-</span><span id="1401" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processFormsArgument(<span class="php-var">$forms</span>)
+</span><span id="1401" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processFormsArgument(<span class="php-var">$forms</span>)
 </span><span id="1402" class="l">    {
 </span><span id="1403" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$forms</span>)) {
 </span><span id="1404" class="l">            <span class="php-var">$forms</span> = <span class="php-keyword1">array</span>();
@@ -1520,7 +1520,7 @@
 </span><span id="1423" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$forms</span>;
 </span><span id="1424" class="l">    }
 </span><span id="1425" class="l">    
-</span><span id="1426" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processNonExportResult(&amp; <span class="php-var">$result</span>)
+</span><span id="1426" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processNonExportResult(&amp; <span class="php-var">$result</span>)
 </span><span id="1427" class="l">    {
 </span><span id="1428" class="l">        <span class="php-var">$matches</span> = <span class="php-keyword1">array</span>();
 </span><span id="1429" class="l">        <span class="php-var">$hasMatch</span> = <span class="php-keyword2">preg_match</span>(<span class="php-quote">'/^[\s]*{&quot;error&quot;:&quot;([^&quot;]+)&quot;}[\s]*$/'</span>, <span class="php-var">$result</span>, <span class="php-var">$matches</span>);
@@ -1532,7 +1532,7 @@
 </span><span id="1435" class="l">        }
 </span><span id="1436" class="l">    }
 </span><span id="1437" class="l">    
-</span><span id="1438" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processOverwriteBehaviorArgument(<span class="php-var">$overwriteBehavior</span>)
+</span><span id="1438" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processOverwriteBehaviorArgument(<span class="php-var">$overwriteBehavior</span>)
 </span><span id="1439" class="l">    {
 </span><span id="1440" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$overwriteBehavior</span>)) {
 </span><span id="1441" class="l">            <span class="php-var">$overwriteBehavior</span> = <span class="php-quote">'normal'</span>;
@@ -1545,7 +1545,7 @@
 </span><span id="1448" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$overwriteBehavior</span>;
 </span><span id="1449" class="l">    }
 </span><span id="1450" class="l">    
-</span><span id="1451" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processRawOrLabelArgument(<span class="php-var">$rawOrLabel</span>)
+</span><span id="1451" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processRawOrLabelArgument(<span class="php-var">$rawOrLabel</span>)
 </span><span id="1452" class="l">    {
 </span><span id="1453" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$rawOrLabel</span>)) {
 </span><span id="1454" class="l">            <span class="php-var">$rawOrLabel</span> = <span class="php-quote">'raw'</span>;
@@ -1562,7 +1562,7 @@
 </span><span id="1465" class="l">    }
 </span><span id="1466" class="l">    
 </span><span id="1467" class="l">    
-</span><span id="1468" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processRawOrLabelHeadersArgument(<span class="php-var">$rawOrLabelHeaders</span>)
+</span><span id="1468" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processRawOrLabelHeadersArgument(<span class="php-var">$rawOrLabelHeaders</span>)
 </span><span id="1469" class="l">    {
 </span><span id="1470" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$rawOrLabelHeaders</span>)) {
 </span><span id="1471" class="l">            <span class="php-var">$rawOrLabelHeaders</span> = <span class="php-quote">'raw'</span>;
@@ -1579,7 +1579,7 @@
 </span><span id="1482" class="l">    }
 </span><span id="1483" class="l">    
 </span><span id="1484" class="l">    
-</span><span id="1485" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processRecordIdArgument(<span class="php-var">$recordId</span>)
+</span><span id="1485" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processRecordIdArgument(<span class="php-var">$recordId</span>)
 </span><span id="1486" class="l">    {
 </span><span id="1487" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$recordId</span>)) {
 </span><span id="1488" class="l">            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> PhpCapException(<span class="php-quote">&quot;No record ID specified.&quot;</span>, PhpCapException::INVALID_ARGUMENT);
@@ -1594,7 +1594,7 @@
 </span><span id="1497" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$recordId</span>;
 </span><span id="1498" class="l">    }
 </span><span id="1499" class="l">    
-</span><span id="1500" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processRecordIdsArgument(<span class="php-var">$recordIds</span>)
+</span><span id="1500" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processRecordIdsArgument(<span class="php-var">$recordIds</span>)
 </span><span id="1501" class="l">    {
 </span><span id="1502" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$recordIds</span>)) {
 </span><span id="1503" class="l">            <span class="php-var">$recordIds</span> = <span class="php-keyword1">array</span>();
@@ -1618,7 +1618,7 @@
 </span><span id="1521" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$recordIds</span>;
 </span><span id="1522" class="l">    }
 </span><span id="1523" class="l">    
-</span><span id="1524" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processRecordsArgument(<span class="php-var">$records</span>, <span class="php-var">$format</span>)
+</span><span id="1524" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processRecordsArgument(<span class="php-var">$records</span>, <span class="php-var">$format</span>)
 </span><span id="1525" class="l">    {
 </span><span id="1526" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$records</span>)) {
 </span><span id="1527" class="l">            <span class="php-var">$message</span> = <span class="php-quote">'No records specified.'</span>;
@@ -1652,7 +1652,7 @@
 </span><span id="1555" class="l">    }
 </span><span id="1556" class="l">
 </span><span id="1557" class="l">    
-</span><span id="1558" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processRepeatInstanceArgument(<span class="php-var">$repeatInstance</span>)
+</span><span id="1558" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processRepeatInstanceArgument(<span class="php-var">$repeatInstance</span>)
 </span><span id="1559" class="l">    {
 </span><span id="1560" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$repeatInstance</span>)) {
 </span><span id="1561" class="l">            ; <span class="php-comment">// Might be OK</span>
@@ -1666,7 +1666,7 @@
 </span><span id="1569" class="l">    }
 </span><span id="1570" class="l">    
 </span><span id="1571" class="l">
-</span><span id="1572" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processReportIdArgument(<span class="php-var">$reportId</span>)
+</span><span id="1572" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processReportIdArgument(<span class="php-var">$reportId</span>)
 </span><span id="1573" class="l">    {
 </span><span id="1574" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$reportId</span>)) {
 </span><span id="1575" class="l">            <span class="php-keyword1">throw</span> <span class="php-keyword1">new</span> PhpCapException(<span class="php-quote">&quot;No report ID specified for export.&quot;</span>, PhpCapException::INVALID_ARGUMENT);
@@ -1694,7 +1694,7 @@
 </span><span id="1597" class="l">    }
 </span><span id="1598" class="l">    
 </span><span id="1599" class="l">
-</span><span id="1600" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processReturnContentArgument(<span class="php-var">$returnContent</span>)
+</span><span id="1600" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processReturnContentArgument(<span class="php-var">$returnContent</span>)
 </span><span id="1601" class="l">    {
 </span><span id="1602" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$returnContent</span>)) {
 </span><span id="1603" class="l">            <span class="php-var">$overwriteBehavior</span> = <span class="php-quote">'count'</span>;
@@ -1707,7 +1707,7 @@
 </span><span id="1610" class="l">        <span class="php-keyword1">return</span> <span class="php-var">$returnContent</span>;
 </span><span id="1611" class="l">    }
 </span><span id="1612" class="l">    
-</span><span id="1613" class="l">    <span class="php-keyword1">private</span> <span class="php-keyword1">function</span> processTypeArgument(<span class="php-var">$type</span>)
+</span><span id="1613" class="l">    <span class="php-keyword1">protected</span> <span class="php-keyword1">function</span> processTypeArgument(<span class="php-var">$type</span>)
 </span><span id="1614" class="l">    {
 </span><span id="1615" class="l">        <span class="php-keyword1">if</span> (!<span class="php-keyword1">isset</span>(<span class="php-var">$type</span>)) {
 </span><span id="1616" class="l">            <span class="php-var">$type</span> = <span class="php-quote">'flat'</span>;

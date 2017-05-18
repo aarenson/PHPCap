@@ -40,10 +40,10 @@ no CA certificate file specified, for example:</p>
 
 <span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>);
 
-<span class="php-keyword1">use</span> \IU\PHPCap\RedCapProject;
+<span class="php-keyword1">use</span> IU\PHPCap\RedCapProject;
 
-<span class="php-var">$apiUrl</span> = <span class="php-quote">''</span>;
-<span class="php-var">$apiToken</span> = <span class="php-quote">'1234567890A1234567890B1234567890'</span>;
+<span class="php-var">$apiUrl</span> = <span class="php-quote">'https://redcap.someplace.edu/api/'</span>; <span class="php-comment"># Replace with your REDCap's API URL</span>
+<span class="php-var">$apiToken</span> = <span class="php-quote">'1234567890A1234567890B1234567890'</span>;  <span class="php-comment"># Replace with your API token</span>
 
 <span class="php-var">$sslVerify</span> = <span class="php-keyword1">true</span>;
 <span class="php-var">$project</span> = RedCapProject(<span class="php-var">$apiUrl</span>, <span class="php-var">$apiToken</span>, <span class="php-var">$sslVerify</span>);
@@ -58,8 +58,10 @@ file. If it fails, and you get an error message about a security certificate, su
 <p>To use the Firefox web browser to create a CA (Certificate Authority) certificate file for use with PHPCap, use the following steps:</p>
 <ol>
 <li>Access your REDCap site with Firefox.</li>
-<li>Click on the padlock icon, and then the connection, and then &quot;More Information&quot;.</li>
-<li>Click on the &quot;Security&quot; tab, if it is not already selected.<br />
+<li>Click on the padlock icon to the left of the URL displayed in Firefox, and then the connection, and then &quot;More Information&quot;.
+<img src="resources/secure-connection.png" alt="Page Information" />  </li>
+<li>If the previous step succeeded, a &quot;Page Info&quot; window should open up. In this window,
+click on the &quot;Security&quot; tab, if it is not already selected.<br />
 <img src="resources/page-info-security.png" alt="Page Information" />  </li>
 <li>Click on the &quot;View Certificate&quot; button</li>
 <li>Click on the &quot;Detail&quot; tab of the &quot;Certificate Viewer&quot; dialog.<br />

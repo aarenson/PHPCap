@@ -7,6 +7,8 @@ source: [src]
 destination: docs/api
 title: "PHPCap"
 
+accessLevels: [public]
+
 #exclude: [Util]
 
 # generate documentation for PHP internal classes that are extended

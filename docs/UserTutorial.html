@@ -74,7 +74,7 @@ cd phpcap-project</code></pre></div>
 
 <span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>);
 
-<span class="php-keyword1">use</span> \IU\PHPCap\RedCapProject;
+<span class="php-keyword1">use</span> IU\PHPCap\RedCapProject;
 
 <span class="php-var">$apiUrl</span> = <span class="php-quote">'https://redcap.xxxxx.edu/api/'</span>;  <span class="php-comment"># replace this URL with your institution's</span>
                                             <span class="php-comment"># REDCap API URL.</span>
@@ -87,7 +87,34 @@ cd phpcap-project</code></pre></div>
 <span class="php-keyword2">print_r</span>(<span class="php-var">$projectInfo</span>);</code></pre></div>
 <p>Run the test program using the following command in your project directory:</p>
 <div class="description"><pre><code>php test.php</code></pre></div>
-<p>You should see output generated with information about your project.</p>
+<p>You should see output generated with information about your project.
+It should look similar to the following, although some of the values will
+probably be different:</p>
+<div class="description"><pre><code class="language-php"><span class="php-keyword1">Array</span>
+(
+    [project_id] =&gt; <span class="php-num">9639</span>
+    [project_title] =&gt; PHPCap Basic Demography Test
+    [creation_time] =&gt; <span class="php-num">2017</span>-<span class="php-num">03</span>-<span class="php-num">31</span> <span class="php-num">13</span>:<span class="php-num">40</span>:<span class="php-num">53</span>
+    [production_time] =&gt; 
+    [in_production] =&gt; <span class="php-num">0</span>
+    [project_language] =&gt; English
+    [purpose] =&gt; <span class="php-num">1</span>
+    [purpose_other] =&gt; PHPCap testing
+    [project_notes] =&gt; 
+    [custom_record_label] =&gt; 
+    [secondary_unique_field] =&gt; 
+    [is_longitudinal] =&gt; <span class="php-num">0</span>
+    [surveys_enabled] =&gt; <span class="php-num">1</span>
+    [scheduling_enabled] =&gt; <span class="php-num">0</span>
+    [record_autonumbering_enabled] =&gt; <span class="php-num">0</span>
+    [randomization_enabled] =&gt; <span class="php-num">0</span>
+    [ddp_enabled] =&gt; <span class="php-num">0</span>
+    [project_irb_number] =&gt; 
+    [project_grant_number] =&gt; 
+    [project_pi_firstname] =&gt; 
+    [project_pi_lastname] =&gt; 
+    [display_today_now_button] =&gt; <span class="php-num">1</span>
+)</code></pre></div>
 <h3>Making your test program secure.</h3>
 <p>The program above is not secure, because it does not use SSL verification to verify that the
 REDCap site accessed is the one actually intended. To make the program more secure, it
@@ -123,7 +150,7 @@ you top-level project directory, the project creation would now be modified to t
 
 <span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>);
 
-<span class="php-keyword1">use</span> \IU\PHPCap\RedCapProject;
+<span class="php-keyword1">use</span> IU\PHPCap\RedCapProject;
 
 <span class="php-var">$apiUrl</span> = <span class="php-quote">'https://redcap.xxxxx.edu/api/'</span>;  <span class="php-comment"># replace this URL with your institution's</span>
                                             <span class="php-comment"># REDCap API URL.</span>
@@ -136,7 +163,38 @@ you top-level project directory, the project creation would now be modified to t
 <span class="php-var">$projectInfo</span> = <span class="php-var">$project</span>-&gt;exportProjectInfo();
 
 <span class="php-keyword2">print_r</span>(<span class="php-var">$projectInfo</span>);</code></pre></div>
-<p>If everything is working correctly, the test program should (still) output information about your project.</p></div>
+<p>If everything is working correctly, the test program should (still) output information about your project.</p>
+<h3>Checking for errors.</h3>
+<p>In general, when an error occurs in PHPCap, it throws a PhpCapException.
+These exceptions can be checked and handled using &quot;try&quot; and &quot;catch&quot;. For example,
+to handle exceptions in the sample program, it could be modified as follows:</p>
+<div class="description"><pre><code class="language-php"><span class="xlang">&lt;?php</span>
+
+<span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>);
+
+<span class="php-keyword1">use</span> IU\PHPCap\RedCapProject;
+<span class="php-keyword1">use</span> IU\PHPCap\PhpCapException;
+
+<span class="php-var">$apiUrl</span> = <span class="php-quote">'https://redcap.xxxxx.edu/api/'</span>;  <span class="php-comment"># replace this URL with your institution's</span>
+                                            <span class="php-comment"># REDCap API URL.</span>
+
+<span class="php-var">$apiToken</span> = <span class="php-quote">'1234567890A1234567890B1234567890'</span>;    <span class="php-comment"># replace with your actual API token</span>
+
+<span class="php-var">$sslVerify</span> = <span class="php-keyword1">true</span>;
+<span class="php-var">$caCertificateFile</span> = <span class="php-quote">'USERTrustRSACertificationAuthority.crt'</span>;
+<span class="php-keyword1">try</span> {
+    <span class="php-var">$project</span> = <span class="php-keyword1">new</span> RedCapProject(<span class="php-var">$apiUrl</span>, <span class="php-var">$apiToken</span>, <span class="php-var">$sslVerify</span>, <span class="php-var">$caCertificateFile</span>);
+    <span class="php-var">$projectInfo</span> = <span class="php-var">$project</span>-&gt;exportProjectInfo();
+    <span class="php-keyword2">print_r</span>(<span class="php-var">$projectInfo</span>);
+} <span class="php-keyword1">catch</span> (PhpCapException <span class="php-var">$exception</span>) {
+    <span class="php-keyword1">print</span> <span class="php-quote">&quot;The following error occurred: </span><span class="php-var">{$exception-&gt;getMessage()}</span><span class="php-quote">\n&quot;</span>;
+    <span class="php-keyword1">print</span> <span class="php-quote">&quot;Here is a stack trace:\n&quot;</span>;
+    <span class="php-keyword1">print</span> <span class="php-var">$exception</span>-&gt;getTraceAsString().<span class="php-quote">&quot;\n&quot;</span>;
+}
+</code></pre></div>
+<p>Note that in addition to the &quot;try&quot; and &quot;catch&quot; that were added, an additional use statement was
+added for the PhpCapException class: </p>
+<div class="description"><pre><code class="language-php"><span class="php-keyword1">use</span> IU\PHPCap\PhpCapException;</code></pre></div></div>
 <div id="footer">
 PHPCap documentation
 </div>
