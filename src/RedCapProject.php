@@ -10,10 +10,10 @@ namespace IU\PHPCap;
 class RedCapProject
 {
     /** string REDCap API token for the project */
-    private $apiToken;
+    protected $apiToken;
     
     /** RedCapApiConnection connection to the REDCap API at the $apiURL. */
-    private $connection;
+    protected $connection;
  
     
     /**
