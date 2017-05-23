@@ -1,4 +1,4 @@
-User Guide 2 - Exporting Records
+User Guide 3 - Exporting Records
 =============================================
 
 PHPCap provides the following 3 methods for exporting records:

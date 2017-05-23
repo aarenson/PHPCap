@@ -44,13 +44,19 @@ require_once('PHPCap/autoloader.php');
 use IU\PHPCap\RedCapProject;
 
 $apiUrl = 'https://redcap.someplace.edu/api/';
-$token  = '273424CC67263B849E41CCD2134F37C3';
+$apiToken  = '273424CC67263B849E41CCD2134F37C3';
 
-$project = new RedCapProject($apiUrl, $token);
+$project = new RedCapProject($apiUrl, $apiToken);
 
+# Print the project title
 $projectInfo = $project->exportProjectInfo();
 print "project title: ".$projectInfo['project_title']."\n";
 
+# Print the first and last names for all records
+$records = $project->exportRecords();
+foreach ($records as $record) {
+    print $record['first_name']." ".$record['last_name']."\n";
+}
 ?>
 ```
 

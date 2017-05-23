@@ -1,11 +1,13 @@
 <?php 
 
-require_once('vendor/autoload.php');
-
 /**
  * Code to generate HTML documents from the Markdown documents.
  *
  */
+
+require_once('vendor/autoload.php');
+
+
 
 class MyParsedown extends \Parsedown
 {
@@ -40,7 +42,13 @@ class MyParsedown extends \Parsedown
 
 }
 
-
+/**
+ * Translates the specified Markdown file to HTML format and creates a file with
+ * the HTML translation.
+ * 
+ * @param string $file the Markdown file to translate.
+ * @param array $files the list of all the Markdown files.
+ */
 function translateFile($file, $files)
 {
     $parsedown = new MyParsedown();
@@ -91,7 +99,14 @@ function translateFile($file, $files)
     file_put_contents($outputFile, $html);
 }
 
-
+/**
+ * Creates an index for the specified file.
+ * 
+ * @param string $file Markdown file for which an index is being created.
+ * @param array $files List of all Markdown files (i.e., the contents of the index).
+ * 
+ * @return string the index in HTML format.
+ */
 function createIndex($file, $files)
 {
     $index = '';
