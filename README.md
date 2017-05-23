@@ -7,6 +7,10 @@ PHPCap is a PHP API (Application Programming Interface) for REDCap.
 
 REDCap is a web application for building and managing online surveys and databases. For information about REDCap, please see http://www.project-redcap.org.
 
+PHPCap makes accessing REDCap from a PHP program easier by providing:
+* a high-level interface
+* improved error checking
+
 
 Requirements
 --------------------------
@@ -14,24 +18,6 @@ To use PHPCap, you need to have:
 * A computer with PHP 5.6 or later installed, and PHP needs to have cURL and OpenSSL enabled.
 * An account on a REDCap site.
 * API token(s) for the project(s) you want to access. API tokens need to be requested within the REDCap system.
-
-
-How to Get PHPCap
---------------------------
-If you have Git installed on your computer, you can use
-
-    git clone https://github.com/aarenson/PHPCap
-
-If you have Subversion, you can use
-
-    svn export https://github.com/aarenson/PHPCap/trunk PHPCap
-
-To download a zip file of PHPCap, you can access this link: <a href="https://github.com/aarenson/PHPCap/archive/master.zip" download="PHPCap.zip">PHPCap.zip</a>
-
-Or, you can access [https://github.com/aarenson/PHPCap](https://github.com/aarenson/PHPCap) in a web browser, and then:    
-1. Click on the __Clone or download__ button
-2. Click on __Download Zip__
-3. Unzip the downloaded file  
 
 
 Example
@@ -61,9 +47,9 @@ foreach ($records as $record) {
 ```
 
 
-API Documentation
+Documentation
 ----------------------------
-Detailed API documentation for PHPCap can be viewed here:
-[PHPCap API](https://aarenson.github.io/PHPCap/api/index.html)
+For more information, see the PHPCap documentation: https://aarenson.github.io/PHPCap/
+
 
 
