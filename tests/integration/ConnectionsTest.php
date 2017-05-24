@@ -55,7 +55,10 @@ class ConnectionsTest extends TestCase
     {
         $apiConnection = new RedCapApiConnection(self::$config['api.url']);
         $this->assertNotNull($apiConnection, 'Connection is not null.');
+    }
     
+    public function testCaCertificateFileNotFound()
+    {
         # Test CA certificate file not found
         $caughtException = false;
         try {
@@ -69,7 +72,10 @@ class ConnectionsTest extends TestCase
             );
         }
         $this->assertTrue($caughtException, 'Caught CA cert file not found exception.');
+    }
     
+    public function testCaCertificateFileUnreadable()
+    {
         # Test CA certificate file not readable
         SystemFunctions::setIsReadableToFail();
         $caughtException = false;
@@ -85,14 +91,17 @@ class ConnectionsTest extends TestCase
         }
         $this->assertTrue($caughtException, 'Caught CA cert file unreadable exception.');
         SystemFunctions::resetIsReadable();
+    }
     
+    public function testConnectionWithCaCertificateFile()
+    {
         if (isset(self::$config['ca.certificate.file'])) {
             $apiConnection = new RedCapApiConnection(
                 self::$config['api.url'],
                 true,
                 self::$config['ca.certificate.file']
             );
-            $this->assertNotNull($apiConnection);
+            $this->assertNotNull($apiConnection, 'Conection not null.');
         }
     }
     
@@ -208,18 +217,24 @@ class ConnectionsTest extends TestCase
     }
     
     
-    public function testTimeout()
+    public function testTimeout1()
     {
         $setTimeout = 10;
         self::$apiConnection->setTimeoutInSeconds($setTimeout);
         $getTimeout = self::$apiConnection->getTimeoutInSeconds();
         $this->assertEquals($setTimeout, $getTimeout, "Timeout comparison 1");
+    }
     
+    public function testTimeout2()
+    {
         $setTimeout = 24;
         self::$apiConnection->setTimeoutInSeconds($setTimeout);
         $getTimeout = self::$apiConnection->getTimeoutInSeconds();
         $this->assertEquals($setTimeout, $getTimeout, "Timeout comparison 2");
+    }
     
+    public function testTimeout3()
+    {
         $setTimeout = 32;
         self::$apiConnection->setCurlOption(CURLOPT_TIMEOUT, $setTimeout);
         $getTimeout = self::$apiConnection->getTimeoutInSeconds();
