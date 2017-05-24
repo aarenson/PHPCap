@@ -1,4 +1,4 @@
-CA Certificate File
+CA Certificate File Info
 =====================================================================
 
 The CA (Certificate Authority) certificate file is needed so that PHPCap can verify that
@@ -44,12 +44,15 @@ To use the Firefox web browser to create a CA (Certificate Authority) certificat
 
 1. Access your REDCap site with Firefox.
 2. Click on the padlock icon to the left of the URL displayed in Firefox, and then the connection, and then "More Information".
+    
     ![Page Information](resources/secure-connection.png)  
 3. If the previous step succeeded, a "Page Info" window should open up. In this window, 
 click on the "Security" tab, if it is not already selected.  
+    
     ![Page Information](resources/page-info-security.png)  
 4. Click on the "View Certificate" button
 5. Click on the "Detail" tab of the "Certificate Viewer" dialog.  
+    
     ![Certificate Viewer](resources/certificate-viewer.png)  
 6. Select the top entry in the "Certificate Hierarchy" box.
 7. Click the "Export..." button.

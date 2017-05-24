@@ -5,12 +5,11 @@ Developers: [Andy Arenson](https://github.com/aarenson), aarenson@iu.edu; [Jim M
 
 PHPCap is a PHP API (Application Programming Interface) for REDCap.
 
-REDCap is a web application for building and managing online surveys and databases. For information about REDCap, please see http://www.project-redcap.org.
-
 PHPCap makes accessing REDCap from a PHP program easier by providing:
 * a high-level interface
 * improved error checking
 
+REDCap is a web application for building and managing online surveys and databases. For information about REDCap, please see http://www.project-redcap.org.
 
 Requirements
 --------------------------

@@ -78,7 +78,7 @@ To run _all_ the automated tests, setup and configuration needs to be completed:
       a valid CA certificate file, and set the __ca.certificate.file__ property
       in the __config.ini__ file to the path to that file. If this property
       isn't set, the tests for this will be skipped.
-      See [CA Certificate file](CACertificateFile.md) for more information on how to
+      See [CA Certificate File Info](CACertificateFile.md) for more information on how to
       do this.
     * To run all of the report tests, you will need to manually set up a report for the
       longitudinal data project and then set the 

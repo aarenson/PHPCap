@@ -10,7 +10,7 @@ The three main classes provided by PHPCap for users are:
 | [PhpCapException](https://aarenson.github.io/PHPCap/api/class-IU.PHPCap.PhpCapException.html) | exception class used by PHPCap when an error occurs      |
  
  Here is a complete example that uses all three of these classes to export the
- records in the project in CSV format to a file:
+ records in a REDCap project to a file in CSV (Comma-Separated Values) format:
  ```php
  <?php 
 
@@ -47,7 +47,7 @@ try {
  __Notes:__
  
  The require statement includes the PHPCap autoloader which loads the PHPCap classes
- that are actually used. So there is no need to require or include the individual
+ that are actually used, so there is no need to require or include the individual
  PHPCap classes.
  
  The use statements allow you to refer to the PHPCap classes without having to specify
