@@ -528,6 +528,46 @@ class RedCapProject
         return $metadata;
     }
     
+    /**
+     * Imports the specified metadata (field information) into the project.
+     *
+     * @param mixed $metadata the metadata to import. This will
+     *     be a PHP associative array if no format, or 'php' format was specified,
+     *     and a string otherwise.
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     *
+     * @throws PhpCapException if an error occurs.
+     *
+     * @return integer the number of fields imported.
+     */
+    public function importMetadata($metadata, $format = 'php')
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'metadata',
+                'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process arguments
+        #---------------------------------------
+        $data['data'] = $this->processImportDataArgument($metadata, 'metadata', $format);
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
+        $result = $this->connection->callWithArray($data);
+        
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
+
     
     /**
      * Exports information about the project, e.g., project ID, project title, creation time.
@@ -587,7 +627,7 @@ class RedCapProject
      * </code>
      *
      * @param mixed $projectInfo the project information to import. This will
-     *     be a PHP associative array if no format, or 'php' format was specidied,
+     *     be a PHP associative array if no format, or 'php' format was specified,
      *     and a string otherwise.
      * @param string $format the format for the export.
      *     <ul>
