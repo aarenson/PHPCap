@@ -567,6 +567,66 @@ class RedCapProject
     }
     
     /**
+     * Imports the specified project information into the project.
+     * The valid fields that can be imported are:
+     *
+     * project_title, project_language, purpose, purpose_other, project_notes,
+     * custom_record_label, secondary_unique_field, is_longitudinal,
+     * surveys_enabled, scheduling_enabled, record_autonumbering_enabled,
+     * randomization_enabled, project_irb_number, project_grant_number,
+     * project_pi_firstname, project_pi_lastname, display_today_now_button
+     *
+     * You do not need to specify all of these fields when doing an import,
+     * only the ones that you actually want to change. For example:
+     * <code>
+     * ...
+     * # Set the project to be longitudinal and enable surveys
+     * $projectInfo = ['is_longitudinal' => 1, 'surveys_enabled' => 1];
+     * $project->importProjectInfo($projectInfo);
+     * ...
+     * </code>
+     *
+     * @param mixed $projectInfo the project information to import. This will
+     *     be a PHP associative array if no format, or 'php' format was specidied,
+     *     and a string otherwise.
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     *
+     * @throws PhpCapException if an error occurs.
+     *
+     * @return integer the number of project info values specified that were valid,
+     *     whether or not each valid value actually caused an update (i.e., was different
+     *     from the existing value before the method call).
+     */
+    public function importProjectInfo($projectInfo, $format = 'php')
+    {
+        $data = array(
+            'token'        => $this->apiToken,
+            'content'      => 'project_settings',
+            'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process arguments
+        #---------------------------------------
+        $data['data'] = $this->processImportDataArgument($projectInfo, 'projectInfo', $format);
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
+        $result = $this->connection->callWithArray($data);
+        
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
+    
+    
+    /**
      * Exports the specified records.
      *
      * Example usage:
@@ -869,7 +929,7 @@ class RedCapProject
         #---------------------------------------
         $legalFormats = array('csv', 'json', 'odm', 'php', 'xml');
         $data['format'] = $this->processFormatArgument($format, $legalFormats);
-        $data['data']   = $this->processRecordsArgument($records, $format);
+        $data['data']   = $this->processImportDataArgument($records, 'records', $format);
         $data['type']   = $this->processTypeArgument($type);
             
         $data['overwriteBehavior'] = $this->processOverwriteBehaviorArgument($overwriteBehavior);
@@ -1455,6 +1515,42 @@ class RedCapProject
         
         return $forms;
     }
+
+    protected function processImportDataArgument($data, $dataName, $format)
+    {
+        if (!isset($data)) {
+            $message = "No value specified for required argument '".$dataName."'.";
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        } elseif ($format === 'php') {
+            if (!is_array($data)) {
+                $message = "Argument '".$dataName."' has type '".gettype($data)."'"
+                    .", but should be an array.";
+                    throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            }
+            $data = json_encode($data);
+            
+            $jsonError = json_last_error();
+            
+            switch ($jsonError) {
+                case JSON_ERROR_NONE:
+                    break;
+                default:
+                    $message =  'JSON error ('.$jsonError.') "'. json_last_error_msg().
+                    '"'." while processing argument '".$dataName."'.";
+                    throw new PhpCapException($message, PhpCapException::JSON_ERROR);
+                    break;
+            }
+        } else { // All other formats
+            if (gettype($data) !== 'string') {
+                $message = "Argument '".$dataName."' has type '".gettype($data)."'"
+                    .", but should be a string.";
+                    throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            }
+        }
+        
+        return $data;
+    }
+    
     
     protected function processNonExportResult(& $result)
     {
@@ -1554,38 +1650,6 @@ class RedCapProject
         return $recordIds;
     }
     
-    protected function processRecordsArgument($records, $format)
-    {
-        if (!isset($records)) {
-            $message = 'No records specified.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-        } elseif ($format === 'php') {
-            if (!is_array($records)) {
-                $message = "Argument 'records' has type '".gettype($records)."', but should be an array.";
-                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-            }
-            $records = json_encode($records);
-            
-            $jsonError = json_last_error();
-            
-            switch ($jsonError) {
-                case JSON_ERROR_NONE:
-                    break;
-                default:
-                    $message =  'JSON error ('.$jsonError.') "'. json_last_error_msg().
-                    '" while processing records argument.';
-                    throw new PhpCapException($message, PhpCapException::JSON_ERROR);
-                    break;
-            }
-        } else { // All other formats
-            if (gettype($records) !== 'string') {
-                $message = "Argument 'records' has type '".gettype($records)."', but should be a string.";
-                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
-            }
-        }
-        
-        return $records;
-    }
 
     
     protected function processRepeatInstanceArgument($repeatInstance)

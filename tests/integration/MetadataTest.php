@@ -8,7 +8,7 @@ use IU\PHPCap\RedCapProject;
 use IU\PHPCap\PhpCapException;
 
 /**
- * PHPUnit tests for the RedCapProject class.
+ * PHPUnit integration tests for metadata.
  */
 class MetadataTest extends TestCase
 {
