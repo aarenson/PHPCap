@@ -189,6 +189,52 @@ class RedCapProject
         
         return $events;
     }
+    
+    
+    /**
+     * Exports the fields names for a project.
+     *
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param string $field the name of the field for which to export field
+     *     name information. If no field is specified, information for all
+     *     fields is exported.
+     *
+     * @return mixed information on the field specified, or all fields if no
+     *     field was specified. If 'php' or no format was specified, results
+     *     will be returned as a PHP array of maps (associative arrays), where the
+     *     keys for the maps:
+     *     <ul>
+     *       <li>original_field_name</li>
+     *       <li>choice_value</li>
+     *       <li>export_field_name</li>
+     *     </ul>
+     */
+    public function exportFieldNames($format = 'php', $field = null)
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'exportFieldNames',
+                'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process arguments
+        #---------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['field']  = $this->processFieldArgument($field, $required = false);
+        
+        $fieldNames = $this->connection->callWithArray($data);
+        $fieldNames = $this->processExportResult($fieldNames, $format);
+        
+        return $fieldNames;
+    }
 
     
     /**
@@ -198,6 +244,8 @@ class RedCapProject
      * @param string $field the name of the field containing the file to export.
      * @param string $event name of event for file export (for longitudinal studies).
      * @param string $repeatInstance
+     *
+     * @throws PhpCapException if an error occurs.
      *
      * @return string the contents of the file that was exported.
      */
@@ -1269,11 +1317,14 @@ class RedCapProject
         return $exportSurveyFields;
     }
     
-    protected function processFieldArgument($field)
+    protected function processFieldArgument($field, $required = true)
     {
         if (!isset($field)) {
-            $message = 'No field was specified.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            if ($required) {
+                $message = 'No field was specified.';
+                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            }
+            // else OK
         } elseif (gettype($field) !== 'string') {
             $message = 'Field has type "'.gettype($field).'", but should be a string.';
             throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
