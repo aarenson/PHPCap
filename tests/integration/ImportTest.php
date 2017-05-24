@@ -60,5 +60,37 @@ class ImportTest extends TestCase
         $actualMetadata   = self::$emptyProject->exportMetadata();
         
         $this->assertEquals($expectedMetadata, $actualMetadata, 'Metadata comparison.');
+         
+        # Call with no override specified to make sure
+        # it doesn't cause an error
+        $arms = self::$longitudinalDataProject->exportArms();
+        self::$emptyProject->importArms($arms, 'php');
+        
+        $arms = self::$longitudinalDataProject->exportArms();
+        self::$emptyProject->importArms($arms, 'php', true);
+
+        # Import arms with non-boolean override
+        $exceptionCaught = false;
+        try {
+            self::$emptyProject->importArms($arms, 'php', 123);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+        }
+        $this->assertTrue($exceptionCaught, 'Non-boolean override exception caught.');
+        
+        $events = self::$longitudinalDataProject->exportEvents();
+        self::$emptyProject->importEvents($events, 'php', true);
+        
+        $mappings = self::$longitudinalDataProject->exportInstrumentEventMappings();
+        self::$emptyProject->importInstrumentEventMappings($mappings);
+        
+        $newArms = self::$emptyProject->exportArms();
+        $this->assertEquals($arms, $newArms, 'Arms check.');
+        
+        $newEvents = self::$emptyProject->exportEvents();
+        $this->assertEquals($events, $newEvents, 'Events check.');
+        
+        $newMappings = self::$emptyProject->exportInstrumentEventMappings();
+        $this->assertEquals($mappings, $newMappings, 'Mappings check.');
     }
 }

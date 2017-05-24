@@ -137,6 +137,51 @@ class RedCapProject
         return $arms;
     }
     
+    /**
+     * Imports the specified arms into the project.
+     *
+     * @param mixed $arms the arms to import. This will
+     *     be a PHP array of associative arrays if no format, or 'php' format was specified,
+     *     and a string otherwise. The field names (keys) used in both cases
+     *     are: arm_num, name
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param boolean $override
+     *
+     * @throws PhpCapException if an error occurs.
+     *
+     * @return integer the number of arms imported.
+     */
+    public function importArms($arms, $format = 'php', $override = false)
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'arm',
+                'action'       => 'import',
+                'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process arguments
+        #---------------------------------------
+        $data['data'] = $this->processImportDataArgument($arms, 'arms', $format);
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['override'] = $this->processOverrideArgument($override);
+        
+        $result = $this->connection->callWithArray($data);
+        
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
+
+
     
     /**
      * Exports information about the specified events.
@@ -190,6 +235,50 @@ class RedCapProject
         return $events;
     }
     
+    
+    /**
+     * Imports the specified events into the project.
+     *
+     * @param mixed $events the events to import. This will
+     *     be a PHP array of associative arrays if no format, or 'php' format is specified,
+     *     and a string otherwise. The field names (keys) used in both cases
+     *     are: event_name, arm_num
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param boolean $override
+     *
+     * @throws PhpCapException if an error occurs.
+     *
+     * @return integer the number of events imported.
+     */
+    public function importEvents($events, $format = 'php', $override = false)
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'event',
+                'action'       => 'import',
+                'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process arguments
+        #---------------------------------------
+        $data['data'] = $this->processImportDataArgument($events, 'arms', $format);
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['override'] = $this->processOverrideArgument($override);
+        
+        $result = $this->connection->callWithArray($data);
+        
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
     
     /**
      * Exports the fields names for a project.
@@ -482,6 +571,49 @@ class RedCapProject
         return $instrumentEventMappings;
     }
 
+    /**
+     * Imports the specified instrument-event mappings into the project.
+     *
+     * @param mixed $mappings the mappings to import. This will
+     *     be a PHP array of associative arrays if no format, or
+     *     'php' format, was specified,
+     *     and a string otherwise. In all cases, the field names that
+     *     are used in the mappings are:
+     *     arm_num, unique_event_name, form
+     * @param string $format the format for the export.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     *
+     * @throws PhpCapException if an error occurs.
+     *
+     * @return integer the number of mappings imported.
+     */
+    public function importInstrumentEventMappings($mappings, $format = 'php')
+    {
+        $data = array(
+            'token'        => $this->apiToken,
+            'content'      => 'formEventMapping',
+            'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------
+        # Process arguments
+        #---------------------------------------
+        $data['data'] = $this->processImportDataArgument($mappings, 'mappings', $format);
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
+        $result = $this->connection->callWithArray($data);
+        
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
+    
     
     /**
      * Exports metadata about the project, i.e., information about the fields in the project.
@@ -1602,6 +1734,30 @@ class RedCapProject
             $message = $matches[1];
             throw new PhpCapException($message, PhpCapException::REDCAP_API_ERROR);
         }
+    }
+    
+    
+    protected function processOverrideArgument($override)
+    {
+        if ($override == null) {
+            $override = false;
+        } else {
+            if (gettype($override) !== 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for override. It should be a boolean (true or false),'
+                    .' but has type: '.gettype($override).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        
+        if ($override === true) {
+            $override = 1;
+        } else {
+            $override = 0;
+        }
+        
+        return $override;
     }
     
     protected function processOverwriteBehaviorArgument($overwriteBehavior)
