@@ -152,7 +152,12 @@ class RedCapProject
      *       <li> 'xml' - string of XML encoded data</li>
      *     </ul>
      * @param boolean $override
-     *
+     *     <ul>
+     *       <li> false - [default] don't delete existing arms; only add new
+     *       arms or renames existing arms.
+     *       </li>
+     *       <li> true - delete all existing arms before importing.</li>
+     *     </ul>
      * @throws PhpCapException if an error occurs.
      *
      * @return integer the number of arms imported.
@@ -251,6 +256,12 @@ class RedCapProject
      *       <li> 'xml' - string of XML encoded data</li>
      *     </ul>
      * @param boolean $override
+     *     <ul>
+     *       <li> false - [default] don't delete existing arms; only add new
+     *       arms or renames existing arms.
+     *       </li>
+     *       <li> true - delete all existing arms before importing.</li>
+     *     </ul>
      *
      * @throws PhpCapException if an error occurs.
      *
