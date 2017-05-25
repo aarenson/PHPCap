@@ -64,7 +64,7 @@ try {
  read the data you send and receive. 
  For information on how to create a CA certificate file, see [CA Certificate File](CACertificateFile.md)
  
- For writing the file, you could use PHP's file_put_contents method,
+ For writing the file, you could use PHP's file_put_contents function,
  but an advantage of using PHPCap's FileUtil method is that FileUtil is
  set up to throw a PhpCapException if an error occurs, so it can
  make error handling more consistent and easier.
