@@ -69,8 +69,8 @@ and you should see no errors of failures.
 To run _all_ the automated tests, setup and configuration needs to be completed:
 1. Log in to your REDCap site.
 2. Create an empty project in REDCap.
-3. Import the test REDCap project files in directory __tests/projects/__.
-3. In REDCap, request API tokens for the empty project and the projects imported in the step above.
+3. Create a project in REDCap for each of the test REDCap project files in directory __tests/projects/__, and import each test project file into the REDCap project created for it.
+3. In REDCap, request API tokens for the empty project and the projects imported in the steps above.
 4. Once you have your tokens, copy the "config-example.ini" file to a file
    named "config.ini" and then set the URL in that file to be the
    URL for the API of your REDCap instance, and set the tokens to be
