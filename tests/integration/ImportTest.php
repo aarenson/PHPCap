@@ -92,5 +92,38 @@ class ImportTest extends TestCase
         
         $newMappings = self::$emptyProject->exportInstrumentEventMappings();
         $this->assertEquals($mappings, $newMappings, 'Mappings check.');
+        
+        # Try deleting arm 2
+        $expectedArms = [['arm_num' => '1', 'name' => 'Drug A']];
+        $count = self::$emptyProject->deleteArms([2]);
+        $newArms = self::$emptyProject->exportArms();
+        $this->assertEquals(1, $count, 'Arm deletion count check.');
+        $this->assertEquals($expectedArms, $newArms, 'Arm deletion check.');
+    }
+    
+    public function testDeleteArmsWithNullArmsSpecified()
+    {
+        $caughtException = false;
+        try {
+            $count = self::$emptyProject->deleteArms(null);
+        } catch (PhpCapException $exception) {
+            $caughtException = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($caughtException, 'Caught exception.');
+    }
+    
+    public function testDeleteArmsWithEmptyArmsArraySpecified()
+    {
+        $caughtException = false;
+        try {
+            $count = self::$emptyProject->deleteArms([]);
+        } catch (PhpCapException $exception) {
+            $caughtException = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        $this->assertTrue($caughtException, 'Caught exception.');
     }
 }

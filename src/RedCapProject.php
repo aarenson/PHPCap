@@ -185,6 +185,33 @@ class RedCapProject
         
         return (integer) $result;
     }
+    
+    /**
+     * Deletes the specified arms from the project.
+     *
+     * @param array $arms array of arm numbers to delete.
+     *
+     * @throws PhpCapException if an error occurs, including if no arms are specified.
+     *
+     * @return integer the number of arms deleted.
+     */
+    public function deleteArms($arms)
+    {
+        $data = array (
+                'token'        => $this->apiToken,
+                'content'      => 'arm',
+                'action'       => 'delete',
+                'returnFormat' => 'json',
+        );
+        
+        $data['arms'] = $this->processArmsArgument($arms, $required = true);
+       
+        $result = $this->connection->callWithArray($data);
+        
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
 
 
     
@@ -1367,14 +1394,25 @@ class RedCapProject
         return $arm;
     }
     
-    protected function processArmsArgument($arms)
+    protected function processArmsArgument($arms, $required = false)
     {
         if (!isset($arms)) {
+            if ($required === true) {
+                throw new PhpCapException(
+                    'The arms argument was not set.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
             $arms = array();
         } else {
             if (!is_array($arms)) {
                 throw new PhpCapException(
                     'The arms argument has invalid type "'.gettype($arms).'"; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            } elseif ($required === true && count($arms) < 1) {
+                throw new PhpCapException(
+                    'No arms were specified in the arms argument; at least one must be specified.',
                     PhpCapException::INVALID_ARGUMENT
                 );
             }
