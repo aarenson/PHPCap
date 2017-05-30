@@ -7,7 +7,10 @@ use PHPUnit\Framework\TestCase;
 use IU\PHPCap\RedCapProject;
 
 /**
- * PHPUnit integrations tests for import methods.
+ * PHPUnit integrations tests for importing and deleting metadata.
+ * There tests include not only the metadata returned by the
+ * getMetadata() method, but also other metadata including
+ * project info, arms and events.
  */
 class ImportTest extends TestCase
 {
