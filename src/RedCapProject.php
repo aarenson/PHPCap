@@ -191,7 +191,7 @@ class RedCapProject
      *
      * @param array $arms array of arm numbers to delete.
      *
-     * @throws PhpCapException if an error occurs, including if no arms are specified.
+     * @throws PhpCapException if an error occurs, including if the arms array is null or empty
      *
      * @return integer the number of arms deleted.
      */
@@ -214,7 +214,6 @@ class RedCapProject
     }
 
 
-    
     /**
      * Exports information about the specified events.
      *
@@ -317,6 +316,35 @@ class RedCapProject
         
         return (integer) $result;
     }
+
+    
+    /**
+     * Deletes the specified events from the project.
+     *
+     * @param array $events array of event names of events to delete.
+     *
+     * @throws PhpCapException if an error occurs, including if the events array is null or empty.
+     *
+     * @return integer the number of events deleted.
+     */
+    public function deleteEvents($events)
+    {
+        $data = array (
+                'token'        => $this->apiToken,
+                'content'      => 'event',
+                'action'       => 'delete',
+                'returnFormat' => 'json',
+        );
+        
+        $data['events'] = $this->processEventsArgument($events, $required = true);
+        
+        $result = $this->connection->callWithArray($data);
+        
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
+    
     
     /**
      * Exports the fields names for a project.
@@ -1475,14 +1503,25 @@ class RedCapProject
         return $event;
     }
     
-    protected function processEventsArgument($events)
+    protected function processEventsArgument($events, $required = false)
     {
         if (!isset($events)) {
+            if ($required === true) {
+                throw new PhpCapException(
+                    'The events argument was not set.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
             $events = array();
         } else {
             if (!is_array($events)) {
                 throw new PhpCapException(
                     'The events argument has invalid type "'.gettype($events).'"; it should be an array.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            } elseif ($required === true && count($events) < 1) {
+                throw new PhpCapException(
+                    'No events were specified in the events argument; at least one must be specified.',
                     PhpCapException::INVALID_ARGUMENT
                 );
             } else {
