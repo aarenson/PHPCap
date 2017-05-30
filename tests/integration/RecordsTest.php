@@ -964,7 +964,6 @@ class RecordsTest extends TestCase
             null,
             $dateFormat = 'MDY'
         );
-        print_r($result);
         
         $records = self::$longitudinalDataProject->exportRecordsAp(
             ['events' => ['enrollment_arm_1', 'enrollment_arm_2']]

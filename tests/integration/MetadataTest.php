@@ -72,4 +72,10 @@ class MetadataTest extends TestCase
     
         $this->assertEquals($fields, $actualFields, 'Field names check.');
     }
+    
+    public function testExportRecordIdFieldName()
+    {
+        $result = self::$longitudinalDataProject->getRecordIdFieldName();
+        $this->assertEquals('study_id', $result, 'Record ID field name check.');
+    }
 }

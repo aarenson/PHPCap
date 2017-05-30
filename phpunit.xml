@@ -9,6 +9,7 @@
     </testsuite>
     <testsuite name="integration">
       <file>tests/integration/ArmsTest.php</file>
+      <file>tests/integration/BatchesTest.php</file>
       <file>tests/integration/ConnectionsTest.php</file>
       <file>tests/integration/EventsTest.php</file>
       <file>tests/integration/FieldNames.php</file>

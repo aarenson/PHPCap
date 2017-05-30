@@ -1338,8 +1338,90 @@ class RedCapProject
     }
 
     
+    /**
+     * Gets an array of record ID batches.
+     *
+     * These can be used for batch
+     * processing of records exports to lessen memory requirements, for example:
+     * <code>
+     * ...
+     * # Get all the record IDs of the project in 10 batches
+     * $recordIdBatches = $project->getRecordIdBatches(10);
+     * foreach ($recordIdBatches as $recordIdBatch) {
+     *     $records = $project->exportRecordsAp(['recordIds' => $recordIdBatch]);
+     *     ...
+     * }
+     * ...
+     * </code>
+     *
+     * @param integer $batches the number of batches of record IDs to return (needs to be
+     *     at least one). If the number of batches specified is greater than the
+     *     number of records IDs, then then number of batches returned should be adjusted
+     *     to equal the number of records IDs.
+     * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
+     *     "[last_name] = 'Smith'". This could be used for batch processing a subset
+     *     of the records.
+     * @return array an array or record ID arrays, where each record ID array
+     *     is considered to be a batch. Each batch can be used as the value
+     *     for the records IDs parameter for an export records method.
+     */
+    public function getRecordIdBatches($batches = 1, $filterLogic = null)
+    {
+        $recordIdBatches = array();
+        
+        #-----------------------------------
+        # Check arguments
+        #-----------------------------------
+        if (!isset($batches)) {
+            $message = 'The number of batches was not specified.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        } elseif (!is_int($batches)) {
+            $message = "The batches argument has type '".gettype($batches).'", '
+                .'but it should have type integer.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        } elseif ($batches < 1) {
+            $message = 'The batches argument is less than 1. It needs to be at least 1.';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        }
+        
+        $filterLogic = $this->processFilterLogicArgument($filterLogic);
+        
+        $recordIdFieldName = $this->getRecordIdFieldName();
+        
+        $records = $this->exportRecordsAp(
+            ['fields' => [$recordIdFieldName], 'filterLogic' => $filterLogic]
+        );
+        $recordIds = array_column($records, $recordIdFieldName);
+        $recordIds = array_unique($recordIds);  # Remove duplicate record IDs
 
+        $numberOfRecordIds = count($recordIds);
+        $batchSize = (integer) ceil($numberOfRecordIds / $batches);
+            
+        $position = 0;
+        for ($batch = 0; $batch < $batches; $batch++) {
+            $recordIdBatch = array();
+            $recordIdBatch = array_slice($recordIds, $position, $batchSize);
+            array_push($recordIdBatches, $recordIdBatch);
+            $position += $batchSize;
+            if ($position >= $numberOfRecordIds) {
+                break;
+            }
+        }
 
+        return $recordIdBatches;
+    }
+    
+    /**
+     * Gets the record ID field name for the project.
+     *
+     * @return string the field name of the record ID field of the project.
+     */
+    public function getRecordIdFieldName()
+    {
+        $metadata = $this->exportMetaData();
+        $recordIdFieldName = $metadata[0]['field_name'];
+        return $recordIdFieldName;
+    }
 
     /**
      * Gets the call information for the last cURL call. PHPCap uses cURL to
