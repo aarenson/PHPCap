@@ -577,6 +577,56 @@ class RedCapProject
     }
     
     /**
+     * Exports a PDF version of the requested instruments (forms).
+     *
+     * @param string $file the name of the file (possibly with a path specified also)
+     *     to store the PDF instruments in.
+     * @param string $recordId if record ID is specified, the forms retrieved will
+     *     be filled with values for that record. Otherwise, they will be blank.
+     * @param string $event (only for longitudinal projects) a unique event name
+     *     that is used when a record ID has been specified to return only
+     *     forms that are in that event (for the specified records).
+     * @param string $form if this is specified, only this form will be
+     *     returned.
+     * @param boolean $allRecords if this is set to true, all forms for all
+     *     records will be retrieved (the $recordId, $event, and $form arguments
+     *     will be ignored).
+     *
+     * @throws PhpCapException if an error occurs.
+     *
+     * @return string PDF content of requested instruments (forms).
+     */
+    public function exportPdfFileOfInstruments(
+        $file = null,
+        $recordId = null,
+        $event = null,
+        $form = null,
+        $allRecords = null
+    ) {
+        $data = array(
+                'token'       => $this->apiToken,
+                'content'     => 'pdf',
+                'returnFormat' => 'json'
+        );
+        
+        $file = $this->processFileArgument($file);
+        
+        $data['record']     = $this->processRecordIdArgument($recordId, $required = false);
+        $data['event']      = $this->processEventArgument($event);
+        $data['instrument'] = $this->processFormArgument($form);
+        $data['allRecords'] = $this->processAllRecordsArgument($allRecords);
+        
+        $result = $this->connection->callWithArray($data);
+        
+        if (isset($file)) {
+            FileUtil::writeStringToFile($result, $file);
+        }
+        
+        return $result;
+    }
+   
+    
+    /**
      * Gets the instrument to event mapping for the project.
      *
      * For example, the following code:
@@ -1476,6 +1526,22 @@ class RedCapProject
         return $this->connection;
     }
 
+    
+    protected function processAllRecordsArgument($allRecords)
+    {
+        if (!isset($allRecords)) {
+            ;  // That's OK
+        } elseif (!is_bool($allRecords)) {
+            $message = 'The allRecords argument has type "'.gettype($allRecords).
+            '", but it should be a boolean (true/false).';
+            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+        } elseif ($allRecords !== true) {
+            $allRecords = null; // need to reset to null, because ANY (non-null) value
+                                // will cause the REDCap API to return all records
+        }
+        
+        return $allRecords;
+    }
    
     protected function processArmArgument($arm)
     {
@@ -1760,6 +1826,16 @@ class RedCapProject
         return $fields;
     }
 
+    protected function processFileArgument($file)
+    {
+        if (isset($file)) {
+            if (gettype($file) !== 'string') {
+                $message = "Argument 'file' has type '".gettype($file)."', but should be a string.";
+                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            }
+        }
+        return $file;
+    }
     
     protected function processFilenameArgument($filename)
     {
@@ -1801,6 +1877,21 @@ class RedCapProject
             }
         }
         return $filterLogic;
+    }
+    
+    
+    protected function processFormArgument($form)
+    {
+        if (!isset($form)) {
+            $form = '';
+        } elseif (!is_string($form)) {
+            throw new PhpCapException(
+                'The form argument has invalid type "'.gettype($form).'"; it should be a string.',
+                PhpCapException::INVALID_ARGUMENT
+            );
+        }
+        
+        return $form;
     }
     
     protected function processFormatArgument(& $format, $legalFormats)
@@ -1977,13 +2068,13 @@ class RedCapProject
     }
     
     
-    protected function processRecordIdArgument($recordId)
+    protected function processRecordIdArgument($recordId, $required = true)
     {
         if (!isset($recordId)) {
-            throw new PhpCapException("No record ID specified.", PhpCapException::INVALID_ARGUMENT);
-        }
-        
-        if (!is_string($recordId) && !is_int($recordId)) {
+            if ($required) {
+                throw new PhpCapException("No record ID specified.", PhpCapException::INVALID_ARGUMENT);
+            }
+        } elseif (!is_string($recordId) && !is_int($recordId)) {
             $message = 'The record ID has type "'.gettype($recordId).
             '", but it should be a string or integer.';
             throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);

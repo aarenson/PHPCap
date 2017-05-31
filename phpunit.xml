@@ -18,6 +18,7 @@
       <file>tests/integration/InstrumentEventMappingsTest.php</file>
       <file>tests/integration/InstrumentsTest.php</file>
       <file>tests/integration/MetadataTest.php</file>
+      <file>tests/integration/PdfFormsTest.php</file>
       <file>tests/integration/ProjectInfoTest.php</file>
       <file>tests/integration/ProjectsTest.php</file>
       <file>tests/integration/RecordsTest.php</file>
