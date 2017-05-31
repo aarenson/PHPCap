@@ -22,7 +22,7 @@ Setup
     
 3. Get Composer. Composer is needed to download the development depedencies for PHPCap.
    See: https://getcomposer.org/download/.
-   You can either install the composer.phar file to the root directory of PHPCap (the ..gitignore 
+   You can either install the composer.phar file to the root directory of PHPCap (the .gitignore 
    file is set to ignore this file), or install it globally at the system or account level.
 4. Install PHPCap's development dependencies:
 
@@ -56,7 +56,7 @@ Usage
 
 ### Automated Tests
 
-PHPCap uses PHPUnit for running automated test. PHPUnit should get installed as a dependency
+PHPCap uses PHPUnit for running automated tests. PHPUnit should get installed as a dependency
 for your PHPCap project when you run the "composer install" command.
 
 You can test your PHPUnit installation by running the following in the root PHPCap directory:
@@ -137,7 +137,7 @@ PHPCap follows the PSR-1 and PSR-2 coding standards. See:
 * http://www.php-fig.org/psr/psr-1/
 * http://www.php-fig.org/psr/psr-2/
 
-To check for compliance for the PHPCap source code, execute the following command in the root directory of the PHPCap:
+To check for compliance for the PHPCap source code, execute the following command in the root directory of PHPCap:
 
     ./vendor/bin/phpcs --standard=PSR1,PSR2 src
 

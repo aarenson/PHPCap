@@ -49,7 +49,7 @@ See: <a href="https://git-scm.com/downloads">https://git-scm.com/downloads</a></
 </li>
 <li>Get Composer. Composer is needed to download the development depedencies for PHPCap.
 See: <a href="https://getcomposer.org/download/">https://getcomposer.org/download/</a>.
-You can either install the composer.phar file to the root directory of PHPCap (the ..gitignore
+You can either install the composer.phar file to the root directory of PHPCap (the .gitignore
 file is set to ignore this file), or install it globally at the system or account level.</li>
 <li>
 <p>Install PHPCap's development dependencies:</p>
@@ -74,7 +74,7 @@ cd PHPCap
 composer install</code></pre></div>
 <h2>Usage</h2>
 <h3>Automated Tests</h3>
-<p>PHPCap uses PHPUnit for running automated test. PHPUnit should get installed as a dependency
+<p>PHPCap uses PHPUnit for running automated tests. PHPUnit should get installed as a dependency
 for your PHPCap project when you run the &quot;composer install&quot; command.</p>
 <p>You can test your PHPUnit installation by running the following in the root PHPCap directory:</p>
 <div class="description"><pre><code>    ./vendor/bin/phpunit --testsuite unit</code></pre></div>
@@ -140,7 +140,7 @@ This directory is intended as a place for developers to places tests for changes
 <li><a href="http://www.php-fig.org/psr/psr-1/">http://www.php-fig.org/psr/psr-1/</a></li>
 <li><a href="http://www.php-fig.org/psr/psr-2/">http://www.php-fig.org/psr/psr-2/</a></li>
 </ul>
-<p>To check for compliance for the PHPCap source code, execute the following command in the root directory of the PHPCap:</p>
+<p>To check for compliance for the PHPCap source code, execute the following command in the root directory of PHPCap:</p>
 <div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 src</code></pre></div>
 <p>To check compliance for the automated tests, use:</p>
 <div class="description"><pre><code>./vendor/bin/phpcs --standard=PSR1,PSR2 tests/unit tests/integration</code></pre></div>

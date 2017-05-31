@@ -1,7 +1,7 @@
 PHPCap
 ==========================================================================
 
-Developers: [Andy Arenson](https://github.com/aarenson), aarenson@iu.edu; [Jim Mullen](https://github.com/mullen2)
+Developers: [Jim Mullen](https://github.com/mullen2); [Andy Arenson](https://github.com/aarenson), aarenson@iu.edu
 
 PHPCap is a PHP API (Application Programming Interface) for REDCap.
 

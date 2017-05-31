@@ -11,7 +11,7 @@ is not recommended. At most, setting SSL verification to false should
 only be used for initial testing with non-critical data.
 
 It is possible that your system may already be set up to use a correct CA certificate file.
-This can be tested by trying to access a project will SSL verification set to true, but with
+This can be tested by trying to access a project with SSL verification set to true, but with
 no CA certificate file specified, for example:
 
 ```php
@@ -61,5 +61,6 @@ click on the "Security" tab, if it is not already selected.
     2. change the name of the file if you don't want to use the default name
     3. set "Save as type" to "X.509 Certificate (PEM)"
     4. click on the "Save" button.  
-    ![Save Certificate to File](resources/save-certificate-to-file.png)   
+    
+        ![Save Certificate to File](resources/save-certificate-to-file.png)   
 

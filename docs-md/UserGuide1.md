@@ -3,7 +3,7 @@ User Guide 1 - Getting Started
 
 Prerequisites
 ----------------------
-  * __Your REDCap API URL.__ You need to know the URL of your REDCap's API (Application programming interface)
+  * __Your REDCap API URL.__ You need to know the URL of your REDCap's API (Application Programming Interface)
   * __REDCap Project with API Token.__ You need to have an API token for a project in REDCap. You would typically get this
     by creating a project in REDCap and then requesting an API token.
   * __PHP 5.6+ with cURL and OpenSSL.__You need to have a computer (with Internet access) that has PHP version 5.6 or greater installed. And you need to have the following PHP modules enabled:
@@ -36,7 +36,7 @@ If you don't have Git installed, you can get a Zip file of PHPCap by clicking on
 
 https://github.com/aarenson/PHPCap/archive/master.zip
 
-Or go to this page and click on the "Clone of download" button, and then click on "Download ZIP":
+Or go to this page and click on the "Clone or download" button, and then click on "Download ZIP":
 
 https://github.com/aarenson/PHPCap/
 
