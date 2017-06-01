@@ -1,6 +1,10 @@
 {
 	"name" : "phpcap/phpcap",
 	"license" : "Apache-2.0",
+	"description" : "PHP API for REDCap",
+	"keywords" : [
+		"REDCap"
+	],
 	"require" : {
 		"php" : ">=5.6.0",
 		"ext-curl" : "*",
