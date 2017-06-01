@@ -51,24 +51,21 @@ You should now have the following directory structure:
 <table>
     <tr><th>Composer</th><th>Git</th></tr>
     <tr>
-      <td>
-<pre>
-    phpcap-project/
-        composer.json
-        composer.lock        
-        vendor/
-            ...
-            composer/
-            phpcap/
-</pre>
+      <td style="vertical-align:top">
+<pre>phpcap-project/
+    composer.json
+    composer.lock        
+    vendor/
+        ...
+        composer/
+        phpcap/</pre>
      </td>
-     <td>
-<pre>
-    phpcap-project/
-        PHPCap/
-            docs/
-            src/
-            ...
+     <td style="vertical-align:top">
+<pre>phpcap-project/
+    PHPCap/
+        docs/
+        src/
+        ...</pre>
         </td>
     </tr>
 </table>
