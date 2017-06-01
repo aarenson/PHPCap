@@ -28,11 +28,15 @@ Create a directory for your project, and cd to that directory:
 
 ### Get PHPCap
   
-Get PHPCap from GitHub. If you have Git installed, you can use the following:
+If you have [Composer](https://getcomposer.org/) installed, you can get PHPCap using:
+
+    composer require phpcap/phpcap
+    
+If you have [Git](https://git-scm.com/) installed, you can use the following:
 
     git clone https://github.com/aarenson/PHPCap 
 
-If you don't have Git installed, you can get a Zip file of PHPCap by clicking on this link:
+If you don't have Composer or Git installed, you can get a Zip file of PHPCap by clicking on this link:
 
 https://github.com/aarenson/PHPCap/archive/master.zip
 
@@ -44,11 +48,30 @@ Then unzip the file to your project directory.
     
 You should now have the following directory structure:
 
+<table>
+    <tr><th>Composer</th><th>Git</th></tr>
+    <tr>
+      <td>
+<pre>
+    phpcap-project/
+        composer.json
+        composer.lock        
+        vendor/
+            ...
+            composer/
+            phpcap/
+</pre>
+     </td>
+     <td>
+<pre>
     phpcap-project/
         PHPCap/
             docs/
             src/
             ...
+        </td>
+    </tr>
+</table>
             
 ### Create your first test program.
 
