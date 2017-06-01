@@ -1,5 +1,6 @@
 {
-	"name": "phpcap/phpcap",
+	"name" : "phpcap/phpcap",
+	"license": "Apache-2.0",
 	"require" : {
 		"php" : ">=5.6.0"
 	},
