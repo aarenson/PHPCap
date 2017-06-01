@@ -1,4 +1,5 @@
 {
+	"name": "phpcap/phpcap",
 	"require" : {
 		"php" : ">=5.6.0"
 	},
@@ -16,7 +17,10 @@
 	},
 	"autoload-dev" : {
 		"psr-4" : {
-			"IU\\PHPCap\\" : ["tests/unit", "tests/integration"]
+			"IU\\PHPCap\\" : [
+				"tests/unit",
+				"tests/integration"
+			]
 		},
 		"files" : [
 			"tests/integration/SystemFunctions.php"
