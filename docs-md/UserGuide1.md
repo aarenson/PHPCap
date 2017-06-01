@@ -6,7 +6,7 @@ Prerequisites
   * __Your REDCap API URL.__ You need to know the URL of your REDCap's API (Application Programming Interface)
   * __REDCap Project with API Token.__ You need to have an API token for a project in REDCap. You would typically get this
     by creating a project in REDCap and then requesting an API token.
-  * __PHP 5.6+ with cURL and OpenSSL.__You need to have a computer (with Internet access) that has PHP version 5.6 or greater installed. And you need to have the following PHP modules enabled:
+  * __PHP 5.6+ with cURL and OpenSSL.__ You need to have a computer (with Internet access) that has PHP version 5.6 or greater installed. And you need to have the following PHP modules enabled:
     * cURL
     * OpenSSL
 
@@ -56,7 +56,7 @@ You should now have the following directory structure:
     composer.json
     composer.lock        
     vendor/
-        ...
+        autoload.php
         composer/
         phpcap/</pre>
      </td>
@@ -65,8 +65,10 @@ You should now have the following directory structure:
     PHPCap/
         docs/
         src/
+        ...
+        autoloader.php
         ...</pre>
-        </td>
+      </td>
     </tr>
 </table>
             
@@ -74,14 +76,31 @@ You should now have the following directory structure:
 
 Create a file __test.php__ in your project directory:
 
-    phpcap-project/
-        PHPCap/
-            docs/
-            src/
-            ...
-            autoloader.php
-            ...
-        test.php
+<table>
+    <tr><th>Composer</th><th>Git</th></tr>
+    <tr>
+      <td style="vertical-align:top">
+<pre>phpcap-project/
+    vendor/
+        composer/
+        phpcap/
+        autoload.php
+    composer.json
+    composer.lock
+    test.php</pre>        
+     </td>
+     <td style="vertical-align:top">
+<pre>phpcap-project/
+    PHPCap/
+        docs/
+        src/
+        ...
+        autoloader.php
+        ...
+    test.php</pre>
+      </td>
+    </tr>
+</table>
 
 Enter the following into the __test.php__ file, modifying the API URL and token to match those for your REDCap project:
 
