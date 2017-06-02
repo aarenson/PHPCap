@@ -12,6 +12,8 @@ PHPCap makes accessing REDCap from a PHP program easier by providing:
 REDCap is a web application for building and managing online surveys and databases. For information about REDCap, please see http://www.project-redcap.org.
 
 [![Packagist](https://img.shields.io/packagist/v/phpcap/PHPCap.svg)](https://packagist.org/packages/phpcap/phpcap)
+[![PHP 5.6+](https://img.shields.io/badge/php-%3E%3D%205.6-8892BF.svg)](https://php.net/)
+[![Apache 2 License](https://img.shields.io/packagist/l/phpcap/PHPCap.svg)](https://www.apache.org/licenses/LICENSE-2.0)
 
 Requirements
 --------------------------
