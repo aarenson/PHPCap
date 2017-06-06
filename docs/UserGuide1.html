@@ -53,7 +53,7 @@ cd phpcap-project</code></pre></div>
 <div class="description"><pre><code>composer require phpcap/phpcap</code></pre></div>
 <p>If you have <a href="https://git-scm.com/">Git</a> installed, you can use the following:</p>
 <div class="description"><pre><code>git clone https://github.com/aarenson/PHPCap </code></pre></div>
-<p>If you don't have Composer or Git installed, you can get a Zip file of PHPCap by clicking on this link:</p>
+<p>If you don't have Composer or Git installed, you can get a Zip file of PHPCap from GitHub by clicking on this link:</p>
 <p><a href="https://github.com/aarenson/PHPCap/archive/master.zip">https://github.com/aarenson/PHPCap/archive/master.zip</a></p>
 <p>Or go to this page and click on the &quot;Clone or download&quot; button, and then click on &quot;Download ZIP&quot;:</p>
 <p><a href="https://github.com/aarenson/PHPCap/">https://github.com/aarenson/PHPCap/</a></p>
@@ -67,21 +67,23 @@ cd phpcap-project</code></pre></div>
     composer.json
     composer.lock        
     vendor/
-        autoload.php
+        <b>autoload.php</b>
         composer/
         phpcap/</pre></div>
      </td>
      <td style="vertical-align:top">
 <div class="description"><pre>phpcap-project/
     PHPCap/
-        docs/
-        src/
         ...
-        autoloader.php
+        <b>autoloader.php</b>
+        ...
+        docs/
         ...</pre></div>
       </td>
     </tr>
 </table>
+<p>You will need to include the PHPCap autoloader (shown in bold above) in your code to access the PHPCap classes. And the location and name of the autoloader to use will depend on
+whether you used Composer to download PHPCap, or downloaded it from GitHub (using Git or directly).</p>
 <h3>Create your first test program.</h3>
 <p>Create a file <strong>test.php</strong> in your project directory:</p>
 <table>
@@ -89,30 +91,32 @@ cd phpcap-project</code></pre></div>
     <tr>
       <td style="vertical-align:top">
 <div class="description"><pre>phpcap-project/
-    vendor/
-        composer/
-        phpcap/
-        autoload.php
     composer.json
     composer.lock
-    test.php</pre></div>        
+    <b>test.php</b>
+    vendor/
+        autoload.php
+        composer/
+        phpcap/</pre></div>        
      </td>
      <td style="vertical-align:top">
 <div class="description"><pre>phpcap-project/
     PHPCap/
-        docs/
-        src/
         ...
         autoloader.php
         ...
-    test.php</pre></div>
+        docs/
+        ...
+    <b>test.php</b></pre></div>
       </td>
     </tr>
 </table>
 <p>Enter the following into the <strong>test.php</strong> file, modifying the API URL and token to match those for your REDCap project:</p>
 <div class="description"><pre><code class="language-php"><span class="xlang">&lt;?php</span>
 
-<span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>);
+<span class="php-comment"># Use only one of the following requires:</span>
+<span class="php-keyword1">require</span>(<span class="php-quote">'vendor/autoload.php'</span>);   <span class="php-comment"># For Composer</span>
+<span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>); <span class="php-comment"># For Git </span>
 
 <span class="php-keyword1">use</span> IU\PHPCap\RedCapProject;
 
@@ -176,19 +180,39 @@ you top-level project directory, the project creation would now be modified to t
 <span class="php-var">$project</span> = <span class="php-keyword1">new</span> RedCapProject(<span class="php-var">$apiUrl</span>, <span class="php-var">$apiToken</span>, <span class="php-var">$sslVerify</span>, <span class="php-var">$caCertificateFile</span>);
 ...</code></pre></div>
 <p>So, at this point, your project directory should look as follows:</p>
-<div class="description"><pre><code>phpcap-project/
+<table>
+    <tr><th>Composer</th><th>Git</th></tr>
+    <tr>
+      <td style="vertical-align:top">
+<div class="description"><pre>phpcap-project/
+    composer.json
+    composer.lock
+    test.php
+    <b>USERTrustRSACertificationAuthority.crt</b>
+    vendor/
+        autoload.php
+        composer/
+        phpcap/</pre></div>        
+     </td>
+     <td style="vertical-align:top">
+<div class="description"><pre>phpcap-project/
     PHPCap/
-        docs/
-        src/
         ...
         autoloader.php
         ...
+        docs/
+        ...
     test.php
-    USERTrustRSACertificationAuthority.crt</code></pre></div>
+    <b>USERTrustRSACertificationAuthority.crt</b></pre></div>
+      </td>
+    </tr>
+</table>
 <p>And your test program should look similar to the following:</p>
 <div class="description"><pre><code class="language-php"><span class="xlang">&lt;?php</span>
 
-<span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>);
+<span class="php-comment"># Use only one of the following requires:</span>
+<span class="php-keyword1">require</span>(<span class="php-quote">'vendor/autoload.php'</span>);   <span class="php-comment"># For Composer</span>
+<span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>); <span class="php-comment"># For Git </span>
 
 <span class="php-keyword1">use</span> IU\PHPCap\RedCapProject;
 
@@ -210,7 +234,9 @@ These exceptions can be checked and handled using &quot;try&quot; and &quot;catc
 to handle exceptions in the sample program, it could be modified as follows:</p>
 <div class="description"><pre><code class="language-php"><span class="xlang">&lt;?php</span>
 
-<span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>);
+<span class="php-comment"># Use only one of the following requires:</span>
+<span class="php-keyword1">require</span>(<span class="php-quote">'vendor/autoload.php'</span>);   <span class="php-comment"># For Composer</span>
+<span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>); <span class="php-comment"># For Git </span>
 
 <span class="php-keyword1">use</span> IU\PHPCap\RedCapProject;
 <span class="php-keyword1">use</span> IU\PHPCap\PhpCapException;

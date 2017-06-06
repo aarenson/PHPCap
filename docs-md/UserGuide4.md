@@ -5,17 +5,15 @@ If you need additional functionality to what is provided by PHPCap, you
 can extend it.
 
 For example, if you wanted to have a method that returns the
-field name of the record ID field in a project, you could create a class
+title of the project, you could create a class
 similar to the following that extended PHPCap's RedCapProject class:
 ```php
 class MyRedCapProject extends IU\PHPCap\RedCapProject
 {
-    public function exportRecordIdFieldName() {
-       $metadata = $this->exportMetadata();
-       # The record ID field should be the first
-       # field (field 0) in the metadata.
-       $recordIdFieldName = $metadata[0]['field_name'];
-       return $recordIdFieldName;
+    public function exportProjectTitle() {
+       $projectInfo = $this->exportProjectInfo();
+       $projectTitle = $projectInfo['project_title'];
+       return $projectTitle;
     }
 }
 ```
@@ -25,8 +23,8 @@ RedCapProject, for example:
 ```php
 ...
 $project = new MyRedCapProject($apiUrl, $apiToken);
-$recordIdFieldName = $project->exportRecordIdFieldName();
-print("Record ID field name: $recordIdFieldName\n");
+$projectTitle = $project->exportProjectTitle();
+print("Project Title: $projectTitle\n");
 
 $records = $project->exportRecords();
 ```

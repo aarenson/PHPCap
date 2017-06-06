@@ -1,11 +1,16 @@
 User Guide 3 - Exporting Records
 =============================================
 
-PHPCap provides the following 3 methods for exporting records:
+PHPCap's __RedCapProject__ class provides the following 3 methods for exporting records:
 1. __exportRecords__ - standard method for exporting records. 
 2. __exportRecordsAp__ - "array parameter" method for exporting records.
 3. __exportReports__ - method that exports the records produced by a report that
                        is defined for the project in REDCap.
+
+__Batch Processing__. The methods above return all of their records at once, but
+the method __getRecordIdBatches__ can be used with the first 2 methods above
+to export records in batches. This will cut down on the memory requirements of the export, which
+can be useful for exporting the records from very large projects.
 
 exportRecords
 ---------------------------
@@ -88,4 +93,20 @@ For example, if you had previously defined a report in REDCap that had an ID of 
 you could export the records for that report in CSV format using the following:
 ```php
 $records = $project->exportReports('18999', 'csv');
+```
+
+getRecordIdBatches
+---------------------------
+The getRecordIdBatches method retrieves batches of record IDs from a project that can then
+be used as input to the exportRecords and exportRecordsAp methods to export records in batches,
+for example:
+```php
+...
+# Get all the record IDs of the project in 10 batches
+$recordIdBatches = $project->getRecordIdBatches(10);
+foreach ($recordIdBatches as $recordIdBatch) {
+    $records = $project->exportRecordsAp(['recordIds' => $recordIdBatch]);
+    ...
+}
+...
 ```

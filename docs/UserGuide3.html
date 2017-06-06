@@ -29,13 +29,17 @@
 <div id="rightInner">
 <div id="content">
 <h1>User Guide 3 - Exporting Records</h1>
-<p>PHPCap provides the following 3 methods for exporting records:</p>
+<p>PHPCap's <strong>RedCapProject</strong> class provides the following 3 methods for exporting records:</p>
 <ol>
 <li><strong>exportRecords</strong> - standard method for exporting records. </li>
 <li><strong>exportRecordsAp</strong> - &quot;array parameter&quot; method for exporting records.</li>
 <li><strong>exportReports</strong> - method that exports the records produced by a report that
 is defined for the project in REDCap.</li>
 </ol>
+<p><strong>Batch Processing</strong>. The methods above return all of their records at once, but
+the method <strong>getRecordIdBatches</strong> can be used with the first 2 methods above
+to export records in batches. This will cut down on the memory requirements of the export, which
+can be useful for exporting the records from very large projects.</p>
 <h2>exportRecords</h2>
 <p>The exportRecords method is a standard PHP method that has 12 parameters that can
 be set to modify the records that are exported and their format.</p>
@@ -91,7 +95,19 @@ doesn't matter, so the above export could also be specified as:</p>
 for the project you are using.</p>
 <p>For example, if you had previously defined a report in REDCap that had an ID of 18999,
 you could export the records for that report in CSV format using the following:</p>
-<div class="description"><pre><code class="language-php"><span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportReports(<span class="php-quote">'18999'</span>, <span class="php-quote">'csv'</span>);</code></pre></div></div>
+<div class="description"><pre><code class="language-php"><span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportReports(<span class="php-quote">'18999'</span>, <span class="php-quote">'csv'</span>);</code></pre></div>
+<h2>getRecordIdBatches</h2>
+<p>The getRecordIdBatches method retrieves batches of record IDs from a project that can then
+be used as input to the exportRecords and exportRecordsAp methods to export records in batches,
+for example:</p>
+<div class="description"><pre><code class="language-php">...
+<span class="php-comment"># Get all the record IDs of the project in 10 batches</span>
+<span class="php-var">$recordIdBatches</span> = <span class="php-var">$project</span>-&gt;getRecordIdBatches(<span class="php-num">10</span>);
+<span class="php-keyword1">foreach</span> (<span class="php-var">$recordIdBatches</span> <span class="php-keyword1">as</span> <span class="php-var">$recordIdBatch</span>) {
+    <span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportRecordsAp([<span class="php-quote">'recordIds'</span> =&gt; <span class="php-var">$recordIdBatch</span>]);
+    ...
+}
+...</code></pre></div></div>
 <div id="footer">
 PHPCap documentation
 </div>

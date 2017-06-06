@@ -3,11 +3,39 @@ User Guide 2 - API Overview
 
 The three main classes provided by PHPCap for users are:
 
-| Class                                                                                         | Description                                              |
-| --------------------------------------------------------------------------------------------- | -------------------------------------------------------- |                                            
-| [RedCapProject](https://aarenson.github.io/PHPCap/api/class-IU.PHPCap.RedCapProject.html)     | used to retrieve data from, and modify, a REDCap project |
-| [FileUtil](https://aarenson.github.io/PHPCap/api/class-IU.PHPCap.FileUtil.html)               | used to read from, and write to, files                   |
-| [PhpCapException](https://aarenson.github.io/PHPCap/api/class-IU.PHPCap.PhpCapException.html) | exception class used by PHPCap when an error occurs      |
+<table>
+<thead>
+  <tr>
+    <th>Class</th><th>Description</th>
+  </tr>
+</thead>
+<tbody>
+  <tr>
+    <td>
+      <a href="https://aarenson.github.io/PHPCap/api/class-IU.PHPCap.RedCapProject.html">RedCapProject</a>
+    </td>
+    <td>
+      Used to retrieve data from, and modify, a project in REDCap.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://aarenson.github.io/PHPCap/api/class-IU.PHPCap.FileUtil.html">FileUtil</a> 
+    </td>
+    <td>
+      Used to read from, and write to, files.     
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <a href="https://aarenson.github.io/PHPCap/api/class-IU.PHPCap.PhpCapException.html">PhpCapException</a>
+    </td>
+    <td>
+      Exception class used by PHPCap when an error occurs. 
+    </td>
+  </tr>
+</tbody>
+</table>
  
  Here is a complete example that uses all three of these classes to export the
  records in a REDCap project to a file in CSV (Comma-Separated Values) format:
@@ -48,7 +76,8 @@ try {
  
  The require statement includes the PHPCap autoloader which loads the PHPCap classes
  that are actually used, so there is no need to require or include the individual
- PHPCap classes.
+ PHPCap classes. If you used Composer to download PHPCap, you should use its autoloader (in the
+ vendor directory) in the require statement, instead of the one contained in the PHPCap project.
  
  The use statements allow you to refer to the PHPCap classes without having to specify
  their fully qualified names. For example, if you did not have a use statement for

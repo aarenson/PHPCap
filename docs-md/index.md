@@ -1,7 +1,10 @@
 Overview
 =========================================
 
-PHPCap is a PHP API (Application Programming Interface) for REDCap.
+PHPCap is a PHP API (Application Programming Interface) for REDCap, that lets you:
+* export/import/delete data in REDCap
+* export/import/delete project information (e.g., field names and types) in REDCap
+
 
 PHPCap makes accessing REDCap from a PHP program easier by providing:
 * a high-level interface

@@ -36,7 +36,7 @@ If you have [Git](https://git-scm.com/) installed, you can use the following:
 
     git clone https://github.com/aarenson/PHPCap 
 
-If you don't have Composer or Git installed, you can get a Zip file of PHPCap by clicking on this link:
+If you don't have Composer or Git installed, you can get a Zip file of PHPCap from GitHub by clicking on this link:
 
 https://github.com/aarenson/PHPCap/archive/master.zip
 
@@ -56,21 +56,24 @@ You should now have the following directory structure:
     composer.json
     composer.lock        
     vendor/
-        autoload.php
+        <b>autoload.php</b>
         composer/
         phpcap/</pre>
      </td>
      <td style="vertical-align:top">
 <pre>phpcap-project/
     PHPCap/
-        docs/
-        src/
         ...
-        autoloader.php
+        <b>autoloader.php</b>
+        ...
+        docs/
         ...</pre>
       </td>
     </tr>
 </table>
+You will need to include the PHPCap autoloader (shown in bold above) in your code to access the PHPCap classes. And the location and name of the autoloader to use will depend on
+whether you used Composer to download PHPCap, or downloaded it from GitHub (using Git or directly).
+
             
 ### Create your first test program.
 
@@ -81,23 +84,23 @@ Create a file __test.php__ in your project directory:
     <tr>
       <td style="vertical-align:top">
 <pre>phpcap-project/
-    vendor/
-        composer/
-        phpcap/
-        autoload.php
     composer.json
     composer.lock
-    test.php</pre>        
+    <b>test.php</b>
+    vendor/
+        autoload.php
+        composer/
+        phpcap/</pre>        
      </td>
      <td style="vertical-align:top">
 <pre>phpcap-project/
     PHPCap/
-        docs/
-        src/
         ...
         autoloader.php
         ...
-    test.php</pre>
+        docs/
+        ...
+    <b>test.php</b></pre>
       </td>
     </tr>
 </table>
@@ -107,7 +110,10 @@ Enter the following into the __test.php__ file, modifying the API URL and token 
 ```php
 <?php
 
-require('PHPCap/autoloader.php');
+# Use only one of the following requires:
+require('vendor/autoload.php');   # For Composer
+require('PHPCap/autoloader.php'); # For Git 
+
 
 use IU\PHPCap\RedCapProject;
 
@@ -191,15 +197,33 @@ $project = new RedCapProject($apiUrl, $apiToken, $sslVerify, $caCertificateFile)
 
 So, at this point, your project directory should look as follows:
 
-    phpcap-project/
-        PHPCap/
-            docs/
-            src/
-            ...
-            autoloader.php
-            ...
-        test.php
-        USERTrustRSACertificationAuthority.crt
+<table>
+    <tr><th>Composer</th><th>Git</th></tr>
+    <tr>
+      <td style="vertical-align:top">
+<pre>phpcap-project/
+    composer.json
+    composer.lock
+    test.php
+    <b>USERTrustRSACertificationAuthority.crt</b>
+    vendor/
+        autoload.php
+        composer/
+        phpcap/</pre>        
+     </td>
+     <td style="vertical-align:top">
+<pre>phpcap-project/
+    PHPCap/
+        ...
+        autoloader.php
+        ...
+        docs/
+        ...
+    test.php
+    <b>USERTrustRSACertificationAuthority.crt</b></pre>
+      </td>
+    </tr>
+</table>
         
 And your test program should look similar to the following:
 
@@ -207,7 +231,9 @@ And your test program should look similar to the following:
 ```php
 <?php
 
-require('PHPCap/autoloader.php');
+# Use only one of the following requires:
+require('vendor/autoload.php');   # For Composer
+require('PHPCap/autoloader.php'); # For Git 
 
 use IU\PHPCap\RedCapProject;
 
@@ -234,7 +260,9 @@ to handle exceptions in the sample program, it could be modified as follows:
 ```php
 <?php
 
-require('PHPCap/autoloader.php');
+# Use only one of the following requires:
+require('vendor/autoload.php');   # For Composer
+require('PHPCap/autoloader.php'); # For Git 
 
 use IU\PHPCap\RedCapProject;
 use IU\PHPCap\PhpCapException;
