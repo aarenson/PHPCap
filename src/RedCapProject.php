@@ -69,11 +69,11 @@ class RedCapProject
                 ." It should only contain numbers and the letters A, B, C, D, E and F.",
                 PhpCapException::INVALID_ARGUMENT
             );
-        } elseif (strlen($apiToken) != 32 && strlen($apiToken) != 64) {
+        } elseif (strlen($apiToken) != 32) {    # Note: super tokens are not valid for project methods
             throw new PhpCapException(
                 "The REDCap API token has an invalid format."
                 . " It has a length of ".strlen($apiToken)." characters, but should have a length of"
-                . " 32 or 64 characters (if a super token is being used).",
+                . " 32.",
                 PhpCapException::INVALID_ARGUMENT
             );
         }
@@ -174,9 +174,9 @@ class RedCapProject
         #---------------------------------------
         # Process arguments
         #---------------------------------------
-        $data['data'] = $this->processImportDataArgument($arms, 'arms', $format);
         $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['format']   = $this->processFormatArgument($format, $legalFormats);
+        $data['data']     = $this->processImportDataArgument($arms, 'arms', $format);
         $data['override'] = $this->processOverrideArgument($override);
         
         $result = $this->connection->callWithArray($data);
@@ -391,6 +391,92 @@ class RedCapProject
         return $fieldNames;
     }
 
+    public function exportSurveyLink($recordId, $form, $event = null, $repeatInstance = null)
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'surveyLink',
+                'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------------
+        # Process arguments
+        #----------------------------------------------
+        $data['record']          = $this->processRecordIdArgument($recordId, $required = true);
+        $data['instrument']      = $this->ProcessFormArgument($form, $required = true);
+        $data['event']           = $this->ProcessEventArgument($event);
+        $data['repeat_instance'] = $this->ProcessRepeatInstanceArgument($repeatInstance);
+        
+        $surveyLink = $this->connection->callWithArray($data);
+        $surveyLink = $this->processExportResult($surveyLink, 'string');
+        
+        return $surveyLink;
+    }
+    
+    
+    public function exportSurveyParticipants($form, $format = 'php', $event = null)
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'participantList',
+                'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------------
+        # Process arguments
+        #----------------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format']     = $this->processFormatArgument($format, $legalFormats);
+        $data['instrument'] = $this->ProcessFormArgument($form, $required = true);
+        $data['event']      = $this->ProcessEventArgument($event);
+        
+        $surveyParticipants = $this->connection->callWithArray($data);
+        $surveyParticipants = $this->processExportResult($surveyParticipants, 'string');
+        
+        return $surveyParticipants;
+    }
+    
+    public function exportSurveyQueueLink($recordId)
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'surveyQueueLink',
+                'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------------
+        # Process arguments
+        #----------------------------------------------
+        $data['record'] = $this->processRecordIdArgument($recordId, $required = true);
+
+        $surveyQueueLink = $this->connection->callWithArray($data);
+        $surveyQueueLink = $this->processExportResult($surveyQueueLink, 'string');
+        
+        return $surveyQueueLink;
+    }
+    
+    public function exportSurveyReturnCode($recordId, $form, $event = null, $repeatInstance = null)
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'surveyReturnCode',
+                'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------------
+        # Process arguments
+        #----------------------------------------------
+        $data['record']          = $this->processRecordIdArgument($recordId, $required = true);
+        $data['instrument']      = $this->ProcessFormArgument($form, $required = true);
+        $data['event']           = $this->ProcessEventArgument($event);
+        $data['repeat_instance'] = $this->ProcessRepeatInstanceArgument($repeatInstance);
+        
+        $surveyReturnCode = $this->connection->callWithArray($data);
+        $surveyReturnCode = $this->processExportResult($surveyReturnCode, 'string');
+        
+        return $surveyReturnCode;
+    }
+    
     
     /**
      * Exports the specified file.
@@ -913,6 +999,60 @@ class RedCapProject
         return (integer) $result;
     }
     
+    public function exportProjectXml(
+        $returnMetadataOnly = false,
+        $recordIds = null,
+        $fields = null,
+        $events = null,
+        $filterLogic = null,
+        $exportSurveyFields = false,
+        $exportDataAccessGroups = false,
+        $exportFiles = false
+    ) {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'project_xml',
+                'returnFormat' => 'json'
+        );
+        
+        #---------------------------------------------
+        # Process the arguments
+        #---------------------------------------------
+        $data['returnMetadataOnly'] = $this->processReturnMetadataOnlyArgument($returnMetadataOnly);
+
+        $data['records']     = $this->processRecordIdsArgument($recordIds);
+        $data['fields']      = $this->processFieldsArgument($fields);
+        $data['events']      = $this->processEventsArgument($events);
+        $data['filterLogic'] = $this->processFilterLogicArgument($filterLogic);
+        
+        $data['exportSurveyFields']     = $this->processExportSurveyFieldsArgument($exportSurveyFields);
+        $data['exportDataAccessGroups'] = $this->processExportDataAccessGroupsArgument($exportDataAccessGroups);
+        $data['exportFiles']            = $this->processExportFilesArgument($exportFiles);
+        
+        #---------------------------------------
+        # Get the Project XML and process it
+        #---------------------------------------
+        $projectXml = $this->connection->callWithArray($data);
+        $projectXml = $this->processExportResult($projectXml, $format = 'xml');
+        
+        return $projectXml;
+    }
+    
+    
+    public function generateNextRecordName()
+    {
+        $data = array(
+                'token'        => $this->apiToken,
+                'content'      => 'generateNextRecordName',
+                'returnFormat' => 'json'
+        );
+        
+        $nextRecordName = $this->connection->callWithArray($data);
+        $nextRecordName = $this->processExportResult($nextRecordName, $format = 'number');
+        
+        return $nextRecordName;
+    }
+    
     
     /**
      * Exports the specified records.
@@ -1009,7 +1149,6 @@ class RedCapProject
         $data = array(
                 'token'        => $this->apiToken,
                 'content'      => 'record',
-                'format'       => 'json',
                 'returnFormat' => 'json'
         );
         
@@ -1310,7 +1449,9 @@ class RedCapProject
                 'token' => $this->apiToken,
                 'content' => 'version'
         );
+        
         $redcapVersion = $this->connection->callWithArray($data);
+        $recapVersion = $this->processExportResult($redcapVersion, 'string');
         
         return $redcapVersion;
     }
@@ -1387,6 +1528,50 @@ class RedCapProject
         return $records;
     }
 
+    public function exportUsers($format = 'php')
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'user',
+                'returnFormat' => 'json'
+        );
+        
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        
+        #---------------------------------------------------
+        # Get and process users
+        #---------------------------------------------------
+        $users = $this->connection->callWithArray($data);
+        $users = $this->processExportResult($users, $format);
+        
+        return $users;
+    }
+    
+    
+    public function importUsers($users, $format = 'php')
+    {
+        $data = array(
+            'token' => $this->apiToken,
+            'content' => 'user',
+            'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------------------
+        # Process arguments
+        #----------------------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format'] = $this->processFormatArgument($format, $legalFormats);
+        $data['data']   = $this->processImportDataArgument($users, 'users', $format);
+        
+        #---------------------------------------------------
+        # Get and process users
+        #---------------------------------------------------
+        $result = $this->connection->callWithArray($data);
+        $this->processNonExportResult($result);
+        
+        return (integer) $result;
+    }
     
     /**
      * Gets an array of record ID batches.
@@ -1525,6 +1710,15 @@ class RedCapProject
     {
         return $this->connection;
     }
+    
+    
+    //public function setConnection($connection)
+    //{
+    //    if (isset($this->connection)) {
+    //        unset($this->connection);
+    //    }
+    //    $this->connection = $connection;
+    //}
 
     
     protected function processAllRecordsArgument($allRecords)
@@ -1720,6 +1914,21 @@ class RedCapProject
         return $exportDataAccessGroups;
     }
     
+    protected function processExportFilesArgument($exportFiles)
+    {
+        if ($exportFiles== null) {
+            $exportFiles= false;
+        } else {
+            if (gettype($exportFiles) !== 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for exportFiles. It should be a boolean (true or false),'
+                    .' but has type: '.gettype($exportFiles).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $exportFiles;
+    }
     
     /**
      * Processes an export result from the REDCap API.
@@ -1880,9 +2089,15 @@ class RedCapProject
     }
     
     
-    protected function processFormArgument($form)
+    protected function processFormArgument($form, $required = false)
     {
         if (!isset($form)) {
+            if ($required === true) {
+                throw new PhpCapException(
+                    'The form argument was not set.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
             $form = '';
         } elseif (!is_string($form)) {
             throw new PhpCapException(
@@ -2162,6 +2377,22 @@ class RedCapProject
         }
     
         return $returnContent;
+    }
+    
+    protected function processReturnMetadataOnlyArgument($returnMetadataOnly)
+    {
+        if ($returnMetadataOnly== null) {
+            $returnMetadataOnly= false;
+        } else {
+            if (gettype($returnMetadataOnly) !== 'boolean') {
+                throw new PhpCapException(
+                    'Invalid type for returnMetadataOnly. It should be a boolean (true or false),'
+                    .' but has type: '.gettype($returnMetadataOnly).'.',
+                    PhpCapException::INVALID_ARGUMENT
+                );
+            }
+        }
+        return $returnMetadataOnly;
     }
     
     protected function processTypeArgument($type)

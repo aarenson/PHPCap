@@ -105,7 +105,7 @@ class RedCapApiConnection
         $errno = 0;
         $response = '';
         
-        // Post speficied data (and do NOT save this in the options array)
+        // Post specified data (and do NOT save this in the options array)
         curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, $data);
         $response = curl_exec($this->curlHandle);
         
