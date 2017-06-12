@@ -61,4 +61,64 @@ class ProjectXmlTest extends TestCase
         
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
+    
+    public function testExportProjectXmlWithFiles()
+    {
+        $file = __DIR__.'/../data/import-file.txt';
+        $recordId = '1001';
+        $field = 'patient_document';
+        $event = 'enrollment_arm_1';
+            
+        # Import a file to make sure there is a at least one file.
+        self::$longitudinalDataProject->importFile($file, $recordId, $field, $event);
+
+        $recordIds = [$recordId];
+        $projectXml = self::$longitudinalDataProject->exportProjectXml(
+            $returnMetadataOnly = false,
+            $recordIds = $recordIds
+        );
+        $projectXmlWithFiles = self::$longitudinalDataProject->exportProjectXml(
+            $returnMetadataOnly = false,
+            $recordIds = $recordIds,
+            $fields = null,
+            $events = null,
+            $filterLogic = null,
+            $exportSurveyFields = false,
+            $exportDataAccessGroups = false,
+            $exportFiles = true
+        );
+        
+        $this->assertGreaterThan(
+            strlen($projectXml),
+            strlen($projectXmlWithFiles),
+            'Xml with files bigger check.'
+        );
+
+        
+        # Delete file to clean up
+        self::$longitudinalDataProject->deleteFile($recordId, $field, $event);
+    }
+    
+    public function testExportProjectXmlWithNonBooleanExportFiles()
+    {
+        $exceptionCaught = false;
+        try {
+            $projectXmlWithFiles = self::$longitudinalDataProject->exportProjectXml(
+                $returnMetadataOnly = false,
+                $recordIds = null,
+                $fields = null,
+                $events = null,
+                $filterLogic = null,
+                $exportSurveyFields = false,
+                $exportDataAccessGroups = false,
+                $exportFiles = 1     # Invalid, non-boolean value
+            );
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+        }
+        
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
 }
