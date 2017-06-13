@@ -431,7 +431,7 @@ class RedCapProject
         $data['event']      = $this->ProcessEventArgument($event);
         
         $surveyParticipants = $this->connection->callWithArray($data);
-        $surveyParticipants = $this->processExportResult($surveyParticipants, 'string');
+        $surveyParticipants = $this->processExportResult($surveyParticipants, $format);
         
         return $surveyParticipants;
     }

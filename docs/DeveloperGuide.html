@@ -80,41 +80,93 @@ for your PHPCap project when you run the &quot;composer install&quot; command.</
 <div class="description"><pre><code>    ./vendor/bin/phpunit --testsuite unit</code></pre></div>
 <p>If this succeeds, you should see an &quot;OK&quot; message with the number of tests and assertions that were run,
 and you should see no errors of failures.</p>
-<p>To run <em>all</em> the automated tests, setup and configuration needs to be completed:</p>
+<p>To run <em>all</em> the automated tests, setup steps needs to be completed.</p>
+<h4>Setup for Non-Optional Integration Tests</h4>
+<p>Running all the automated tests, or all the integration tests, will fail unless the
+following setup steps are completed:</p>
 <ol>
 <li>Log in to your REDCap site.</li>
 <li>Create an empty project in REDCap.</li>
-<li>Create a project in REDCap for each of the test REDCap project files in directory <strong>tests/projects/</strong>, and import each test project file into the REDCap project created for it.</li>
-<li>In REDCap, request API tokens for the empty project and the projects imported in the steps above.</li>
+<li>Create a project in REDCap for the &quot;Basic Demography&quot; and &quot;Longitudinal Data&quot; test projects in directory <strong>tests/projects/</strong>, and import each of those test project files into the REDCap project created for it.</li>
+<li>In REDCap, request API tokens for the empty project and the projects imported in the step above.</li>
 <li>Once you have your tokens, copy the &quot;config-example.ini&quot; file to a file
 named &quot;config.ini&quot; and then set the URL in that file to be the
 URL for the API of your REDCap instance, and set the tokens to be
-the tokens requested in the previous step.
-<ul>
-<li>To run tests involving the CA certificate file, you will need to set up
+the tokens requested in the previous step.</li>
+</ol>
+<h4>Setup for Optional CA Certificate File Integration Tests</h4>
+<p>To run the optional tests involving the CA certificate file, you will need to set up
 a valid CA certificate file, and set the <strong>ca.certificate.file</strong> property
 in the <strong>config.ini</strong> file to the path to that file. If this property
 isn't set, the tests for this will be skipped.
 See <a href="CACertificateFile.html">CA Certificate File Info</a> for more information on how to
-do this.</li>
-<li>To run all of the report tests, you will need to manually set up a report for the
+do this.</p>
+<h4>Setup for Optional Report Integration Tests</h4>
+<p>To run all of the optional report tests, you will need to manually set up a report for the
 longitudinal data project and then set the
 <strong>longitudinal.data.report.id</strong> property in your <strong>tests/config.ini</strong> file
 to the ID of the report. If the ID property is not set, then the tests
 that use the report will not be run. You need to set up an &quot;Exercise&quot; report
-as follows:
+as follows:</p>
 <ul>
 <li>Include these fields in this order: study_id, age, ethnicity, race, sex, gym, aerobics</li>
 <li>Filter (only) by the following events: &quot;Enrollment (Arm 1: Drug A)&quot;, &quot;Enrollment (Arm 2: Drug B)&quot; </li>
-</ul></li>
-</ul></li>
+</ul>
+<h4>Setup for Optional Survey Integration Tests</h4>
+<p>To run the survey tests, use the following steps:</p>
+<ol>
+<li>In REDCap, create a project for the &quot;Repeatable Survey&quot; project test file in the <strong>tests/projects</strong> directory, and import the project test file into that project.</li>
+<li>In the &quot;Project Setup&quot; tab for the project created in the step above, click on the <strong>Enable</strong> button for &quot;User surveys for this project?&quot;</li>
+<li>In the &quot;Project Setup&quot; tab, click on the <strong>Online Designer</strong> button</li>
+<li>In the &quot;Online Designer&quot; tab, click on the <strong>Enable</strong> button for instrument &quot;Basic Information&quot;, and then:
+<ol>
+<li>Select &quot;Yes&quot; for &quot;Allow 'Save &amp; Return Later' option for respondents?&quot;</li>
+<li>Click on the <strong>Save Changes</strong> button</li>
+</ol></li>
+<li>In the &quot;Online Designer&quot; tab, click on the <strong>Enable</strong> button for instrument &quot;Weight&quot;, and then:
+<ol>
+<li>Select &quot;Yes&quot; for &quot;Allow 'Save &amp; Return Later' option for respondents?&quot;</li>
+<li>Check the box for &quot;(Optional) Allow respondents to repeat the survey&quot;</li>
+<li>Click on the <strong>Save Changes</strong> button</li>
+</ol></li>
+<li>In the &quot;Online Designer&quot; tab, click on the &quot;Survey Queue&quot; button</li>
+<li>In the &quot;Set up Survey Queue&quot; dialog:
+<ol>
+<li>Click on the <strong>Activate</strong> button for &quot;Weight&quot;</li>
+<li>Check &quot;When the following survey is completed:&quot;</li>
+<li>In the selection below &quot;When the following survey is completed:&quot;, select &quot;Basic Information&quot;</li>
+<li>Click on the <strong>Save</strong> button</li>
+</ol></li>
+<li>Click on the &quot;Manage Survey Participants&quot; link on the left</li>
+<li>In the &quot;Manage Survey Participants&quot; panel, go to the &quot;Participant List&quot; tab</li>
+<li>Click on the <strong>Add participants</strong> button</li>
+<li>Add an e-mail that you have access to and click on the <strong>Add participants</strong> button</li>
+<li>Click on the <strong>Enable</strong> button for participant identifiers, and confirm this action</li>
+<li>Enter an identifier for the participant for the e-mail that you entered above and then click on the <strong>Save</strong> button</li>
+<li>Click on the <strong>Compose Survey Invitations</strong> button</li>
+<li>In the &quot;Send a Survey Invitation to Participants&quot; dialog:
+<ol>
+<li>Make sure that &quot;Immediately&quot; is selected for when the e-mail should be sent</li>
+<li>Make sure that the participant you create above is selected</li>
+<li>Click on the <strong>Send Invitations</strong> button</li>
+</ol></li>
+<li>Open the e-mail that should have been sent (you may need to wait a few minutes to receive it)</li>
+<li>Click on the &quot;Basic Information&quot; link in the e-mail and fill out the survey, and then at least one &quot;Weight&quot; survey</li>
+<li>In your project window in REDCap, click on the &quot;API&quot; link on the left and request (or create if you are an admin) an API token with at least API Export rights</li>
+<li>
+<p>Once you have your API token, use it and the e-mail and identifier entered earlier to set the following properties in the config.ini file in the tests directory:</p>
+<div class="description"><pre><code>        repeatable.survey.api.token=
+        survey.participant.email=
+        survey.participant.identifier=</code></pre></div>
+</li>
 </ol>
 <p>Note: the .gitignore file in PHPCap is set to ignore the <strong>tests/config.ini</strong> file, so that your
 personal API tokens will not be committed to Git. </p>
+<h4>Running the Automated Tests</h4>
 <p>To run the automated tests, execute the following command in the top-level directory of your downloaded version of PHPCap:</p>
 <div class="description"><pre><code>./vendor/bin/phpunit</code></pre></div>
 <p>Note: PHPUnit uses the <strong>phpunit.xml</strong> configuration file in the root directory of PHPCap.</p>
-<h4>Running Selected Tests</h4>
+<h5>Running Selected Tests</h5>
 <p>You can run just the integration tests using:</p>
 <div class="description"><pre><code>./vendor/bin/phpunit --testsuite integration</code></pre></div>
 <p>You can run a specific test class by specifying the path to its file, for example:</p>
@@ -125,7 +177,7 @@ would run only tests methods that contain 'Unreadable' in their name:</p>
 <p>And you can combine class files and filters together. For example, the following command would only run
 methods with 'Curl' in their name that belong to the PhpCapExceptionTest class:</p>
 <div class="description"><pre><code>./vendor/bin/phpunit tests/unit/PhpCapExceptionTest.php --filter 'Curl'</code></pre></div>
-<h4>Code Coverage</h4>
+<h5>Code Coverage</h5>
 <p>If XDebug has been installed (and PHP is configured to use it), code coverage for the automated tests can
 be calculated by running the following command in the root directory of PHPCap:</p>
 <div class="description"><pre><code>./vendor/bin/phpunit --coverage-html tests/coverage</code></pre></div>

@@ -12,7 +12,7 @@
       <file>tests/integration/BatchesTest.php</file>
       <file>tests/integration/ConnectionsTest.php</file>
       <file>tests/integration/EventsTest.php</file>
-      <file>tests/integration/FieldNames.php</file>
+      <file>tests/integration/FieldNamesTest.php</file>
       <file>tests/integration/FilesTest.php</file>
       <file>tests/integration/ImportAndDeleteMetadataTest.php</file>
       <file>tests/integration/InstrumentEventMappingsTest.php</file>
@@ -26,6 +26,7 @@
       <file>tests/integration/RecordsTest.php</file>
       <file>tests/integration/RedCapVersionTest.php</file>
       <file>tests/integration/ReportsTest.php</file>
+      <file>tests/integration/SurveyTest.php</file>
       <file>tests/integration/UsersTest.php</file>
     </testsuite>
   </testsuites>
