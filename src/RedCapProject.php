@@ -391,100 +391,13 @@ class RedCapProject
         return $fieldNames;
     }
 
-    public function exportSurveyLink($recordId, $form, $event = null, $repeatInstance = null)
-    {
-        $data = array(
-                'token' => $this->apiToken,
-                'content' => 'surveyLink',
-                'returnFormat' => 'json'
-        );
-        
-        #----------------------------------------------
-        # Process arguments
-        #----------------------------------------------
-        $data['record']          = $this->processRecordIdArgument($recordId, $required = true);
-        $data['instrument']      = $this->ProcessFormArgument($form, $required = true);
-        $data['event']           = $this->ProcessEventArgument($event);
-        $data['repeat_instance'] = $this->ProcessRepeatInstanceArgument($repeatInstance);
-        
-        $surveyLink = $this->connection->callWithArray($data);
-        $surveyLink = $this->processExportResult($surveyLink, 'string');
-        
-        return $surveyLink;
-    }
-    
-    
-    public function exportSurveyParticipants($form, $format = 'php', $event = null)
-    {
-        $data = array(
-                'token' => $this->apiToken,
-                'content' => 'participantList',
-                'returnFormat' => 'json'
-        );
-        
-        #----------------------------------------------
-        # Process arguments
-        #----------------------------------------------
-        $legalFormats = array('csv', 'json', 'php', 'xml');
-        $data['format']     = $this->processFormatArgument($format, $legalFormats);
-        $data['instrument'] = $this->ProcessFormArgument($form, $required = true);
-        $data['event']      = $this->ProcessEventArgument($event);
-        
-        $surveyParticipants = $this->connection->callWithArray($data);
-        $surveyParticipants = $this->processExportResult($surveyParticipants, $format);
-        
-        return $surveyParticipants;
-    }
-    
-    public function exportSurveyQueueLink($recordId)
-    {
-        $data = array(
-                'token' => $this->apiToken,
-                'content' => 'surveyQueueLink',
-                'returnFormat' => 'json'
-        );
-        
-        #----------------------------------------------
-        # Process arguments
-        #----------------------------------------------
-        $data['record'] = $this->processRecordIdArgument($recordId, $required = true);
-
-        $surveyQueueLink = $this->connection->callWithArray($data);
-        $surveyQueueLink = $this->processExportResult($surveyQueueLink, 'string');
-        
-        return $surveyQueueLink;
-    }
-    
-    public function exportSurveyReturnCode($recordId, $form, $event = null, $repeatInstance = null)
-    {
-        $data = array(
-                'token' => $this->apiToken,
-                'content' => 'surveyReturnCode',
-                'returnFormat' => 'json'
-        );
-        
-        #----------------------------------------------
-        # Process arguments
-        #----------------------------------------------
-        $data['record']          = $this->processRecordIdArgument($recordId, $required = true);
-        $data['instrument']      = $this->ProcessFormArgument($form, $required = true);
-        $data['event']           = $this->ProcessEventArgument($event);
-        $data['repeat_instance'] = $this->ProcessRepeatInstanceArgument($repeatInstance);
-        
-        $surveyReturnCode = $this->connection->callWithArray($data);
-        $surveyReturnCode = $this->processExportResult($surveyReturnCode, 'string');
-        
-        return $surveyReturnCode;
-    }
-    
-    
     /**
      * Exports the specified file.
      *
      * @param string $recordId the record ID for the file to be exported.
      * @param string $field the name of the field containing the file to export.
      * @param string $event name of event for file export (for longitudinal studies).
-     * @param string $repeatInstance
+     * @param integer $repeatInstance
      *
      * @throws PhpCapException if an error occurs.
      *
@@ -537,7 +450,7 @@ class RedCapProject
      * @param string $field the field of the record to import the file into.
      * @param string $event the event of the record to import the file into
      *     (only for longitudinal studies).
-     * @param string $repeatInstance the repeat instance of the record to import
+     * @param integer $repeatInstance the repeat instance of the record to import
      *     the file into (only for studies that have repeating events
      *     and/or instruments).
      *
@@ -572,7 +485,8 @@ class RedCapProject
         
         $this->processNonExportResult($result);
     }
-    
+
+
     /**
      * Deletes the specified file.
      *
@@ -580,7 +494,7 @@ class RedCapProject
      * @param string $field the field name of the file to delete.
      * @param string $event the event of the file to delete
      *     (only for longitudinal studies).
-     * @param string $repeatInstance repeat instance of the file to delete
+     * @param integer $repeatInstance repeat instance of the file to delete
      *     (only for studies that have repeating events
      *     and/or instruments).
      */
@@ -1528,6 +1442,132 @@ class RedCapProject
         return $records;
     }
 
+    
+    /**
+     * Exports the survey link for the specified inputs.
+     *
+     * @param string $recordId the record ID for the link.
+     * @param string $form the form for the link.
+     * @param string $event event for link (for longitudinal studies only).
+     * @param integer $repeatInstance for repeatable forms, the instance of the form
+     *     to return a link for.
+     *
+     * @return string survey link.
+     */
+    public function exportSurveyLink($recordId, $form, $event = null, $repeatInstance = null)
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'surveyLink',
+                'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------------
+        # Process arguments
+        #----------------------------------------------
+        $data['record']          = $this->processRecordIdArgument($recordId, $required = true);
+        $data['instrument']      = $this->ProcessFormArgument($form, $required = true);
+        $data['event']           = $this->ProcessEventArgument($event);
+        $data['repeat_instance'] = $this->ProcessRepeatInstanceArgument($repeatInstance);
+        
+        $surveyLink = $this->connection->callWithArray($data);
+        $surveyLink = $this->processExportResult($surveyLink, 'string');
+        
+        return $surveyLink;
+    }
+    
+    /**
+     * Exports the list of survey participants for the specified form and, for
+     * longitudinal studies, event.
+     *
+     * @param string $form the form for which the participants should be exported.
+     * @param string $format output data format.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * @param string $event the event name for which survey participants should be
+     *     exported.
+     *
+     * @return mixed for the 'php' format, an array of arrays of participant
+     *     information is returned, for all other formats, the data is returned
+     *     in the specified format as a string.
+     */
+    public function exportSurveyParticipants($form, $format = 'php', $event = null)
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'participantList',
+                'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------------
+        # Process arguments
+        #----------------------------------------------
+        $legalFormats = array('csv', 'json', 'php', 'xml');
+        $data['format']     = $this->processFormatArgument($format, $legalFormats);
+        $data['instrument'] = $this->ProcessFormArgument($form, $required = true);
+        $data['event']      = $this->ProcessEventArgument($event);
+        
+        $surveyParticipants = $this->connection->callWithArray($data);
+        $surveyParticipants = $this->processExportResult($surveyParticipants, $format);
+        
+        return $surveyParticipants;
+    }
+    
+    /**
+     * Exports the survey queue link for the specified record ID.
+     *
+     * @param string $recordId the record ID of the survey queue link that should be returned.
+     *
+     * @return string survey queue link.
+     */
+    public function exportSurveyQueueLink($recordId)
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'surveyQueueLink',
+                'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------------
+        # Process arguments
+        #----------------------------------------------
+        $data['record'] = $this->processRecordIdArgument($recordId, $required = true);
+        
+        $surveyQueueLink = $this->connection->callWithArray($data);
+        $surveyQueueLink = $this->processExportResult($surveyQueueLink, 'string');
+        
+        return $surveyQueueLink;
+    }
+    
+    
+    public function exportSurveyReturnCode($recordId, $form, $event = null, $repeatInstance = null)
+    {
+        $data = array(
+                'token' => $this->apiToken,
+                'content' => 'surveyReturnCode',
+                'returnFormat' => 'json'
+        );
+        
+        #----------------------------------------------
+        # Process arguments
+        #----------------------------------------------
+        $data['record']          = $this->processRecordIdArgument($recordId, $required = true);
+        $data['instrument']      = $this->ProcessFormArgument($form, $required = true);
+        $data['event']           = $this->ProcessEventArgument($event);
+        $data['repeat_instance'] = $this->ProcessRepeatInstanceArgument($repeatInstance);
+        
+        $surveyReturnCode = $this->connection->callWithArray($data);
+        $surveyReturnCode = $this->processExportResult($surveyReturnCode, 'string');
+        
+        return $surveyReturnCode;
+    }
+    
+    
+    
     public function exportUsers($format = 'php')
     {
         $data = array(
@@ -2328,9 +2368,10 @@ class RedCapProject
     {
         if (!isset($repeatInstance)) {
             ; // Might be OK
-        } elseif (!is_string($repeatInstance) && !is_int($repeatInstance)) {
+        //} elseif (!is_string($repeatInstance) && !is_int($repeatInstance)) {
+        } elseif (!is_int($repeatInstance)) {
             $message = 'The repeat instance has type "'.gettype($repeatInstance).
-            '", but it should be a string or integer.';
+            '", but it should be an integer.';
             throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
         }
         
