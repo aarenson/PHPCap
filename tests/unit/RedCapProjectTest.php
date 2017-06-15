@@ -18,7 +18,11 @@ class RedCapProjectTest extends TestCase
             $project = new RedCapProject(123, '12345678901234567890123456789012');
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode(), 'Exception code check.');
+            $this->assertEquals(
+                ErrorHandlerInterface::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'Exception code check.'
+            );
             $this->assertContains('integer', $exception->getMessage(), 'Message content check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -36,7 +40,7 @@ class RedCapProjectTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
-                PhpCapException::INVALID_ARGUMENT,
+                ErrorHandlerInterface::INVALID_ARGUMENT,
                 $exception->getCode(),
                 'Null API token exception code check.'
             );

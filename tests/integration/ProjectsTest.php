@@ -58,7 +58,7 @@ class ProjectsTest extends TestCase
             $project = new RedCapProject(null, self::$config['basic.demography.api.token']);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode());
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $exception->getCode());
         }
         $this->assertTrue($exceptionCaught, 'Null API URL exception caught.');
     }
@@ -74,7 +74,7 @@ class ProjectsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
-                PhpCapException::INVALID_ARGUMENT,
+                ErrorHandlerInterface::INVALID_ARGUMENT,
                 $exception->getCode(),
                 'API token with wrong type.'
             );
@@ -93,7 +93,7 @@ class ProjectsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
-                PhpCapException::INVALID_ARGUMENT,
+                ErrorHandlerInterface::INVALID_ARGUMENT,
                 $exception->getCode(),
                 'API token with invalid character exception code check.'
             );
@@ -112,7 +112,7 @@ class ProjectsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
-                PhpCapException::INVALID_ARGUMENT,
+                ErrorHandlerInterface::INVALID_ARGUMENT,
                 $exception->getCode(),
                 'API token with incorrect length exception code check.'
             );
@@ -131,7 +131,7 @@ class ProjectsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
-                PhpCapException::INVALID_ARGUMENT,
+                ErrorHandlerInterface::INVALID_ARGUMENT,
                 $exception->getCode(),
                 'SSL verify with wrong type exception code check.'
             );
@@ -150,7 +150,7 @@ class ProjectsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
-                PhpCapException::INVALID_ARGUMENT,
+                ErrorHandlerInterface::INVALID_ARGUMENT,
                 $exception->getCode(),
                 'CA certificate file with wrong type exception code check.'
             );

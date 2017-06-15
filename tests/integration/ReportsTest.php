@@ -95,7 +95,7 @@ class ReportsTest extends TestCase
             $result = self::$longitudinalDataProject->exportReports($reportId = null);
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Invalid argument check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -109,7 +109,7 @@ class ReportsTest extends TestCase
             $result = self::$longitudinalDataProject->exportReports($reportId = true);
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Invalid argument check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -123,7 +123,7 @@ class ReportsTest extends TestCase
             $result = self::$longitudinalDataProject->exportReports($reportId = 'abc');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Invalid argument check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -137,7 +137,7 @@ class ReportsTest extends TestCase
             $result = self::$longitudinalDataProject->exportReports($reportId = -100);
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Invalid argument check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');

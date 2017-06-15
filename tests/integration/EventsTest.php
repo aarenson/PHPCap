@@ -45,7 +45,11 @@ class EventsTest extends TestCase
             $result = self::$longitudinalDataProject->exportEvents($format = 'txt');
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode(), 'Invalid format argument.');
+            $this->assertEquals(
+                ErrorHandlerInterface::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'Invalid format argument.'
+            );
         }
         $this->assertTrue($exceptionCaught, 'Invalid format exception caught.');
 
@@ -56,7 +60,7 @@ class EventsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
-                PhpCapException::INVALID_ARGUMENT,
+                ErrorHandlerInterface::INVALID_ARGUMENT,
                 $exception->getCode(),
                 'Invalid format type argument.'
             );

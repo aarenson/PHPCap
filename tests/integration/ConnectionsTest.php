@@ -67,7 +67,7 @@ class ConnectionsTest extends TestCase
             $caughtException = true;
             $this->assertEquals(
                 $exception->getCode(),
-                PhpCapException::CA_CERTIFICATE_FILE_NOT_FOUND,
+                ErrorHandlerInterface::CA_CERTIFICATE_FILE_NOT_FOUND,
                 'CA cert file not found.'
             );
         }
@@ -85,7 +85,7 @@ class ConnectionsTest extends TestCase
             $caughtException = true;
             $this->assertEquals(
                 $exception->getCode(),
-                PhpCapException::CA_CERTIFICATE_FILE_UNREADABLE,
+                ErrorHandlerInterface::CA_CERTIFICATE_FILE_UNREADABLE,
                 'CA cert file is unreadable.'
             );
         }
@@ -135,8 +135,8 @@ class ConnectionsTest extends TestCase
             $callInfo = self::$apiConnection->getCallInfo();
         } catch (PHPCapException $exception) {
             $exceptionCaught = true;
-            $this->assertEquals($exception->getCode(), PhpCapException::CURL_ERROR);
-            $this->assertEquals($exception->getCurlErrorNumber(), SystemFunctions::$curlErrorNumber);
+            $this->assertEquals($exception->getCode(), ErrorHandlerInterface::CONNECTION_ERROR);
+            $this->assertEquals($exception->getConnectionErrorNumber(), SystemFunctions::$curlErrorNumber);
             $this->assertEquals($exception->getMessage(), SystemFunctions::$curlErrorMessage);
         }
         $this->assertTrue($exceptionCaught);
@@ -151,7 +151,7 @@ class ConnectionsTest extends TestCase
             self::$apiConnection->call(123);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
-            $this->assertEquals($exception->getCode(), PhpCapException::INVALID_ARGUMENT);
+            $this->assertEquals($exception->getCode(), ErrorHandlerInterface::INVALID_ARGUMENT);
         }
         $this->assertTrue($exceptionCaught);
     }
@@ -177,8 +177,8 @@ class ConnectionsTest extends TestCase
             $result = self::$apiConnection->call($callData);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
-            $this->assertEquals($exception->getCode(), PhpCapException::CURL_ERROR);
-            $this->assertEquals($exception->getCurlErrorNumber(), SystemFunctions::$curlErrorNumber);
+            $this->assertEquals($exception->getCode(), ErrorHandlerInterface::CONNECTION_ERROR);
+            $this->assertEquals($exception->getConnectionErrorNumber(), SystemFunctions::$curlErrorNumber);
             $this->assertEquals($exception->getMessage(), SystemFunctions::$curlErrorMessage);
         }
         $this->assertTrue($exceptionCaught);
@@ -194,7 +194,7 @@ class ConnectionsTest extends TestCase
             $result = self::$apiConnection->call($callData);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
-            $this->assertEquals($exception->getCode(), PhpCapException::INVALID_URL);
+            $this->assertEquals($exception->getCode(), ErrorHandlerInterface::INVALID_URL);
             $this->assertEquals($exception->getHttpStatusCode(), SystemFunctions::$httpCode);
         }
         $this->assertTrue($exceptionCaught);
@@ -209,7 +209,7 @@ class ConnectionsTest extends TestCase
             $result = self::$apiConnection->call($callData);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
-            $this->assertEquals($exception->getCode(), PhpCapException::INVALID_URL);
+            $this->assertEquals($exception->getCode(), ErrorHandlerInterface::INVALID_URL);
             $this->assertEquals($exception->getHttpStatusCode(), SystemFunctions::$httpCode);
         }
         $this->assertTrue($exceptionCaught);

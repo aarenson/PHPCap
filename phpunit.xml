@@ -24,6 +24,7 @@
       <file>tests/integration/ProjectsTest.php</file>
       <file>tests/integration/ProjectXmlTest.php</file>
       <file>tests/integration/RecordsTest.php</file>
+      <file>tests/integration/RedCapTest.php</file>
       <file>tests/integration/RedCapVersionTest.php</file>
       <file>tests/integration/ReportsTest.php</file>
       <file>tests/integration/SurveyTest.php</file>

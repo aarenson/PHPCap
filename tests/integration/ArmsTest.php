@@ -60,7 +60,7 @@ class ArmsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
-                PhpCapException::INVALID_ARGUMENT,
+                ErrorHandlerInterface::INVALID_ARGUMENT,
                 $exception->getCode(),
                 'Non-array arm type returned INVALID_ARGUMENT.'
             );
@@ -80,7 +80,7 @@ class ArmsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
-                PhpCapException::INVALID_ARGUMENT,
+                ErrorHandlerInterface::INVALID_ARGUMENT,
                 $exception->getCode(),
                 'Non-numeric string arm returned INVALID_ARGUMENT.'
             );
@@ -100,7 +100,7 @@ class ArmsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
-                PhpCapException::INVALID_ARGUMENT,
+                ErrorHandlerInterface::INVALID_ARGUMENT,
                 $exception->getCode(),
                 'Negative arm returned INVALID_ARGUMENT.'
             );
@@ -120,7 +120,7 @@ class ArmsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
-                PhpCapException::INVALID_ARGUMENT,
+                ErrorHandlerInterface::INVALID_ARGUMENT,
                 $exception->getCode(),
                 'Invalid arm type returned INVALID_ARGUMENT.'
             );

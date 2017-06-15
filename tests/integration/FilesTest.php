@@ -77,7 +77,7 @@ class FilesTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $this->assertEquals(
-                PhpCapException::REDCAP_API_ERROR,
+                ErrorHandlerInterface::REDCAP_API_ERROR,
                 $exception->getCode(),
                 'Export non-existant file exception code check.'
             );
@@ -98,7 +98,7 @@ class FilesTest extends TestCase
             );
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -116,7 +116,7 @@ class FilesTest extends TestCase
             );
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -134,7 +134,7 @@ class FilesTest extends TestCase
             );
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INPUT_FILE_NOT_FOUND, $code, 'File not found check.');
+            $this->assertEquals(ErrorHandlerInterface::INPUT_FILE_NOT_FOUND, $code, 'File not found check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -154,7 +154,7 @@ class FilesTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INPUT_FILE_UNREADABLE, $code, 'File unreadable check.');
+            $this->assertEquals(ErrorHandlerInterface::INPUT_FILE_UNREADABLE, $code, 'File unreadable check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
         SystemFunctions::resetIsReadable();
@@ -172,7 +172,7 @@ class FilesTest extends TestCase
             );
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -190,7 +190,7 @@ class FilesTest extends TestCase
             );
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -209,7 +209,7 @@ class FilesTest extends TestCase
             );
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Invalid argument.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -227,7 +227,7 @@ class FilesTest extends TestCase
             );
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Invalid argument.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -245,7 +245,7 @@ class FilesTest extends TestCase
             );
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Invalid argument.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -264,7 +264,7 @@ class FilesTest extends TestCase
             );
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Invalid argument.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Invalid argument.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -282,7 +282,7 @@ class FilesTest extends TestCase
             );
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::REDCAP_API_ERROR, $code, 'Invalid argument.');
+            $this->assertEquals(ErrorHandlerInterface::REDCAP_API_ERROR, $code, 'Invalid argument.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');

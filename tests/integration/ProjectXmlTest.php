@@ -56,7 +56,7 @@ class ProjectXmlTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -116,7 +116,7 @@ class ProjectXmlTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         
         $this->assertTrue($exceptionCaught, 'Exception caught.');

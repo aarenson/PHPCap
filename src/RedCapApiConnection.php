@@ -12,7 +12,7 @@ namespace IU\PHPCap;
  * but could be used directly by a user to access REDCap functionality not provided
  * by PHPCap.
  */
-class RedCapApiConnection
+class RedCapApiConnection implements RedCapApiConnectionInterface
 {
     const DEFAULT_TIMEOUT_IN_SECONDS = 1200; // 1,200 seconds = 20 minutes
     const DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS = 20;
@@ -20,9 +20,12 @@ class RedCapApiConnection
     /** resource cURL handle. */
     private $curlHandle;
     
-    /** cURL options */
+    /** array used to stored cURL option values. */
     private $curlOptions;
 
+    /** the error handler for the connection. */
+    protected $errorHandler;
+    
     /**
      * Constructor that creates a REDCap API connection for the specified URL, with the
      * specified settings.
@@ -36,6 +39,8 @@ class RedCapApiConnection
      *            SSL certificate (i.e., for verifying that the REDCap site that is
      *            connected to is the one specified).
      * @param integer $timeoutInSeconds the timeout in seconds for the connection.
+     * @param integer $connectionTimeoutInSeconds the connection timeout in seconds for the connection.
+     * @param ErrorHandlerInterface $errorHandler the error handler for the connection.
      *
      * @throws PhpCapException
      */
@@ -43,8 +48,18 @@ class RedCapApiConnection
         $url,
         $sslVerify = false,
         $caCertificateFile = '',
-        $timeoutInSeconds = self::DEFAULT_TIMEOUT_IN_SECONDS
+        $timeoutInSeconds = self::DEFAULT_TIMEOUT_IN_SECONDS,
+        $connectionTimeoutInSeconds = self::DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS,
+        $errorHandler = null
     ) {
+        # If an error handler was specified, use it,
+        # otherwise, use the default PHPCap error handler
+        if (isset($errorHandler)) {
+            $this->errorHandler = $errorHandler;
+        } else {
+            $this->errorHandler = new ErrorHandler();
+        }
+        
         $this->curlOptions = array();
         
         $this->curlHandle = curl_init();
@@ -54,18 +69,20 @@ class RedCapApiConnection
         
         if ($sslVerify && $caCertificateFile != null && trim($caCertificateFile) != '') {
             if (! file_exists($caCertificateFile)) {
-                throw new PhpCapException('The cert file "' . $caCertificateFile
-                        . '" does not exist.', PhpCapException::CA_CERTIFICATE_FILE_NOT_FOUND);
+                $message = 'The cert file "'. $caCertificateFile.'" does not exist.';
+                $code    = ErrorHandlerInterface::CA_CERTIFICATE_FILE_NOT_FOUND;
+                $this->errorHandler->throwException($message, $code);
             } elseif (! is_readable($caCertificateFile)) {
-                throw new PhpCapException('The cert file "' . $caCertificateFile
-                        . '" exists, but cannot be read.', PhpCapException::CA_CERTIFICATE_FILE_UNREADABLE);
+                $message = 'The cert file "'. $caCertificateFile.'" exists, but cannot be read.';
+                $code    = ErrorHandlerInterface::CA_CERTIFICATE_FILE_UNREADABLE;
+                $this->errorHandler->throwException($message, $code);
             }
 
             $this->setCurlOption(CURLOPT_CAINFO, $caCertificateFile);
         }
         
         $this->setCurlOption(CURLOPT_TIMEOUT, $timeoutInSeconds);
-        $this->setCurlOption(CURLOPT_CONNECTTIMEOUT, self::DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS);
+        $this->setCurlOption(CURLOPT_CONNECTTIMEOUT, $connectionTimeoutInSeconds);
         $this->setCurlOption(CURLOPT_URL, $url);
         $this->setCurlOption(CURLOPT_RETURNTRANSFER, true);
         $this->setCurlOption(CURLOPT_HTTPHEADER, array ('Accept: text/xml'));
@@ -95,11 +112,10 @@ class RedCapApiConnection
     public function call($data)
     {
         if (!is_string($data) && !is_array($data)) {
-            throw new PhpCapException(
-                "Data passed to ".__METHOD__
-                ." has type ".gettype($data). ", but should be a string or an array.",
-                PhpCapException::INVALID_ARGUMENT
-            );
+            $message = "Data passed to ".__METHOD__." has type ".gettype($data)
+                .", but should be a string or an array.";
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
         }
         
         $errno = 0;
@@ -110,23 +126,24 @@ class RedCapApiConnection
         $response = curl_exec($this->curlHandle);
         
         if ($errno = curl_errno($this->curlHandle)) {
-            throw new PhpCapException(curl_error($this->curlHandle), PhpCapException::CURL_ERROR, $errno);
+            $message = curl_error($this->curlHandle);
+            $code    = ErrorHandlerInterface::CONNECTION_ERROR;
+            $this->errorHandler->throwException($message, $code, $errno);
         } else {
             // Check for HTTP errors
             $httpCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
             if ($httpCode == 301) {
                 $callInfo = curl_getinfo($this->curlHandle);
-                throw new PhpCapException(
-                    "The page for the specified URL (" . $this->getCurlOption(CURLOPT_URL). ") has moved to ".
-                        $callInfo ['redirect_url'] . ". Please update your URL.",
-                    PhpCapException::INVALID_URL,
-                    null,
-                    $httpCode
-                );
+                $message =  "The page for the specified URL ("
+                    .$this->getCurlOption(CURLOPT_URL). ") has moved to "
+                    .$callInfo ['redirect_url'] . ". Please update your URL.";
+                $code = ErrorHandlerInterface::INVALID_URL;
+                $this->errorHandler->throwException($message, $code, null, $httpCode);
             } elseif ($httpCode == 404) {
-                throw new PhpCapException('
-                        The specified URL (' . $this->getCurlOption(CURLOPT_URL). ') appears to be incorrect.'
-                        . ' Nothing was found at this URL.', PhpCapException::INVALID_URL, null, $httpCode);
+                $message = 'The specified URL ('.$this->getCurlOption(CURLOPT_URL)
+                    .') appears to be incorrect. Nothing was found at this URL.';
+                $code = ErrorHandlerInterface::INVALID_URL;
+                $this->errorHandler->throwException($message, $code, null, $httpCode);
             }
         }
         
@@ -163,13 +180,76 @@ class RedCapApiConnection
     {
         $callInfo = curl_getinfo($this->curlHandle);
         if ($errno = curl_errno($this->curlHandle)) {
-            throw new PhpCapException(curl_error($this->curlHandle), PhpCapException::CURL_ERROR, $errno);
+            $message = curl_error($this->curlHandle);
+            $code    = ErrorHandlerInterface::CONNECTION_ERROR;
+            $this->errorHandler->throwException($message, $code, $errno);
         }
         
         return $callInfo;
     }
 
 
+    /**
+     * {@inheritdoc}
+     */
+    public function getErrorHandler()
+    {
+        return $this->errorHandler;
+    }
+    
+    /**
+     * Sets the error handler;
+     *
+     * @param ErrorHandlerInterface $errorHandler the error handler to use.
+     */
+    public function setErrorHandler($errorHandler)
+    {
+        $this->errorHandler = $errorHandler;
+    }
+    
+    /**
+     * Gets the URL of the connection.
+     *
+     * return string the URL of the connection.
+     */
+    public function getUrl()
+    {
+        return $this->getCurlOption(CURLOPT_URL);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getSslVerify()
+    {
+        return $this->getCurlOption(CURLOPT_SSL_VERIFYPEER);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setSslVerify($sslVerify)
+    {
+        $this->setCurlOption(CURLOPT_SSL_VERIFYPEER, $sslVerify);
+    }
+    
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function getCaCertificateFile()
+    {
+        return $this->getCurlOption(CURLOPT_CAINFO);
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    public function setCaCertificateFile($caCertificateFile)
+    {
+        $this->setCurlOption(CURLOPT_CAINFO, $caCertificateFile);
+    }
+    
     /**
      * Gets the timeout in seconds for cURL calls.
      *
@@ -189,9 +269,34 @@ class RedCapApiConnection
     {
         $this->setCurlOption(CURLOPT_TIMEOUT, $timeoutInSeconds);
     }
+
+    /**
+     * Gets the connection timeout in seconds for cURL calls.
+     *
+     * @return integer timeout in seconds for cURL calls.
+     */
+    public function getConnectionTimeoutInSeconds()
+    {
+        return $this->getCurlOption(CURLOPT_CONNECTTIMEOUT);
+    }
+    
+    /**
+     * Sets the connection timeout for cURL calls to the specified amount of seconds.
+     *
+     * @param integer $connectionTimeoutInSeconds connection timeout in seconds for cURL calls.
+     */
+    public function setConnectionTimeoutInSeconds($connectionTimeoutInSeconds)
+    {
+        $this->setCurlOption(CURLOPT_CONNECTTIMEOUT, $connectionTimeoutInSeconds);
+    }
+    
     
     /**
      * Sets the specified cURL option to the specified value.
+     *
+     * <b>Note:</b> this method is cURL specific and is NOT part
+     * of the connection interface, and therefore should
+     * NOT be used internally by PHPCap outside of this class.
      *
      * @see <a href="http://php.net/manual/en/function.curl-setopt.php">http://php.net/manual/en/function.curl-setopt.php</a>
      *      for information on cURL options.
@@ -210,6 +315,10 @@ class RedCapApiConnection
     /**
      * Gets the value for the specified cURL option number.
      *
+     * <b>Note:</b> this method is cURL specific and is NOT part
+     * of the connection interface, and therefore should
+     * NOT be used internally by PHPCap outside of this class.
+     *
      * @see <a href="http://php.net/manual/en/function.curl-setopt.php">http://php.net/manual/en/function.curl-setopt.php</a>
      * for information on cURL options.
      *
@@ -227,5 +336,18 @@ class RedCapApiConnection
             $optionValue = $this->curlOptions[$option];
         }
         return $optionValue;
+    }
+    
+    public function __clone()
+    {
+        # Reset the curlHandle so it will be a new handle
+        $this->curlHandle = curl_init();
+        
+        # Reset all of the options (for the new handle)
+        foreach ($this->curlOptions as $optionName => $optionValue) {
+            $this->setCurlOption($optionName, $optionValue);
+        }
+        
+        $this->errorHandler = clone $this->errorHandler;
     }
 }

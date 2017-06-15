@@ -75,7 +75,7 @@ class PdfFormsTest extends TestCase
             $result = self::$longitudinalDataProject->exportPdfFileOfInstruments(123);
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -88,7 +88,7 @@ class PdfFormsTest extends TestCase
             $result = self::$longitudinalDataProject->exportPdfFileOfInstruments(null, null, null, null, 1);
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -101,7 +101,7 @@ class PdfFormsTest extends TestCase
             $result = self::$longitudinalDataProject->exportPdfFileOfInstruments(null, null, null, 1);
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');

@@ -14,6 +14,9 @@ class RedCapProject
     
     /** RedCapApiConnection connection to the REDCap API at the $apiURL. */
     protected $connection;
+    
+    /** Error handler for the project. */
+    protected $errorHandler;
  
     
     /**
@@ -35,68 +38,43 @@ class RedCapProject
      * @param string $apiToken the API token for this project.
      * @param boolean $sslVerify indicates if SSL connection to REDCap web site should be verified.
      * @param string $caCertificateFile the full path name of the CA (Certificate Authority) certificate file.
-     *
+     * @param ErrorHandlerInterface $errorHandler the error handler used by the project.
+     *    This would normally only be set if you want to override the PHPCap's default
+     *    error handler.
+     * @param RedCapApiConnectionInterface $connection the connection used by the project.
+     *    This would normally only be set if you want to override the PHPCap's default
+     *    connection. If this argument is specified, the $apiUrl, $sslVerify, and
+     *    $caCertificateFile arguments will be ignored, and the values for these
+     *    set in the connection will be used.
      * @throws PhpCapException if any of the arguments are invalid
      */
-    public function __construct($apiUrl, $apiToken, $sslVerify = false, $caCertificateFile = null)
-    {
-        #----------------------------------------------------------------------------------------
-        # Process the REDCAp API URL
-        # Note: standard PHP URL validation will fail for non-ASCII URLs (so it was not used)
-        #----------------------------------------------------------------------------------------
-        if (!isset($apiUrl)) {
-            throw new PhpCapException(
-                "The REDCap API URL specified for the project was null or blank.",
-                PhpCapException::INVALID_ARGUMENT
-            );
-        } elseif (gettype($apiUrl) !== 'string') {
-            throw new PhpCapException("The REDCap API URL provided (".$apiUrl.") should be a string, but has type: "
-                    . gettype($apiUrl), PhpCapException::INVALID_ARGUMENT);
+    public function __construct(
+        $apiUrl,
+        $apiToken,
+        $sslVerify = false,
+        $caCertificateFile = null,
+        $errorHandler = null,
+        $connection = null
+    ) {
+        # Need to set errorHandler to default to start in case there is an
+        # error with the errorHandler passed as an argument
+        # (to be able to handle that error!)
+        $this->errorHandler = new ErrorHandler();
+        if (isset($errorHandler)) {
+            $this->errorHandler = $this->processErrorHandlerArgument($errorHandler);
         }
         
-        #------------------------------------------------------------
-        # Process the REDCap API token
-        #------------------------------------------------------------
-        if (!isset($apiToken)) {
-            throw new PhpCapException("The REDCap API token specified for the project was null or blank."
-                    . gettype($apiToken), PhpCapException::INVALID_ARGUMENT);
-        } elseif (gettype($apiToken) !== 'string') {
-            throw new PhpCapException("The REDCap API token provided should be a string, but has type: "
-                    . gettype($apiToken), PhpCapException::INVALID_ARGUMENT);
-        } elseif (!ctype_xdigit($apiToken)) {   // ctype_xdigit - check token for hexidecimal
-            throw new PhpCapException(
-                "The REDCap API token has an invalid format."
-                ." It should only contain numbers and the letters A, B, C, D, E and F.",
-                PhpCapException::INVALID_ARGUMENT
-            );
-        } elseif (strlen($apiToken) != 32) {    # Note: super tokens are not valid for project methods
-            throw new PhpCapException(
-                "The REDCap API token has an invalid format."
-                . " It has a length of ".strlen($apiToken)." characters, but should have a length of"
-                . " 32.",
-                PhpCapException::INVALID_ARGUMENT
-            );
-        }
-        $this->apiToken = $apiToken;
+        $this->apiToken = $this->processApiTokenArgument($apiToken);
         
-        #----------------------------------------------------
-        # Process SSL verify
-        #----------------------------------------------------
-        if (isset($sslVerify) && gettype($sslVerify) !== 'boolean') {
-            throw new PhpCapException('The value for $sslVerify be a boolean (true/false), but has type: '
-                    . gettype($sslVerify), PhpCapException::INVALID_ARGUMENT);
+        if (isset($connection)) {
+            $this->connection = $this->processConnectionArgument($connection);
+        } else {
+            $this->apiUrl      = $this->processApiUrlArgument($apiUrl);
+            $sslVerify         = $this->processSslVerifyArgument($sslVerify);
+            $caCertificateFile = $this->processCaCertificateFileArgument($caCertificateFile);
+            
+            $this->connection = new RedCapApiConnection($apiUrl, $sslVerify, $caCertificateFile);
         }
-        
-        #-----------------------------------------------------
-        # Process CA certificate file
-        #-----------------------------------------------------
-        if (isset($caCertificateFile) && gettype($caCertificateFile) !== 'string') {
-            throw new PhpCapException('The value for $sslVerify be a string, but has type: '
-                    . gettype($caCertificateFile), PhpCapException::INVALID_ARGUMENT);
-        }
-
-        
-        $this->connection = new RedCapApiConnection($apiUrl, $sslVerify, $caCertificateFile);
     }
 
     
@@ -1124,14 +1102,14 @@ class RedCapProject
         if (func_num_args() > 1) {
             $message = __METHOD__.'() was called with '.func_num_args().' arguments, but '
                     .' it accepts at most 1 argument.';
-            throw new PhpCapException($message, PhpCapException::TOO_MANY_ARGUMENTS);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::TOO_MANY_ARGUMENTS);
         } elseif (!isset($arrayParameter)) {
             $arrayParameter = [];
         } elseif (!is_array($arrayParameter)) {
             $message = 'The argument has type "'
                     .gettype($arrayParameter)
                     .'", but it needs to be an array.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         }
         
         $num = 1;
@@ -1139,7 +1117,7 @@ class RedCapProject
             if (gettype($name) !== 'string') {
                 $message = 'Argument name number '.$num.' in the array argument has type '
                         .gettype($name).', but it needs to be a string.';
-                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
             }
             
             switch ($name) {
@@ -1180,9 +1158,9 @@ class RedCapProject
                     $exportDataAccessGroups = $value;
                     break;
                 default:
-                    throw new PhpCapException(
+                    $this->errorHandler->throwException(
                         'Unrecognized argument name "' . $name . '".',
-                        PhpCapException::INVALID_ARGUMENT
+                        ErrorHandlerInterface::INVALID_ARGUMENT
                     );
             }
             $num++;
@@ -1308,7 +1286,7 @@ class RedCapProject
                 $message =  'JSON error ('.$jsonError.') "'.json_last_error_msg().
                     '" while processing import return value: "'.
                 $result.'".';
-                throw new PhpCapException($message, PhpCapException::JSON_ERROR);
+                $this->errorHandler->throwException($message, ErrorHandlerInterface::JSON_ERROR);
                 break;
         }
         
@@ -1649,14 +1627,14 @@ class RedCapProject
         #-----------------------------------
         if (!isset($batches)) {
             $message = 'The number of batches was not specified.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         } elseif (!is_int($batches)) {
             $message = "The batches argument has type '".gettype($batches).'", '
                 .'but it should have type integer.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         } elseif ($batches < 1) {
             $message = 'The batches argument is less than 1. It needs to be at least 1.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         }
         
         $filterLogic = $this->processFilterLogicArgument($filterLogic);
@@ -1698,6 +1676,16 @@ class RedCapProject
         return $recordIdFieldName;
     }
 
+    /**
+     * Gets the API token for the project.
+     *
+     * @return string the API token for the project.
+     */
+    public function getApiToken()
+    {
+        return $this->apiToken;
+    }
+    
     /**
      * Gets the call information for the last cURL call. PHPCap uses cURL to
      * communicate with the REDCap API.
@@ -1760,7 +1748,7 @@ class RedCapProject
     //    $this->connection = $connection;
     //}
 
-    
+
     protected function processAllRecordsArgument($allRecords)
     {
         if (!isset($allRecords)) {
@@ -1768,7 +1756,7 @@ class RedCapProject
         } elseif (!is_bool($allRecords)) {
             $message = 'The allRecords argument has type "'.gettype($allRecords).
             '", but it should be a boolean (true/false).';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         } elseif ($allRecords !== true) {
             $allRecords = null; // need to reset to null, because ANY (non-null) value
                                 // will cause the REDCap API to return all records
@@ -1776,29 +1764,72 @@ class RedCapProject
         
         return $allRecords;
     }
-   
+
+    protected function processApiTokenArgument($apiToken)
+    {
+        if (!isset($apiToken)) {
+            $message = 'The REDCap API token specified for the project was null or blank.';
+            $code    =  ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } elseif (gettype($apiToken) !== 'string') {
+            $message = 'The REDCap API token provided should be a string, but has type: '
+                .gettype($apiToken);
+            $code =  ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } elseif (!ctype_xdigit($apiToken)) {   // ctype_xdigit - check token for hexidecimal
+            $message = 'The REDCap API token has an invalid format.'
+                .' It should only contain numbers and the letters A, B, C, D, E and F.';
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } elseif (strlen($apiToken) != 32) { # Note: super tokens are not valid for project methods
+            $message = 'The REDCap API token has an invalid format.'
+                .' It has a length of '.strlen($apiToken).' characters, but should have a length of'
+                .' 32.';
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        }
+        return $apiToken;
+    }
+    
+    protected function processApiUrlArgument($apiUrl)
+    {
+        # Note: standard PHP URL validation will fail for non-ASCII URLs (so it was not used)
+        if (!isset($apiUrl)) {
+            $message = 'The REDCap API URL specified for the project was null or blank.';
+            $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } elseif (gettype($apiUrl) !== 'string') {
+            $message = 'The REDCap API URL provided ('.$apiUrl.') should be a string, but has type: '
+                . gettype($apiUrl);
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        }
+        return $apiUrl;
+    }
+    
+    
     protected function processArmArgument($arm)
     {
         if (!isset($arm)) {
             ;  // That's OK
         } elseif (is_string($arm)) {
             if (! preg_match('/^[0-9]+$/', $arm)) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Arm number "' . $arm . '" is non-numeric string.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         } elseif (is_int($arm)) {
             if ($arm < 0) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Arm number "' . $arm . '" is a negative integer.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         } else {
             $message = 'The arm argument has type "'.gettype($arm).
             '"; it should be an integer or a (numeric) string.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         }
         
         return $arm;
@@ -1808,22 +1839,22 @@ class RedCapProject
     {
         if (!isset($arms)) {
             if ($required === true) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'The arms argument was not set.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
             $arms = array();
         } else {
             if (!is_array($arms)) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'The arms argument has invalid type "'.gettype($arms).'"; it should be an array.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             } elseif ($required === true && count($arms) < 1) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'No arms were specified in the arms argument; at least one must be specified.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         }
@@ -1831,26 +1862,48 @@ class RedCapProject
         foreach ($arms as $arm) {
             if (is_string($arm)) {
                 if (! preg_match('/^[0-9]+$/', $arm)) {
-                    throw new PhpCapException(
+                    $this->errorHandler->throwException(
                         'Arm number "' . $arm . '" is non-numeric string.',
-                        PhpCapException::INVALID_ARGUMENT
+                        ErrorHandlerInterface::INVALID_ARGUMENT
                     );
                 }
             } elseif (is_int($arm)) {
                 if ($arm < 0) {
-                    throw new PhpCapException(
+                    $this->errorHandler->throwException(
                         'Arm number "' . $arm . '" is a negative integer.',
-                        PhpCapException::INVALID_ARGUMENT
+                        ErrorHandlerInterface::INVALID_ARGUMENT
                     );
                 }
             } else {
                 $message = 'An arm was found in the arms array that has type "'.gettype($arm).
                 '"; it should be an integer or a (numeric) string.';
-                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
             }
         }
         
         return $arms;
+    }
+    
+    protected function processCaCertificateFileArgument($caCertificateFile)
+    {
+        if (isset($caCertificateFile) && gettype($caCertificateFile) !== 'string') {
+            $message = 'The value for $sslVerify must be a string, but has type: '
+                .gettype($caCertificateFile);
+            $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        }
+        return $caCertificateFile;
+    }
+    
+    protected function processConnectionArgument($connection)
+    {
+        if (!($connection instanceof RedCapApiConnectionInterface)) {
+            $message = 'The connection argument is not valid, because it doesn\'t implement '
+                .RedCapApiConnectionInterface::class.'.';
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        }
+        return $connection;
     }
     
     protected function processDateFormatArgument($dateFormat)
@@ -1867,11 +1920,22 @@ class RedCapProject
                 $message = 'Invalid date format "'.$dateFormat.'" specified.'
                         .' The date format should be one of the following: "'.
                 implode('", "', $legalDateFormats).'".';
-                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
             }
         }
         
         return $dateFormat;
+    }
+    
+    protected function processErrorHandlerArgument($errorHandler)
+    {
+        if (!($errorHandler instanceof ErrorHandlerInterface)) {
+            $message = 'The error handler argument is not valid, because it doesn\'t implement '
+                .ErrorHandlerInterface::class.'.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+        }
+        return $errorHandler;
     }
     
     protected function processEventArgument($event)
@@ -1880,7 +1944,7 @@ class RedCapProject
             ; // This might be OK
         } elseif (gettype($event) !== 'string') {
             $message = 'Event has type "'.gettype($event).'", but should be a string.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         }
         return $event;
     }
@@ -1889,22 +1953,22 @@ class RedCapProject
     {
         if (!isset($events)) {
             if ($required === true) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'The events argument was not set.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
             $events = array();
         } else {
             if (!is_array($events)) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'The events argument has invalid type "'.gettype($events).'"; it should be an array.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             } elseif ($required === true && count($events) < 1) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'No events were specified in the events argument; at least one must be specified.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             } else {
                 foreach ($events as $event) {
@@ -1912,7 +1976,7 @@ class RedCapProject
                     if (strcmp($type, 'string') !== 0) {
                         $message = 'An event with type "'.$type.'" was found in the events array.'.
                             ' Events should be strings.';
-                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                        $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
                     }
                 }
             }
@@ -1928,10 +1992,10 @@ class RedCapProject
             $exportCheckboxLabel = false;
         } else {
             if (gettype($exportCheckboxLabel) !== 'boolean') {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Invalid type for exportCheckboxLabel. It should be a boolean (true or false),'
                     .' but has type: '.gettype($exportCheckboxLabel).'.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         }
@@ -1944,10 +2008,10 @@ class RedCapProject
             $exportDataAccessGroups = false;
         } else {
             if (gettype($exportDataAccessGroups) !== 'boolean') {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Invalid type for exportDataAccessGroups. It should be a boolean (true or false),'
                     .' but has type: '.gettype($exportDataAccessGroups).'.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         }
@@ -1960,10 +2024,10 @@ class RedCapProject
             $exportFiles= false;
         } else {
             if (gettype($exportFiles) !== 'boolean') {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Invalid type for exportFiles. It should be a boolean (true or false),'
                     .' but has type: '.gettype($exportFiles).'.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         }
@@ -1989,18 +2053,18 @@ class RedCapProject
                     $result = $phpResult;
                     break;
                 default:
-                    throw new PhpCapException(
+                    $this->errorHandler->throwException(
                         "JSON error (" . $jsonError . ") \"" . json_last_error_msg() .
                         "\" in REDCap API output." .
                         "\nThe first 1,000 characters of output returned from REDCap are:\n" .
                         substr($result, 0, 1000),
-                        PhpCapException::JSON_ERROR
+                        ErrorHandlerInterface::JSON_ERROR
                     );
                     break;
             }
                 
             if (array_key_exists('error', $result)) {
-                throw new PhpCapException($result ['error'], PhpCapException::REDCAP_API_ERROR);
+                $this->errorHandler->throwException($result ['error'], ErrorHandlerInterface::REDCAP_API_ERROR);
             }
         } else {
             // If this is a format other than 'php', look for a JSON error, because
@@ -2011,7 +2075,7 @@ class RedCapProject
                 // note: $matches[0] is the complete string that matched
                 //       $matches[1] is just the error message part
                 $message = $matches[1];
-                throw new PhpCapException($message, PhpCapException::REDCAP_API_ERROR);
+                $this->errorHandler->throwException($message, ErrorHandlerInterface::REDCAP_API_ERROR);
             }
         }
         
@@ -2024,10 +2088,10 @@ class RedCapProject
             $exportSurveyFields = false;
         } else {
             if (gettype($exportSurveyFields) !== 'boolean') {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Invalid type for exportSurveyFields. It should be a boolean (true or false),'
                     .' but has type: '.gettype($exportSurveyFields).'.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         }
@@ -2039,12 +2103,12 @@ class RedCapProject
         if (!isset($field)) {
             if ($required) {
                 $message = 'No field was specified.';
-                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
             }
             // else OK
         } elseif (gettype($field) !== 'string') {
             $message = 'Field has type "'.gettype($field).'", but should be a string.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         }
         return $field;
     }
@@ -2056,9 +2120,9 @@ class RedCapProject
             $fields = array();
         } else {
             if (!is_array($fields)) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Argument "fields" has the wrong type; it should be an array.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             } else {
                 foreach ($fields as $field) {
@@ -2066,7 +2130,7 @@ class RedCapProject
                     if (strcmp($type, 'string') !== 0) {
                         $message = 'A field with type "'.$type.'" was found in the fields array.'.
                             ' Fields should be strings.';
-                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                        $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
                     }
                 }
             }
@@ -2080,7 +2144,7 @@ class RedCapProject
         if (isset($file)) {
             if (gettype($file) !== 'string') {
                 $message = "Argument 'file' has type '".gettype($file)."', but should be a string.";
-                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
             }
         }
         return $file;
@@ -2090,19 +2154,19 @@ class RedCapProject
     {
         if (!isset($filename)) {
             $message = 'No filename specified.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         } elseif (gettype($filename) !== 'string') {
             $message = "Argument 'filename' has type '".gettype($filename)."', but should be a string.";
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         } elseif (!file_exists($filename)) {
-            throw new PhpCapException(
+            $this->errorHandler->throwException(
                 'The input file "'.$filename.'" could not be found.',
-                PhpCapException::INPUT_FILE_NOT_FOUND
+                ErrorHandlerInterface::INPUT_FILE_NOT_FOUND
             );
         } elseif (!is_readable($filename)) {
-            throw new PhpCapException(
+            $this->errorHandler->throwException(
                 'The input file "'.$filename.'" was unreadable.',
-                PhpCapException::INPUT_FILE_UNREADABLE
+                ErrorHandlerInterface::INPUT_FILE_UNREADABLE
             );
         }
         
@@ -2119,9 +2183,9 @@ class RedCapProject
             $filterLogic = '';
         } else {
             if (gettype($filterLogic) !== 'string') {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Invalid type for filterLogic. It should be a string, but has type "'.gettype($filterLogic).'".',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         }
@@ -2133,16 +2197,16 @@ class RedCapProject
     {
         if (!isset($form)) {
             if ($required === true) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'The form argument was not set.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
             $form = '';
         } elseif (!is_string($form)) {
-            throw new PhpCapException(
+            $this->errorHandler->throwException(
                 'The form argument has invalid type "'.gettype($form).'"; it should be a string.',
-                PhpCapException::INVALID_ARGUMENT
+                ErrorHandlerInterface::INVALID_ARGUMENT
             );
         }
         
@@ -2157,7 +2221,7 @@ class RedCapProject
         
         if (gettype($format) !== 'string') {
             $message = 'The format specified has type "'.gettype($format).'", but it should be a string.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         }
         
         $format = strtolower(trim($format));
@@ -2166,7 +2230,7 @@ class RedCapProject
             $message = 'Invalid format "'.$format.'" specified.'
                 .' The format should be one of the following: "'.
                 implode('", "', $legalFormats).'".';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         }
         
         $dataFormat = '';
@@ -2185,9 +2249,9 @@ class RedCapProject
             $forms = array();
         } else {
             if (!is_array($forms)) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'The forms argument has invalid type "'.gettype($forms).'"; it should be an array.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             } else {
                 foreach ($forms as $form) {
@@ -2195,7 +2259,7 @@ class RedCapProject
                     if (strcmp($type, 'string') !== 0) {
                         $message = 'A form with type "'.$type.'" was found in the forms array.'.
                             ' Forms should be strings.';
-                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                        $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
                     }
                 }
             }
@@ -2208,12 +2272,12 @@ class RedCapProject
     {
         if (!isset($data)) {
             $message = "No value specified for required argument '".$dataName."'.";
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         } elseif ($format === 'php') {
             if (!is_array($data)) {
                 $message = "Argument '".$dataName."' has type '".gettype($data)."'"
                     .", but should be an array.";
-                    throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                    $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
             }
             $data = json_encode($data);
             
@@ -2225,14 +2289,14 @@ class RedCapProject
                 default:
                     $message =  'JSON error ('.$jsonError.') "'. json_last_error_msg().
                     '"'." while processing argument '".$dataName."'.";
-                    throw new PhpCapException($message, PhpCapException::JSON_ERROR);
+                    $this->errorHandler->throwException($message, ErrorHandlerInterface::JSON_ERROR);
                     break;
             }
         } else { // All other formats
             if (gettype($data) !== 'string') {
                 $message = "Argument '".$dataName."' has type '".gettype($data)."'"
                     .", but should be a string.";
-                    throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                    $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
             }
         }
         
@@ -2248,7 +2312,7 @@ class RedCapProject
             // note: $matches[0] is the complete string that matched
             //       $matches[1] is just the error message part
             $message = $matches[1];
-            throw new PhpCapException($message, PhpCapException::REDCAP_API_ERROR);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::REDCAP_API_ERROR);
         }
     }
     
@@ -2259,10 +2323,10 @@ class RedCapProject
             $override = false;
         } else {
             if (gettype($override) !== 'boolean') {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Invalid type for override. It should be a boolean (true or false),'
                     .' but has type: '.gettype($override).'.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         }
@@ -2283,7 +2347,7 @@ class RedCapProject
         } elseif ($overwriteBehavior !== 'normal' && $overwriteBehavior !== 'overwrite') {
             $message = 'Invalid value "'.$overwriteBehavior.'" specified for overwriteBehavior.'.
                 " Valid values are 'normal' and 'overwrite'.";
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         }
         
         return $overwriteBehavior;
@@ -2295,10 +2359,10 @@ class RedCapProject
             $rawOrLabel = 'raw';
         } else {
             if ($rawOrLabel !== 'raw' && $rawOrLabel !== 'label') {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Invalid value "'.$rawOrLabel.'" specified for rawOrLabel.'.
                     " Valid values are 'raw' and 'label'.",
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         }
@@ -2312,10 +2376,10 @@ class RedCapProject
             $rawOrLabelHeaders = 'raw';
         } else {
             if ($rawOrLabelHeaders !== 'raw' && $rawOrLabelHeaders !== 'label') {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Invalid value "'.$rawOrLabelHeaders.'" specified for rawOrLabelHeaders.'.
                     " Valid values are 'raw' and 'label'.",
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         }
@@ -2327,12 +2391,12 @@ class RedCapProject
     {
         if (!isset($recordId)) {
             if ($required) {
-                throw new PhpCapException("No record ID specified.", PhpCapException::INVALID_ARGUMENT);
+                $this->errorHandler->throwException("No record ID specified.", ErrorHandlerInterface::INVALID_ARGUMENT);
             }
         } elseif (!is_string($recordId) && !is_int($recordId)) {
             $message = 'The record ID has type "'.gettype($recordId).
             '", but it should be a string or integer.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         }
         
         return $recordId;
@@ -2344,9 +2408,9 @@ class RedCapProject
             $recordIds = array();
         } else {
             if (!is_array($recordIds)) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'The record IDs argument has type "'.gettype($recordIds).'"; it should be an array.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             } else {
                 foreach ($recordIds as $recordId) {
@@ -2354,7 +2418,7 @@ class RedCapProject
                     if (strcmp($type, 'integer') !== 0 && strcmp($type, 'string') !== 0) {
                         $message = 'A record ID with type "'.$type.'" was found.'.
                                 ' Record IDs should be integers or strings.';
-                        throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                        $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
                     }
                 }
             }
@@ -2372,7 +2436,7 @@ class RedCapProject
         } elseif (!is_int($repeatInstance)) {
             $message = 'The repeat instance has type "'.gettype($repeatInstance).
             '", but it should be an integer.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         }
         
         return $repeatInstance;
@@ -2382,25 +2446,27 @@ class RedCapProject
     protected function processReportIdArgument($reportId)
     {
         if (!isset($reportId)) {
-            throw new PhpCapException("No report ID specified for export.", PhpCapException::INVALID_ARGUMENT);
+            $message = 'No report ID specified for export.';
+            $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
         }
 
         if (is_string($reportId)) {
             if (!preg_match('/^[0-9]+$/', $reportId)) {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Report ID "'.$reportId.'" is non-numeric string.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         } elseif (is_int($reportId)) {
             if ($reportId < 0) {
                 $message = 'Report ID "'.$reportId.'" is a negative integer.';
-                throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+                $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
             }
         } else {
             $message = 'The report ID has type "'.gettype($reportId).
             '", but it should be an integer or a (numeric) string.';
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         }
         
         return $reportId;
@@ -2414,7 +2480,7 @@ class RedCapProject
         } elseif ($returnContent !== 'count' && $returnContent !== 'ids') {
             $message = 'Invalid value "'.$returnContent.'" specified for overwriteBehavior.'.
                     " Valid values are 'count' and 'ids'.";
-            throw new PhpCapException($message, PhpCapException::INVALID_ARGUMENT);
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         }
     
         return $returnContent;
@@ -2426,15 +2492,27 @@ class RedCapProject
             $returnMetadataOnly= false;
         } else {
             if (gettype($returnMetadataOnly) !== 'boolean') {
-                throw new PhpCapException(
+                $this->errorHandler->throwException(
                     'Invalid type for returnMetadataOnly. It should be a boolean (true or false),'
                     .' but has type: '.gettype($returnMetadataOnly).'.',
-                    PhpCapException::INVALID_ARGUMENT
+                    ErrorHandlerInterface::INVALID_ARGUMENT
                 );
             }
         }
         return $returnMetadataOnly;
     }
+    
+    protected function processSslVerifyArgument($sslVerify)
+    {
+        if (isset($sslVerify) && gettype($sslVerify) !== 'boolean') {
+            $message = 'The value for $sslVerify must be a boolean (true/false), but has type: '
+                .gettype($sslVerify);
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        }
+        return $sslVerify;
+    }
+    
     
     protected function processTypeArgument($type)
     {
@@ -2444,9 +2522,9 @@ class RedCapProject
         $type = strtolower(trim($type));
         
         if (strcmp($type, 'flat') !== 0 && strcmp($type, 'eav') !== 0) {
-            throw new PhpCapException(
+            $this->errorHandler->throwException(
                 "Invalid type '".$type."' specified. Type should be either 'flat' or 'eav'",
-                PhpCapException::INVALID_ARGUMENT
+                ErrorHandlerInterface::INVALID_ARGUMENT
             );
         }
         return $type;

@@ -41,7 +41,7 @@ class FileUtilTest extends TestCase
             $content = FileUtil::fileToString(self::DATA_DIR.uniqid().'.txt');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INPUT_FILE_NOT_FOUND, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INPUT_FILE_NOT_FOUND, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -55,7 +55,7 @@ class FileUtilTest extends TestCase
             $content = FileUtil::fileToString(self::DATA_DIR.'file.txt');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INPUT_FILE_UNREADABLE, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INPUT_FILE_UNREADABLE, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -72,7 +72,7 @@ class FileUtilTest extends TestCase
             $content = FileUtil::fileToString(self::DATA_DIR.'file.txt');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INPUT_FILE_ERROR, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INPUT_FILE_ERROR, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -89,7 +89,7 @@ class FileUtilTest extends TestCase
             $content = FileUtil::fileToString(self::DATA_DIR.'file.txt');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INPUT_FILE_ERROR, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INPUT_FILE_ERROR, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -107,7 +107,7 @@ class FileUtilTest extends TestCase
             FileUtil::writeStringToFile('test', self::DATA_DIR.'output.txt');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::OUTPUT_FILE_ERROR, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::OUTPUT_FILE_ERROR, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -123,7 +123,7 @@ class FileUtilTest extends TestCase
             FileUtil::writeStringToFile('test', self::DATA_DIR.'output.txt');
         } catch (PhpCapException $exception) {
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::OUTPUT_FILE_ERROR, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::OUTPUT_FILE_ERROR, $code, 'Exception code check.');
             $exceptionCaught = true;
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');

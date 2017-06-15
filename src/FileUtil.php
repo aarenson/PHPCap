@@ -9,7 +9,6 @@ namespace IU\PHPCap;
  */
 class FileUtil
 {
-
     /**
      * Reads the contents of the specified file and returns it as a string.
      *
@@ -24,12 +23,12 @@ class FileUtil
         if (!file_exists($filename)) {
             throw new PhpCapException(
                 'The input file "'.$filename.'" could not be found.',
-                PhpCapException::INPUT_FILE_NOT_FOUND
+                ErrorHandlerInterface::INPUT_FILE_NOT_FOUND
             );
         } elseif (!is_readable($filename)) {
             throw new PhpCapException(
                 'The input file "'.$filename.'" was unreadable.',
-                PhpCapException::INPUT_FILE_UNREADABLE
+                ErrorHandlerInterface::INPUT_FILE_UNREADABLE
             );
         }
         
@@ -45,12 +44,12 @@ class FileUtil
             if (isset($errorMessage)) {
                 throw new PhpCapException(
                     'An error occurred in input file "'.$filename.'": '.$errorMessage,
-                    PhpCapException::INPUT_FILE_ERROR
+                    ErrorHandlerInterface::INPUT_FILE_ERROR
                 );
             } else {
                 throw new PhpCapException(
                     'An error occurred in input file "'.$filename.'"',
-                    PhpCapException::INPUT_FILE_ERROR
+                    ErrorHandlerInterface::INPUT_FILE_ERROR
                 );
             }
         }
@@ -89,12 +88,12 @@ class FileUtil
             if (isset($errorMessage)) {
                 throw new PhpCapException(
                     'An error occurred in output file "'.$filename.'": '.$errorMessage,
-                    PhpCapException::OUTPUT_FILE_ERROR
+                    ErrorHandlerInterface::OUTPUT_FILE_ERROR
                 );
             } else {
                 throw new PhpCapException(
                     'An error occurred in output file "'.$filename.'"',
-                    PhpCapException::OUTPUT_FILE_ERROR
+                    ErrorHandlerInterface::OUTPUT_FILE_ERROR
                 );
             }
         }

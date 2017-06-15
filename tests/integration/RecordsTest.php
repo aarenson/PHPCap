@@ -46,7 +46,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -60,7 +60,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -74,7 +74,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -88,7 +88,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -102,7 +102,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -116,7 +116,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -130,7 +130,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -145,7 +145,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -159,7 +159,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -173,7 +173,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -187,7 +187,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -202,7 +202,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -217,7 +217,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -231,7 +231,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -246,7 +246,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -328,7 +328,11 @@ class RecordsTest extends TestCase
             $result = self::$basicDemographyProject->exportRecordsAp(['format' => 'php'], ['type' => 'eav']);
         } catch (PhpCapException $exception) {
             $caughtException = true;
-            $this->assertEquals(PhpCapException::TOO_MANY_ARGUMENTS, $exception->getCode(), 'Too many arguments.');
+            $this->assertEquals(
+                ErrorHandlerInterface::TOO_MANY_ARGUMENTS,
+                $exception->getCode(),
+                'Too many arguments.'
+            );
         }
         $this->assertTrue($caughtException, 'Caught exception.');
     }
@@ -340,7 +344,7 @@ class RecordsTest extends TestCase
             $result = self::$basicDemographyProject->exportRecordsAp('php');
         } catch (PhpCapException $exception) {
             $caughtException = true;
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode(), 'Invalid argument.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $exception->getCode(), 'Invalid argument.');
         }
         $this->assertTrue($caughtException, 'Caught exception.');
     }
@@ -352,7 +356,7 @@ class RecordsTest extends TestCase
             $result = self::$basicDemographyProject->exportRecordsAp([123 => 'php']);
         } catch (PhpCapException $exception) {
             $caughtException = true;
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode(), 'Invalid argument.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $exception->getCode(), 'Invalid argument.');
         }
         $this->assertTrue($caughtException, 'Caught exception.');
     }
@@ -364,7 +368,7 @@ class RecordsTest extends TestCase
             $result = self::$basicDemographyProject->exportRecordsAp(['typ' => 'eav']);
         } catch (PhpCapException $exception) {
             $caughtException = true;
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $exception->getCode(), 'Invalid argument.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $exception->getCode(), 'Invalid argument.');
         }
         $this->assertTrue($caughtException, 'Caught exception.');
     }
@@ -655,7 +659,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::JSON_ERROR, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::JSON_ERROR, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
         SystemFunctions::clearJsonError();
@@ -676,7 +680,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::REDCAP_API_ERROR, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::REDCAP_API_ERROR, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
         
@@ -693,7 +697,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -773,7 +777,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::JSON_ERROR, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::JSON_ERROR, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
         SystemFunctions::clearJsonError();
@@ -823,7 +827,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -838,7 +842,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -872,7 +876,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::JSON_ERROR, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::JSON_ERROR, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
         SystemFunctions::clearJsonError();
@@ -896,7 +900,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -922,7 +926,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -947,7 +951,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
     }
@@ -996,7 +1000,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
         
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -1011,7 +1015,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
     
         $this->assertTrue($exceptionCaught, 'Exception caught.');
@@ -1025,7 +1029,7 @@ class RecordsTest extends TestCase
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
-            $this->assertEquals(PhpCapException::INVALID_ARGUMENT, $code, 'Exception code check.');
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code check.');
         }
     
         $this->assertTrue($exceptionCaught, 'Exception caught.');
