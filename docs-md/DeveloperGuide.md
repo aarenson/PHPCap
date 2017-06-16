@@ -175,6 +175,15 @@ be calculated by running the following command in the root directory of PHPCap:
 To see the results, open the file **tests/coverage/index.html** with a web browser. The .gitignore file is set to
 ignore the tests/coverage directory.
 
+Note that when writing code, it is sometimes necessary to use the __@codeCoverageIgnore__ annotation
+to reach 100% line coverage. The one problem that has come up is that the code coverage check will
+mark the closing bracket after a method that throws an exception as a line that was not covered. To avoid this, you can add the @codeCoverageIgnore annotation as shown in the example below. 
+```php
+if ($required) {
+    $message = 'No field was specified.';
+    $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
+} // @codeCoverageIgnore
+```
 
 ### Local Tests
 The directory __tests/local/__ has been set up so that all files in it, except for the README file, will be ignored by Git.

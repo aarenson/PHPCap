@@ -1110,7 +1110,7 @@ class RedCapProject
                     .gettype($arrayParameter)
                     .'", but it needs to be an array.';
             $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+        } // @codeCoverageIgnore
         
         $num = 1;
         foreach ($arrayParameter as $name => $value) {
@@ -1118,7 +1118,7 @@ class RedCapProject
                 $message = 'Argument name number '.$num.' in the array argument has type '
                         .gettype($name).', but it needs to be a string.';
                 $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-            }
+            } // @codeCoverageIgnore
             
             switch ($name) {
                 case 'format':
@@ -1162,6 +1162,7 @@ class RedCapProject
                         'Unrecognized argument name "' . $name . '".',
                         ErrorHandlerInterface::INVALID_ARGUMENT
                     );
+                    break; // @codeCoverageIgnore
             }
             $num++;
         }
@@ -1287,7 +1288,7 @@ class RedCapProject
                     '" while processing import return value: "'.
                 $result.'".';
                 $this->errorHandler->throwException($message, ErrorHandlerInterface::JSON_ERROR);
-                break;
+                break; // @codeCoverageIgnore
         }
         
         return $result;
@@ -1635,7 +1636,7 @@ class RedCapProject
         } elseif ($batches < 1) {
             $message = 'The batches argument is less than 1. It needs to be at least 1.';
             $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+        } // @codeCoverageIgnore
         
         $filterLogic = $this->processFilterLogicArgument($filterLogic);
         
@@ -1787,7 +1788,7 @@ class RedCapProject
                 .' 32.';
             $code = ErrorHandlerInterface::INVALID_ARGUMENT;
             $this->errorHandler->throwException($message, $code);
-        }
+        } // @codeCoverageIgnore
         return $apiToken;
     }
     
@@ -1803,7 +1804,7 @@ class RedCapProject
                 . gettype($apiUrl);
             $code = ErrorHandlerInterface::INVALID_ARGUMENT;
             $this->errorHandler->throwException($message, $code);
-        }
+        } // @codeCoverageIgnore
         return $apiUrl;
     }
     
@@ -1818,19 +1819,20 @@ class RedCapProject
                     'Arm number "' . $arm . '" is non-numeric string.',
                     ErrorHandlerInterface::INVALID_ARGUMENT
                 );
-            }
+            } // @codeCoverageIgnore
         } elseif (is_int($arm)) {
             if ($arm < 0) {
                 $this->errorHandler->throwException(
                     'Arm number "' . $arm . '" is a negative integer.',
                     ErrorHandlerInterface::INVALID_ARGUMENT
                 );
-            }
+            } // @codeCoverageIgnore
         } else {
-            $message = 'The arm argument has type "'.gettype($arm).
-            '"; it should be an integer or a (numeric) string.';
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+            $message = 'The arm argument has type "'.gettype($arm)
+                .'"; it should be an integer or a (numeric) string.';
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         
         return $arm;
     }
@@ -1843,7 +1845,7 @@ class RedCapProject
                     'The arms argument was not set.',
                     ErrorHandlerInterface::INVALID_ARGUMENT
                 );
-            }
+            } // @codeCoverageIgnore
             $arms = array();
         } else {
             if (!is_array($arms)) {
@@ -1856,7 +1858,7 @@ class RedCapProject
                     'No arms were specified in the arms argument; at least one must be specified.',
                     ErrorHandlerInterface::INVALID_ARGUMENT
                 );
-            }
+            } // @codeCoverageIgnore
         }
         
         foreach ($arms as $arm) {
@@ -1866,19 +1868,19 @@ class RedCapProject
                         'Arm number "' . $arm . '" is non-numeric string.',
                         ErrorHandlerInterface::INVALID_ARGUMENT
                     );
-                }
+                } // @codeCoverageIgnore
             } elseif (is_int($arm)) {
                 if ($arm < 0) {
                     $this->errorHandler->throwException(
                         'Arm number "' . $arm . '" is a negative integer.',
                         ErrorHandlerInterface::INVALID_ARGUMENT
                     );
-                }
+                } // @codeCoverageIgnore
             } else {
                 $message = 'An arm was found in the arms array that has type "'.gettype($arm).
                 '"; it should be an integer or a (numeric) string.';
                 $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-            }
+            } // @codeCoverageIgnore
         }
         
         return $arms;
@@ -1891,7 +1893,7 @@ class RedCapProject
                 .gettype($caCertificateFile);
             $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
             $this->errorHandler->throwException($message, $code);
-        }
+        } // @codeCoverageIgnore
         return $caCertificateFile;
     }
     
@@ -1902,7 +1904,7 @@ class RedCapProject
                 .RedCapApiConnectionInterface::class.'.';
             $code = ErrorHandlerInterface::INVALID_ARGUMENT;
             $this->errorHandler->throwException($message, $code);
-        }
+        } // @codeCoverageIgnore
         return $connection;
     }
     
@@ -1918,10 +1920,11 @@ class RedCapProject
             $legalDateFormats = ['MDY', 'DMY', 'YMD'];
             if (!in_array($dateFormat, $legalDateFormats)) {
                 $message = 'Invalid date format "'.$dateFormat.'" specified.'
-                        .' The date format should be one of the following: "'.
-                implode('", "', $legalDateFormats).'".';
-                $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-            }
+                    .' The date format should be one of the following: "'
+                    .implode('", "', $legalDateFormats).'".';
+                    $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         }
         
         return $dateFormat;
@@ -1932,9 +1935,9 @@ class RedCapProject
         if (!($errorHandler instanceof ErrorHandlerInterface)) {
             $message = 'The error handler argument is not valid, because it doesn\'t implement '
                 .ErrorHandlerInterface::class.'.';
-                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
-                $this->errorHandler->throwException($message, $code);
-        }
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         return $errorHandler;
     }
     
@@ -1945,7 +1948,7 @@ class RedCapProject
         } elseif (gettype($event) !== 'string') {
             $message = 'Event has type "'.gettype($event).'", but should be a string.';
             $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+        } // @codeCoverageIgnore
         return $event;
     }
     
@@ -1953,31 +1956,31 @@ class RedCapProject
     {
         if (!isset($events)) {
             if ($required === true) {
-                $this->errorHandler->throwException(
-                    'The events argument was not set.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
+                $message = 'The events argument was not set.';
+                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
             $events = array();
         } else {
             if (!is_array($events)) {
-                $this->errorHandler->throwException(
-                    'The events argument has invalid type "'.gettype($events).'"; it should be an array.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
+                $message = 'The events argument has invalid type "'.gettype($events)
+                    .'"; it should be an array.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
             } elseif ($required === true && count($events) < 1) {
-                $this->errorHandler->throwException(
-                    'No events were specified in the events argument; at least one must be specified.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            } else {
+                $message = 'No events were specified in the events argument;'
+                    .' at least one must be specified.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } else { // @codeCoverageIgnore
                 foreach ($events as $event) {
                     $type = gettype($event);
                     if (strcmp($type, 'string') !== 0) {
                         $message = 'An event with type "'.$type.'" was found in the events array.'.
                             ' Events should be strings.';
-                        $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-                    }
+                        $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                        $this->errorHandler->throwException($message, $code);
+                    } // @codeCoverageIgnore
                 }
             }
         }
@@ -1997,7 +2000,7 @@ class RedCapProject
                     .' but has type: '.gettype($exportCheckboxLabel).'.',
                     ErrorHandlerInterface::INVALID_ARGUMENT
                 );
-            }
+            } // @codeCoverageIgnore
         }
         return $exportCheckboxLabel;
     }
@@ -2008,12 +2011,12 @@ class RedCapProject
             $exportDataAccessGroups = false;
         } else {
             if (gettype($exportDataAccessGroups) !== 'boolean') {
-                $this->errorHandler->throwException(
-                    'Invalid type for exportDataAccessGroups. It should be a boolean (true or false),'
-                    .' but has type: '.gettype($exportDataAccessGroups).'.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
+                $message = 'Invalid type for exportDataAccessGroups.'
+                    .' It should be a boolean (true or false),'
+                    .' but has type: '.gettype($exportDataAccessGroups).'.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         }
         return $exportDataAccessGroups;
     }
@@ -2024,12 +2027,11 @@ class RedCapProject
             $exportFiles= false;
         } else {
             if (gettype($exportFiles) !== 'boolean') {
-                $this->errorHandler->throwException(
-                    'Invalid type for exportFiles. It should be a boolean (true or false),'
-                    .' but has type: '.gettype($exportFiles).'.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
+                $message = 'Invalid type for exportFiles. It should be a boolean (true or false),'
+                    .' but has type: '.gettype($exportFiles).'.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         }
         return $exportFiles;
     }
@@ -2053,19 +2055,18 @@ class RedCapProject
                     $result = $phpResult;
                     break;
                 default:
-                    $this->errorHandler->throwException(
-                        "JSON error (" . $jsonError . ") \"" . json_last_error_msg() .
-                        "\" in REDCap API output." .
-                        "\nThe first 1,000 characters of output returned from REDCap are:\n" .
-                        substr($result, 0, 1000),
-                        ErrorHandlerInterface::JSON_ERROR
-                    );
-                    break;
+                    $message =  "JSON error (" . $jsonError . ") \"" . json_last_error_msg()
+                        ."\" in REDCap API output."
+                        ."\nThe first 1,000 characters of output returned from REDCap are:\n"
+                        .substr($result, 0, 1000);
+                    $code = ErrorHandlerInterface::JSON_ERROR;
+                    $this->errorHandler->throwException($message, $code);
+                    break; // @codeCoverageIgnore
             }
                 
             if (array_key_exists('error', $result)) {
                 $this->errorHandler->throwException($result ['error'], ErrorHandlerInterface::REDCAP_API_ERROR);
-            }
+            } // @codeCoverageIgnore
         } else {
             // If this is a format other than 'php', look for a JSON error, because
             // all formats return errors as JSON
@@ -2076,7 +2077,7 @@ class RedCapProject
                 //       $matches[1] is just the error message part
                 $message = $matches[1];
                 $this->errorHandler->throwException($message, ErrorHandlerInterface::REDCAP_API_ERROR);
-            }
+            } // @codeCoverageIgnore
         }
         
         return $result;
@@ -2088,12 +2089,12 @@ class RedCapProject
             $exportSurveyFields = false;
         } else {
             if (gettype($exportSurveyFields) !== 'boolean') {
-                $this->errorHandler->throwException(
-                    'Invalid type for exportSurveyFields. It should be a boolean (true or false),'
-                    .' but has type: '.gettype($exportSurveyFields).'.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
+                $message =  'Invalid type for exportSurveyFields.'
+                    .' It should be a boolean (true or false),'
+                    .' but has type: '.gettype($exportSurveyFields).'.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         }
         return $exportSurveyFields;
     }
@@ -2104,12 +2105,12 @@ class RedCapProject
             if ($required) {
                 $message = 'No field was specified.';
                 $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-            }
+            }  // @codeCoverageIgnore
             // else OK
         } elseif (gettype($field) !== 'string') {
             $message = 'Field has type "'.gettype($field).'", but should be a string.';
             $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+        } // @codeCoverageIgnore
         return $field;
     }
     
@@ -2120,18 +2121,18 @@ class RedCapProject
             $fields = array();
         } else {
             if (!is_array($fields)) {
-                $this->errorHandler->throwException(
-                    'Argument "fields" has the wrong type; it should be an array.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            } else {
+                $message = 'Argument "fields" has the wrong type; it should be an array.';
+                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } else { // @codeCoverageIgnore
                 foreach ($fields as $field) {
                     $type = gettype($field);
                     if (strcmp($type, 'string') !== 0) {
                         $message = 'A field with type "'.$type.'" was found in the fields array.'.
                             ' Fields should be strings.';
-                        $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-                    }
+                        $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                        $this->errorHandler->throwException($message, $code);
+                    } // @codeCoverageIgnore
                 }
             }
         }
@@ -2144,8 +2145,9 @@ class RedCapProject
         if (isset($file)) {
             if (gettype($file) !== 'string') {
                 $message = "Argument 'file' has type '".gettype($file)."', but should be a string.";
-                $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-            }
+                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         }
         return $file;
     }
@@ -2154,21 +2156,21 @@ class RedCapProject
     {
         if (!isset($filename)) {
             $message = 'No filename specified.';
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
+            $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
         } elseif (gettype($filename) !== 'string') {
             $message = "Argument 'filename' has type '".gettype($filename)."', but should be a string.";
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
+            $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
         } elseif (!file_exists($filename)) {
-            $this->errorHandler->throwException(
-                'The input file "'.$filename.'" could not be found.',
-                ErrorHandlerInterface::INPUT_FILE_NOT_FOUND
-            );
+            $message = 'The input file "'.$filename.'" could not be found.';
+            $code    = ErrorHandlerInterface::INPUT_FILE_NOT_FOUND;
+            $this->errorHandler->throwException($message, $code);
         } elseif (!is_readable($filename)) {
-            $this->errorHandler->throwException(
-                'The input file "'.$filename.'" was unreadable.',
-                ErrorHandlerInterface::INPUT_FILE_UNREADABLE
-            );
-        }
+            $message = 'The input file "'.$filename.'" was unreadable.';
+            $code    = ErrorHandlerInterface::INPUT_FILE_UNREADABLE;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         
         $basename = pathinfo($filename, PATHINFO_BASENAME);
         $curlFile = curl_file_create($filename, 'text/plain', $basename);
@@ -2183,11 +2185,11 @@ class RedCapProject
             $filterLogic = '';
         } else {
             if (gettype($filterLogic) !== 'string') {
-                $this->errorHandler->throwException(
-                    'Invalid type for filterLogic. It should be a string, but has type "'.gettype($filterLogic).'".',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
+                $message = 'Invalid type for filterLogic. It should be a string, but has type "'
+                    .gettype($filterLogic).'".';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         }
         return $filterLogic;
     }
@@ -2197,18 +2199,17 @@ class RedCapProject
     {
         if (!isset($form)) {
             if ($required === true) {
-                $this->errorHandler->throwException(
-                    'The form argument was not set.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
+                $message = 'The form argument was not set.';
+                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
             $form = '';
         } elseif (!is_string($form)) {
-            $this->errorHandler->throwException(
-                'The form argument has invalid type "'.gettype($form).'"; it should be a string.',
-                ErrorHandlerInterface::INVALID_ARGUMENT
-            );
-        }
+            $message = 'The form argument has invalid type "'.gettype($form)
+                .'"; it should be a string.';
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         
         return $form;
     }
@@ -2220,9 +2221,11 @@ class RedCapProject
         }
         
         if (gettype($format) !== 'string') {
-            $message = 'The format specified has type "'.gettype($format).'", but it should be a string.';
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+            $message = 'The format specified has type "'.gettype($format)
+                .'", but it should be a string.';
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         
         $format = strtolower(trim($format));
         
@@ -2230,8 +2233,9 @@ class RedCapProject
             $message = 'Invalid format "'.$format.'" specified.'
                 .' The format should be one of the following: "'.
                 implode('", "', $legalFormats).'".';
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         
         $dataFormat = '';
         if (strcmp($format, 'php') === 0) {
@@ -2249,18 +2253,18 @@ class RedCapProject
             $forms = array();
         } else {
             if (!is_array($forms)) {
-                $this->errorHandler->throwException(
-                    'The forms argument has invalid type "'.gettype($forms).'"; it should be an array.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            } else {
+                $message = 'The forms argument has invalid type "'.gettype($forms)
+                    .'"; it should be an array.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } else { // @codeCoverageIgnore
                 foreach ($forms as $form) {
                     $type = gettype($form);
                     if (strcmp($type, 'string') !== 0) {
                         $message = 'A form with type "'.$type.'" was found in the forms array.'.
                             ' Forms should be strings.';
                         $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-                    }
+                    } // @codeCoverageIgnore
                 }
             }
         }
@@ -2277,8 +2281,9 @@ class RedCapProject
             if (!is_array($data)) {
                 $message = "Argument '".$dataName."' has type '".gettype($data)."'"
                     .", but should be an array.";
-                    $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-            }
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
             $data = json_encode($data);
             
             $jsonError = json_last_error();
@@ -2290,20 +2295,30 @@ class RedCapProject
                     $message =  'JSON error ('.$jsonError.') "'. json_last_error_msg().
                     '"'." while processing argument '".$dataName."'.";
                     $this->errorHandler->throwException($message, ErrorHandlerInterface::JSON_ERROR);
-                    break;
+                    break; // @codeCoverageIgnore
             }
         } else { // All other formats
             if (gettype($data) !== 'string') {
                 $message = "Argument '".$dataName."' has type '".gettype($data)."'"
                     .", but should be a string.";
-                    $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-            }
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         }
         
         return $data;
     }
     
-    
+    /**
+     * Checks the result returned from the REDCap API for non-export methods.
+     * PHPCap is set to return errors from REDCap using JSON, so the result
+     * string is checked to see if there is a JSON format error, and if so,
+     * and exception is thrown using the error message returned from the
+     * REDCap API.
+     *
+     * @param string $result a result returned from the REDCap API, which
+     *     should be for a non-export method.
+     */
     protected function processNonExportResult(& $result)
     {
         $matches = array();
@@ -2312,8 +2327,9 @@ class RedCapProject
             // note: $matches[0] is the complete string that matched
             //       $matches[1] is just the error message part
             $message = $matches[1];
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::REDCAP_API_ERROR);
-        }
+            $code    = ErrorHandlerInterface::REDCAP_API_ERROR;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
     }
     
     
@@ -2323,12 +2339,11 @@ class RedCapProject
             $override = false;
         } else {
             if (gettype($override) !== 'boolean') {
-                $this->errorHandler->throwException(
-                    'Invalid type for override. It should be a boolean (true or false),'
-                    .' but has type: '.gettype($override).'.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
+                $message = 'Invalid type for override. It should be a boolean (true or false),'
+                    .' but has type: '.gettype($override).'.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         }
         
         if ($override === true) {
@@ -2347,8 +2362,9 @@ class RedCapProject
         } elseif ($overwriteBehavior !== 'normal' && $overwriteBehavior !== 'overwrite') {
             $message = 'Invalid value "'.$overwriteBehavior.'" specified for overwriteBehavior.'.
                 " Valid values are 'normal' and 'overwrite'.";
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         
         return $overwriteBehavior;
     }
@@ -2359,12 +2375,11 @@ class RedCapProject
             $rawOrLabel = 'raw';
         } else {
             if ($rawOrLabel !== 'raw' && $rawOrLabel !== 'label') {
-                $this->errorHandler->throwException(
-                    'Invalid value "'.$rawOrLabel.'" specified for rawOrLabel.'.
-                    " Valid values are 'raw' and 'label'.",
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
+                $message =   'Invalid value "'.$rawOrLabel.'" specified for rawOrLabel.'
+                    ." Valid values are 'raw' and 'label'.";
+                    $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         }
         return $rawOrLabel;
     }
@@ -2376,12 +2391,11 @@ class RedCapProject
             $rawOrLabelHeaders = 'raw';
         } else {
             if ($rawOrLabelHeaders !== 'raw' && $rawOrLabelHeaders !== 'label') {
-                $this->errorHandler->throwException(
-                    'Invalid value "'.$rawOrLabelHeaders.'" specified for rawOrLabelHeaders.'.
-                    " Valid values are 'raw' and 'label'.",
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
+                $message = 'Invalid value "'.$rawOrLabelHeaders.'" specified for rawOrLabelHeaders.'
+                    ." Valid values are 'raw' and 'label'.";
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         }
         return $rawOrLabelHeaders;
     }
@@ -2391,13 +2405,16 @@ class RedCapProject
     {
         if (!isset($recordId)) {
             if ($required) {
-                $this->errorHandler->throwException("No record ID specified.", ErrorHandlerInterface::INVALID_ARGUMENT);
-            }
+                $message = 'No record ID specified.';
+                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         } elseif (!is_string($recordId) && !is_int($recordId)) {
-            $message = 'The record ID has type "'.gettype($recordId).
-            '", but it should be a string or integer.';
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+            $message = 'The record ID has type "'.gettype($recordId)
+                .'", but it should be a string or integer.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        }  // @codeCoverageIgnore
         
         return $recordId;
     }
@@ -2408,18 +2425,19 @@ class RedCapProject
             $recordIds = array();
         } else {
             if (!is_array($recordIds)) {
-                $this->errorHandler->throwException(
-                    'The record IDs argument has type "'.gettype($recordIds).'"; it should be an array.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            } else {
+                $message = 'The record IDs argument has type "'.gettype($recordIds)
+                    .'"; it should be an array.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } else { // @codeCoverageIgnore
                 foreach ($recordIds as $recordId) {
                     $type = gettype($recordId);
                     if (strcmp($type, 'integer') !== 0 && strcmp($type, 'string') !== 0) {
-                        $message = 'A record ID with type "'.$type.'" was found.'.
-                                ' Record IDs should be integers or strings.';
-                        $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-                    }
+                        $message = 'A record ID with type "'.$type.'" was found.'
+                            .' Record IDs should be integers or strings.';
+                            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                        $this->errorHandler->throwException($message, $code);
+                    } // @codeCoverageIgnore
                 }
             }
         }
@@ -2432,12 +2450,12 @@ class RedCapProject
     {
         if (!isset($repeatInstance)) {
             ; // Might be OK
-        //} elseif (!is_string($repeatInstance) && !is_int($repeatInstance)) {
         } elseif (!is_int($repeatInstance)) {
-            $message = 'The repeat instance has type "'.gettype($repeatInstance).
-            '", but it should be an integer.';
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+            $message = 'The repeat instance has type "'.gettype($repeatInstance)
+                .'", but it should be an integer.';
+            $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         
         return $repeatInstance;
     }
@@ -2449,25 +2467,26 @@ class RedCapProject
             $message = 'No report ID specified for export.';
             $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
             $this->errorHandler->throwException($message, $code);
-        }
+        } // @codeCoverageIgnore
 
         if (is_string($reportId)) {
             if (!preg_match('/^[0-9]+$/', $reportId)) {
-                $this->errorHandler->throwException(
-                    'Report ID "'.$reportId.'" is non-numeric string.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
+                $message = 'Report ID "'.$reportId.'" is non-numeric string.';
+                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         } elseif (is_int($reportId)) {
             if ($reportId < 0) {
                 $message = 'Report ID "'.$reportId.'" is a negative integer.';
-                $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-            }
+                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         } else {
-            $message = 'The report ID has type "'.gettype($reportId).
-            '", but it should be an integer or a (numeric) string.';
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+            $message = 'The report ID has type "'.gettype($reportId)
+                .'", but it should be an integer or a (numeric) string.';
+                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         
         return $reportId;
     }
@@ -2480,8 +2499,9 @@ class RedCapProject
         } elseif ($returnContent !== 'count' && $returnContent !== 'ids') {
             $message = 'Invalid value "'.$returnContent.'" specified for overwriteBehavior.'.
                     " Valid values are 'count' and 'ids'.";
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+            $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
     
         return $returnContent;
     }
@@ -2492,12 +2512,12 @@ class RedCapProject
             $returnMetadataOnly= false;
         } else {
             if (gettype($returnMetadataOnly) !== 'boolean') {
-                $this->errorHandler->throwException(
-                    'Invalid type for returnMetadataOnly. It should be a boolean (true or false),'
-                    .' but has type: '.gettype($returnMetadataOnly).'.',
-                    ErrorHandlerInterface::INVALID_ARGUMENT
-                );
-            }
+                $message = 'Invalid type for returnMetadataOnly.'
+                    .' It should be a boolean (true or false),'
+                    .' but has type: '.gettype($returnMetadataOnly).'.';
+                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         }
         return $returnMetadataOnly;
     }
@@ -2509,7 +2529,7 @@ class RedCapProject
                 .gettype($sslVerify);
             $code = ErrorHandlerInterface::INVALID_ARGUMENT;
             $this->errorHandler->throwException($message, $code);
-        }
+        } // @codeCoverageIgnore
         return $sslVerify;
     }
     
@@ -2522,11 +2542,10 @@ class RedCapProject
         $type = strtolower(trim($type));
         
         if (strcmp($type, 'flat') !== 0 && strcmp($type, 'eav') !== 0) {
-            $this->errorHandler->throwException(
-                "Invalid type '".$type."' specified. Type should be either 'flat' or 'eav'",
-                ErrorHandlerInterface::INVALID_ARGUMENT
-            );
-        }
+            $message = "Invalid type '".$type."' specified. Type should be either 'flat' or 'eav'";
+            $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         return $type;
     }
 }

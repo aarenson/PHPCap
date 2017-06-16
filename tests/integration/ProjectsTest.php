@@ -157,4 +157,62 @@ class ProjectsTest extends TestCase
         }
         $this->assertTrue($exceptionCaught, 'CA certificate file with wrong type exception caught.');
     }
+
+    public function testCreateProjectWithInvalidErrorHandler()
+    {
+        $exceptionCaught = false;
+        try {
+            $project = new RedCapProject(
+                $apiUrl = self::$config['api.url'],
+                $apiToken = self::$config['basic.demography.api.token'],
+                $sslVerify = false,
+                $caCertificateFile = null,
+                $errorHandler = 123
+            );
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                ErrorHandlerInterface::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'Invalid error handler check.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'Invalid error handler exception caught.');
+    }
+    
+    public function testCreateProjectWithInvalidConnection()
+    {
+        $exceptionCaught = false;
+        try {
+            $project = new RedCapProject(
+                $apiUrl = self::$config['api.url'],
+                $apiToken = self::$config['basic.demography.api.token'],
+                $sslVerify = false,
+                $caCertificateFile = null,
+                $errorHandler = null,
+                $connection = 123
+            );
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(
+                ErrorHandlerInterface::INVALID_ARGUMENT,
+                $exception->getCode(),
+                'Invalid connection check.'
+            );
+        }
+        $this->assertTrue($exceptionCaught, 'Invalid connection exception caught.');
+    }
+    
+    
+    public function testGetApiInfo()
+    {
+        $apiUrl = self::$config['api.url'];
+        $basicDemographyApiToken = self::$config['basic.demography.api.token'];
+        
+        $project = new RedCapProject($apiUrl, $basicDemographyApiToken);
+        
+        $apiToken = $project->getApiToken();
+        
+        $this->assertEquals($basicDemographyApiToken, $apiToken, 'API Token check.');
+    }
 }

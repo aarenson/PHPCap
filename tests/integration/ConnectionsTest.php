@@ -53,8 +53,72 @@ class ConnectionsTest extends TestCase
     
     public function testConnectionCreation()
     {
-        $apiConnection = new RedCapApiConnection(self::$config['api.url']);
-        $this->assertNotNull($apiConnection, 'Connection is not null.');
+        $connection = new RedCapApiConnection(self::$config['api.url']);
+        $this->assertNotNull($connection, 'Connection is not null.');
+        
+        $this->assertEquals(self::$config['api.url'], $connection->getUrl(), 'URL check.');
+        
+        $this->assertFalse($connection->getSslVerify(), 'SSL verify default check.');
+        
+        $connection->setSslVerify(true);
+        $sslVerify = $connection->getSslVerify();
+        $this->assertTrue($connection->getSslVerify(), 'Set SSL verify check.');
+        
+        $this->assertNull($connection->getCaCertificateFile(), 'SSL CA certificate file default check.');
+        
+        $caCertFile = 'USERTrustRSACertificationAuthority.crt';
+        $connection->setCaCertificateFile($caCertFile);
+        $this->assertEquals($caCertFile, $connection->getCaCertificateFile(), 'CA cert. file check.');
+        
+        $timeout = $connection->getTimeoutInSeconds();
+        $timeout += 120;
+        $connection->setTimeoutInSeconds($timeout);
+        $this->assertEquals(
+            $timeout,
+            $connection->getTimeoutInSeconds(),
+            'Timeout check.'
+        );
+        
+        $connectionTimeout = $connection->getConnectionTimeoutInSeconds();
+        $connectionTimeout += 20;
+        $connection->setConnectionTimeoutInSeconds($connectionTimeout);
+        $this->assertEquals(
+            $connectionTimeout,
+            $connection->getConnectionTimeoutInSeconds(),
+            'Connection timeout check.'
+        );
+    }
+    
+    public function testConnectionCreationWithErrorHandler()
+    {
+        $errorHandler = new ErrorHandler();
+        $connection = new RedCapApiConnection(
+            $apiUrl = self::$config['api.url'],
+            $sslVerify = false,
+            $caCertificateFile = null,
+            null,
+            null,
+            $errorHandler
+        );
+        
+        $this->assertNotNull($connection, 'Connection not null check.');
+        
+        $errorHandlerFromGet = $connection->getErrorHandler();
+        $this->assertSame($errorHandler, $errorHandlerFromGet, 'Error handler check.');
+    }
+    
+    public function testConnectionSetErrorHandler()
+    {
+        $errorHandler = new ErrorHandler();
+        $connection = new RedCapApiConnection(self::$config['api.url']);
+        
+        $this->assertNotNull($connection, 'Connection not null check.');
+        
+        $connection->setErrorHandler($errorHandler);
+        
+        $errorHandlerFromGet = $connection->getErrorHandler();
+        
+        $this->assertSame($errorHandler, $errorHandlerFromGet, 'Error handler check.');
     }
     
     public function testCaCertificateFileNotFound()

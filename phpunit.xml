@@ -5,6 +5,7 @@
     <testsuite name="unit">
       <file>tests/unit/FileUtilTest.php</file>
       <file>tests/unit/PhpCapExceptionTest.php</file>
+      <file>tests/unit/RedCapTest.php</file>
       <file>tests/unit/RedCapProjectTest.php</file>
     </testsuite>
     <testsuite name="integration">
@@ -24,7 +25,7 @@
       <file>tests/integration/ProjectsTest.php</file>
       <file>tests/integration/ProjectXmlTest.php</file>
       <file>tests/integration/RecordsTest.php</file>
-      <file>tests/integration/RedCapTest.php</file>
+      <file>tests/integration/RedCapIntegrationTest.php</file>
       <file>tests/integration/RedCapVersionTest.php</file>
       <file>tests/integration/ReportsTest.php</file>
       <file>tests/integration/SurveyTest.php</file>

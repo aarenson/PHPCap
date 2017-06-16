@@ -76,7 +76,7 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
                 $message = 'The cert file "'. $caCertificateFile.'" exists, but cannot be read.';
                 $code    = ErrorHandlerInterface::CA_CERTIFICATE_FILE_UNREADABLE;
                 $this->errorHandler->throwException($message, $code);
-            }
+            } // @codeCoverageIgnore
 
             $this->setCurlOption(CURLOPT_CAINFO, $caCertificateFile);
         }
@@ -116,7 +116,7 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
                 .", but should be a string or an array.";
             $code = ErrorHandlerInterface::INVALID_ARGUMENT;
             $this->errorHandler->throwException($message, $code);
-        }
+        } // @codeCoverageIgnore
         
         $errno = 0;
         $response = '';
@@ -129,7 +129,7 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
             $message = curl_error($this->curlHandle);
             $code    = ErrorHandlerInterface::CONNECTION_ERROR;
             $this->errorHandler->throwException($message, $code, $errno);
-        } else {
+        } else { // @codeCoverageIgnore
             // Check for HTTP errors
             $httpCode = curl_getinfo($this->curlHandle, CURLINFO_HTTP_CODE);
             if ($httpCode == 301) {
@@ -144,7 +144,7 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
                     .') appears to be incorrect. Nothing was found at this URL.';
                 $code = ErrorHandlerInterface::INVALID_URL;
                 $this->errorHandler->throwException($message, $code, null, $httpCode);
-            }
+            } // @codeCoverageIgnore
         }
         
         return ($response);
@@ -183,7 +183,7 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
             $message = curl_error($this->curlHandle);
             $code    = ErrorHandlerInterface::CONNECTION_ERROR;
             $this->errorHandler->throwException($message, $code, $errno);
-        }
+        } // @codeCoverageIgnore
         
         return $callInfo;
     }

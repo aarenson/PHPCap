@@ -34,7 +34,7 @@ class RedCap
         }
     
         if (isset($connection)) {
-            $this->connection = $this->processConnectionArgument();
+            $this->connection = $this->processConnectionArgument($connection);
         } else {
             $apiUrl    = $this->processApiUrlArgument($apiUrl);
             $sslVerify = $this->processSslVerifyArgument($sslVerify);
@@ -89,7 +89,7 @@ class RedCap
      *     'php' format is used, the data needs to be an array where the keys are
      *     the field names and the values are the field values.
      * @param string $format
-     * @param unknown $odm
+     * @param string $odm
      * @return unknown
      */
     public function createProject(
@@ -149,6 +149,8 @@ class RedCap
      */
     public function getProject($apiToken)
     {
+        $apiToken = $this->processApiTokenArgument($apiToken);
+        
         $connection   = clone $this->connection;
         $errorHandler = clone $this->errorHandler;
         
@@ -164,6 +166,32 @@ class RedCap
         return $project;
     }
     
+    protected function processApiTokenArgument($apiToken)
+    {
+        if (!isset($apiToken)) {
+            $message = 'The REDCap API token specified for the project was null or blank.';
+            $code    =  ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } elseif (gettype($apiToken) !== 'string') {
+            $message = 'The REDCap API token provided should be a string, but has type: '
+                .gettype($apiToken);
+            $code =  ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } elseif (!ctype_xdigit($apiToken)) {   // ctype_xdigit - check token for hexidecimal
+            $message = 'The REDCap API token has an invalid format.'
+                .' It should only contain numbers and the letters A, B, C, D, E and F.';
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } elseif (strlen($apiToken) != 32) { # Note: super tokens are not valid for project methods
+            $message = 'The REDCap API token has an invalid format.'
+                .' It has a length of '.strlen($apiToken).' characters, but should have a length of'
+                .' 32.';
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
+        return $apiToken;
+    }
+    
     
     protected function processApiUrlArgument($apiUrl)
     {
@@ -177,7 +205,7 @@ class RedCap
                 . gettype($apiUrl);
             $code = ErrorHandlerInterface::INVALID_ARGUMENT;
             $this->errorHandler->throwException($message, $code);
-        }
+        } // @codeCoverageIgnore
         return $apiUrl;
     }
     
@@ -187,9 +215,9 @@ class RedCap
         if (isset($caCertificateFile) && gettype($caCertificateFile) !== 'string') {
             $message = 'The value for $sslVerify must be a string, but has type: '
                 .gettype($caCertificateFile);
-                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
-                $this->errorHandler->throwException($message, $code);
-        }
+            $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         return $caCertificateFile;
     }
     
@@ -198,10 +226,21 @@ class RedCap
         if (!($connection instanceof RedCapApiConnectionInterface)) {
             $message = 'The connection argument is not valid, because it doesn\'t implement '
                 .RedCapApiConnectionInterface::class.'.';
-                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
-                $this->errorHandler->throwException($message, $code);
-        }
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         return $connection;
+    }
+    
+    protected function processErrorHandlerArgument($errorHandler)
+    {
+        if (!($errorHandler instanceof ErrorHandlerInterface)) {
+            $message = 'The error handler argument is not valid, because it doesn\'t implement '
+                .ErrorHandlerInterface::class.'.';
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
+        return $errorHandler;
     }
     
     protected function processFormatArgument(& $format, $legalFormats)
@@ -221,8 +260,8 @@ class RedCap
             $message = 'Invalid format "'.$format.'" specified.'
                 .' The format should be one of the following: "'.
                 implode('", "', $legalFormats).'".';
-                $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
+        } // @codeCoverageIgnore
         
         $dataFormat = '';
         if (strcmp($format, 'php') === 0) {
@@ -263,8 +302,8 @@ class RedCap
             if (gettype($data) !== 'string') {
                 $message = "Argument '".$dataName."' has type '".gettype($data)."'"
                     .", but should be a string.";
-                    $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-            }
+                $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
+            } // @codeCoverageIgnore
         }
         
         return $data;
@@ -279,7 +318,7 @@ class RedCap
             //       $matches[1] is just the error message part
             $message = $matches[1];
             $this->errorHandler->throwException($message, ErrorHandlerInterface::REDCAP_API_ERROR);
-        }
+        } // @codeCoverageIgnore
     }
     
     
@@ -288,16 +327,17 @@ class RedCap
         if (isset($sslVerify) && gettype($sslVerify) !== 'boolean') {
             $message = 'The value for $sslVerify must be a boolean (true/false), but has type: '
                 .gettype($sslVerify);
-                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
-                $this->errorHandler->throwException($message, $code);
-        }
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
+        
         return $sslVerify;
     }
     
     
     protected function processSuperTokenArgument($superToken)
     {
-        if (!isset($superToken)) {
+        if (!isset($superToken) || trim($superToken) === '') {
             ;  // OK; just means that createProject can't be used
         } elseif (gettype($superToken) !== 'string') {
             $this->errorHandler->throwException("The REDCap super token provided should be a string, but has type: "
@@ -315,7 +355,7 @@ class RedCap
                 . " 64 characters.",
                 ErrorHandlerInterface::INVALID_ARGUMENT
             );
-        }
+        } // @codeCoverageIgnore
         
         return $superToken;
     }
