@@ -61,6 +61,34 @@ class RedCapIntegrationTest extends TestCase
         $this->assertNotNull($project, 'Project not null check.');
     }
     
+    public function testGetProjectConstructor()
+    {
+        $constructor = self::$redCap->getProjectConstructor();
+        
+        $this->assertNotNull($constructor, 'Constructor not null.');
+        $this->assertTrue(is_callable($constructor), 'Constructor is callable.');
+    }
+    
+    public function testSetProjectConstructor()
+    {
+        $constructor = function (
+            $apiUrl,
+            $apiToken,
+            $sslVerify = false,
+            $caCertificateFile = null,
+            $errorHandler = null,
+            $connection = null
+        ) {
+                return 123;
+        };
+
+        $redCap = new RedCap(self::$apiUrl);
+        $redCap->setProjectConstructor($constructor);
+        
+        $value = $redCap->getProject('12345678901234567890123456789012');
+        $this->assertEquals(123, $value, 'Project value check.');
+    }
+    
     /**
      * Note: there is no way for this test to delete the project that
      * it creates.
@@ -82,7 +110,7 @@ class RedCapIntegrationTest extends TestCase
                 'surveys_enabled' => 1,
                 'record_autonumbering_enabled' => 1
             ];
-            $project = self::$redCap->createProject($projectData);
+            $project = self::$redCap->createProject($projectData, $format = null);
         
             $projectInfo = $project->exportProjectInfo();
         
@@ -100,21 +128,22 @@ class RedCapIntegrationTest extends TestCase
         }
     }
     
+   
     public function testCreateProjectWithOdm()
     {
         if (isset(self::$superToken)) {
             $projectTitle = 'PHPCap Created Project with ODM Test';
             $purpose = 1;
             $purposeOther = 'PHPCap project creation with ODM test';
-            $projectData = [
-                    'project_title' => $projectTitle,
-                    'purpose' => 1,
-                    'purpose_other' => $purposeOther
-            ];
+            $projectData = '[{'
+                .'"project_title": "'.$projectTitle.'",'
+                .'"purpose": "1",'
+                .'"purpose_other": "'.$purposeOther.'"'
+                .'}]';
             $odmFile = __DIR__.'/../projects/PHPCapBasicDemography.REDCap.xml';
             $projectOdmData = FileUtil::fileToString($odmFile);
             
-            $project = self::$redCap->createProject($projectData, 'php', $projectOdmData);
+            $project = self::$redCap->createProject($projectData, 'json', $projectOdmData);
             $this->assertNotNull($project, 'Project not null check.');
             
             $projectInfo = $project->exportProjectInfo();
@@ -135,6 +164,108 @@ class RedCapIntegrationTest extends TestCase
         }
         $this->assertTrue($exceptionCaught, 'Exception caught check.');
     }
+    
+    
+    public function testCreateProjectWithInvalidPhpProjectData()
+    {
+        $exceptionCaught = false;
+        try {
+            # project data should be an array for 'php' format, but it's a string
+            $projectData = '[{"project_title": "Test project.", "purpose": "0"}]';
+            $project = self::$redCap->createProject($projectData, $format = 'php');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $exception->getCode());
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught check.');
+    }
+    
+    public function testCreateProjectWithInvalidJsonProjectData()
+    {
+        $exceptionCaught = false;
+        try {
+            # project data should be a string for 'json' format, but it's an array
+            $projectData = ["project_title" => "Test project.", "purpose" => "0"];
+            $project = self::$redCap->createProject($projectData, $format = 'json');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $exception->getCode());
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught check.');
+    }
+    
+    public function testCreateProjectWithPhpToJsonError()
+    {
+        SystemFunctions::setJsonError();
+        
+        $exceptionCaught = false;
+        try {
+            $projectData = ["project_title" => "Test project.", "purpose" => "0"];
+            $project = self::$redCap->createProject($projectData, $format = 'php');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(ErrorHandlerInterface::JSON_ERROR, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+        SystemFunctions::clearJsonError();
+    }
+    
+    public function testCreateProjectWithInvalidProjectDataFieldName()
+    {
+        if (isset(self::$superToken)) {
+            $exceptionCaught = false;
+            try {
+                // project_caption below should be project_title
+                $projectData = [
+                    "project_caption" => "Test project.",
+                    "purpose" => "0"
+                ];
+                $project = self::$redCap->createProject($projectData, $format = 'php');
+            } catch (PhpCapException $exception) {
+                $exceptionCaught = true;
+                $code = $exception->getCode();
+                $this->assertEquals(ErrorHandlerInterface::REDCAP_API_ERROR, $code, 'Exception code check.');
+            }
+            $this->assertTrue($exceptionCaught, 'Exception caught.');
+        }
+    }
+    
+    public function testCreateProjectWithInvalidFormatType()
+    {
+        $exceptionCaught = false;
+        try {
+            $projectData = [
+                    'project_title' => 'PHPCap create project error',
+                    'purpose' => 0
+            ];
+            $projectData = null;
+            $project = self::$redCap->createProject($projectData, $format =  123);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $exception->getCode());
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught check.');
+    }
+    
+    
+    public function testCreateProjectWithInvalidFormatValue()
+    {
+        $exceptionCaught = false;
+        try {
+            $projectData = [
+                    'project_title' => 'PHPCap create project error',
+                    'purpose' => 0
+            ];
+            $projectData = null;
+            $project = self::$redCap->createProject($projectData, $format = 'invalid');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $exception->getCode());
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught check.');
+    }
+    
     
     public function testGetProject()
     {

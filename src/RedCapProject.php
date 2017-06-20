@@ -2322,7 +2322,7 @@ class RedCapProject
     protected function processNonExportResult(& $result)
     {
         $matches = array();
-        $hasMatch = preg_match('/^[\s]*{"error":"([^"]+)"}[\s]*$/', $result, $matches);
+        $hasMatch = preg_match('/^[\s]*{"error":\s*"([^"]+)"}[\s]*$/', $result, $matches);
         if ($hasMatch === 1) {
             // note: $matches[0] is the complete string that matched
             //       $matches[1] is just the error message part

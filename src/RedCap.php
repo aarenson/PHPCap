@@ -12,10 +12,13 @@ class RedCap
 {
     protected $superToken;
     
+    protected $errorHandler;
+    
     /** connection to the REDCap API at the $apiURL. */
     protected $connection;
- 
-    protected $errorHandler;
+
+    /** function for creating project object (so that it can be modified) */
+    protected $projectConstructor;
     
     public function __construct(
         $apiUrl,
@@ -31,7 +34,7 @@ class RedCap
         $this->errorHandler = new ErrorHandler();
         if (isset($errorHandler)) {
             $this->errorHandler = $this->processErrorHandlerArgument($errorHandler);
-        }
+        } // @codeCoverageIgnore
     
         if (isset($connection)) {
             $this->connection = $this->processConnectionArgument($connection);
@@ -44,6 +47,24 @@ class RedCap
         }
         
         $this->superToken = $this->processSuperTokenArgument($superToken);
+        
+        $this->projectConstructor = function (
+            $apiUrl,
+            $apiToken,
+            $sslVerify = false,
+            $caCertificateFile = null,
+            $errorHandler = null,
+            $connection = null
+        ) {
+            return new RedCapProject(
+                $apiUrl,
+                $apiToken,
+                $sslVerify,
+                $caCertificateFile,
+                $errorHandler,
+                $connection
+            );
+        };
     }
 
     
@@ -128,7 +149,10 @@ class RedCap
         $connection   = clone $this->connection;
         $errorHandler = clone $this->errorHandler;
         
-        $project = new RedCapProject(
+        $projectConstructor = $this->projectConstructor;
+        
+        $project = call_user_func(
+            $projectConstructor,
             $apiUrl = null,
             $apiToken,
             $sslVerify = null,
@@ -154,7 +178,11 @@ class RedCap
         $connection   = clone $this->connection;
         $errorHandler = clone $this->errorHandler;
         
-        $project = new RedCapProject(
+        $projectConstructor = $this->projectConstructor;
+        
+        # By default, this creates a RedCapProject
+        $project = call_user_func(
+            $projectConstructor,
             $apiUrl = null,
             $apiToken,
             $sslVerify = null,
@@ -164,6 +192,17 @@ class RedCap
         );
         
         return $project;
+    }
+    
+    
+    public function getProjectConstructor()
+    {
+        return $this->projectConstructor;
+    }
+    
+    public function setProjectConstructor($projectConstructor)
+    {
+        $this->projectConstructor = $projectConstructor;
     }
     
     protected function processApiTokenArgument($apiToken)
@@ -245,14 +284,10 @@ class RedCap
     
     protected function processFormatArgument(& $format, $legalFormats)
     {
-        if (!isset($format)) {
-            $format = 'php';
-        }
-        
         if (gettype($format) !== 'string') {
             $message = 'The format specified has type "'.gettype($format).'", but it should be a string.';
             $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
+        } // @codeCoverageIgnore
         
         $format = strtolower(trim($format));
         
@@ -283,7 +318,7 @@ class RedCap
                 $message = "Argument '".$dataName."' has type '".gettype($data)."'"
                     .", but should be an array.";
                     $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-            }
+            } // @codeCoverageIgnore
             $data = array($data); // Needs to be an array within an array to work
             $data = json_encode($data);
             
@@ -296,9 +331,10 @@ class RedCap
                     $message =  'JSON error ('.$jsonError.') "'. json_last_error_msg().
                     '"'." while processing argument '".$dataName."'.";
                     $this->errorHandler->throwException($message, ErrorHandlerInterface::JSON_ERROR);
-                    break;
+                    break; // @codeCoverageIgnore
             }
-        } else { // All other formats
+        } else { // @codeCoverageIgnore
+            // All non-php formats:
             if (gettype($data) !== 'string') {
                 $message = "Argument '".$dataName."' has type '".gettype($data)."'"
                     .", but should be a string.";
@@ -312,7 +348,7 @@ class RedCap
     protected function processNonExportResult(& $result)
     {
         $matches = array();
-        $hasMatch = preg_match('/^[\s]*{"error":"([^"]+)"}[\s]*$/', $result, $matches);
+        $hasMatch = preg_match('/^[\s]*{"error":\s*"([^"]+)"}[\s]*$/', $result, $matches);
         if ($hasMatch === 1) {
             // note: $matches[0] is the complete string that matched
             //       $matches[1] is just the error message part
