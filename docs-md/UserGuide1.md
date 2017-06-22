@@ -12,7 +12,7 @@ Prerequisites
 
 Example PHP Setup on Ubuntu 16:
     
-    sudo apt-get install php php-curl
+    sudo apt-get install php php-curl composer
 
 Information on installing PHP on Windows: http://php.net/manual/en/install.windows.php
     

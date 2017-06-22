@@ -1,7 +1,7 @@
 User Guide 2 - API Overview
 =============================================
 
-The three main classes provided by PHPCap for users are:
+The four main classes provided by PHPCap for users are:
 
 <table>
 <thead>
@@ -20,10 +20,23 @@ The three main classes provided by PHPCap for users are:
   </tr>
   <tr>
     <td>
+      <a href="https://aarenson.github.io/PHPCap/api/class-IU.PHPCap.RedCap.html">RedCap</a> 
+    </td>
+    <td>
+      Represents a REDCap instance/site. This class is only required for creating new REDCap
+      projects using PHPCap, but it also may be helpful if your program needs
+      to access multiple projects, especially if you are doing a lot of customization
+      of PHPCap.
+    </td>
+  </tr>  
+  <tr>
+    <td>
       <a href="https://aarenson.github.io/PHPCap/api/class-IU.PHPCap.FileUtil.html">FileUtil</a> 
     </td>
     <td>
-      Used to read from, and write to, files.     
+      Used to read from, and write to, files. FileUtil is
+      set up to throw a PhpCapException if an error occurs, so it can
+      make error handling more consistent and easier.
     </td>
   </tr>
   <tr>
@@ -37,7 +50,7 @@ The three main classes provided by PHPCap for users are:
 </tbody>
 </table>
  
- Here is a complete example that uses all three of these classes to export the
+ Here is a complete example that uses three of these classes to export the
  records in a REDCap project to a file in CSV (Comma-Separated Values) format:
  ```php
  <?php 

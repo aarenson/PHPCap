@@ -20,6 +20,18 @@ class RedCap
     /** function for creating project object (so that it can be modified) */
     protected $projectConstructor;
     
+    /**
+     * 
+     * @param string $apiUrl the URL for the API for your REDCap site.
+     * @param string $superToken the user's super token. This needs to be provided if
+     *     you are going to create projects.
+     * @param boolean $sslVerify
+     * @param unknown $caCertificateFile
+     * @param unknown $errorHandler the error handler to use; set only if you want to 
+     *     override the default error handler.
+     * @param unknown $connection the connection to user; set only if you want to
+     *     override the default connection.
+     */
     public function __construct(
         $apiUrl,
         $superToken = null,
@@ -194,12 +206,26 @@ class RedCap
         return $project;
     }
     
-    
+    /**
+     * Gets the function used to create projects.
+     * 
+     * @return callable the function used by this class to create projects.
+     */
     public function getProjectConstructor()
     {
         return $this->projectConstructor;
     }
     
+    /**
+     * Sets the function used to create projects in this class.
+     * This method would normally only be used if you have extended
+     * the RedCapProject class and want RedCap to return
+     * projects using your extended class.
+     * 
+     * @param callable $projectConstructor the function to call to create a new project.
+     *     The function will be passed the same arguments as the RedCapProject
+     *     constructor gets. 
+     */
     public function setProjectConstructor($projectConstructor)
     {
         $this->projectConstructor = $projectConstructor;

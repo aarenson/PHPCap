@@ -64,7 +64,7 @@ composer install
 </li>
 </ol>
 <h2>Example Setup on Ubuntu 16</h2>
-<p>To set up PHPCap on Ubuntu 16, execute the following commands:</p>
+<p>To set up PHPCap for development on Ubuntu 16, execute the following commands:</p>
 <div class="description"><pre><code class="language-shell">sudo apt-get install php php-curl php-xml php-mbstring
 sudo apt-get install php-xdebug
 sudo apt-get install git
@@ -160,6 +160,11 @@ as follows:</p>
         survey.participant.identifier=</code></pre></div>
 </li>
 </ol>
+<h4>Setup for Optional Project Creation Tests</h4>
+<p>To set up the optional tests for project creation, you need to uncomment and set the
+<strong>super.token</strong> to a valid super token value. Note that the tests for project creation
+have no way to delete the projects that are created, so they will need to be deleted
+manually.</p>
 <p>Note: the .gitignore file in PHPCap is set to ignore the <strong>tests/config.ini</strong> file, so that your
 personal API tokens will not be committed to Git. </p>
 <h4>Running the Automated Tests</h4>

@@ -49,11 +49,18 @@
 		<div id="elements">
 			<h3>Classes</h3>
 			<ul>
+				<li><a href="class-IU.PHPCap.ErrorHandler.html">ErrorHandler</a></li>
 				<li><a href="class-IU.PHPCap.FileUtil.html">FileUtil</a></li>
+				<li><a href="class-IU.PHPCap.RedCap.html">RedCap</a></li>
 				<li><a href="class-IU.PHPCap.RedCapApiConnection.html">RedCapApiConnection</a></li>
 				<li><a href="class-IU.PHPCap.RedCapProject.html">RedCapProject</a></li>
 			</ul>
 
+			<h3>Interfaces</h3>
+			<ul>
+				<li><a href="class-IU.PHPCap.ErrorHandlerInterface.html">ErrorHandlerInterface</a></li>
+				<li><a href="class-IU.PHPCap.RedCapApiConnectionInterface.html">RedCapApiConnectionInterface</a></li>
+			</ul>
 
 
 			<h3>Exceptions</h3>
@@ -109,10 +116,10 @@ throw when it encounters an error.</p>
 <span class="php-keyword1">catch</span> (PhpCapException <span class="php-var">$exception</span>) {
     <span class="php-keyword1">print</span> <span class="php-quote">&quot;The following error occurred: </span><span class="php-var">{$exception-&gt;getMessage()}</span><span class="php-quote">\n&quot;</span>;
     <span class="php-keyword1">print</span> <span class="php-quote">&quot;Error code: </span><span class="php-var">{$exception-&gt;getCode()}</span><span class="php-quote">\n&quot;</span>;
-    <span class="php-var">$curlErrorNumber</span> = <span class="php-var">$exception</span>-&gt;getCurlErrorNumber();
-    <span class="php-keyword1">if</span> (<span class="php-keyword1">isset</span>(<span class="php-var">$curlErrorNumber</span>)) {
-        <span class="php-keyword1">print</span> <span class="php-quote">&quot;A cURL error occurred.\n&quot;</span>;
-        <span class="php-keyword1">print</span> <span class="php-quote">&quot;cURL error number: </span><span class="php-var">{$curlErrorNumber}</span><span class="php-quote">\n&quot;</span>;
+    <span class="php-var">$connectionErrorNumber</span> = <span class="php-var">$exception</span>-&gt;getConnectionErrorNumber();
+    <span class="php-keyword1">if</span> (<span class="php-keyword1">isset</span>(<span class="php-var">$connectionErrorNumber</span>)) {
+        <span class="php-keyword1">print</span> <span class="php-quote">&quot;A connection error occurred.\n&quot;</span>;
+        <span class="php-keyword1">print</span> <span class="php-quote">&quot;Connection error number: </span><span class="php-var">{$connectionErrorNumber}</span><span class="php-quote">\n&quot;</span>;
     }
     <span class="php-keyword1">print</span> <span class="php-quote">&quot;Stack trace:\n</span><span class="php-var">{$exception-&gt;getTraceAsString()}</span><span class="php-quote">\n&quot;</span>;
 }</pre>
@@ -149,7 +156,7 @@ throw when it encounters an error.</p>
 				<b>See:</b>
 				<p>http://php.net/manual/en/class.exception.php
         Information on additional methods provided by parent class Exception.</p><br>
-			<b>Located at</b> <a href="source-class-IU.PHPCap.PhpCapException.html#9-121" title="Go to source code">PhpCapException.php</a>
+			<b>Located at</b> <a href="source-class-IU.PHPCap.PhpCapException.html#9-93" title="Go to source code">PhpCapException.php</a>
 		<br>
 	</div>
 
@@ -173,7 +180,7 @@ throw when it encounters an error.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#___construct">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.PhpCapException.html#84-98" title="Go to source code">__construct</a>( <span>string <var>$message</var></span>, <span>integer <var>$code</var></span>, <span>integer <var>$curlErrorNumber</var> = <span class="php-keyword1">null</span></span>, <span>integer <var>$httpStatusCode</var> = <span class="php-keyword1">null</span></span>, <span><code><a href="class-Exception.html">Exception</a></code> <var>$previous</var> = <span class="php-keyword1">null</span></span> )</code>
+		<code><a href="source-class-IU.PHPCap.PhpCapException.html#44-66" title="Go to source code">__construct</a>( <span>string <var>$message</var></span>, <span>integer <var>$code</var></span>, <span>integer <var>$connectionErrorNumber</var> = <span class="php-keyword1">null</span></span>, <span>integer <var>$httpStatusCode</var> = <span class="php-keyword1">null</span></span>, <span><code><a href="class-Exception.html">Exception</a></code> <var>$previous</var> = <span class="php-keyword1">null</span> </span> )</code>
 
 		<div class="description short">
 			<p>Constructor.</p>
@@ -189,8 +196,9 @@ throw when it encounters an error.</p>
 					<dd>the error message.</dd>
 					<dt><var>$code</var></dt>
 					<dd>the error code.</dd>
-					<dt><var>$curlErrorNumber</var></dt>
-					<dd>the cURL error number (set to null if no cURL error occurred).</dd>
+					<dt><var>$connectionErrorNumber</var></dt>
+					<dd><p>the connection error number
+    (set to null if no connection error occurred).</p></dd>
 					<dt><var>$httpStatusCode</var></dt>
 					<dd>the HTTP status code (set to null if no HTTP status code was returned).</dd>
 					<dt><var>$previous</var></dt>
@@ -206,7 +214,7 @@ throw when it encounters an error.</p>
 		</div>
 		</div></td>
 	</tr>
-	<tr data-order="getCurlErrorNumber" id="_getCurlErrorNumber">
+	<tr data-order="getConnectionErrorNumber" id="_getConnectionErrorNumber">
 
 		<td class="attributes"><code>
 			 public 
@@ -219,23 +227,31 @@ throw when it encounters an error.</p>
 		<td class="name"><div>
 		
 		<!-- PHPCap change -->
-		<!-- <a class="anchor" title="expand/collapse" href="#_getCurlErrorNumber">+/-</a> -->
+		<!-- <a class="anchor" title="expand/collapse" href="#_getConnectionErrorNumber">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.PhpCapException.html#101-109" title="Go to source code">getCurlErrorNumber</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.PhpCapException.html#69-81" title="Go to source code">getConnectionErrorNumber</a>( )</code>
 
 		<div class="description short">
-			<p>Returns the cURL error number, or null if no cURL error occurred.</p>
+			<p>Returns the connection error number, or null if there was no
+connection error. The possible numbers returned will depend
+on the type of connection class being used. For example, if
+cURL is being used, then the cURL error number would be
+returned.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Returns the cURL error number, or null if no cURL error occurred.</p>
+			<p>Returns the connection error number, or null if there was no
+connection error. The possible numbers returned will depend
+on the type of connection class being used. For example, if
+cURL is being used, then the cURL error number would be
+returned.</p>
 
 
 
 				<h4>Returns</h4>
 				<div class="list">
-					integer|null<br>cURL error number, or null if there was no cURL error.
+					integer|null<br>connection error number, or null if there was no connection error.
 				</div>
 
 
@@ -260,7 +276,7 @@ throw when it encounters an error.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getHttpStatusCode">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.PhpCapException.html#112-120" title="Go to source code">getHttpStatusCode</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.PhpCapException.html#84-92" title="Go to source code">getHttpStatusCode</a>( )</code>
 
 		<div class="description short">
 			<p>Returns the HTTP status code, or null if this was not set.</p>
@@ -307,299 +323,6 @@ throw when it encounters an error.</p>
 
 
 
-	<table class="summary constants" id="constants">
-	<caption>Constants summary</caption>
-	<tr data-order="INVALID_ARGUMENT" id="INVALID_ARGUMENT">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name">
-			<code>
-				<a href="source-class-IU.PHPCap.PhpCapException.html#38-39" title="Go to source code"><b>INVALID_ARGUMENT</b></a>
-			</code>
-
-			<div class="description short">
-				<p>Invalid argument passed to a PHPCap method.</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>Invalid argument passed to a PHPCap method.</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#INVALID_ARGUMENT" title="expand/collapse" class="anchor">+/-</a>
-				<code><span class="php-num">1</span></code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="TOO_MANY_ARGUMENTS" id="TOO_MANY_ARGUMENTS">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name">
-			<code>
-				<a href="source-class-IU.PHPCap.PhpCapException.html#41-42" title="Go to source code"><b>TOO_MANY_ARGUMENTS</b></a>
-			</code>
-
-			<div class="description short">
-				<p>Too many arguments were passed to the method.</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>Too many arguments were passed to the method.</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#TOO_MANY_ARGUMENTS" title="expand/collapse" class="anchor">+/-</a>
-				<code><span class="php-num">2</span></code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="INVALID_URL" id="INVALID_URL">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name">
-			<code>
-				<a href="source-class-IU.PHPCap.PhpCapException.html#44-45" title="Go to source code"><b>INVALID_URL</b></a>
-			</code>
-
-			<div class="description short">
-				<p>An invalid URL was used.</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>An invalid URL was used.</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#INVALID_URL" title="expand/collapse" class="anchor">+/-</a>
-				<code><span class="php-num">3</span></code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="CA_CERTIFICATE_FILE_NOT_FOUND" id="CA_CERTIFICATE_FILE_NOT_FOUND">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name">
-			<code>
-				<a href="source-class-IU.PHPCap.PhpCapException.html#47-48" title="Go to source code"><b>CA_CERTIFICATE_FILE_NOT_FOUND</b></a>
-			</code>
-
-			<div class="description short">
-				<p>A CA certificate file was specified, but it could not be found.</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>A CA certificate file was specified, but it could not be found.</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#CA_CERTIFICATE_FILE_NOT_FOUND" title="expand/collapse" class="anchor">+/-</a>
-				<code><span class="php-num">4</span></code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="CA_CERTIFICATE_FILE_UNREADABLE" id="CA_CERTIFICATE_FILE_UNREADABLE">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name">
-			<code>
-				<a href="source-class-IU.PHPCap.PhpCapException.html#50-51" title="Go to source code"><b>CA_CERTIFICATE_FILE_UNREADABLE</b></a>
-			</code>
-
-			<div class="description short">
-				<p>The CA certificate file could not be read.</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>The CA certificate file could not be read.</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#CA_CERTIFICATE_FILE_UNREADABLE" title="expand/collapse" class="anchor">+/-</a>
-				<code><span class="php-num">5</span></code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="CURL_ERROR" id="CURL_ERROR">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name">
-			<code>
-				<a href="source-class-IU.PHPCap.PhpCapException.html#53-54" title="Go to source code"><b>CURL_ERROR</b></a>
-			</code>
-
-			<div class="description short">
-				<p>A cURL error occurred.</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>A cURL error occurred.</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#CURL_ERROR" title="expand/collapse" class="anchor">+/-</a>
-				<code><span class="php-num">6</span></code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="REDCAP_API_ERROR" id="REDCAP_API_ERROR">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name">
-			<code>
-				<a href="source-class-IU.PHPCap.PhpCapException.html#56-57" title="Go to source code"><b>REDCAP_API_ERROR</b></a>
-			</code>
-
-			<div class="description short">
-				<p>The REDCap API generated an error.</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>The REDCap API generated an error.</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#REDCAP_API_ERROR" title="expand/collapse" class="anchor">+/-</a>
-				<code><span class="php-num">7</span></code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="JSON_ERROR" id="JSON_ERROR">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name">
-			<code>
-				<a href="source-class-IU.PHPCap.PhpCapException.html#59-62" title="Go to source code"><b>JSON_ERROR</b></a>
-			</code>
-
-			<div class="description short">
-				<p>A JSON error occurred. This would typically happen when PHPCap is expecting
-the REDCap API to return data in JSON format, but the result returned is not valid JSON.</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>A JSON error occurred. This would typically happen when PHPCap is expecting
-the REDCap API to return data in JSON format, but the result returned is not valid JSON.</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#JSON_ERROR" title="expand/collapse" class="anchor">+/-</a>
-				<code><span class="php-num">8</span></code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="OUTPUT_FILE_ERROR" id="OUTPUT_FILE_ERROR">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name">
-			<code>
-				<a href="source-class-IU.PHPCap.PhpCapException.html#64-65" title="Go to source code"><b>OUTPUT_FILE_ERROR</b></a>
-			</code>
-
-			<div class="description short">
-				<p>The output file could not be found, or was found and could not be written</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>The output file could not be found, or was found and could not be written</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#OUTPUT_FILE_ERROR" title="expand/collapse" class="anchor">+/-</a>
-				<code><span class="php-num">9</span></code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="INPUT_FILE_NOT_FOUND" id="INPUT_FILE_NOT_FOUND">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name">
-			<code>
-				<a href="source-class-IU.PHPCap.PhpCapException.html#67-68" title="Go to source code"><b>INPUT_FILE_NOT_FOUND</b></a>
-			</code>
-
-			<div class="description short">
-				<p>The input file could not be found.</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>The input file could not be found.</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#INPUT_FILE_NOT_FOUND" title="expand/collapse" class="anchor">+/-</a>
-				<code><span class="php-num">10</span></code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="INPUT_FILE_UNREADABLE" id="INPUT_FILE_UNREADABLE">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name">
-			<code>
-				<a href="source-class-IU.PHPCap.PhpCapException.html#70-71" title="Go to source code"><b>INPUT_FILE_UNREADABLE</b></a>
-			</code>
-
-			<div class="description short">
-				<p>The input file was found, but is unreadable.</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>The input file was found, but is unreadable.</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#INPUT_FILE_UNREADABLE" title="expand/collapse" class="anchor">+/-</a>
-				<code><span class="php-num">11</span></code>
-			</div>
-		</td>
-	</tr>
-	<tr data-order="INPUT_FILE_ERROR" id="INPUT_FILE_ERROR">
-
-		<td class="attributes"><code>integer</code></td>
-		<td class="name">
-			<code>
-				<a href="source-class-IU.PHPCap.PhpCapException.html#73-74" title="Go to source code"><b>INPUT_FILE_ERROR</b></a>
-			</code>
-
-			<div class="description short">
-				<p>The input file contents are invalid.</p>
-			</div>
-
-			<div class="description detailed hidden">
-				<p>The input file contents are invalid.</p>
-
-			</div>
-		</td>
-		<td class="value">
-			<div>
-				<a href="#INPUT_FILE_ERROR" title="expand/collapse" class="anchor">+/-</a>
-				<code><span class="php-num">12</span></code>
-			</div>
-		</td>
-	</tr>
-	</table>
 
 
 

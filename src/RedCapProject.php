@@ -34,7 +34,7 @@ class RedCapProject
      * $project = new RedCapProject($apiUrl, $apiToken, $sslVerify, $caCertificateFile);
      * </code>
      *
-     * @param string $apiUrl the URL for the API for the REDCap Site that has the project.
+     * @param string $apiUrl the URL for the API for the REDCap site that has the project.
      * @param string $apiToken the API token for this project.
      * @param boolean $sslVerify indicates if SSL connection to REDCap web site should be verified.
      * @param string $caCertificateFile the full path name of the CA (Certificate Authority) certificate file.
@@ -1522,7 +1522,16 @@ class RedCapProject
         return $surveyQueueLink;
     }
     
-    
+    /**
+     * Exports the code for returning to a survey that was not completed.
+     * 
+     * @param string $recordId the record ID for the survey to return to.
+     * @param string $form the form name of the survey to return to.
+     * @param string $event the unique event name (for longitudinal studies) for the survey
+     *     to return to.
+     * @param integer $repeatInstance the repeat instance (if any) for the survey to return to.
+     * @return string survey return code.
+     */
     public function exportSurveyReturnCode($recordId, $form, $event = null, $repeatInstance = null)
     {
         $data = array(
@@ -1546,7 +1555,22 @@ class RedCapProject
     }
     
     
-    
+    /**
+     * Exports the users of the project.
+     * 
+     * @param string $format output data format.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     * 
+     * @return mixed a list of users. For the 'php' format an array of associative
+     *     arrays is returned, where the keys are the field names and the values
+     *     are the field values. For all other formats, a string is returned with
+     *     the data in the specified format.
+     */
     public function exportUsers($format = 'php')
     {
         $data = array(
@@ -1567,7 +1591,51 @@ class RedCapProject
         return $users;
     }
     
-    
+    /**
+     * Imports the specified users into the project. This method
+     * can also be used to update user priveleges by importing
+     * a users that already exist in the project and
+     * specifying new privleges for that user in the user
+     * data that is imported.
+     * 
+     * The available field names for user import are:
+     * <code>
+     * username, expiration, data_access_group, design,
+     * user_rights, data_access_groups, data_export, reports, stats_and_charts,
+     * manage_survey_participants, calendar, data_import_tool, data_comparison_tool,
+     * logging, file_repository, data_quality_create, data_quality_execute,
+     * api_export, api_import, mobile_app, mobile_app_download_data,
+     * record_create, record_rename, record_delete,
+     * lock_records_customization, lock_records, lock_records_all_forms,
+     * forms
+     * </code>
+     * 
+     * 
+     * Privileges for fields above can be set as follows:
+     * <ul>
+     *   <li><b>Data Export:</b> 0=No Access, 2=De-Identified, 1=Full Data Set</li>
+     *   <li><b>Form Rights:</b> 0=No Access, 2=Read Only,
+     *       1=View records/responses and edit records (survey responses are read-only),
+     *       3=Edit survey responses</li>
+     *   <li><b>Other field values:</b> 0=No Access, 1=Access.</li>
+     * </ul>
+     * 
+     * See the REDCap API documentation for more information, or print the results
+     * of PHPCap's exportUsers method to see what the data looks like for the current users.
+     * 
+     * @param mixed $users for 'php' format, an array should be used that
+     *     maps field names to field values. For all other formats a string
+     *     should be used that has the data in the correct format. 
+     * @param string $format output data format.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
+     *     
+     * @return integer the number of users added or updated.
+     */
     public function importUsers($users, $format = 'php')
     {
         $data = array(

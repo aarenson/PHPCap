@@ -4,6 +4,8 @@ User Guide 4 - Extending PHPCap
 If you need additional functionality to what is provided by PHPCap, you
 can extend it.
 
+Extending the RedCapProject class
+-------------------------------------
 For example, if you wanted to have a method that returns the
 title of the project, you could create a class
 similar to the following that extended PHPCap's RedCapProject class:
@@ -38,3 +40,18 @@ $result = $this->connection->call($data);
 ```
 This is useful for accessing methods provided by the REDCap API that
 have not been implemented in PHPCap.
+
+Extending the ErrorHandler class
+----------------------------------------
+The ErrorHandler class handles errors that occur in PHPCap,
+and it handles them by throwing a PhpCapException. This
+class can be extended, or you can implement a completely new class
+that implements the ErrorHandlerInterface interface.
+
+The constructors for the RedCap and RedCapProject classes have an ErrorHandler
+parameter that can be used to set these classes to use your custom error handler class.
+In addition, if a project is created with, or gotten from, a RedCap object where 
+a custom error handler has been set, the returned project will be assigned a clone
+of the custom error handler in the RedCap object.
+
+

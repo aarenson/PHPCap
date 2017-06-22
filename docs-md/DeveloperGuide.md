@@ -39,7 +39,7 @@ Setup
 
 Example Setup on Ubuntu 16
 -----------------------------------------
-To set up PHPCap on Ubuntu 16, execute the following commands:
+To set up PHPCap for development on Ubuntu 16, execute the following commands:
     
 ```shell
 sudo apt-get install php php-curl php-xml php-mbstring
@@ -136,7 +136,14 @@ To run the survey tests, use the following steps:
                 survey.participant.email=
                 survey.participant.identifier=
     
-     
+
+#### Setup for Optional Project Creation Tests
+To set up the optional tests for project creation, you need to uncomment and set the
+__super.token__ to a valid super token value. Note that the tests for project creation
+have no way to delete the projects that are created, so they will need to be deleted
+manually.
+
+
 Note: the .gitignore file in PHPCap is set to ignore the __tests/config.ini__ file, so that your
 personal API tokens will not be committed to Git. 
 
