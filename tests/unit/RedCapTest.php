@@ -7,6 +7,16 @@ use IU\PHPCap\PhpCapException;
 
 class RedCapTest extends TestCase
 {
+    private $redCap;
+    
+    public function setUp()
+    {
+        $apiUrl = 'https://redcap.somplace.edu/api/';
+        $apiToken = '12345678901234567890123456789012';
+        $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')->getMock();
+        $this->redCap = new RedCap($apiUrl, null, null, null, null, $connection);
+    }
+    
     public function testCreateRedCap()
     {
         $apiUrl = 'https://redcap.somplace.edu/api/';
@@ -14,15 +24,29 @@ class RedCapTest extends TestCase
         
         $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')
             ->getMock();
-        /*
+        
         $redCapProject = $this->getMockBuilder(__NAMESPACE__.'\RedCapProject')
             ->setMethods(['__construct'])
-            ->setConstructorArgs([$apiUrl, $apiToken, $sslVerify = null,
-            $caCertificateFile = null, $errorHandler = null, $connection = null])
+            ->setConstructorArgs(
+                [$apiUrl, $apiToken, $sslVerify = null,
+                $caCertificateFile = null, $errorHandler = null, $connection = null]
+            )
             ->getMock();
-        */
+        
         $redCap = new RedCap($apiUrl, null, null, null, null, $connection);
         $this->assertNotNull($redCap, 'RedCap not null.');
+        
+        $project = $redCap->getProject($apiToken);
+        
+        $this->assertNotNull($project, 'Project not null.');
+    }
+    
+    public function testGetProjectConstructor()
+    {
+        $projectConstructor = $this->redCap->getProjectConstructor();
+        
+        $this->assertNotNull($projectConstructor, 'Not null.');
+        $this->assertTrue(is_callable($projectConstructor), 'Callable.');
     }
     
     
@@ -335,16 +359,10 @@ class RedCapTest extends TestCase
     
     public function testCreateProjectWithNullData()
     {
-        $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')->getMock();
-        
-        $apiUrl = 'https://redcap.somplace.edu/api';
-        
-        $redCap = new RedCap($apiUrl, null, null, null, null, $connection);
-        
         $projectData = null;
         $exceptionCaught = false;
         try {
-            $project = $redCap->createProject($projectData);
+            $project = $this->redCap->createProject($projectData);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $expectedCode = ErrorHandlerInterface::INVALID_ARGUMENT;
@@ -352,6 +370,55 @@ class RedCapTest extends TestCase
             $this->assertEquals($expectedCode, $code, 'Exception code check.');
         }
         $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
+    
+    
+    public function testCreateProjectWithInvalidJsonProjectData()
+    {
+        $exceptionCaught = false;
+        try {
+            # project data should be a string for 'json' format, but it's an array
+            $projectData = ["project_title" => "Test project.", "purpose" => "0"];
+            $project = $this->redCap->createProject($projectData, $format = 'json');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $exception->getCode());
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught check.');
+    }
+    
+    public function testCreateProjectWithPhpToJsonError()
+    {
+        SystemFunctions::setJsonError();
+        
+        $exceptionCaught = false;
+        try {
+            $projectData = ["project_title" => "Test project.", "purpose" => "0"];
+            $project = $this->redCap->createProject($projectData, $format = 'php');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(ErrorHandlerInterface::JSON_ERROR, $code, 'Exception code check.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+        SystemFunctions::clearJsonError();
+    }
+    
+    
+    
+    
+    public function testCreateProjectWithInvalidPhpProjectData()
+    {
+        $exceptionCaught = false;
+        try {
+            # project data should be an array for 'php' format, but it's a string
+            $projectData = '[{"project_title": "Test project.", "purpose": "0"}]';
+            $project = $this->redCap->createProject($projectData, $format = 'php');
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $exception->getCode());
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught check.');
     }
     
     public function testGetProject()
@@ -385,13 +452,9 @@ class RedCapTest extends TestCase
     
     public function testGetProjectWithNullApiToken()
     {
-        $connection = $this->getMockBuilder(__NAMESPACE__.'\RedCapApiConnectionInterface')->getMock();
-        $apiUrl = 'https://redcap.somplace.edu/api';
-        $redCap = new RedCap($apiUrl, null, null, null, null, $connection);
-        
         $exceptionCaught = false;
         try {
-            $project = $redCap->getProject($apiToken = null);
+            $project = $this->redCap->getProject($apiToken = null);
         } catch (PhpCapException $exception) {
             $exceptionCaught = true;
             $code = $exception->getCode();
