@@ -21,16 +21,21 @@ class RedCap
     protected $projectConstructor;
     
     /**
-     * 
+     *
      * @param string $apiUrl the URL for the API for your REDCap site.
      * @param string $superToken the user's super token. This needs to be provided if
      *     you are going to create projects.
-     * @param boolean $sslVerify
-     * @param unknown $caCertificateFile
-     * @param unknown $errorHandler the error handler to use; set only if you want to 
-     *     override the default error handler.
-     * @param unknown $connection the connection to user; set only if you want to
-     *     override the default connection.
+     * @param boolean $sslVerify indicates if SSL connection to REDCap web site should be verified.
+     * @param string $caCertificateFile the full path name of the CA (Certificate Authority)
+     *     certificate file.
+     * @param ErrorHandlerInterface $errorHandler the error handler that will be
+     *    used. This would normally only be set if you want to override the PHPCap's default
+     *    error handler.
+     * @param RedCapApiConnectionInterface $connection the connection that will be used.
+     *    This would normally only be set if you want to override the PHPCap's default
+     *    connection. If this argument is specified, the $apiUrl, $sslVerify, and
+     *    $caCertificateFile arguments will be ignored, and the values for these
+     *    set in the connection will be used.
      */
     public function __construct(
         $apiUrl,
@@ -121,9 +126,15 @@ class RedCap
      * @param mixed $projectData the data used for project creation. Note that if
      *     'php' format is used, the data needs to be an array where the keys are
      *     the field names and the values are the field values.
-     * @param string $format
+     * @param $format string the format used to export the arm data.
+     *     <ul>
+     *       <li> 'php' - [default] array of maps of values</li>
+     *       <li> 'csv' - string of CSV (comma-separated values)</li>
+     *       <li> 'json' - string of JSON encoded values</li>
+     *       <li> 'xml' - string of XML encoded data</li>
+     *     </ul>
      * @param string $odm
-     * @return unknown
+     * @return RedCapProject the project that was created.
      */
     public function createProject(
         $projectData,
@@ -208,7 +219,7 @@ class RedCap
     
     /**
      * Gets the function used to create projects.
-     * 
+     *
      * @return callable the function used by this class to create projects.
      */
     public function getProjectConstructor()
@@ -221,10 +232,10 @@ class RedCap
      * This method would normally only be used if you have extended
      * the RedCapProject class and want RedCap to return
      * projects using your extended class.
-     * 
+     *
      * @param callable $projectConstructor the function to call to create a new project.
      *     The function will be passed the same arguments as the RedCapProject
-     *     constructor gets. 
+     *     constructor gets.
      */
     public function setProjectConstructor($projectConstructor)
     {

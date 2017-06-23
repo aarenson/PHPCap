@@ -27,22 +27,9 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
     protected $errorHandler;
     
     /**
-     * Constructor that creates a REDCap API connection for the specified URL, with the
-     * specified settings.
+     * {@inheritdoc}
      *
-     * @param string $url
-     *            the URL for the API of the REDCap site that you want to connect to.
-     * @param boolean $sslVerify indicates if verification should be done for the SSL
-     *            connection to REDCap. Setting this to false is not secure.
-     * @param string $caCertificateFile
-     *            the CA (Certificate Authority) certificate file used for veriying the REDCap site's
-     *            SSL certificate (i.e., for verifying that the REDCap site that is
-     *            connected to is the one specified).
-     * @param integer $timeoutInSeconds the timeout in seconds for the connection.
-     * @param integer $connectionTimeoutInSeconds the connection timeout in seconds for the connection.
-     * @param ErrorHandlerInterface $errorHandler the error handler for the connection.
-     *
-     * @throws PhpCapException
+     * @throws PhpCapException if an error occurs and the default error handler is being used.
      */
     public function __construct(
         $url,
@@ -90,7 +77,7 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
     }
 
     /**
-     * Destructor that closes the cURL handle (if it is set).
+     * Closes the cURL handle (if it is set).
      */
     public function __destruct()
     {
@@ -100,15 +87,7 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
         }
     }
 
-    /**
-     * Makes a call to REDCap's API and returns the results.
-     *
-     * @param mixed $data
-     *         data for the call.
-     * @throws PhpCapException
-     * @return string the response returned by the REDCap API for the specified call data.
-     *         See the REDCap API documentation for more information.
-     */
+
     public function call($data)
     {
         if (!is_string($data) && !is_array($data)) {
@@ -150,16 +129,7 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
         return ($response);
     }
     
-    /**
-     * Calls REDCap's API using a with a correctly formatted string version
-     * of the specified array and returns the results.
-     *
-     * @param $dataArray array the array of data that is converted to a
-     *         string and then passed to the REDCap API.
-     * @throws PhpCapException
-     * @return string the response returned by the REDCap API for the specified call data.
-     *         See the REDCap API documentation for more information.
-     */
+
     public function callWithArray($dataArray)
     {
         $data = http_build_query($dataArray, '', '&');
@@ -170,7 +140,7 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
     /**
      * Returns call information for the most recent call.
      *
-     * @throws PhpCapException
+     * @throws PhpCapException if an error occurs and the default error handler is being used.
      * @return array an associative array of values of call information for the most recent call made.
      *
      * @see <a href="http://php.net/manual/en/function.curl-getinfo.php">http://php.net/manual/en/function.curl-getinfo.php</a>
@@ -197,94 +167,54 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
         return $this->errorHandler;
     }
     
-    /**
-     * Sets the error handler;
-     *
-     * @param ErrorHandlerInterface $errorHandler the error handler to use.
-     */
+
     public function setErrorHandler($errorHandler)
     {
         $this->errorHandler = $errorHandler;
     }
     
-    /**
-     * Gets the URL of the connection.
-     *
-     * return string the URL of the connection.
-     */
+
     public function getUrl()
     {
         return $this->getCurlOption(CURLOPT_URL);
     }
     
-    /**
-     * {@inheritdoc}
-     */
     public function getSslVerify()
     {
         return $this->getCurlOption(CURLOPT_SSL_VERIFYPEER);
     }
     
-    /**
-     * {@inheritdoc}
-     */
     public function setSslVerify($sslVerify)
     {
         $this->setCurlOption(CURLOPT_SSL_VERIFYPEER, $sslVerify);
     }
     
     
-    /**
-     * {@inheritdoc}
-     */
     public function getCaCertificateFile()
     {
         return $this->getCurlOption(CURLOPT_CAINFO);
     }
     
-    /**
-     * {@inheritdoc}
-     */
     public function setCaCertificateFile($caCertificateFile)
     {
         $this->setCurlOption(CURLOPT_CAINFO, $caCertificateFile);
     }
     
-    /**
-     * Gets the timeout in seconds for cURL calls.
-     *
-     * @return integer timeout in seconds for cURL calls.
-     */
     public function getTimeoutInSeconds()
     {
         return $this->getCurlOption(CURLOPT_TIMEOUT);
     }
     
-    /**
-     * Sets the timeout for cURL calls to the specified amount of seconds.
-     *
-     * @param integer $timeoutInSeconds timeout in seconds for cURL calls.
-     */
     public function setTimeoutInSeconds($timeoutInSeconds)
     {
         $this->setCurlOption(CURLOPT_TIMEOUT, $timeoutInSeconds);
     }
 
-    /**
-     * Gets the connection timeout in seconds for cURL calls.
-     *
-     * @return integer timeout in seconds for cURL calls.
-     */
     public function getConnectionTimeoutInSeconds()
     {
         return $this->getCurlOption(CURLOPT_CONNECTTIMEOUT);
     }
     
-    /**
-     * Sets the connection timeout for cURL calls to the specified amount of seconds.
-     *
-     * @param integer $connectionTimeoutInSeconds connection timeout in seconds for cURL calls.
-     */
     public function setConnectionTimeoutInSeconds($connectionTimeoutInSeconds)
     {
         $this->setCurlOption(CURLOPT_CONNECTTIMEOUT, $connectionTimeoutInSeconds);

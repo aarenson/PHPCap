@@ -37,7 +37,8 @@ class RedCapProject
      * @param string $apiUrl the URL for the API for the REDCap site that has the project.
      * @param string $apiToken the API token for this project.
      * @param boolean $sslVerify indicates if SSL connection to REDCap web site should be verified.
-     * @param string $caCertificateFile the full path name of the CA (Certificate Authority) certificate file.
+     * @param string $caCertificateFile the full path name of the CA (Certificate Authority)
+     *     certificate file.
      * @param ErrorHandlerInterface $errorHandler the error handler used by the project.
      *    This would normally only be set if you want to override the PHPCap's default
      *    error handler.
@@ -1524,7 +1525,7 @@ class RedCapProject
     
     /**
      * Exports the code for returning to a survey that was not completed.
-     * 
+     *
      * @param string $recordId the record ID for the survey to return to.
      * @param string $form the form name of the survey to return to.
      * @param string $event the unique event name (for longitudinal studies) for the survey
@@ -1557,7 +1558,7 @@ class RedCapProject
     
     /**
      * Exports the users of the project.
-     * 
+     *
      * @param string $format output data format.
      *     <ul>
      *       <li> 'php' - [default] array of maps of values</li>
@@ -1565,7 +1566,7 @@ class RedCapProject
      *       <li> 'json' - string of JSON encoded values</li>
      *       <li> 'xml' - string of XML encoded data</li>
      *     </ul>
-     * 
+     *
      * @return mixed a list of users. For the 'php' format an array of associative
      *     arrays is returned, where the keys are the field names and the values
      *     are the field values. For all other formats, a string is returned with
@@ -1597,7 +1598,7 @@ class RedCapProject
      * a users that already exist in the project and
      * specifying new privleges for that user in the user
      * data that is imported.
-     * 
+     *
      * The available field names for user import are:
      * <code>
      * username, expiration, data_access_group, design,
@@ -1609,8 +1610,8 @@ class RedCapProject
      * lock_records_customization, lock_records, lock_records_all_forms,
      * forms
      * </code>
-     * 
-     * 
+     *
+     *
      * Privileges for fields above can be set as follows:
      * <ul>
      *   <li><b>Data Export:</b> 0=No Access, 2=De-Identified, 1=Full Data Set</li>
@@ -1619,13 +1620,13 @@ class RedCapProject
      *       3=Edit survey responses</li>
      *   <li><b>Other field values:</b> 0=No Access, 1=Access.</li>
      * </ul>
-     * 
+     *
      * See the REDCap API documentation for more information, or print the results
      * of PHPCap's exportUsers method to see what the data looks like for the current users.
-     * 
+     *
      * @param mixed $users for 'php' format, an array should be used that
      *     maps field names to field values. For all other formats a string
-     *     should be used that has the data in the correct format. 
+     *     should be used that has the data in the correct format.
      * @param string $format output data format.
      *     <ul>
      *       <li> 'php' - [default] array of maps of values</li>
@@ -1633,7 +1634,7 @@ class RedCapProject
      *       <li> 'json' - string of JSON encoded values</li>
      *       <li> 'xml' - string of XML encoded data</li>
      *     </ul>
-     *     
+     *
      * @return integer the number of users added or updated.
      */
     public function importUsers($users, $format = 'php')
@@ -1683,11 +1684,14 @@ class RedCapProject
      * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
      *     "[last_name] = 'Smith'". This could be used for batch processing a subset
      *     of the records.
+     * @param $recordIdFieldName the name of the record ID field. Specifying this is not
+     *     necessary, but will speed things up, because it will eliminate the call
+     *     to retrieve this value from REDCap.
      * @return array an array or record ID arrays, where each record ID array
      *     is considered to be a batch. Each batch can be used as the value
      *     for the records IDs parameter for an export records method.
      */
-    public function getRecordIdBatches($batches = 1, $filterLogic = null)
+    public function getRecordIdBatches($batches = 1, $filterLogic = null, $recordIdFieldName = null)
     {
         $recordIdBatches = array();
         
@@ -1708,7 +1712,9 @@ class RedCapProject
         
         $filterLogic = $this->processFilterLogicArgument($filterLogic);
         
-        $recordIdFieldName = $this->getRecordIdFieldName();
+        if (!isset($recordIdFieldName)) {
+            $recordIdFieldName = $this->getRecordIdFieldName();
+        }
         
         $records = $this->exportRecordsAp(
             ['fields' => [$recordIdFieldName], 'filterLogic' => $filterLogic]

@@ -105,7 +105,9 @@
 
 
 	<div class="description">
-	<p>Interface for error handlers for PHPCap.</p>
+	<p>Default error handler for PHPCap. PHPCap will call
+the throwException method of this class when
+an error occurs.</p>
 	</div>
 
 	<dl class="tree">
@@ -131,7 +133,7 @@
 		<b>Namespace:</b> <a href="namespace-IU.html">IU</a>\<a href="namespace-IU.PHPCap.html">PHPCap</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-IU.PHPCap.ErrorHandler.html#5-32" title="Go to source code">ErrorHandler.php</a>
+			<b>Located at</b> <a href="source-class-IU.PHPCap.ErrorHandler.html#5-33" title="Go to source code">ErrorHandler.php</a>
 		<br>
 	</div>
 
@@ -155,19 +157,42 @@
 		<!-- <a class="anchor" title="expand/collapse" href="#_throwException">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.ErrorHandler.html#7-31" title="Go to source code">throwException</a>( <span> <var>$message</var></span>, <span> <var>$code</var></span>, <span> <var>$connectionErrorNumber</var> = <span class="php-keyword1">null</span></span>, <span> <var>$httpStatusCode</var> = <span class="php-keyword1">null</span></span>, <span> <var>$previousException</var> = <span class="php-keyword1">null</span> </span> )</code>
+		<code><a href="source-class-IU.PHPCap.ErrorHandler.html#12-32" title="Go to source code">throwException</a>( <span>string <var>$message</var></span>, <span>integer <var>$code</var></span>, <span>integer <var>$connectionErrorNumber</var> = <span class="php-keyword1">null</span></span>, <span>integer <var>$httpStatusCode</var> = <span class="php-keyword1">null</span></span>, <span>Throwable <var>$previousException</var> = <span class="php-keyword1">null</span> </span> )</code>
 
 		<div class="description short">
-			
+			<p>Throw an exception for the specified values.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Throw an exception for the specified values.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$message</var></dt>
+					<dd>message describing the error that occurred.</dd>
+					<dt><var>$code</var></dt>
+					<dd>the error code.</dd>
+					<dt><var>$connectionErrorNumber</var></dt>
+					<dd><p>the error number from the underlying connection used,
+    of null if no connection error occurred.
+    For example, if cURL is being used (the default) this will be the cURL error number
+    if a connection error occurs.</p></dd>
+					<dt><var>$httpStatusCode</var></dt>
+					<dd><p>https status code, which would typcially be set if
+    an error occurs with the http response from the REDCap API.</p></dd>
+					<dt><var>$previousException</var></dt>
+					<dd><p>the previous exception that occurred that
+    caused this exception, if any.</p></dd>
+				</dl></div>
 
 
 
-
-
+				<h4>See</h4>
+				<div class="list">
+						<p><a href="http://php.net/manual/en/function.debug-backtrace.php">debug_backtrace()</a>
+    for information on how to get a stack trace within this method.</p><br>
+				</div>
 
 
 				<h4>Implementation of</h4>

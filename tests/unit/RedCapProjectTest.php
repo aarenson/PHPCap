@@ -179,5 +179,4 @@ class RedCapProjectTest extends TestCase
         }
         $this->assertTrue($exceptionCaught, 'CA certificate file with wrong type exception caught.');
     }
-    
 }

@@ -134,7 +134,7 @@ by PHPCap.</p>
 		<b>Namespace:</b> <a href="namespace-IU.html">IU</a>\<a href="namespace-IU.PHPCap.html">PHPCap</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapApiConnection.html#9-353" title="Go to source code">RedCapApiConnection.php</a>
+			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCapApiConnection.html#9-283" title="Go to source code">RedCapApiConnection.php</a>
 		<br>
 	</div>
 
@@ -158,7 +158,7 @@ by PHPCap.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#___construct">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#29-90" title="Go to source code">__construct</a>( <span>string <var>$url</var></span>, <span>boolean <var>$sslVerify</var> = <span class="php-keyword1">false</span></span>, <span>string <var>$caCertificateFile</var> = <span class="php-quote">''</span></span>, <span>integer <var>$timeoutInSeconds</var> = self::DEFAULT_TIMEOUT_IN_SECONDS</span>, <span>integer <var>$connectionTimeoutInSeconds</var> = self::DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS</span>, <span><code><a href="class-IU.PHPCap.ErrorHandlerInterface.html">IU\PHPCap\ErrorHandlerInterface</a></code> <var>$errorHandler</var> = <span class="php-keyword1">null</span> </span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#29-77" title="Go to source code">__construct</a>( <span>string <var>$url</var></span>, <span>boolean <var>$sslVerify</var> = <span class="php-keyword1">false</span></span>, <span>string <var>$caCertificateFile</var> = <span class="php-quote">''</span></span>, <span>integer <var>$timeoutInSeconds</var> = self::DEFAULT_TIMEOUT_IN_SECONDS</span>, <span>integer <var>$connectionTimeoutInSeconds</var> = self::DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS</span>, <span><code><a href="class-IU.PHPCap.ErrorHandlerInterface.html">IU\PHPCap\ErrorHandlerInterface</a></code> <var>$errorHandler</var> = <span class="php-keyword1">null</span> </span> )</code>
 
 		<div class="description short">
 			<p>Constructor that creates a REDCap API connection for the specified URL, with the
@@ -192,7 +192,7 @@ specified settings.</p>
 
 				<h4>Throws</h4>
 				<div class="list">
-					<code><a href="class-IU.PHPCap.PhpCapException.html">IU\PHPCap\PhpCapException</a></code>
+					<code><a href="class-IU.PHPCap.PhpCapException.html">IU\PHPCap\PhpCapException</a></code><br>if an error occurs and the default error handler is being used.
 				</div>
 
 
@@ -218,14 +218,14 @@ specified settings.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#___destruct">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#92-101" title="Go to source code">__destruct</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#79-88" title="Go to source code">__destruct</a>( )</code>
 
 		<div class="description short">
-			<p>Destructor that closes the cURL handle (if it is set).</p>
+			<p>Closes the cURL handle (if it is set).</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Destructor that closes the cURL handle (if it is set).</p>
+			<p>Closes the cURL handle (if it is set).</p>
 
 
 
@@ -254,7 +254,7 @@ specified settings.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_call">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#103-151" title="Go to source code">call</a>( <span>mixed <var>$data</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#91-130" title="Go to source code">call</a>( <span>mixed <var>$data</var></span> )</code>
 
 		<div class="description short">
 			<p>Makes a call to REDCap's API and returns the results.</p>
@@ -304,7 +304,7 @@ specified settings.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_callWithArray">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#153-167" title="Go to source code">callWithArray</a>( <span> <var>$dataArray</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#133-137" title="Go to source code">callWithArray</a>( <span> <var>$dataArray</var></span> )</code>
 
 		<div class="description short">
 			<p>Calls REDCap's API using a with a correctly formatted string version
@@ -357,7 +357,7 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getCallInfo">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#170-189" title="Go to source code">getCallInfo</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#140-159" title="Go to source code">getCallInfo</a>( )</code>
 
 		<div class="description short">
 			<p>Returns call information for the most recent call.</p>
@@ -375,7 +375,7 @@ of the specified array and returns the results.</p>
 
 				<h4>Throws</h4>
 				<div class="list">
-					<code><a href="class-IU.PHPCap.PhpCapException.html">IU\PHPCap\PhpCapException</a></code>
+					<code><a href="class-IU.PHPCap.PhpCapException.html">IU\PHPCap\PhpCapException</a></code><br>if an error occurs and the default error handler is being used.
 				</div>
 
 				<h4>See</h4>
@@ -406,7 +406,7 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getErrorHandler">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#192-198" title="Go to source code">getErrorHandler</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#162-168" title="Go to source code">getErrorHandler</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the error handler for the connection.</p>
@@ -442,7 +442,7 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setErrorHandler">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#200-208" title="Go to source code">setErrorHandler</a>( <span><code><a href="class-IU.PHPCap.ErrorHandlerInterface.html">IU\PHPCap\ErrorHandlerInterface</a></code> <var>$errorHandler</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#171-174" title="Go to source code">setErrorHandler</a>( <span><code><a href="class-IU.PHPCap.ErrorHandlerInterface.html">IU\PHPCap\ErrorHandlerInterface</a></code> <var>$errorHandler</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the error handler;</p>
@@ -483,7 +483,7 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getUrl">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#210-218" title="Go to source code">getUrl</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#177-180" title="Go to source code">getUrl</a>( )</code>
 
 		<div class="description short">
 			<p>Gets the URL of the connection.</p>
@@ -510,7 +510,7 @@ of the specified array and returns the results.</p>
 		<td class="attributes"><code>
 			 public 
 
-			
+			boolean
 			
 			</code>
 		</td>
@@ -521,17 +521,21 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getSslVerify">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#220-226" title="Go to source code">getSslVerify</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#182-185" title="Go to source code">getSslVerify</a>( )</code>
 
 		<div class="description short">
-			
+			<p>Gets the status of SSL verification for the connection.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			
+			<p>Gets the status of SSL verification for the connection.</p>
 
 
 
+				<h4>Returns</h4>
+				<div class="list">
+					boolean<br>true if SSL verification is enabled, and false otherwise.
+				</div>
 
 
 
@@ -557,7 +561,7 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setSslVerify">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#228-234" title="Go to source code">setSslVerify</a>( <span>boolean <var>$sslVerify</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#187-190" title="Go to source code">setSslVerify</a>( <span>boolean <var>$sslVerify</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets SSL verification for the connection.</p>
@@ -599,7 +603,7 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getCaCertificateFile">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#237-243" title="Go to source code">getCaCertificateFile</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#193-196" title="Go to source code">getCaCertificateFile</a>( )</code>
 
 		<div class="description short">
 			
@@ -633,7 +637,7 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setCaCertificateFile">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#245-251" title="Go to source code">setCaCertificateFile</a>( <span> <var>$caCertificateFile</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#198-201" title="Go to source code">setCaCertificateFile</a>( <span> <var>$caCertificateFile</var></span> )</code>
 
 		<div class="description short">
 			
@@ -667,20 +671,20 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getTimeoutInSeconds">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#253-261" title="Go to source code">getTimeoutInSeconds</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#203-206" title="Go to source code">getTimeoutInSeconds</a>( )</code>
 
 		<div class="description short">
-			<p>Gets the timeout in seconds for cURL calls.</p>
+			<p>Gets the timeout in seconds for calls to the connection.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Gets the timeout in seconds for cURL calls.</p>
+			<p>Gets the timeout in seconds for calls to the connection.</p>
 
 
 
 				<h4>Returns</h4>
 				<div class="list">
-					integer<br>timeout in seconds for cURL calls.
+					integer<br>timeout in seconds for calls to connection.
 				</div>
 
 
@@ -707,20 +711,20 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setTimeoutInSeconds">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#263-271" title="Go to source code">setTimeoutInSeconds</a>( <span>integer <var>$timeoutInSeconds</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#208-211" title="Go to source code">setTimeoutInSeconds</a>( <span> <var>$timeoutInSeconds</var></span> )</code>
 
 		<div class="description short">
-			<p>Sets the timeout for cURL calls to the specified amount of seconds.</p>
+			<p>Sets the timeout in seconds for calls to the connection.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Sets the timeout for cURL calls to the specified amount of seconds.</p>
+			<p>Sets the timeout in seconds for calls to the connection.</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$timeoutInSeconds</var></dt>
-					<dd>timeout in seconds for cURL calls.</dd>
+					<dd>in seconds for call to connection.</dd>
 				</dl></div>
 
 
@@ -748,20 +752,20 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getConnectionTimeoutInSeconds">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#273-281" title="Go to source code">getConnectionTimeoutInSeconds</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#213-216" title="Go to source code">getConnectionTimeoutInSeconds</a>( )</code>
 
 		<div class="description short">
-			<p>Gets the connection timeout in seconds for cURL calls.</p>
+			<p>Gets the timeout for time to make a connection in seconds.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Gets the connection timeout in seconds for cURL calls.</p>
+			<p>Gets the timeout for time to make a connection in seconds.</p>
 
 
 
 				<h4>Returns</h4>
 				<div class="list">
-					integer<br>timeout in seconds for cURL calls.
+					integer<br>connection timeout in seconds.
 				</div>
 
 
@@ -788,20 +792,20 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setConnectionTimeoutInSeconds">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#283-291" title="Go to source code">setConnectionTimeoutInSeconds</a>( <span>integer <var>$connectionTimeoutInSeconds</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#218-221" title="Go to source code">setConnectionTimeoutInSeconds</a>( <span>integer <var>$connectionTimeoutInSeconds</var></span> )</code>
 
 		<div class="description short">
-			<p>Sets the connection timeout for cURL calls to the specified amount of seconds.</p>
+			<p>Sets the timeout for time to make a connection in seconds.</p>
 		</div>
 
 		<div class="description detailed hidden">
-			<p>Sets the connection timeout for cURL calls to the specified amount of seconds.</p>
+			<p>Sets the timeout for time to make a connection in seconds.</p>
 
 
 				<h4>Parameters</h4>
 				<div class="list"><dl>
 					<dt><var>$connectionTimeoutInSeconds</var></dt>
-					<dd>connection timeout in seconds for cURL calls.</dd>
+					<dd>timeout in seconds.</dd>
 				</dl></div>
 
 
@@ -829,7 +833,7 @@ of the specified array and returns the results.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setCurlOption">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#294-313" title="Go to source code">setCurlOption</a>( <span>integer <var>$option</var></span>, <span>mixed <var>$value</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#224-243" title="Go to source code">setCurlOption</a>( <span>integer <var>$option</var></span>, <span>mixed <var>$value</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the specified cURL option to the specified value.</p>
@@ -883,7 +887,7 @@ NOT be used internally by PHPCap outside of this class.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_getCurlOption">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#315-339" title="Go to source code">getCurlOption</a>( <span>integer <var>$option</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#245-269" title="Go to source code">getCurlOption</a>( <span>integer <var>$option</var></span> )</code>
 
 		<div class="description short">
 			<p>Gets the value for the specified cURL option number.</p>
@@ -939,7 +943,7 @@ for information on cURL options.</p><br>
 		<!-- <a class="anchor" title="expand/collapse" href="#___clone">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#341-352" title="Go to source code">__clone</a>( )</code>
+		<code><a href="source-class-IU.PHPCap.RedCapApiConnection.html#271-282" title="Go to source code">__clone</a>( )</code>
 
 		<div class="description short">
 			
