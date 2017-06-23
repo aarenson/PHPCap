@@ -12,10 +12,7 @@ use IU\PHPCap\SystemFunctions;
 class FileUtilTest extends TestCase
 {
     const DATA_DIR = __DIR__.'/../data/';
-    
-    public static function setUpBeforeClass()
-    {
-    }
+
     
     public function testFileReadAndWrite()
     {
@@ -33,6 +30,20 @@ class FileUtilTest extends TestCase
         $content = FileUtil::fileToString($outputFile);
         $this->assertEquals($content, $text1 . $text2, 'String append check.');
     }
+
+    public function testFileUtilSetErrorHandler()
+    {
+        $myMessage = 'error handler test';
+        $myCode    = 123;
+        
+        $myErrorHandler = new ErrorHandler();
+        
+        FileUtil::setErrorHandler($myErrorHandler);
+        $errorHandler = FileUtil::getErrorHandler();
+        
+        $this->assertSame($myErrorHandler, $errorHandler, 'Error handler check.');
+    }
+ 
     
     public function testFileToStringWithNonExistantFile()
     {

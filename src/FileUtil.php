@@ -9,6 +9,9 @@ namespace IU\PHPCap;
  */
 class FileUtil
 {
+    
+    protected static $errorHandler = null;
+    
     /**
      * Reads the contents of the specified file and returns it as a string.
      *
@@ -20,17 +23,19 @@ class FileUtil
      */
     public static function fileToString($filename)
     {
+        $errorHandler = static::getErrorHandler();
+        
         if (!file_exists($filename)) {
-            throw new PhpCapException(
+            $errorHandler->throwException(
                 'The input file "'.$filename.'" could not be found.',
                 ErrorHandlerInterface::INPUT_FILE_NOT_FOUND
             );
         } elseif (!is_readable($filename)) {
-            throw new PhpCapException(
+            $errorHandler->throwException(
                 'The input file "'.$filename.'" was unreadable.',
                 ErrorHandlerInterface::INPUT_FILE_UNREADABLE
             );
-        }
+        } // @codeCoverageIgnore
         
         $contents = file_get_contents($filename);
 
@@ -42,17 +47,17 @@ class FileUtil
             }
             
             if (isset($errorMessage)) {
-                throw new PhpCapException(
+                $errorHandler->throwException(
                     'An error occurred in input file "'.$filename.'": '.$errorMessage,
                     ErrorHandlerInterface::INPUT_FILE_ERROR
                 );
-            } else {
-                throw new PhpCapException(
+            } else { // @codeCoverageIgnore
+                $errorHandler->throwException(
                     'An error occurred in input file "'.$filename.'"',
                     ErrorHandlerInterface::INPUT_FILE_ERROR
                 );
-            }
-        }
+            } // @codeCoverageIgnore
+        } // @codeCoverageIgnore
         
         return $contents;
     }
@@ -71,6 +76,8 @@ class FileUtil
      */
     public static function writeStringToFile($string, $filename, $append = false)
     {
+        $errorHandler = static::getErrorHandler();
+        
         $result = false;
         if ($append === true) {
             $result = file_put_contents($filename, $string, FILE_APPEND);
@@ -86,17 +93,17 @@ class FileUtil
             }
             
             if (isset($errorMessage)) {
-                throw new PhpCapException(
+                $errorHandler->throwException(
                     'An error occurred in output file "'.$filename.'": '.$errorMessage,
                     ErrorHandlerInterface::OUTPUT_FILE_ERROR
                 );
-            } else {
-                throw new PhpCapException(
+            } else { // @codeCoverageIgnore
+                $errorHandler->throwException(
                     'An error occurred in output file "'.$filename.'"',
                     ErrorHandlerInterface::OUTPUT_FILE_ERROR
                 );
-            }
-        }
+            } // @codeCoverageIgnore
+        } // @codeCoverageIgnore
             
         return $result;
     }
@@ -115,5 +122,28 @@ class FileUtil
     {
         $result = static::writeStringToFile($string, $filename, true);
         return $result;
+    }
+    
+    /**
+     * Gets the error handler for the class.
+     *
+     * @return ErrorHandlerInterface the error handler for the class.
+     */
+    public static function getErrorHandler()
+    {
+        if (!isset(self::$errorHandler)) {
+            self::$errorHandler = new ErrorHandler();
+        }
+        return self::$errorHandler;
+    }
+    
+    /**
+     * Sets the error handler used for methods in this class.
+     *
+     * @param ErrorHandlerInterface $errorHandler
+     */
+    public static function setErrorHandler($errorHandler)
+    {
+        self::$errorHandler = $errorHandler;
     }
 }

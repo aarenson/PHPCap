@@ -11,8 +11,7 @@ class ErrorHandler implements ErrorHandlerInterface
 {
     /**
      * {@inheritdoc}
-     * 
-     * 
+     *
      * @see <a href="http://php.net/manual/en/function.debug-backtrace.php">debug_backtrace()</a>
      *     for information on how to get a stack trace within this method.
      */
