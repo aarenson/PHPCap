@@ -47,5 +47,19 @@ interface ErrorHandlerInterface
     /** The input file contents are invalid. */
     const INPUT_FILE_ERROR      = 12;
     
+    /**
+     * Throw an exception for the specified values.
+     *
+     * @param string $message message describing the error that occurred.
+     * @param integer $code the error code.
+     * @param integer $connectionErrorNumber the error number from the underlying connection used,
+     *     of null if no connection error occurred.
+     *     For example, if cURL is being used (the default) this will be the cURL error number
+     *     if a connection error occurs.
+     * @param integer $httpStatusCode https status code, which would typcially be set if
+     *     an error occurs with the http response from the REDCap API.
+     * @param \Throwable $previousException the previous exception that occurred that
+     *     caused this exception, if any.
+     */
     public function throwException($message, $code, $connectionErrorNumber, $httpStatusCode, $previousException);
 }

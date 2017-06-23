@@ -2,8 +2,20 @@
 
 namespace IU\PHPCap;
 
+/**
+ * Default error handler for PHPCap. PHPCap will call
+ * the throwException method of this class when
+ * an error occurs.
+ */
 class ErrorHandler implements ErrorHandlerInterface
 {
+    /**
+     * {@inheritdoc}
+     * 
+     * 
+     * @see <a href="http://php.net/manual/en/function.debug-backtrace.php">debug_backtrace()</a>
+     *     for information on how to get a stack trace within this method.
+     */
     public function throwException(
         $message,
         $code,
@@ -11,16 +23,6 @@ class ErrorHandler implements ErrorHandlerInterface
         $httpStatusCode = null,
         $previousException = null
     ) {
-        /* -------------------------------
-        $trace = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1);
-        $caller = $trace[0];
-        $callingFunction = $caller['function'];
-        $callingFile     = $caller['file'];
-        $callingLine     = $caller['line'];
-        print "File ".$callingFile.", line ".$callingLine.": ".$message."\n";
-        #print_r($trace);
-        *****/
-        
         throw new PhpCapException(
             $message,
             $code,
