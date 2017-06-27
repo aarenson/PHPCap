@@ -90,6 +90,13 @@ interface RedCapApiConnectionInterface
     public function getUrl();
     
     /**
+     * Sets the URL of the connection.
+     *
+     * @param string $url the URL of the connection.
+     */
+    public function setUrl($url);
+    
+    /**
      * Gets the status of SSL verification for the connection.
      *
      * @return boolean true if SSL verification is enabled, and false otherwise.

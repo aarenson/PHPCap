@@ -82,6 +82,11 @@ class ConnectionsTest extends TestCase
             $connection->getConnectionTimeoutInSeconds(),
             'Connection timeout check.'
         );
+        
+        $newUrl = 'https://redcap.somplace.edu/api/';
+        $connection->setUrl($newUrl);
+        $url = $connection->getUrl();
+        $this->assertEquals($newUrl, $url, 'URL set check.');
     }
     
     public function testConnectionCreationWithErrorHandler()

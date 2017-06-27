@@ -177,6 +177,11 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
         return $this->getCurlOption(CURLOPT_URL);
     }
     
+    public function setUrl($url)
+    {
+        return $this->setCurlOption(CURLOPT_URL, $url);
+    }
+    
     public function getSslVerify()
     {
         return $this->getCurlOption(CURLOPT_SSL_VERIFYPEER);
