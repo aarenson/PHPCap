@@ -50,6 +50,41 @@ class RedCapTest extends TestCase
     }
     
     
+    public function testSetErrorHandler()
+    {
+        $errorHandler = $this->redCap->getErrorHandler();
+        $this->assertNotNull($errorHandler, 'Error handler not null check.');
+        
+        $this->assertTrue($errorHandler instanceof ErrorHandlerInterface, 'Error handler class check.');
+        
+        $myErrorHandler = new ErrorHandler();
+        
+        $this->redCap->setErrorHandler($myErrorHandler);
+        
+        # Test that error handler retrieved is the same one that was set
+        $retrievedErrorHandler = $this->redCap->getErrorHandler();
+        $this->assertSame($myErrorHandler, $retrievedErrorHandler, 'Error handler get check.');
+    }
+
+    
+    public function testSetConnection()
+    {
+        $connection = $this->redCap->getConnection();
+        $this->assertNotNull($connection, 'Connection not null check.');
+        
+        $this->assertTrue($connection instanceof RedCapApiConnectionInterface, 'Connection class check.');
+        
+        $url = $connection->getUrl();
+        
+        $myConnection = new RedCapApiConnection($url);
+        
+        $this->redCap->setConnection($myConnection);
+        
+        # Test that connection retrieved is the same one that was set
+        $retrievedConnection = $this->redCap->getConnection();
+        $this->assertSame($myConnection, $retrievedConnection, 'Connection get check.');
+    }
+    
     public function testCreateRedCapWithNullApiUrl()
     {
         $exceptionCaught = false;

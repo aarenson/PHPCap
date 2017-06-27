@@ -1685,8 +1685,8 @@ class RedCapProject
      *     "[last_name] = 'Smith'". This could be used for batch processing a subset
      *     of the records.
      * @param $recordIdFieldName the name of the record ID field. Specifying this is not
-     *     necessary, but will speed things up, because it will eliminate the call
-     *     to retrieve this value from REDCap.
+     *     necessary, but will speed things up, because it will eliminate the need for
+     *     this method to call the REDCap API to retrieve the value.
      * @return array an array or record ID arrays, where each record ID array
      *     is considered to be a batch. Each batch can be used as the value
      *     for the records IDs parameter for an export records method.
@@ -1761,57 +1761,49 @@ class RedCapProject
         return $this->apiToken;
     }
     
-    /**
-     * Gets the call information for the last cURL call. PHPCap uses cURL to
-     * communicate with the REDCap API.
-     *
-     * @return array cURL call information for last cURL call made.
-     *
-     * @see <a href="http://php.net/manual/en/function.curl-getinfo.php">
-     *      http://php.net/manual/en/function.curl-getinfo.php
-     *      </a>
-     *      for information on what values are returned.
-     */
-    public function getCallInfo()
-    {
-        $callInfo = $this->connection->getCallInfo();
-    
-        return $callInfo;
-    }
-    
-    
-    
-    /**
-     * Gets the timeout in seconds for calls to the REDCap API.
-     *
-     * @return integer timeout in seconds for cURL calls.
-     */
-    public function getTimeoutInSeconds()
-    {
-        return $this->connection->getTimeoutInSeconds();
-    }
-    
-    /**
-     * Sets the timeout for calls to the REDCap API to the specified number of seconds.
-     *
-     * @param integer $timeoutInSeconds timeout in seconds for cURL calls.
-     */
-    public function setTimeoutInSeconds($timeoutInSeconds)
-    {
-        $this->connection->setTimeoutInSeconds($timeoutInSeconds);
-    }
     
     /**
      * Returns the underlying REDCap API connection being used by the project.
      * This can be used to make calls to the REDCap API, possibly to access functionality
      * not supported by PHPCap.
      *
-     * @return RedCapApiConnection the underlying REDCap API connection being
+     * @return RedCapApiConnectionInterface the underlying REDCap API connection being
      *         used by the project.
      */
     public function getConnection()
     {
         return $this->connection;
+    }
+    
+    /**
+     * Sets the connection used for calling the REDCap API.
+     *
+     * @param RedCapApiConnectionInterface $connection the connection to use
+     *     for calls to the REDCap API.
+     */
+    public function setConnection($connection)
+    {
+        $this->connection = $connection;
+    }
+    
+    /**
+     * Gets the error handler.
+     *
+     * @return ErrorHandlerInterface the error handler being used.
+     */
+    public function getErrorHandler()
+    {
+        return $this->errorHandler;
+    }
+    
+    /**
+     * Sets the error handler used by the project.
+     *
+     * @param ErrorHandlerInterface $errorHandler the error handler to use.
+     */
+    public function setErrorHandler($errorHandler)
+    {
+        $this->errorHandler = $errorHandler;
     }
     
     

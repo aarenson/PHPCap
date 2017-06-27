@@ -44,11 +44,6 @@ class ConnectionsTest extends TestCase
         $timeout = $connection->getTimeoutInSeconds();
         
         $this->assertEquals(10, $timeout, 'Connection timeout check.');
-        
-        $project->setTimeoutInSeconds(10);
-        $timeout = $project->getTimeoutInSeconds();
-        
-        $this->assertEquals(10, $timeout, 'Project timeout check.');
     }
     
     public function testConnectionCreation()

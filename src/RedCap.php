@@ -242,6 +242,47 @@ class RedCap
         $this->projectConstructor = $projectConstructor;
     }
     
+    /**
+     * Gets the error handler being used.
+     *
+     * @return ErrorHandlerInterface the error handler being used.
+     */
+    public function getErrorHandler()
+    {
+        return $this->errorHandler;
+    }
+    
+    /**
+     * Set the error handler that is used.
+     *
+     * @param ErrorHandlerInterface $errorHandler the error handler to use.
+     */
+    public function setErrorHandler($errorHandler)
+    {
+        $this->errorHandler = $this->processErrorHandlerArgument($errorHandler);
+    }
+    
+    /**
+     * Gets the connection being used.
+     *
+     * @return RedCapApiConnectionInterface the connection being used.
+     */
+    public function getConnection()
+    {
+        return $this->connection;
+    }
+    
+    /**
+     * Sets the connection that is used.
+     *
+     * @param RedCapApiConnectionInterface $connection the connection to use.
+     */
+    public function setConnection($connection)
+    {
+        $this->connection = $this->processConnectionArgument($connection);
+    }
+
+    
     protected function processApiTokenArgument($apiToken)
     {
         if (!isset($apiToken)) {

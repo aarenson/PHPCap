@@ -95,7 +95,7 @@ interface RedCapApiConnectionInterface
     
     /**
      * Gets the status of SSL verification for the connection.
-     * 
+     *
      * @return boolean true if SSL verification is enabled, and false otherwise.
      */
     public function getSslVerify();
@@ -119,7 +119,7 @@ interface RedCapApiConnectionInterface
     
     /**
      * Sets the timeout in seconds for calls to the connection.
-     * 
+     *
      * @param $timeoutInSeconds timeout in seconds for call to connection.
      */
     public function setTimeoutInSeconds($timeoutInSeconds);

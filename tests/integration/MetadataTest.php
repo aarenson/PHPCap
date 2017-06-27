@@ -35,12 +35,6 @@ class MetadataTest extends TestCase
          
         $this->assertArrayHasKey('field_name', $result[0], 'Metadata has field_name field test.');
         $this->assertEquals($result[0]['field_name'], 'record_id', 'Metadata has study_id field test.');
-    
-        $callInfo = self::$basicDemographyProject->getCallInfo();
-     
-        $this->assertEquals($callInfo['url'], self::$config['api.url'], 'Metadata url test.');
-        $this->assertArrayHasKey('content_type', $callInfo, 'Metadata has content type test.');
-        $this->assertArrayHasKey('http_code', $callInfo, 'Metadata has HTTP code test.');
     }
     
     public function testExportMetadataWithForms()
