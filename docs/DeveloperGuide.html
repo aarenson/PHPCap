@@ -76,11 +76,10 @@ composer install</code></pre></div>
 <h3>Automated Tests</h3>
 <p>PHPCap uses PHPUnit for running automated tests. PHPUnit should get installed as a dependency
 for your PHPCap project when you run the &quot;composer install&quot; command.</p>
-<p>You can test your PHPUnit installation by running the following in the root PHPCap directory:</p>
+<p>You can test your PHPUnit installation by running the following in the root PHPCap directory, which will run the unit tests for PHPCap:</p>
 <div class="description"><pre><code>    ./vendor/bin/phpunit --testsuite unit</code></pre></div>
-<p>If this succeeds, you should see an &quot;OK&quot; message with the number of tests and assertions that were run,
-and you should see no errors of failures.</p>
-<p>To run <em>all</em> the automated tests, setup steps needs to be completed.</p>
+<p>The unit tests for PHPCap do not require a REDCap account or REDCap project setup using your account (as the integration tests do). If the above command succeeds, you should see an &quot;OK&quot; message with the number of tests and assertions that were run, and you should see no errors of failures.</p>
+<p>To run <em>all</em> the automated tests (the unit tests as well as the integration tests), setup steps needs to be completed.</p>
 <h4>Setup for Non-Optional Integration Tests</h4>
 <p>Running all the automated tests, or all the integration tests, will fail unless the
 following setup steps are completed:</p>

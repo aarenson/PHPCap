@@ -59,14 +59,13 @@ Usage
 PHPCap uses PHPUnit for running automated tests. PHPUnit should get installed as a dependency
 for your PHPCap project when you run the "composer install" command.
 
-You can test your PHPUnit installation by running the following in the root PHPCap directory:
+You can test your PHPUnit installation by running the following in the root PHPCap directory, which will run the unit tests for PHPCap:
 
 	    ./vendor/bin/phpunit --testsuite unit
     
-If this succeeds, you should see an "OK" message with the number of tests and assertions that were run, 
-and you should see no errors of failures.
+The unit tests for PHPCap do not require a REDCap account or REDCap project setup using your account (as the integration tests do). If the above command succeeds, you should see an "OK" message with the number of tests and assertions that were run, and you should see no errors of failures.
     
-To run _all_ the automated tests, setup steps needs to be completed.
+To run _all_ the automated tests (the unit tests as well as the integration tests), setup steps needs to be completed.
 
 #### Setup for Non-Optional Integration Tests
 Running all the automated tests, or all the integration tests, will fail unless the
@@ -146,6 +145,7 @@ manually.
 
 Note: the .gitignore file in PHPCap is set to ignore the __tests/config.ini__ file, so that your
 personal API tokens will not be committed to Git. 
+
 
 #### Running the Automated Tests
 To run the automated tests, execute the following command in the top-level directory of your downloaded version of PHPCap:
