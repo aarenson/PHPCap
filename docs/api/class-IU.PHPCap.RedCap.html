@@ -125,7 +125,7 @@ REDCap project.</p>
 		<b>Namespace:</b> <a href="namespace-IU.html">IU</a>\<a href="namespace-IU.PHPCap.html">PHPCap</a><br>
 		
 
-			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCap.html#5-435" title="Go to source code">RedCap.php</a>
+			<b>Located at</b> <a href="source-class-IU.PHPCap.RedCap.html#5-488" title="Go to source code">RedCap.php</a>
 		<br>
 	</div>
 
@@ -299,7 +299,7 @@ REDCap project.</p>
 		<td class="attributes"><code>
 			 public 
 
-			callable
+			Callable
 			
 			</code>
 		</td>
@@ -323,7 +323,7 @@ REDCap project.</p>
 
 				<h4>Returns</h4>
 				<div class="list">
-					callable<br>the function used by this class to create projects.
+					Callable<br>the function used by this class to create projects.
 				</div>
 
 
@@ -348,7 +348,7 @@ REDCap project.</p>
 		<!-- <a class="anchor" title="expand/collapse" href="#_setProjectConstructor">+/-</a> -->
 		<a class="anchor" title="expand/collapse">+/-</a>
 				
-		<code><a href="source-class-IU.PHPCap.RedCap.html#230-243" title="Go to source code">setProjectConstructor</a>( <span>callable <var>$projectConstructor</var></span> )</code>
+		<code><a href="source-class-IU.PHPCap.RedCap.html#230-243" title="Go to source code">setProjectConstructor</a>( <span>Callable <var>$projectConstructor</var></span> )</code>
 
 		<div class="description short">
 			<p>Sets the function used to create projects in this class.
@@ -370,6 +370,160 @@ projects using your extended class.</p>
 					<dd><p>the function to call to create a new project.
     The function will be passed the same arguments as the RedCapProject
     constructor gets.</p></dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getErrorHandler" id="_getErrorHandler">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-IU.PHPCap.ErrorHandlerInterface.html">IU\PHPCap\ErrorHandlerInterface</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<!-- <a class="anchor" title="expand/collapse" href="#_getErrorHandler">+/-</a> -->
+		<a class="anchor" title="expand/collapse">+/-</a>
+				
+		<code><a href="source-class-IU.PHPCap.RedCap.html#245-253" title="Go to source code">getErrorHandler</a>( )</code>
+
+		<div class="description short">
+			<p>Gets the error handler being used.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the error handler being used.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-IU.PHPCap.ErrorHandlerInterface.html">IU\PHPCap\ErrorHandlerInterface</a></code><br>the error handler being used.
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setErrorHandler" id="_setErrorHandler">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<!-- <a class="anchor" title="expand/collapse" href="#_setErrorHandler">+/-</a> -->
+		<a class="anchor" title="expand/collapse">+/-</a>
+				
+		<code><a href="source-class-IU.PHPCap.RedCap.html#255-263" title="Go to source code">setErrorHandler</a>( <span><code><a href="class-IU.PHPCap.ErrorHandlerInterface.html">IU\PHPCap\ErrorHandlerInterface</a></code> <var>$errorHandler</var></span> )</code>
+
+		<div class="description short">
+			<p>Set the error handler that is used.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Set the error handler that is used.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$errorHandler</var></dt>
+					<dd>the error handler to use.</dd>
+				</dl></div>
+
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="getConnection" id="_getConnection">
+
+		<td class="attributes"><code>
+			 public 
+
+			<code><a href="class-IU.PHPCap.RedCapApiConnectionInterface.html">IU\PHPCap\RedCapApiConnectionInterface</a></code>
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<!-- <a class="anchor" title="expand/collapse" href="#_getConnection">+/-</a> -->
+		<a class="anchor" title="expand/collapse">+/-</a>
+				
+		<code><a href="source-class-IU.PHPCap.RedCap.html#265-273" title="Go to source code">getConnection</a>( )</code>
+
+		<div class="description short">
+			<p>Gets the connection being used.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Gets the connection being used.</p>
+
+
+
+				<h4>Returns</h4>
+				<div class="list">
+					<code><a href="class-IU.PHPCap.RedCapApiConnectionInterface.html">IU\PHPCap\RedCapApiConnectionInterface</a></code><br>the connection being used.
+				</div>
+
+
+
+
+		</div>
+		</div></td>
+	</tr>
+	<tr data-order="setConnection" id="_setConnection">
+
+		<td class="attributes"><code>
+			 public 
+
+			
+			
+			</code>
+		</td>
+
+		<td class="name"><div>
+		
+		<!-- PHPCap change -->
+		<!-- <a class="anchor" title="expand/collapse" href="#_setConnection">+/-</a> -->
+		<a class="anchor" title="expand/collapse">+/-</a>
+				
+		<code><a href="source-class-IU.PHPCap.RedCap.html#275-283" title="Go to source code">setConnection</a>( <span><code><a href="class-IU.PHPCap.RedCapApiConnectionInterface.html">IU\PHPCap\RedCapApiConnectionInterface</a></code> <var>$connection</var></span> )</code>
+
+		<div class="description short">
+			<p>Sets the connection that is used.</p>
+		</div>
+
+		<div class="description detailed hidden">
+			<p>Sets the connection that is used.</p>
+
+
+				<h4>Parameters</h4>
+				<div class="list"><dl>
+					<dt><var>$connection</var></dt>
+					<dd>the connection to use.</dd>
 				</dl></div>
 
 

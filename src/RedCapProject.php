@@ -1783,7 +1783,7 @@ class RedCapProject
      */
     public function setConnection($connection)
     {
-        $this->connection = $connection;
+        $this->connection = $this->processConnectionArgument($connection);
     }
     
     /**
@@ -1803,17 +1803,8 @@ class RedCapProject
      */
     public function setErrorHandler($errorHandler)
     {
-        $this->errorHandler = $errorHandler;
+        $this->errorHandler = $this->processErrorHandlerArgument($errorHandler);
     }
-    
-    
-    //public function setConnection($connection)
-    //{
-    //    if (isset($this->connection)) {
-    //        unset($this->connection);
-    //    }
-    //    $this->connection = $connection;
-    //}
 
 
     protected function processAllRecordsArgument($allRecords)

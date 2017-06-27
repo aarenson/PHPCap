@@ -61,15 +61,15 @@ class RedCapIntegrationTest extends TestCase
         $this->assertNotNull($project, 'Project not null check.');
     }
     
-    public function testGetProjectConstructor()
+    public function testGetProjectConstructorCallback()
     {
-        $constructor = self::$redCap->getProjectConstructor();
+        $constructor = self::$redCap->getProjectConstructorCallback();
         
         $this->assertNotNull($constructor, 'Constructor not null.');
         $this->assertTrue(is_callable($constructor), 'Constructor is callable.');
     }
     
-    public function testSetProjectConstructor()
+    public function testSetProjectConstructorCallback()
     {
         $constructor = function (
             $apiUrl,
@@ -83,7 +83,7 @@ class RedCapIntegrationTest extends TestCase
         };
 
         $redCap = new RedCap(self::$apiUrl);
-        $redCap->setProjectConstructor($constructor);
+        $redCap->setProjectConstructorCallback($constructor);
         
         $value = $redCap->getProject('12345678901234567890123456789012');
         $this->assertEquals(123, $value, 'Project value check.');

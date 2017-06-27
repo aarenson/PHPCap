@@ -144,6 +144,17 @@ class FileUtil
      */
     public static function setErrorHandler($errorHandler)
     {
+        # Get the current error handler to make sure it's set,
+        # since it will need to be used if the passed error
+        # handler is invalid
+        $currentErrorHandler = static::getErrorHandler();
+        
+        if (!($errorHandler instanceof ErrorHandlerInterface)) {
+            $message = 'The error handler argument is not valid, because it doesn\'t implement '
+                .ErrorHandlerInterface::class.'.';
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $currentErrorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
         self::$errorHandler = $errorHandler;
     }
 }

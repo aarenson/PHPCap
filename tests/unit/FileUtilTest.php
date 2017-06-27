@@ -44,6 +44,18 @@ class FileUtilTest extends TestCase
         $this->assertSame($myErrorHandler, $errorHandler, 'Error handler check.');
     }
  
+    public function testFileUtilSetNullErrorHandler()
+    {
+        $exceptionCaught = false;
+        try {
+            FileUtil::setErrorHandler(null);
+        } catch (PhpCapException $exception) {
+            $exceptionCaught = true;
+            $code = $exception->getCode();
+            $this->assertEquals(ErrorHandlerInterface::INVALID_ARGUMENT, $code, 'Exception code.');
+        }
+        $this->assertTrue($exceptionCaught, 'Exception caught.');
+    }
     
     public function testFileToStringWithNonExistantFile()
     {

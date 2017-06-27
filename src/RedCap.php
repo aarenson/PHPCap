@@ -17,8 +17,8 @@ class RedCap
     /** connection to the REDCap API at the $apiURL. */
     protected $connection;
 
-    /** function for creating project object (so that it can be modified) */
-    protected $projectConstructor;
+    /** function for creating project object */
+    protected $ProjectConstructorCallback;
     
     /**
      *
@@ -65,7 +65,7 @@ class RedCap
         
         $this->superToken = $this->processSuperTokenArgument($superToken);
         
-        $this->projectConstructor = function (
+        $this->ProjectConstructorCallback = function (
             $apiUrl,
             $apiToken,
             $sslVerify = false,
@@ -159,7 +159,7 @@ class RedCap
         $data['data']   = $this->processImportDataArgument($projectData, 'projectData', $format);
         
         if (isset($odm)) {
-            $data['odm'] = $odm;
+            $data['odm'] = $this->processOdmArgument($odm);
         }
         
         #---------------------------------------
@@ -172,10 +172,10 @@ class RedCap
         $connection   = clone $this->connection;
         $errorHandler = clone $this->errorHandler;
         
-        $projectConstructor = $this->projectConstructor;
+        $ProjectConstructorCallback = $this->ProjectConstructorCallback;
         
         $project = call_user_func(
-            $projectConstructor,
+            $ProjectConstructorCallback,
             $apiUrl = null,
             $apiToken,
             $sslVerify = null,
@@ -201,11 +201,11 @@ class RedCap
         $connection   = clone $this->connection;
         $errorHandler = clone $this->errorHandler;
         
-        $projectConstructor = $this->projectConstructor;
+        $ProjectConstructorCallback = $this->ProjectConstructorCallback;
         
         # By default, this creates a RedCapProject
         $project = call_user_func(
-            $projectConstructor,
+            $ProjectConstructorCallback,
             $apiUrl = null,
             $apiToken,
             $sslVerify = null,
@@ -222,9 +222,9 @@ class RedCap
      *
      * @return callable the function used by this class to create projects.
      */
-    public function getProjectConstructor()
+    public function getProjectConstructorCallback()
     {
-        return $this->projectConstructor;
+        return $this->ProjectConstructorCallback;
     }
     
     /**
@@ -233,13 +233,14 @@ class RedCap
      * the RedCapProject class and want RedCap to return
      * projects using your extended class.
      *
-     * @param callable $projectConstructor the function to call to create a new project.
+     * @param callable $ProjectConstructorCallback the function to call to create a new project.
      *     The function will be passed the same arguments as the RedCapProject
      *     constructor gets.
      */
-    public function setProjectConstructor($projectConstructor)
+    public function setProjectConstructorCallback($ProjectConstructorCallback)
     {
-        $this->projectConstructor = $projectConstructor;
+        $this->ProjectConstructorCallback
+            = $this->processProjectConstructorCallbackArgument($ProjectConstructorCallback);
     }
     
     /**
@@ -435,6 +436,30 @@ class RedCap
         } // @codeCoverageIgnore
     }
     
+    
+    protected function processOdmArgument($odm)
+    {
+        if (isset($odm) && !is_string($odm)) {
+            $message = 'The value for $odm must have type string, but has type: '
+                .gettype($odm);
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
+        
+        return $odm;
+    }
+    
+    protected function processProjectConstructorCallbackArgument($callback)
+    {
+        if (!is_callable($callback)) {
+            $message = 'The project constructor callback needs to be callable (i.e., be a function)'
+                .', but it isn\'t.';
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $this->errorHandler->throwException($message, $code);
+        } // @codeCoverageIgnore
+        
+        return $callback;
+    }
     
     protected function processSslVerifyArgument($sslVerify)
     {
