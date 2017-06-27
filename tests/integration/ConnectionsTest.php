@@ -91,8 +91,6 @@ class ConnectionsTest extends TestCase
             $apiUrl = self::$config['api.url'],
             $sslVerify = false,
             $caCertificateFile = null,
-            null,
-            null,
             $errorHandler
         );
         

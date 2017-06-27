@@ -35,8 +35,6 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
         $url,
         $sslVerify = false,
         $caCertificateFile = '',
-        $timeoutInSeconds = self::DEFAULT_TIMEOUT_IN_SECONDS,
-        $connectionTimeoutInSeconds = self::DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS,
         $errorHandler = null
     ) {
         # If an error handler was specified, use it,
@@ -68,8 +66,8 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
             $this->setCurlOption(CURLOPT_CAINFO, $caCertificateFile);
         }
         
-        $this->setCurlOption(CURLOPT_TIMEOUT, $timeoutInSeconds);
-        $this->setCurlOption(CURLOPT_CONNECTTIMEOUT, $connectionTimeoutInSeconds);
+        $this->setCurlOption(CURLOPT_TIMEOUT, self::DEFAULT_TIMEOUT_IN_SECONDS);
+        $this->setCurlOption(CURLOPT_CONNECTTIMEOUT, self::DEFAULT_CONNECTION_TIMEOUT_IN_SECONDS);
         $this->setCurlOption(CURLOPT_URL, $url);
         $this->setCurlOption(CURLOPT_RETURNTRANSFER, true);
         $this->setCurlOption(CURLOPT_HTTPHEADER, array ('Accept: text/xml'));
@@ -224,9 +222,11 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
     /**
      * Sets the specified cURL option to the specified value.
      *
-     * <b>Note:</b> this method is cURL specific and is NOT part
-     * of the connection interface, and therefore should
-     * NOT be used internally by PHPCap outside of this class.
+     * {@internal
+     *     NOTE: this method is cURL specific and is NOT part
+     *     of the connection interface, and therefore should
+     *     NOT be used internally by PHPCap outside of this class.
+     * }
      *
      * @see <a href="http://php.net/manual/en/function.curl-setopt.php">http://php.net/manual/en/function.curl-setopt.php</a>
      *      for information on cURL options.
@@ -245,9 +245,11 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
     /**
      * Gets the value for the specified cURL option number.
      *
-     * <b>Note:</b> this method is cURL specific and is NOT part
-     * of the connection interface, and therefore should
-     * NOT be used internally by PHPCap outside of this class.
+     * {@internal
+     *     NOTE: this method is cURL specific and is NOT part
+     *     of the connection interface, and therefore should
+     *     NOT be used internally by PHPCap outside of this class.
+     * }
      *
      * @see <a href="http://php.net/manual/en/function.curl-setopt.php">http://php.net/manual/en/function.curl-setopt.php</a>
      * for information on cURL options.

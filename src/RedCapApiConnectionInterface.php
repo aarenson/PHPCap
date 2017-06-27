@@ -26,16 +26,12 @@ interface RedCapApiConnectionInterface
      *            the CA (Certificate Authority) certificate file used for veriying the REDCap site's
      *            SSL certificate (i.e., for verifying that the REDCap site that is
      *            connected to is the one specified).
-     * @param integer $timeoutInSeconds the timeout in seconds for the connection.
-     * @param integer $connectionTimeoutInSeconds the connection timeout in seconds for the connection.
      * @param ErrorHandlerInterface $errorHandler the error handler for the connection.
      */
     public function __construct(
         $url,
         $sslVerify,
         $caCertificateFile,
-        $timeoutInSeconds,
-        $connectionTimeoutInSeconds,
         $errorHandler
     );
 
