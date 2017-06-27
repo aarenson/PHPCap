@@ -5,6 +5,7 @@
     <testsuite name="unit">
       <file>tests/unit/FileUtilTest.php</file>
       <file>tests/unit/PhpCapExceptionTest.php</file>
+      <file>tests/unit/RedCapApiConnectionTest.php</file>
       <file>tests/unit/RedCapTest.php</file>
       <file>tests/unit/RedCapProjectTest.php</file>
     </testsuite>

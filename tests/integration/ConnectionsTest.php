@@ -114,42 +114,6 @@ class ConnectionsTest extends TestCase
         $this->assertSame($errorHandler, $errorHandlerFromGet, 'Error handler check.');
     }
     
-    public function testCaCertificateFileNotFound()
-    {
-        # Test CA certificate file not found
-        $caughtException = false;
-        try {
-            $apiConnection = new RedCapApiConnection(self::$config['api.url'], true, uniqid().".txt");
-        } catch (PhpCapException $exception) {
-            $caughtException = true;
-            $this->assertEquals(
-                $exception->getCode(),
-                ErrorHandlerInterface::CA_CERTIFICATE_FILE_NOT_FOUND,
-                'CA cert file not found.'
-            );
-        }
-        $this->assertTrue($caughtException, 'Caught CA cert file not found exception.');
-    }
-    
-    public function testCaCertificateFileUnreadable()
-    {
-        # Test CA certificate file not readable
-        SystemFunctions::setIsReadableToFail();
-        $caughtException = false;
-        try {
-            $apiConnection = new RedCapApiConnection(self::$config['api.url'], true, __FILE__);
-        } catch (PhpCapException $exception) {
-            $caughtException = true;
-            $this->assertEquals(
-                $exception->getCode(),
-                ErrorHandlerInterface::CA_CERTIFICATE_FILE_UNREADABLE,
-                'CA cert file is unreadable.'
-            );
-        }
-        $this->assertTrue($caughtException, 'Caught CA cert file unreadable exception.');
-        SystemFunctions::resetIsReadable();
-    }
-    
     public function testConnectionWithCaCertificateFile()
     {
         if (isset(self::$config['ca.certificate.file'])) {
