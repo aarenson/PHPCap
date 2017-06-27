@@ -8,7 +8,10 @@
 require_once('vendor/autoload.php');
 
 
-
+/**
+ * Extension of Parsedown class that is used to translate Markdown to HTML.
+ *
+ */
 class MyParsedown extends \Parsedown
 {
     protected $highlighter;
@@ -16,13 +19,21 @@ class MyParsedown extends \Parsedown
 
     public function __construct()
     {
+        # Syntax highlighter for PHP
         $this->highlighter = new \FSHL\Highlighter(new \FSHL\Output\Html());
         $this->highlighter->setLexer(new \FSHL\Lexer\Php());
         
+        # Syntax highlighter for shell commands/scripts
         $this->minimalHighlighter = new \FSHL\Highlighter(new \FSHL\Output\Html());
         $this->minimalHighlighter->setLexer(new \FSHL\Lexer\Minimal());
     }
 
+    /**
+     * Use new highlighters for code blocks.
+     * 
+     * @param unknown $block
+     * @return unknown
+     */
     public function blockFencedCodeComplete($block)
     {
         $text = print_r($block, true);
