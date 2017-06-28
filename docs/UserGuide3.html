@@ -20,6 +20,12 @@
 <li><a href="UserGuide1.html">User Guide 1 - Getting Started</a></li>
 <li><a href="UserGuide2.html">User Guide 2 - API Overview</a></li>
 <li class="active"><a href="UserGuide3.html">User Guide 3 - Exporting Records</a></li>
+<ul class="intraPage">
+    <li class="active"><a href="#exportRecords">exportRecords</a></li>
+    <li class="active"><a href="#exportRecordsAp">exportRecordsAp</a></li>
+    <li class="active"><a href="#exportReports">exportReports</a></li>
+    <li class="active"><a href="#getRecordIdBatches">getRecordIdBatches</a></li>
+</ul>
 <li><a href="UserGuide4.html">User Guide 4 - Extending PHPCap</a></li>
 </ul>
 </div>
@@ -40,7 +46,7 @@ is defined for the project in REDCap.</li>
 the method <strong>getRecordIdBatches</strong> can be used with the first 2 methods above
 to export records in batches. This will cut down on the memory requirements of the export, which
 can be useful for exporting the records from very large projects.</p>
-<h2>exportRecords</h2>
+<h2 id="exportRecords">exportRecords</h2>
 <p>The exportRecords method is a standard PHP method that has 12 parameters that can
 be set to modify the records that are exported and their format.</p>
 <p>The complete documentation for this method can be found in the PHPCap API documentation:
@@ -63,7 +69,7 @@ can be used to export all records from a project with default formats:</p>
 <span class="php-comment">// CSV format (note that null can be used for arguments</span>
 <span class="php-comment">// where you want to use the default value)</span>
 <span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportRecords(<span class="php-quote">'csv'</span>, <span class="php-keyword1">null</span>, <span class="php-keyword1">null</span>, [<span class="php-quote">'age'</span>, <span class="php-quote">'bmi'</span>]);</code></pre></div>
-<h2>exportRecordsAp</h2>
+<h2 id="exportRecordsAp">exportRecordsAp</h2>
 <p>The exportRecordsAp method supports the same functionality as the exportRecords method,
 but with different parameters. The exportRecordsAp method has a single array parameter
 where the keys of the array correspond the the parameter names in the exportRecords
@@ -90,13 +96,13 @@ parameters before it need to be included.</p>
 <p>In this case, only the arguments with non-default values need to be specified. And, the order
 doesn't matter, so the above export could also be specified as:</p>
 <div class="description"><pre><code class="language-php"><span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportRecordsAp([<span class="php-quote">'exportDataAccessGroups'</span> =&gt; <span class="php-keyword1">true</span>, <span class="php-quote">'format'</span> =&gt; <span class="php-quote">'csv'</span>]);</code></pre></div>
-<h2>exportReports</h2>
+<h2 id="exportReports">exportReports</h2>
 <p>To use the exportReports method, you first need to define one or more reports in REDCap
 for the project you are using.</p>
 <p>For example, if you had previously defined a report in REDCap that had an ID of 18999,
 you could export the records for that report in CSV format using the following:</p>
 <div class="description"><pre><code class="language-php"><span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportReports(<span class="php-quote">'18999'</span>, <span class="php-quote">'csv'</span>);</code></pre></div>
-<h2>getRecordIdBatches</h2>
+<h2 id="getRecordIdBatches">getRecordIdBatches</h2>
 <p>The getRecordIdBatches method retrieves batches of record IDs from a project that can then
 be used as input to the exportRecords and exportRecordsAp methods to export records in batches,
 for example:</p>

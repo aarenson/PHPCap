@@ -19,7 +19,7 @@ Information on installing PHP on Windows: http://php.net/manual/en/install.windo
 Creating a PHPCap Project
 ------------------------------
 
-### Create a project directory.
+### Create a project directory
 
 Create a directory for your project, and cd to that directory:
 
@@ -75,7 +75,7 @@ You will need to include the PHPCap autoloader (shown in bold above) in your cod
 whether you used Composer to download PHPCap, or downloaded it from GitHub (using Git or directly).
 
             
-### Create your first test program.
+### Create your first test program
 
 Create a file __test.php__ in your project directory:
 
@@ -164,7 +164,7 @@ Array
 )
 ```
 
-### Making your test program secure.
+### Making your test program secure
 
 The program above is not secure, because it does not use SSL verification to verify that the
 REDCap site accessed is the one actually intended. To make the program more secure, it
@@ -252,7 +252,7 @@ print_r($projectInfo);
 
 If everything is working correctly, the test program should (still) output information about your project.
 
-### Checking for errors.
+### Checking for errors
 
 In general, when an error occurs in PHPCap, it throws a PhpCapException.
 These exceptions can be checked and handled using "try" and "catch". For example,

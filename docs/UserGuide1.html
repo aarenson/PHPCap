@@ -18,6 +18,17 @@
 <li><a href="CACertificateFile.html">CA Certificate File Info</a></li>
 <li><a href="DeveloperGuide.html">Developer Guide</a></li>
 <li class="active"><a href="UserGuide1.html">User Guide 1 - Getting Started</a></li>
+<ul class="intraPage">
+    <li class="active"><a href="#Prerequisites">Prerequisites</a></li>
+    <li class="active"><a href="#Creating a PHPCap Project">Creating a PHPCap Project</a></li>
+<ul class="intraPage">
+    <li class="active"><a href="#Create a project directory">Create a project directory</a></li>
+    <li class="active"><a href="#Get PHPCap">Get PHPCap</a></li>
+    <li class="active"><a href="#Create your first test program">Create your first test program</a></li>
+    <li class="active"><a href="#Making your test program secure">Making your test program secure</a></li>
+    <li class="active"><a href="#Checking for errors">Checking for errors</a></li>
+</ul>
+</ul>
 <li><a href="UserGuide2.html">User Guide 2 - API Overview</a></li>
 <li><a href="UserGuide3.html">User Guide 3 - Exporting Records</a></li>
 <li><a href="UserGuide4.html">User Guide 4 - Extending PHPCap</a></li>
@@ -29,7 +40,7 @@
 <div id="rightInner">
 <div id="content">
 <h1>User Guide 1 - Getting Started</h1>
-<h2>Prerequisites</h2>
+<h2 id="Prerequisites">Prerequisites</h2>
 <ul>
 <li><strong>Your REDCap API URL.</strong> You need to know the URL of your REDCap's API (Application Programming Interface)</li>
 <li><strong>REDCap Project with API Token.</strong> You need to have an API token for a project in REDCap. You would typically get this
@@ -43,12 +54,12 @@ by creating a project in REDCap and then requesting an API token.</li>
 <p>Example PHP Setup on Ubuntu 16:</p>
 <div class="description"><pre><code>sudo apt-get install php php-curl composer</code></pre></div>
 <p>Information on installing PHP on Windows: <a href="http://php.net/manual/en/install.windows.php">http://php.net/manual/en/install.windows.php</a></p>
-<h2>Creating a PHPCap Project</h2>
-<h3>Create a project directory.</h3>
+<h2 id="Creating a PHPCap Project">Creating a PHPCap Project</h2>
+<h3 id="Create a project directory">Create a project directory</h3>
 <p>Create a directory for your project, and cd to that directory:</p>
 <div class="description"><pre><code>mkdir phpcap-project
 cd phpcap-project</code></pre></div>
-<h3>Get PHPCap</h3>
+<h3 id="Get PHPCap">Get PHPCap</h3>
 <p>If you have <a href="https://getcomposer.org/">Composer</a> installed, you can get PHPCap using:</p>
 <div class="description"><pre><code>composer require phpcap/phpcap</code></pre></div>
 <p>If you have <a href="https://git-scm.com/">Git</a> installed, you can use the following:</p>
@@ -84,7 +95,7 @@ cd phpcap-project</code></pre></div>
 </table>
 <p>You will need to include the PHPCap autoloader (shown in bold above) in your code to access the PHPCap classes. And the location and name of the autoloader to use will depend on
 whether you used Composer to download PHPCap, or downloaded it from GitHub (using Git or directly).</p>
-<h3>Create your first test program.</h3>
+<h3 id="Create your first test program">Create your first test program</h3>
 <p>Create a file <strong>test.php</strong> in your project directory:</p>
 <table>
     <tr><th>Composer</th><th>Git</th></tr>
@@ -159,7 +170,7 @@ probably be different:</p>
     [project_pi_lastname] =&gt; 
     [display_today_now_button] =&gt; <span class="php-num">1</span>
 )</code></pre></div>
-<h3>Making your test program secure.</h3>
+<h3 id="Making your test program secure">Making your test program secure</h3>
 <p>The program above is not secure, because it does not use SSL verification to verify that the
 REDCap site accessed is the one actually intended. To make the program more secure, it
 should use SSL verification. </p>
@@ -228,7 +239,7 @@ you top-level project directory, the project creation would now be modified to t
 
 <span class="php-keyword2">print_r</span>(<span class="php-var">$projectInfo</span>);</code></pre></div>
 <p>If everything is working correctly, the test program should (still) output information about your project.</p>
-<h3>Checking for errors.</h3>
+<h3 id="Checking for errors">Checking for errors</h3>
 <p>In general, when an error occurs in PHPCap, it throws a PhpCapException.
 These exceptions can be checked and handled using &quot;try&quot; and &quot;catch&quot;. For example,
 to handle exceptions in the sample program, it could be modified as follows:</p>

@@ -17,6 +17,19 @@
 <ul>
 <li><a href="CACertificateFile.html">CA Certificate File Info</a></li>
 <li class="active"><a href="DeveloperGuide.html">Developer Guide</a></li>
+<ul class="intraPage">
+    <li class="active"><a href="#Setup">Setup</a></li>
+<ul class="intraPage">
+    <li class="active"><a href="#Example Setup on Ubuntu 16">Example Setup on Ubuntu 16</a></li>
+</ul>
+    <li class="active"><a href="#Development">Development</a></li>
+<ul class="intraPage">
+    <li class="active"><a href="#Automated Tests">Automated Tests</a></li>
+    <li class="active"><a href="#Local Tests">Local Tests</a></li>
+    <li class="active"><a href="#Coding Standard Compliance">Coding Standard Compliance</a></li>
+    <li class="active"><a href="#Documentation">Documentation</a></li>
+</ul>
+</ul>
 <li><a href="UserGuide1.html">User Guide 1 - Getting Started</a></li>
 <li><a href="UserGuide2.html">User Guide 2 - API Overview</a></li>
 <li><a href="UserGuide3.html">User Guide 3 - Exporting Records</a></li>
@@ -31,7 +44,7 @@
 <h1>Developer Guide</h1>
 <p>This guide is for people interested in developing PHPCap (i.e., actually making changes to the PHPCap code). If you just want to use PHPCap to access REDCap from PHP, please see the
 user guides.</p>
-<h2>Setup</h2>
+<h2 id="Setup">Setup</h2>
 <ol>
 <li>Install PHP 5.6 or greater with the following extensions:
 <ul>
@@ -63,7 +76,7 @@ composer install
 # (which will be ignored by Git).    </code></pre></div>
 </li>
 </ol>
-<h2>Example Setup on Ubuntu 16</h2>
+<h3 id="Example Setup on Ubuntu 16">Example Setup on Ubuntu 16</h3>
 <p>To set up PHPCap for development on Ubuntu 16, execute the following commands:</p>
 <div class="description"><pre><code class="language-shell">sudo apt-get install php php-curl php-xml php-mbstring
 sudo apt-get install php-xdebug
@@ -72,8 +85,8 @@ git clone https://github.com/aarenson/PHPCap
 sudo apt-get install composer
 cd PHPCap
 composer install</code></pre></div>
-<h2>Usage</h2>
-<h3>Automated Tests</h3>
+<h2 id="Development">Development</h2>
+<h3 id="Automated Tests">Automated Tests</h3>
 <p>PHPCap uses PHPUnit for running automated tests. PHPUnit should get installed as a dependency
 for your PHPCap project when you run the &quot;composer install&quot; command.</p>
 <p>You can test your PHPUnit installation by running the following in the root PHPCap directory, which will run the unit tests for PHPCap:</p>
@@ -194,10 +207,10 @@ mark the closing bracket after a method that throws an exception as a line that 
     <span class="php-var">$message</span> = <span class="php-quote">'No field was specified.'</span>;
     <span class="php-var">$this</span>-&gt;errorHandler-&gt;throwException(<span class="php-var">$message</span>, ErrorHandlerInterface::INVALID_ARGUMENT);
 } <span class="php-comment">// @codeCoverageIgnore</span></code></pre></div>
-<h3>Local Tests</h3>
+<h3 id="Local Tests">Local Tests</h3>
 <p>The directory <strong>tests/local/</strong> has been set up so that all files in it, except for the README file, will be ignored by Git.
 This directory is intended as a place for developers to places tests for changes they are working on.</p>
-<h3>Coding Standard Compliance</h3>
+<h3 id="Coding Standard Compliance">Coding Standard Compliance</h3>
 <p>PHPCap follows the PSR-1 and PSR-2 coding standards. See:</p>
 <ul>
 <li><a href="http://www.php-fig.org/psr/psr-1/">http://www.php-fig.org/psr/psr-1/</a></li>
@@ -222,7 +235,7 @@ PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
 ----------------------------------------------------------------------</code></pre></div>
 <p>These errors are not important, because the issue should be fixed when you commit your code.</p>
 <p>PHPCap also follows the PSR-4 (Autoloader) standard, see: <a href="http://www.php-fig.org/psr/psr-4/">http://www.php-fig.org/psr/psr-4/</a></p>
-<h3>Documentation</h3>
+<h3 id="Documentation">Documentation</h3>
 <p>Documentation consists of the following:</p>
 <ul>
 <li>Top-level README.md file</li>

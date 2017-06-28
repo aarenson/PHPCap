@@ -37,8 +37,7 @@ Setup
     # (which will be ignored by Git).    
     ```
 
-Example Setup on Ubuntu 16
------------------------------------------
+### Example Setup on Ubuntu 16
 To set up PHPCap for development on Ubuntu 16, execute the following commands:
     
 ```shell
@@ -51,7 +50,7 @@ cd PHPCap
 composer install
 ```
 
-Usage
+Development
 -----------------------------------------
 
 ### Automated Tests

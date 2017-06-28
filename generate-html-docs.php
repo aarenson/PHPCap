@@ -71,6 +71,10 @@ function translateFile($file, $files)
     $content = str_replace('<pre>', '<div class="description"><pre>', $content);
     $content = str_replace('</pre>', '</pre></div>', $content);
     
+    # Create anchors for h2 and h3 tags
+    $content = preg_replace('/<h2>([^<]*)<\/h2>/', '<h2 id="\1">\1</h2>', $content);
+    $content = preg_replace('/<h3>([^<]*)<\/h3>/', '<h3 id="\1">\1</h3>', $content);
+    
     # Convert links to Markdown documents to links to HTML documents
     $content = str_replace('.md">', '.html">', $content);
     
@@ -111,7 +115,10 @@ function translateFile($file, $files)
 }
 
 /**
- * Creates an index for the specified file.
+ * Creates an index for the specified file. Code assumes 
+ * each file has a single <h1> tag that is at the start
+ * of the file. The text for this tag is used as the
+ * name of the document represented by the file.
  * 
  * @param string $file Markdown file for which an index is being created.
  * @param array $files List of all Markdown files (i.e., the contents of the index).
@@ -144,6 +151,10 @@ function createIndex($file, $files)
         
             $html = new DOMDocument();
         
+            #------------------------------------------------------
+            # Get the first <h1> element value; it will be used as
+            # the label for the link for the document
+            #------------------------------------------------------
             $h1 = '';
             $html->loadHTML($content);
             foreach($html->getElementsByTagName('h1') as $h1) {
@@ -151,9 +162,43 @@ function createIndex($file, $files)
                 $h1 = $h1->nodeValue;
                 break;
             }
+
+            #---------------------------------------------
+            # Get the text for the h2 and h3 tags
+            #---------------------------------------------
+            $xpath = new DOMXPath($html);
+            $expression = '(//h2|//h3)';
+            $elements = $xpath->query($expression);
+            $headings = array();
+            foreach ($elements as $element) {
+                array_push($headings, [$element->tagName, $element->nodeValue]);
+            }
             
+            # if this is the index entry for the current file being processed
             if (strcmp($fileName,$indexFileName) === 0) {
                 $index .= '<li class="active"><a href="'.$indexFileName.'">'.$h1.'</a></li>'."\n";
+                
+                # if any h2 or h3 headings were found
+                if (count($headings) > 0) {
+                    $index .= '<ul class="intraPage">'."\n";
+                    $lastTag = 'h2';
+                    foreach ($headings as $heading) {
+                        list($tag, $text) = $heading;
+                        if ($tag > $lastTag) {
+                            $index .= '<ul class="intraPage">'."\n";
+                        } elseif ($tag < $lastTag) {
+                            $index .= "</ul>\n";
+                        }
+                        
+                        $index .= '    <li class="active"><a href="#'.$text.'">'.$text.'</a></li>'."\n";
+
+                        $lastTag = $tag;
+                    }
+                    if ($lastTag > 'h2') {
+                        $index .= "</ul>\n";
+                    }
+                    $index .= "</ul>\n";
+                }
             }
             else {
                 $index .= '<li><a href="'.$indexFileName.'">'.$h1.'</a></li>'."\n";
