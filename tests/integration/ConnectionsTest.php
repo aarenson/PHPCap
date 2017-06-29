@@ -104,20 +104,7 @@ class ConnectionsTest extends TestCase
         $errorHandlerFromGet = $connection->getErrorHandler();
         $this->assertSame($errorHandler, $errorHandlerFromGet, 'Error handler check.');
     }
-    
-    public function testConnectionSetErrorHandler()
-    {
-        $errorHandler = new ErrorHandler();
-        $connection = new RedCapApiConnection(self::$config['api.url']);
-        
-        $this->assertNotNull($connection, 'Connection not null check.');
-        
-        $connection->setErrorHandler($errorHandler);
-        
-        $errorHandlerFromGet = $connection->getErrorHandler();
-        
-        $this->assertSame($errorHandler, $errorHandlerFromGet, 'Error handler check.');
-    }
+
     
     public function testConnectionWithCaCertificateFile()
     {
@@ -168,102 +155,5 @@ class ConnectionsTest extends TestCase
         $this->assertTrue($exceptionCaught);
         SystemFunctions::$curlErrorNumber = 0;
         SystemFunctions::$curlErrorMessage = '';
-    }
-    
-    public function testCallWithInvalidData()
-    {
-        $exceptionCaught = false;
-        try {
-            self::$apiConnection->call(123);
-        } catch (PhpCapException $exception) {
-            $exceptionCaught = true;
-            $this->assertEquals($exception->getCode(), ErrorHandlerInterface::INVALID_ARGUMENT);
-        }
-        $this->assertTrue($exceptionCaught);
-    }
-    
-    public function testCallWithCurlErrors()
-    {
-        # Set up valid call data
-        $data = array(
-                'token' => self::$config['basic.demography.api.token'],
-                'content' => 'project',
-                'format' => 'json',
-                'returnFormat' => 'json'
-        );
-        $callData = http_build_query($data, '', '&');
-    
-        #---------------------------------------
-        # Test curl_exec error in call
-        #---------------------------------------
-        SystemFunctions::$curlErrorNumber = 3;
-        SystemFunctions::$curlErrorMessage = 'The URL was not properly formatted.';
-        $exceptionCaught = false;
-        try {
-            $result = self::$apiConnection->call($callData);
-        } catch (PhpCapException $exception) {
-            $exceptionCaught = true;
-            $this->assertEquals($exception->getCode(), ErrorHandlerInterface::CONNECTION_ERROR);
-            $this->assertEquals($exception->getConnectionErrorNumber(), SystemFunctions::$curlErrorNumber);
-            $this->assertEquals($exception->getMessage(), SystemFunctions::$curlErrorMessage);
-        }
-        $this->assertTrue($exceptionCaught);
-        SystemFunctions::$curlErrorNumber = 0;
-        SystemFunctions::$curlErrorMessage = '';
-    
-        #--------------------------------------
-        # Test http code 301 in call
-        #--------------------------------------
-        SystemFunctions::$httpCode = 301;
-        $exceptionCaught = false;
-        try {
-            $result = self::$apiConnection->call($callData);
-        } catch (PhpCapException $exception) {
-            $exceptionCaught = true;
-            $this->assertEquals($exception->getCode(), ErrorHandlerInterface::INVALID_URL);
-            $this->assertEquals($exception->getHttpStatusCode(), SystemFunctions::$httpCode);
-        }
-        $this->assertTrue($exceptionCaught);
-        SystemFunctions::$httpCode = null;
-    
-        #--------------------------------------
-        # Test http code 404 in call
-        #--------------------------------------
-        SystemFunctions::$httpCode = 404;
-        $exceptionCaught = false;
-        try {
-            $result = self::$apiConnection->call($callData);
-        } catch (PhpCapException $exception) {
-            $exceptionCaught = true;
-            $this->assertEquals($exception->getCode(), ErrorHandlerInterface::INVALID_URL);
-            $this->assertEquals($exception->getHttpStatusCode(), SystemFunctions::$httpCode);
-        }
-        $this->assertTrue($exceptionCaught);
-        SystemFunctions::$httpCode = null;
-    }
-    
-    
-    public function testTimeout1()
-    {
-        $setTimeout = 10;
-        self::$apiConnection->setTimeoutInSeconds($setTimeout);
-        $getTimeout = self::$apiConnection->getTimeoutInSeconds();
-        $this->assertEquals($setTimeout, $getTimeout, "Timeout comparison 1");
-    }
-    
-    public function testTimeout2()
-    {
-        $setTimeout = 24;
-        self::$apiConnection->setTimeoutInSeconds($setTimeout);
-        $getTimeout = self::$apiConnection->getTimeoutInSeconds();
-        $this->assertEquals($setTimeout, $getTimeout, "Timeout comparison 2");
-    }
-    
-    public function testTimeout3()
-    {
-        $setTimeout = 32;
-        self::$apiConnection->setCurlOption(CURLOPT_TIMEOUT, $setTimeout);
-        $getTimeout = self::$apiConnection->getTimeoutInSeconds();
-        $this->assertEquals($setTimeout, $getTimeout, "Timeout comparison 3");
     }
 }

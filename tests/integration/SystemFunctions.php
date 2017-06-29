@@ -7,6 +7,7 @@ class SystemFunctions
     public static $curlErrorNumber   = 0;
     public static $curlErrorMessage  = '';
     public static $curlStringError   = '';
+    public static $curlExecResponse  = '';
     public static $httpCode          = null;
     
     private static $isReadable      = true;
@@ -25,6 +26,12 @@ class SystemFunctions
         self::$curlErrorNumber   = $number;
         self::$curlErrorMessage  = $message;
         self::$curlStringError   = $stringError;
+    }
+    
+    
+    public static function setCurlExecResponse($response)
+    {
+        self::$curlExecResponse = $response;
     }
     
     public static function setIsReadableToFail()
@@ -140,6 +147,16 @@ class SystemFunctions
 #==============================================================================
 # Overridden system functions
 #==============================================================================
+
+function curl_exec($curlHandle)
+{
+    if (SystemFunctions::$curlExecResponse !== '') {
+        $response = SystemFunctions::$curlExecResponse;
+    } else {
+        $response = \curl_exec($curlHandle);
+    }
+    return $response;
+}
 
 function curl_errno($curlHandle)
 {
