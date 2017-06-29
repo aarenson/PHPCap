@@ -55,7 +55,10 @@ The four main classes provided by PHPCap for users are:
  ```php
  <?php 
 
-require('PHPCap/autoloader.php'); # change path to file as needed
+# use only one of the following and
+# change the path to the file as needed
+require('vendor/autoload.php');   # For Composer
+require('PHPCap/autoloader.php'); # For Git 
 
 use IU\PHPCap\RedCapProject;
 use IU\PHPCap\FileUtil;

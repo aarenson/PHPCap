@@ -80,7 +80,10 @@
 records in a REDCap project to a file in CSV (Comma-Separated Values) format:</p>
 <div class="description"><pre><code class="language-php"> <span class="xlang">&lt;?php</span> 
 
-<span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>); <span class="php-comment"># change path to file as needed</span>
+<span class="php-comment"># use only one of the following and</span>
+<span class="php-comment"># change the path to the file as needed</span>
+<span class="php-keyword1">require</span>(<span class="php-quote">'vendor/autoload.php'</span>);   <span class="php-comment"># For Composer</span>
+<span class="php-keyword1">require</span>(<span class="php-quote">'PHPCap/autoloader.php'</span>); <span class="php-comment"># For Git </span>
 
 <span class="php-keyword1">use</span> IU\PHPCap\RedCapProject;
 <span class="php-keyword1">use</span> IU\PHPCap\FileUtil;

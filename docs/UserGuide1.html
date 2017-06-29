@@ -204,9 +204,13 @@ should use SSL verification. </p>
 <span class="php-var">$sslVerify</span> = <span class="php-keyword1">true</span>;
 <span class="php-var">$project</span> = <span class="php-keyword1">new</span> RedCapProject(<span class="php-var">$apiUrl</span>, <span class="php-var">$apiToken</span>, <span class="php-var">$sslVerify</span>);
 ...</code></pre></div>
-<p>But unless your system has already been set up to verify connections, you will need to create a
-certificate file
-for this, and add it also. Information on creating the file
+<p>If you can successfully run the test program with the change above, then
+it should mean that your system is set up to do SSL verification by default.
+However, if the above change causes an SSL certificate error,
+you will need take additional steps to get SSL verification to work.</p>
+<p>One approach to getting SSL verification to work is to create a
+certificate file for this, and add specify it in your program.
+Information on creating the file
 can be found here: <a href="CACertificateFile.html">CA Certificate file</a></p>
 <p>Assuming the file was created with the name 'USERTrustRSACertificationAuthority.crt' and is in
 you top-level project directory, the project creation would now be modified to the following:</p>
@@ -215,7 +219,8 @@ you top-level project directory, the project creation would now be modified to t
 <span class="php-var">$caCertificateFile</span> = <span class="php-quote">'USERTrustRSACertificationAuthority.crt'</span>;
 <span class="php-var">$project</span> = <span class="php-keyword1">new</span> RedCapProject(<span class="php-var">$apiUrl</span>, <span class="php-var">$apiToken</span>, <span class="php-var">$sslVerify</span>, <span class="php-var">$caCertificateFile</span>);
 ...</code></pre></div>
-<p>So, at this point, your project directory should look as follows:</p>
+<p>So, at this point, your project directory should look as follows (without the .crt
+file if it is not needed):</p>
 <table>
     <tr><th>Composer</th><th>Git</th></tr>
     <tr>

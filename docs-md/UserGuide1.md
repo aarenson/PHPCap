@@ -202,9 +202,14 @@ $project = new RedCapProject($apiUrl, $apiToken, $sslVerify);
 ...
 ```
 
-But unless your system has already been set up to verify connections, you will need to create a
-certificate file
-for this, and add it also. Information on creating the file
+If you can successfully run the test program with the change above, then
+it should mean that your system is set up to do SSL verification by default.
+However, if the above change causes an SSL certificate error,
+you will need take additional steps to get SSL verification to work.
+
+One approach to getting SSL verification to work is to create a
+certificate file for this, and add specify it in your program.
+Information on creating the file
 can be found here: [CA Certificate file](CACertificateFile.md)
 
 Assuming the file was created with the name 'USERTrustRSACertificationAuthority.crt' and is in
@@ -218,7 +223,8 @@ $project = new RedCapProject($apiUrl, $apiToken, $sslVerify, $caCertificateFile)
 ...
 ```
 
-So, at this point, your project directory should look as follows:
+So, at this point, your project directory should look as follows (without the .crt
+file if it is not needed):
 
 <table>
     <tr><th>Composer</th><th>Git</th></tr>
