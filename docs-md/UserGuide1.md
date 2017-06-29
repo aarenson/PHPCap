@@ -3,19 +3,42 @@ User Guide 1 - Getting Started
 
 Prerequisites
 ----------------------
-  * __Your REDCap API URL.__ You need to know the URL of your REDCap's API (Application Programming Interface)
-  * __REDCap Project with API Token.__ You need to have an API token for a project in REDCap. You would typically get this
-    by creating a project in REDCap and then requesting an API token.
-  * __PHP 5.6+ with cURL and OpenSSL.__ You need to have a computer (with Internet access) that has PHP version 5.6 or greater installed. And you need to have the following PHP modules enabled:
+* __REDCap 7.0+.__ You need to have an account for a REDCap version 7.0 or greater site.
+The version of your REDCap site should be listed on the bottom of the page after you log in.
+* __Your REDCap API URL.__ You need to know the URL of your REDCap's API (Application Programming Interface). You can see this from within REDCap by using the following steps:
+    1. Select a project.
+    2. Click on the __API__ link on the left.
+    3. On the API page, click on the __REDCap API documentation__ link
+       toward the the top of the page.
+    4. Select one of the methods in the left, such as __Export Arms__.
+    5. Your REDCap API URL should be displayed in the page for the method
+       under __URL__.
+* __REDCap Project with API Token.__ You need to have an API token for a project in REDCap. You would typically get this
+by creating a project in REDCap and then requesting an API token. To request an API
+token, from your project's page in REDCap:
+    1. Click on the __API__ link on the left.
+    2. On the API page, click on the __Request API token__ button.
+* __PHP 5.6+ with cURL and OpenSSL.__ You need to have a computer (with Internet access) that has PHP version 5.6 or greater installed. And you need to have the following PHP modules enabled:
     * cURL
     * OpenSSL
-
-Example PHP Setup on Ubuntu 16:
     
+    If you use Composer to install PHPCap (see below), it will
+    automatically check that the above modules are enabled,
+    and generate an error message if they are not. If you don't
+    use Composer, you can use the following command to check
+    which modules are enabled:
+    ```shell
+    php -m
+    ```
+
+    Example PHP Setup on Ubuntu 16:
+    ```shell
     sudo apt-get install php php-curl composer
+    ```
+    Information on installing PHP on Windows: 
+    http://php.net/manual/en/install.windows.php
 
-Information on installing PHP on Windows: http://php.net/manual/en/install.windows.php
-    
+
 Creating a PHPCap Project
 ------------------------------
 
@@ -120,7 +143,7 @@ use IU\PHPCap\RedCapProject;
 $apiUrl = 'https://redcap.xxxxx.edu/api/';  # replace this URL with your institution's
                                             # REDCap API URL.
                                                  
-$apiToken = '1234567890A1234567890B1234567890';    # replace with your actual API token
+$apiToken = '11111111112222222222333333333344';    # replace with your actual API token
 
 $project = new RedCapProject($apiUrl, $apiToken);
 $projectInfo = $project->exportProjectInfo();
@@ -240,7 +263,7 @@ use IU\PHPCap\RedCapProject;
 $apiUrl = 'https://redcap.xxxxx.edu/api/';  # replace this URL with your institution's
                                             # REDCap API URL.
                                                  
-$apiToken = '1234567890A1234567890B1234567890';    # replace with your actual API token
+$apiToken = '11111111112222222222333333333344';    # replace with your actual API token
 
 $sslVerify = true;
 $caCertificateFile = 'USERTrustRSACertificationAuthority.crt';
@@ -270,7 +293,7 @@ use IU\PHPCap\PhpCapException;
 $apiUrl = 'https://redcap.xxxxx.edu/api/';  # replace this URL with your institution's
                                             # REDCap API URL.
                                                  
-$apiToken = '1234567890A1234567890B1234567890';    # replace with your actual API token
+$apiToken = '11111111112222222222333333333344';    # replace with your actual API token
 
 $sslVerify = true;
 $caCertificateFile = 'USERTrustRSACertificationAuthority.crt';

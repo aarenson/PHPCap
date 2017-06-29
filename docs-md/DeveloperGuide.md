@@ -55,16 +55,26 @@ Development
 
 ### Automated Tests
 
-PHPCap uses PHPUnit for running automated tests. PHPUnit should get installed as a dependency
-for your PHPCap project when you run the "composer install" command.
+PHPCap uses PHPUnit for running automated tests. PHPUnit should get installed as a dependency for your PHPCap project when you run the "composer install" command.
+PHPCap has the following types of automated tests:
+1. __unit tests__
+    * in directory __tests/unit__
+    * don't require a REDCap instance to run
+2. __integration tests__
+    * in directory __tests/integration__
+    * require a REDCap instance to run
+    * require setup and configuration to run
 
 You can test your PHPUnit installation by running the following in the root PHPCap directory, which will run the unit tests for PHPCap:
 
 	    ./vendor/bin/phpunit --testsuite unit
     
-The unit tests for PHPCap do not require a REDCap account or REDCap project setup using your account (as the integration tests do). If the above command succeeds, you should see an "OK" message with the number of tests and assertions that were run, and you should see no errors of failures.
+If the above command succeeds, you should see an "OK" message with the number of tests and assertions that were run, and you should see no errors of failures.
     
-To run _all_ the automated tests (the unit tests as well as the integration tests), setup steps needs to be completed.
+To run _all_ the automated tests (the unit tests as well as the integration tests), setup steps needs to be completed. Some of the integration tests are considered optional. If 
+you don't do the setup steps for these optional tests, they will not be run. But if you don't do the setup steps for the non-optional integration tests, phpunit will fail
+when you try to run them.
+
 
 #### Setup for Non-Optional Integration Tests
 Running all the automated tests, or all the integration tests, will fail unless the
@@ -72,8 +82,8 @@ following setup steps are completed:
 1. Log in to your REDCap site.
 2. Create an empty project in REDCap.
 3. Create a project in REDCap for the "Basic Demography" and "Longitudinal Data" test projects in directory __tests/projects/__, and import each of those test project files into the REDCap project created for it.
-3. In REDCap, request API tokens for the empty project and the projects imported in the step above.
-4. Once you have your tokens, copy the "config-example.ini" file to a file
+4. In REDCap, request API tokens for the empty project and the projects imported in the step above.
+5. Once you have your tokens, copy the "config-example.ini" file to a file
    named "config.ini" and then set the URL in that file to be the
    URL for the API of your REDCap instance, and set the tokens to be
    the tokens requested in the previous step.
@@ -150,8 +160,13 @@ personal API tokens will not be committed to Git.
 To run the automated tests, execute the following command in the top-level directory of your downloaded version of PHPCap:
 
     ./vendor/bin/phpunit
+
+The above command will run all the unit tests, and all the integration tests, except for
+the optional test that were not set up.
     
 Note: PHPUnit uses the **phpunit.xml** configuration file in the root directory of PHPCap.
+See this file for a list of the test suites and files. This file will need to be
+modified to make changes to the test suites and/or files.
 
 ##### Running Selected Tests
 You can run just the integration tests using:
@@ -253,4 +268,9 @@ The API documentation is stored in Git to eliminate the need for non-developer u
 To generate an HTML version for the Markdown documents in the __docs-md/__ directory, execute the following command in PHPCap's root directory:
 
     php generate-html-docs.php
+
+### Tagging Releases
+
+Releases should be tagged in accordance with semantic versioning: 
+http://semver.org/
 

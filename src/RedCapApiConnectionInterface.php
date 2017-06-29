@@ -65,6 +65,7 @@ interface RedCapApiConnectionInterface
     
     /**
      *  Returns call information for the most recent call.
+     *  The format of the call information will be connection dependent.
      */
     public function getCallInfo();
     

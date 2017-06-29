@@ -42,18 +42,43 @@
 <h1>User Guide 1 - Getting Started</h1>
 <h2 id="Prerequisites">Prerequisites</h2>
 <ul>
-<li><strong>Your REDCap API URL.</strong> You need to know the URL of your REDCap's API (Application Programming Interface)</li>
+<li><strong>REDCap 7.0+.</strong> You need to have an account for a REDCap version 7.0 or greater site.
+The version of your REDCap site should be listed on the bottom of the page after you log in.</li>
+<li><strong>Your REDCap API URL.</strong> You need to know the URL of your REDCap's API (Application Programming Interface). You can see this from within REDCap by using the following steps:
+<ol>
+<li>Select a project.</li>
+<li>Click on the <strong>API</strong> link on the left.</li>
+<li>On the API page, click on the <strong>REDCap API documentation</strong> link
+toward the the top of the page.</li>
+<li>Select one of the methods in the left, such as <strong>Export Arms</strong>.</li>
+<li>Your REDCap API URL should be displayed in the page for the method
+under <strong>URL</strong>.</li>
+</ol></li>
 <li><strong>REDCap Project with API Token.</strong> You need to have an API token for a project in REDCap. You would typically get this
-by creating a project in REDCap and then requesting an API token.</li>
-<li><strong>PHP 5.6+ with cURL and OpenSSL.</strong> You need to have a computer (with Internet access) that has PHP version 5.6 or greater installed. And you need to have the following PHP modules enabled:
+by creating a project in REDCap and then requesting an API token. To request an API
+token, from your project's page in REDCap:
+<ol>
+<li>Click on the <strong>API</strong> link on the left.</li>
+<li>On the API page, click on the <strong>Request API token</strong> button.</li>
+</ol></li>
+<li>
+<p><strong>PHP 5.6+ with cURL and OpenSSL.</strong> You need to have a computer (with Internet access) that has PHP version 5.6 or greater installed. And you need to have the following PHP modules enabled:</p>
 <ul>
 <li>cURL</li>
 <li>OpenSSL</li>
-</ul></li>
 </ul>
+<p>If you use Composer to install PHPCap (see below), it will
+automatically check that the above modules are enabled,
+and generate an error message if they are not. If you don't
+use Composer, you can use the following command to check
+which modules are enabled:</p>
+<div class="description"><pre><code class="language-shell">php -m</code></pre></div>
 <p>Example PHP Setup on Ubuntu 16:</p>
-<div class="description"><pre><code>sudo apt-get install php php-curl composer</code></pre></div>
-<p>Information on installing PHP on Windows: <a href="http://php.net/manual/en/install.windows.php">http://php.net/manual/en/install.windows.php</a></p>
+<div class="description"><pre><code class="language-shell">sudo apt-get install php php-curl composer</code></pre></div>
+<p>Information on installing PHP on Windows:
+<a href="http://php.net/manual/en/install.windows.php">http://php.net/manual/en/install.windows.php</a></p>
+</li>
+</ul>
 <h2 id="Creating a PHPCap Project">Creating a PHPCap Project</h2>
 <h3 id="Create a project directory">Create a project directory</h3>
 <p>Create a directory for your project, and cd to that directory:</p>
@@ -134,7 +159,7 @@ whether you used Composer to download PHPCap, or downloaded it from GitHub (usin
 <span class="php-var">$apiUrl</span> = <span class="php-quote">'https://redcap.xxxxx.edu/api/'</span>;  <span class="php-comment"># replace this URL with your institution's</span>
                                             <span class="php-comment"># REDCap API URL.</span>
 
-<span class="php-var">$apiToken</span> = <span class="php-quote">'1234567890A1234567890B1234567890'</span>;    <span class="php-comment"># replace with your actual API token</span>
+<span class="php-var">$apiToken</span> = <span class="php-quote">'11111111112222222222333333333344'</span>;    <span class="php-comment"># replace with your actual API token</span>
 
 <span class="php-var">$project</span> = <span class="php-keyword1">new</span> RedCapProject(<span class="php-var">$apiUrl</span>, <span class="php-var">$apiToken</span>);
 <span class="php-var">$projectInfo</span> = <span class="php-var">$project</span>-&gt;exportProjectInfo();
@@ -230,7 +255,7 @@ you top-level project directory, the project creation would now be modified to t
 <span class="php-var">$apiUrl</span> = <span class="php-quote">'https://redcap.xxxxx.edu/api/'</span>;  <span class="php-comment"># replace this URL with your institution's</span>
                                             <span class="php-comment"># REDCap API URL.</span>
 
-<span class="php-var">$apiToken</span> = <span class="php-quote">'1234567890A1234567890B1234567890'</span>;    <span class="php-comment"># replace with your actual API token</span>
+<span class="php-var">$apiToken</span> = <span class="php-quote">'11111111112222222222333333333344'</span>;    <span class="php-comment"># replace with your actual API token</span>
 
 <span class="php-var">$sslVerify</span> = <span class="php-keyword1">true</span>;
 <span class="php-var">$caCertificateFile</span> = <span class="php-quote">'USERTrustRSACertificationAuthority.crt'</span>;
@@ -255,7 +280,7 @@ to handle exceptions in the sample program, it could be modified as follows:</p>
 <span class="php-var">$apiUrl</span> = <span class="php-quote">'https://redcap.xxxxx.edu/api/'</span>;  <span class="php-comment"># replace this URL with your institution's</span>
                                             <span class="php-comment"># REDCap API URL.</span>
 
-<span class="php-var">$apiToken</span> = <span class="php-quote">'1234567890A1234567890B1234567890'</span>;    <span class="php-comment"># replace with your actual API token</span>
+<span class="php-var">$apiToken</span> = <span class="php-quote">'11111111112222222222333333333344'</span>;    <span class="php-comment"># replace with your actual API token</span>
 
 <span class="php-var">$sslVerify</span> = <span class="php-keyword1">true</span>;
 <span class="php-var">$caCertificateFile</span> = <span class="php-quote">'USERTrustRSACertificationAuthority.crt'</span>;

@@ -53,3 +53,12 @@ td {
 	font-size: 1em;
 	vertical-align: top;
 }
+
+ul.intrapage {
+	padding-left: 20px;
+}
+
+#menu ul.intraPage a {
+	font-size: 90%;
+	font-weight: normal;
+}

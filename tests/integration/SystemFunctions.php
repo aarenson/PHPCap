@@ -6,6 +6,7 @@ class SystemFunctions
 {
     public static $curlErrorNumber   = 0;
     public static $curlErrorMessage  = '';
+    public static $curlStringError   = '';
     public static $httpCode          = null;
     
     private static $isReadable      = true;
@@ -18,6 +19,13 @@ class SystemFunctions
     
     private static $jsonDecode = null;
     
+    
+    public static function setCurlErrorInfo($number, $message, $stringError)
+    {
+        self::$curlErrorNumber   = $number;
+        self::$curlErrorMessage  = $message;
+        self::$curlStringError   = $stringError;
+    }
     
     public static function setIsReadableToFail()
     {
@@ -152,6 +160,17 @@ function curl_error($curlHandle)
     }
     return $error;
 }
+
+function curl_strerror($errornum)
+{
+    if (SystemFunctions::$curlStringError !== '') {
+        $strerror = SystemFunctions::$curlStringError;
+    } else {
+        $strerror = \curl_strerror($errornum);
+    }
+    return $strerror;
+}
+
 
 function is_readable($file)
 {

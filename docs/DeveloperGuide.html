@@ -28,6 +28,7 @@
     <li class="active"><a href="#Local Tests">Local Tests</a></li>
     <li class="active"><a href="#Coding Standard Compliance">Coding Standard Compliance</a></li>
     <li class="active"><a href="#Documentation">Documentation</a></li>
+    <li class="active"><a href="#Tagging Releases">Tagging Releases</a></li>
 </ul>
 </ul>
 <li><a href="UserGuide1.html">User Guide 1 - Getting Started</a></li>
@@ -87,12 +88,27 @@ cd PHPCap
 composer install</code></pre></div>
 <h2 id="Development">Development</h2>
 <h3 id="Automated Tests">Automated Tests</h3>
-<p>PHPCap uses PHPUnit for running automated tests. PHPUnit should get installed as a dependency
-for your PHPCap project when you run the &quot;composer install&quot; command.</p>
+<p>PHPCap uses PHPUnit for running automated tests. PHPUnit should get installed as a dependency for your PHPCap project when you run the &quot;composer install&quot; command.
+PHPCap has the following types of automated tests:</p>
+<ol>
+<li><strong>unit tests</strong>
+<ul>
+<li>in directory <strong>tests/unit</strong></li>
+<li>don't require a REDCap instance to run</li>
+</ul></li>
+<li><strong>integration tests</strong>
+<ul>
+<li>in directory <strong>tests/integration</strong></li>
+<li>require a REDCap instance to run</li>
+<li>require setup and configuration to run</li>
+</ul></li>
+</ol>
 <p>You can test your PHPUnit installation by running the following in the root PHPCap directory, which will run the unit tests for PHPCap:</p>
 <div class="description"><pre><code>    ./vendor/bin/phpunit --testsuite unit</code></pre></div>
-<p>The unit tests for PHPCap do not require a REDCap account or REDCap project setup using your account (as the integration tests do). If the above command succeeds, you should see an &quot;OK&quot; message with the number of tests and assertions that were run, and you should see no errors of failures.</p>
-<p>To run <em>all</em> the automated tests (the unit tests as well as the integration tests), setup steps needs to be completed.</p>
+<p>If the above command succeeds, you should see an &quot;OK&quot; message with the number of tests and assertions that were run, and you should see no errors of failures.</p>
+<p>To run <em>all</em> the automated tests (the unit tests as well as the integration tests), setup steps needs to be completed. Some of the integration tests are considered optional. If
+you don't do the setup steps for these optional tests, they will not be run. But if you don't do the setup steps for the non-optional integration tests, phpunit will fail
+when you try to run them.</p>
 <h4>Setup for Non-Optional Integration Tests</h4>
 <p>Running all the automated tests, or all the integration tests, will fail unless the
 following setup steps are completed:</p>
@@ -182,7 +198,11 @@ personal API tokens will not be committed to Git. </p>
 <h4>Running the Automated Tests</h4>
 <p>To run the automated tests, execute the following command in the top-level directory of your downloaded version of PHPCap:</p>
 <div class="description"><pre><code>./vendor/bin/phpunit</code></pre></div>
-<p>Note: PHPUnit uses the <strong>phpunit.xml</strong> configuration file in the root directory of PHPCap.</p>
+<p>The above command will run all the unit tests, and all the integration tests, except for
+the optional test that were not set up.</p>
+<p>Note: PHPUnit uses the <strong>phpunit.xml</strong> configuration file in the root directory of PHPCap.
+See this file for a list of the test suites and files. This file will need to be
+modified to make changes to the test suites and/or files.</p>
 <h5>Running Selected Tests</h5>
 <p>You can run just the integration tests using:</p>
 <div class="description"><pre><code>./vendor/bin/phpunit --testsuite integration</code></pre></div>
@@ -250,7 +270,10 @@ PHPCBF CAN FIX THE 1 MARKED SNIFF VIOLATIONS AUTOMATICALLY
 <p>The API documentation is stored in Git to eliminate the need for non-developer users to install Composer and the developer dependencies.</p>
 <h4>HTML Document Generation</h4>
 <p>To generate an HTML version for the Markdown documents in the <strong>docs-md/</strong> directory, execute the following command in PHPCap's root directory:</p>
-<div class="description"><pre><code>php generate-html-docs.php</code></pre></div></div>
+<div class="description"><pre><code>php generate-html-docs.php</code></pre></div>
+<h3 id="Tagging Releases">Tagging Releases</h3>
+<p>Releases should be tagged in accordance with semantic versioning:
+<a href="http://semver.org/">http://semver.org/</a></p></div>
 <div id="footer">
 PHPCap documentation
 </div>

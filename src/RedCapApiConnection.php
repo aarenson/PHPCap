@@ -105,6 +105,14 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
         if ($errno = curl_errno($this->curlHandle)) {
             $message = curl_error($this->curlHandle);
             $code    = ErrorHandlerInterface::CONNECTION_ERROR;
+            
+            # Had one case where curl_error didn't return a message
+            if ($message == null || $message == '') {
+                $message = curl_strerror($errno);
+                if ($message == null || $message == '') {
+                    $message = 'Connection error '.$errno.' occurred.';
+                }
+            }
             $this->errorHandler->throwException($message, $code, $errno);
         } else { // @codeCoverageIgnore
             // Check for HTTP errors
