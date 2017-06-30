@@ -24,10 +24,15 @@ class SurveyTest extends TestCase
         
         self::$apiUrl = self::$config['api.url'];
         
-        self::$apiToken = self::$config['repeatable.survey.api.token'];
-        
-        self::$participantEmail      = self::$config['survey.participant.email'];
-        self::$participantIdentifier = self::$config['survey.participant.identifier'];
+        if (array_key_exists('repeatable.survey.api.token', self::$config)) {
+            self::$apiToken              = self::$config['repeatable.survey.api.token'];
+            self::$participantEmail      = self::$config['survey.participant.email'];
+            self::$participantIdentifier = self::$config['survey.participant.identifier'];
+        } else {
+            self::$apiToken              = null;
+            self::$participantEmail      = null;
+            self::$participantIdentifier = null;
+        }
         
         self::$repeatableSurveyProject = null;
         if (self::$apiToken != null && self::$apiToken !== '') {
@@ -37,7 +42,7 @@ class SurveyTest extends TestCase
     
     public function testExportSurveyLink()
     {
-        if (self::$repeatableSurveyProject != null) {
+        if (isset(self::$repeatableSurveyProject)) {
             $recordId = 1;
             $form = "weight";
             $surveyLink = self::$repeatableSurveyProject->exportSurveyLink($recordId, $form);
@@ -50,7 +55,7 @@ class SurveyTest extends TestCase
     
     public function testExportSurveyLinkWithNullForm()
     {
-        if (self::$repeatableSurveyProject != null) {
+        if (isset(self::$repeatableSurveyProject)) {
             $recordId = 1;
             $caughtException = false;
             try {
@@ -66,7 +71,7 @@ class SurveyTest extends TestCase
     
     public function testExportSurveyParticipants()
     {
-        if (self::$repeatableSurveyProject != null) {
+        if (isset(self::$repeatableSurveyProject)) {
             $form = 'weight';
             $surveyParticipants = self::$repeatableSurveyProject->exportSurveyParticipants($form);
 
@@ -92,7 +97,7 @@ class SurveyTest extends TestCase
     
     public function testExportSurveyQueueLink()
     {
-        if (self::$repeatableSurveyProject != null) {
+        if (isset(self::$repeatableSurveyProject)) {
             $recordId = 1;
             $form = "weight";
             $surveyQueueLink = self::$repeatableSurveyProject->exportSurveyQueueLink($recordId, $form);
@@ -106,7 +111,7 @@ class SurveyTest extends TestCase
     
     public function testExportSurveyReturnCode()
     {
-        if (self::$repeatableSurveyProject != null) {
+        if (isset(self::$repeatableSurveyProject)) {
             $recordId = 1;
             $form = "weight";
             $surveyReturnCode = self::$repeatableSurveyProject->exportSurveyReturnCode($recordId, $form);
