@@ -211,8 +211,45 @@ function createIndex($file, $files)
     return $index;
 }
 
+/**
+ * Sorts file names in alphabetical order, except that file names
+ * starting with 'user' (ignoring case) always sort first, and
+ * file names starting with 'developer' (ignoring case) always sort last.
+ * 
+ * @param string $a file name 1 (possibly a full path name)
+ * @param string $b file name 2 (possibly a full path name) 
+ * @return number -1 for a < b, 0 for a = b, and 1 for a > b
+ */
+function fileNameCompare($a, $b)
+{
+    $comparison = 0;
+    
+    # Get just the file names from the full paths
+    $a = basename($a);  
+    $b = basename($b);
+    
 
+    if (stripos($a, 'user', 0) === 0 && stripos($b, 'user', 0) !== 0) {
+        # if $a starts with 'user' and $b does not, sort $a first
+        $comparison = -1;
+    } elseif (stripos($a, 'user', 0) !== 0 && stripos($b, 'user', 0) === 0) {
+        # if $a does not start with 'user' and $b does, sort $b first
+        $comparison = 1;
+    } elseif (stripos($a, 'developer', 0) === 0 && stripos($b, 'developer', 0) !== 0) {
+        # if $a starts with 'developer' and $b does not, sort $a last
+        $comparison = 1;
+    } elseif (stripos($a, 'developer', 0) !== 0 && stripos($b, 'developer', 0) === 0) {
+        # if $a does not start with 'developer' and $b does, sort $b last
+        $comparison = -1;
+    } else {
+        # for cases not covered above, sort alphabetically
+        $comparison = strcmp($a,$b);
+    }
+    
+    return $comparison;
+}
 
+# Set the input and output directories
 $inputDirectory  = __DIR__."/docs-md/";
 $outputDirectory = __DIR__."/docs/";
 
@@ -233,7 +270,7 @@ foreach ($resources as $resource) {
 
 # Process each Markdown file
 $files = glob($inputDirectory . "*.md");
-sort($files);
+usort($files, "fileNameCompare");
 foreach($files as $file)
 {
     print "\nTranslating\n$file\n";
@@ -241,4 +278,3 @@ foreach($files as $file)
 }
 
 print "\nDone.\n";
-
