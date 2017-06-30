@@ -41,6 +41,23 @@ $result = $this->connection->call($data);
 This is useful for accessing methods provided by the REDCap API that
 have not been implemented in PHPCap.
 
+If you do define your own project class, and want to use it in conjunction with PHPCap's
+RedCap class, you can use the __setProjectConstructorCallback__ method of the __RedCap__
+class to get RedCap to use your project class for projects that it returns from its
+methods to create and get projects. For example:
+```php
+...
+$callback = function ($apiUrl, $apiToken, $sslVerify = false,
+                      $caCertificateFile = null, $errorHandler = null,
+                      $connection = null) {
+        return new MyRedCapProject($apiUrl, $apiToken, $sslVerify,
+                                   $caCertificateFile, $errorHandler, $connection);
+    };
+...        
+$redCap = new RedCap($apiUrl);
+$redCap->setProjectConstructorCallback($callback);
+```
+
 Extending the ErrorHandler class
 ----------------------------------------
 The ErrorHandler class handles errors that occur in PHPCap,
@@ -54,4 +71,15 @@ In addition, if a project is created with, or gotten from, a RedCap object where
 a custom error handler has been set, the returned project will be assigned a clone
 of the custom error handler in the RedCap object.
 
+Extending the RedCapApiConnection class
+----------------------------------------------
+The RedCapApiConnection class is used to represent the PHPCap's underlying
+connection to a REDCap API.
+This class can be extended, or you can implement a completely new connection class
+that implements the RedCapApiConnectionInterface interface.
 
+The constructors for the RedCap and RedCapProject classes have a connection
+parameter that can be used to set these classes to use your custom connection class.
+In addition, if a project is created with, or gotten from, a RedCap object where 
+a custom connection has been set, the returned project will be assigned a clone
+of the custom connection in the RedCap object.
