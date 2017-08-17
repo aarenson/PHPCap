@@ -892,6 +892,39 @@ class RedCapProject
         return (integer) $result;
     }
     
+    /**
+     * Exports the specified information of project in XML format.
+     *
+     * @param boolean $returnMetadataOnly if this is set to true, only the metadata for
+     *     the project is returned. If it is not set to true, the metadata and data for the project
+     *     is returned.
+     * @param array $recordIds array of strings with record id's that are to be retrieved.
+     * @param array $fields array of field names to export
+     * @param array $events array of event names for which fields should be exported
+     * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
+     *     "[last_name] = 'Smith'".
+     * @param boolean $exportSurveyFields specifies whether survey fields should be exported.
+     *     <ul>
+     *       <li> true - export the following survey fields:
+     *         <ul>
+     *           <li> survey identifier field ('redcap_survey_identifier') </li>
+     *           <li> survey timestamp fields (instrument+'_timestamp') </li>
+     *         </ul>
+     *       </li>
+     *       <li> false - [default] survey fields are not exported.</li>
+     *     </ul>
+     * @param boolean $exportDataAccessGroups specifies whether the data access group field
+     *      ('redcap_data_access_group') should be exported.
+     *     <ul>
+     *       <li> true - export the data access group field if there is at least one data access group, and
+     *                   the user calling the method (as identified by the API token) is not
+     *                   in a data access group.</li>
+     *       <li> false - [default] don't export the data access group field.</li>
+     *     </ul>
+     * @param boolean $exportFiles If this is set to true, files will be exported in the XML.
+     *     If it is not set to true, files will not be exported.
+     * @return string the specified information for the project in XML format.
+     */
     public function exportProjectXml(
         $returnMetadataOnly = false,
         $recordIds = null,
@@ -931,7 +964,15 @@ class RedCapProject
         return $projectXml;
     }
     
-    
+    /**
+     * This method returns the next potential record ID for a project, but it does NOT
+     * actually create a new record. The record ID returned will generally be the current maximum
+     * record ID number incremented by one (but see the REDCap documentation for the case
+     * where Data Access Groups are being used).
+     * This method is intended for use with projects that have record-autonumbering enabled.
+     *
+     * @return string the next record name.
+     */
     public function generateNextRecordName()
     {
         $data = array(
