@@ -107,7 +107,7 @@ you could export the records for that report in CSV format using the following:<
 be used as input to the exportRecords and exportRecordsAp methods to export records in batches,
 for example:</p>
 <div class="description"><pre><code class="language-php">...
-<span class="php-comment"># Get all the record IDs of the project in 10 batches</span>
+<span class="php-comment"># Get all the record IDs of the project using a batch size of 10</span>
 <span class="php-var">$recordIdBatches</span> = <span class="php-var">$project</span>-&gt;getRecordIdBatches(<span class="php-num">10</span>);
 <span class="php-keyword1">foreach</span> (<span class="php-var">$recordIdBatches</span> <span class="php-keyword1">as</span> <span class="php-var">$recordIdBatch</span>) {
     <span class="php-var">$records</span> = <span class="php-var">$project</span>-&gt;exportRecordsAp([<span class="php-quote">'recordIds'</span> =&gt; <span class="php-var">$recordIdBatch</span>]);

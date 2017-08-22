@@ -1702,6 +1702,7 @@ class RedCapProject
         return (integer) $result;
     }
     
+ 
     /**
      * Gets an array of record ID batches.
      *
@@ -1718,10 +1719,10 @@ class RedCapProject
      * ...
      * </code>
      *
-     * @param integer $batches the number of batches of record IDs to return (needs to be
-     *     at least one). If the number of batches specified is greater than the
-     *     number of records IDs, then then number of batches returned should be adjusted
-     *     to equal the number of records IDs.
+     * @param integer $batchSize the batch size in number of record IDs.
+     *     The last batch may have less record IDs. For example, if you had 500
+     *     record IDs and specified a batch size of 200, the first 2 batches would have
+     *     200 record IDs, and the last batch would have 100.
      * @param array $filterLogic logic used to restrict the records retrieved, e.g.,
      *     "[last_name] = 'Smith'". This could be used for batch processing a subset
      *     of the records.
@@ -1732,22 +1733,22 @@ class RedCapProject
      *     is considered to be a batch. Each batch can be used as the value
      *     for the records IDs parameter for an export records method.
      */
-    public function getRecordIdBatches($batches = 1, $filterLogic = null, $recordIdFieldName = null)
+    public function getRecordIdBatches($batchSize = null, $filterLogic = null, $recordIdFieldName = null)
     {
         $recordIdBatches = array();
         
         #-----------------------------------
         # Check arguments
         #-----------------------------------
-        if (!isset($batches)) {
+        if (!isset($batchSize)) {
             $message = 'The number of batches was not specified.';
             $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        } elseif (!is_int($batches)) {
-            $message = "The batches argument has type '".gettype($batches).'", '
+        } elseif (!is_int($batchSize)) {
+            $message = "The batch size argument has type '".gettype($batchSize).'", '
                 .'but it should have type integer.';
-            $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
-        } elseif ($batches < 1) {
-            $message = 'The batches argument is less than 1. It needs to be at least 1.';
+                $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
+        } elseif ($batchSize < 1) {
+            $message = 'The batch size argument is less than 1. It needs to be at least 1.';
             $this->errorHandler->throwException($message, ErrorHandlerInterface::INVALID_ARGUMENT);
         } // @codeCoverageIgnore
         
@@ -1762,23 +1763,20 @@ class RedCapProject
         );
         $recordIds = array_column($records, $recordIdFieldName);
         $recordIds = array_unique($recordIds);  # Remove duplicate record IDs
-
+        
         $numberOfRecordIds = count($recordIds);
-        $batchSize = (integer) ceil($numberOfRecordIds / $batches);
-            
+        
         $position = 0;
-        for ($batch = 0; $batch < $batches; $batch++) {
+        for ($position = 0; $position < $numberOfRecordIds; $position += $batchSize) {
             $recordIdBatch = array();
             $recordIdBatch = array_slice($recordIds, $position, $batchSize);
             array_push($recordIdBatches, $recordIdBatch);
-            $position += $batchSize;
-            if ($position >= $numberOfRecordIds) {
-                break;
-            }
         }
-
+        
         return $recordIdBatches;
     }
+    
+    
     
     /**
      * Gets the record ID field name for the project.

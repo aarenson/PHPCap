@@ -29,6 +29,20 @@ class BatchesTest extends TestCase
         );
     }
     
+    public function testRecordIdBatches()
+    {
+        $expectedResult = self::$longitudinalDataProject->exportRecords($format = 'csv');
+        
+        # 100 records, so a batch size of 20 should return 5 batches
+        $recordIdBatches = self::$longitudinalDataProject->getRecordIdBatches(20);
+        $this->assertEquals(5, count($recordIdBatches), '20 batch size test');
+        
+        $recordIdBatches = self::$longitudinalDataProject->getRecordIdBatches(15);
+        $this->assertEquals(7, count($recordIdBatches), '15 batch size test');
+        $this->assertEquals(10, count($recordIdBatches[6]), '15 batch size last batch test');
+    }
+    
+    
     public function testExportWithBatches()
     {
         $expectedResult = self::$longitudinalDataProject->exportRecords($format = 'csv');

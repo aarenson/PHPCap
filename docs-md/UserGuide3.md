@@ -102,7 +102,7 @@ be used as input to the exportRecords and exportRecordsAp methods to export reco
 for example:
 ```php
 ...
-# Get all the record IDs of the project in 10 batches
+# Get all the record IDs of the project using a batch size of 10
 $recordIdBatches = $project->getRecordIdBatches(10);
 foreach ($recordIdBatches as $recordIdBatch) {
     $records = $project->exportRecordsAp(['recordIds' => $recordIdBatch]);
