@@ -55,7 +55,8 @@ class RedCapProject
         $sslVerify = false,
         $caCertificateFile = null,
         $errorHandler = null,
-        $connection = null
+        $connection = null,
+        $hostHeader = null
     ) {
         # Need to set errorHandler to default to start in case there is an
         # error with the errorHandler passed as an argument
@@ -74,7 +75,7 @@ class RedCapProject
             $sslVerify         = $this->processSslVerifyArgument($sslVerify);
             $caCertificateFile = $this->processCaCertificateFileArgument($caCertificateFile);
             
-            $this->connection = new RedCapApiConnection($apiUrl, $sslVerify, $caCertificateFile);
+            $this->connection = new RedCapApiConnection($apiUrl, $sslVerify, $caCertificateFile, null, $hostHeader);
         }
     }
 
