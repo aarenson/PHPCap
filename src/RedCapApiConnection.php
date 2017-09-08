@@ -25,7 +25,10 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
 
     /** the error handler for the connection. */
     protected $errorHandler;
-    
+
+    /** the host http header in case of tunneling for example. */
+    protected $hostHeader;    
+
     /**
      * {@inheritdoc}
      *
@@ -35,7 +38,8 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
         $url,
         $sslVerify = false,
         $caCertificateFile = '',
-        $errorHandler = null
+        $errorHandler = null,
+        $hostHeader = null
     ) {
         # If an error handler was specified, use it,
         # otherwise, use the default PHPCap error handler
@@ -49,6 +53,8 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
         
         $this->curlHandle = curl_init();
         
+        $this->hostHeader = array("Host: $hostHeader");
+
         $this->setCurlOption(CURLOPT_SSL_VERIFYPEER, $sslVerify);
         $this->setCurlOption(CURLOPT_SSL_VERIFYHOST, 2);
         
@@ -85,7 +91,6 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
         }
     }
 
-
     public function call($data)
     {
         if (!is_string($data) && !is_array($data)) {
@@ -100,7 +105,12 @@ class RedCapApiConnection implements RedCapApiConnectionInterface
         
         // Post specified data (and do NOT save this in the options array)
         curl_setopt($this->curlHandle, CURLOPT_POSTFIELDS, $data);
-        $response = curl_exec($this->curlHandle);
+	
+        if($this->hostHeader != null) {
+            curl_setopt($this->curlHandle, CURLOPT_HTTPHEADER, $this->hostHeader);
+        }
+
+	$response = curl_exec($this->curlHandle);
         
         if ($errno = curl_errno($this->curlHandle)) {
             $message = curl_error($this->curlHandle);
