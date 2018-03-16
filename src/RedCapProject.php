@@ -9,6 +9,8 @@ namespace IU\PHPCap;
  */
 class RedCapProject
 {
+    const JSON_RESULT_ERROR_PATTERN = '/^[\s]*{"error":[\s]*"(.*)"}[\s]*$/';
+    
     /** string REDCap API token for the project */
     protected $apiToken;
     
@@ -1263,7 +1265,7 @@ class RedCapProject
      * @param string $returnContent specifies what should be returned:
      *           <ul>
      *             <li>'count' - [default] the number of records imported</li>
-     *             <li> ids' - an array of the record IDs imported is returned</li>
+     *             <li>'ids' - an array of the record IDs imported is returned</li>
      *           </ul>
      *
      * @return mixed if 'count' was specified for 'returnContent', then an integer will
@@ -1299,7 +1301,7 @@ class RedCapProject
         $data['dateFormat']        = $this->processDateFormatArgument($dateFormat);
             
         $result = $this->connection->callWithArray($data);
-            
+
         $this->processNonExportResult($result);
         
         
@@ -2167,7 +2169,7 @@ class RedCapProject
             // If this is a format other than 'php', look for a JSON error, because
             // all formats return errors as JSON
             $matches = array();
-            $hasMatch = preg_match('/^[\s]*{"error":"([^"]+)"}[\s]*$/', $result, $matches);
+            $hasMatch = preg_match(self::JSON_RESULT_ERROR_PATTERN, $result, $matches);
             if ($hasMatch === 1) {
                 // note: $matches[0] is the complete string that matched
                 //       $matches[1] is just the error message part
@@ -2418,11 +2420,15 @@ class RedCapProject
     protected function processNonExportResult(& $result)
     {
         $matches = array();
-        $hasMatch = preg_match('/^[\s]*{"error":\s*"([^"]+)"}[\s]*$/', $result, $matches);
+        #$hasMatch = preg_match('/^[\s]*{"error":[\s]*"(.*)"}[\s]*$/', $result, $matches);
+        $hasMatch = preg_match(self::JSON_RESULT_ERROR_PATTERN, $result, $matches);
         if ($hasMatch === 1) {
             // note: $matches[0] is the complete string that matched
             //       $matches[1] is just the error message part
             $message = $matches[1];
+            $message = str_replace('\"', '"', $message);
+            $message = str_replace('\n', "\n", $message);
+             
             $code    = ErrorHandlerInterface::REDCAP_API_ERROR;
             $this->errorHandler->throwException($message, $code);
         } // @codeCoverageIgnore
