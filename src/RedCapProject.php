@@ -1266,12 +1266,21 @@ class RedCapProject
      *           <ul>
      *             <li>'count' - [default] the number of records imported</li>
      *             <li>'ids' - an array of the record IDs imported is returned</li>
+     *             <li>'auto_ids' - an array of comma-separated record ID pairs, with
+     *                 the new ID created and the corresponding ID that
+     *                 was sent, for the records that were imported.
+     *                 This can only be used if $forceAutoNumber is set to true.</li>
      *           </ul>
+     * @param boolean $forceAutoNumber enables automatic assignment of record IDs of imported
+     *         records by REDCap.
+     *         If this is set to true, and auto-numbering for records is enabled for the project,
+     *         auto-numbering of imported records will be enabled.
      *
      * @return mixed if 'count' was specified for 'returnContent', then an integer will
      *         be returned that is the number of records imported.
      *         If 'ids' was specified, then an array of record IDs that were imported will
-     *         be returned.
+     *         be returned. If 'auto_ids' was specified, an array that maps newly created IDs
+     *         to sent IDs will be returned.
      */
     public function importRecords(
         $records,
@@ -1279,7 +1288,8 @@ class RedCapProject
         $type = 'flat',
         $overwriteBehavior = 'normal',
         $dateFormat = 'YMD',
-        $returnContent = 'count'
+        $returnContent = 'count',
+        $forceAutoNumber = false
     ) {
             
         $data = array (
@@ -1297,9 +1307,10 @@ class RedCapProject
         $data['type']   = $this->processTypeArgument($type);
             
         $data['overwriteBehavior'] = $this->processOverwriteBehaviorArgument($overwriteBehavior);
-        $data['returnContent']     = $this->processReturnContentArgument($returnContent);
+        $data['forceAutoNumber']   = $this->processForceAutoNumberArgument($forceAutoNumber);
+        $data['returnContent']     = $this->processReturnContentArgument($returnContent, $forceAutoNumber);
         $data['dateFormat']        = $this->processDateFormatArgument($dateFormat);
-            
+        
         $result = $this->connection->callWithArray($data);
 
         $this->processNonExportResult($result);
@@ -2292,6 +2303,21 @@ class RedCapProject
         return $filterLogic;
     }
     
+    protected function processForceAutoNumberArgument($forceAutoNumber)
+    {
+        if ($forceAutoNumber == null) {
+            $forceAutoNumber = false;
+        } else {
+            if (gettype($forceAutoNumber) !== 'boolean') {
+                $message = 'Invalid type for forceAutoNumber.'
+                    .' It should be a boolean (true or false),'
+                    .' but has type: '.gettype($forceAutoNumber).'.';
+                $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
+        }
+        return $forceAutoNumber;
+    }
     
     protected function processFormArgument($form, $required = false)
     {
@@ -2594,14 +2620,22 @@ class RedCapProject
     }
     
 
-    protected function processReturnContentArgument($returnContent)
+    protected function processReturnContentArgument($returnContent, $forceAutoNumber)
     {
         if (!isset($returnContent)) {
-            $overwriteBehavior = 'count';
+            $returnContent = 'count';
+        } elseif ($returnContent === 'auto_ids') {
+            if ($forceAutoNumber !== true) {
+                $message = "'auto_ids' specified for returnContent,"
+                    ." but forceAutoNumber was not set to true;"
+                    ." 'auto_ids' can only be used when forceAutoNumber is set to true.";
+                $code = ErrorHandlerInterface::INVALID_ARGUMENT;
+                $this->errorHandler->throwException($message, $code);
+            } // @codeCoverageIgnore
         } elseif ($returnContent !== 'count' && $returnContent !== 'ids') {
-            $message = 'Invalid value "'.$returnContent.'" specified for overwriteBehavior.'.
-                    " Valid values are 'count' and 'ids'.";
-            $code    = ErrorHandlerInterface::INVALID_ARGUMENT;
+            $message = "Invalid value '".$returnContent."' specified for returnContent.".
+                    " Valid values are 'count', 'ids' and 'auto_ids'.";
+            $code = ErrorHandlerInterface::INVALID_ARGUMENT;
             $this->errorHandler->throwException($message, $code);
         } // @codeCoverageIgnore
     
