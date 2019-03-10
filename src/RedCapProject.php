@@ -1397,6 +1397,14 @@ class RedCapProject
      *       <li> 'xml' - string of XML encoded data</li>
      *       <li> 'odm' - string with CDISC ODM XML format, specifically ODM version 1.3.1</li>
      *     </ul>
+     *
+     * @return mixed an array will be returned for the 'php' format, and a string for
+     *     all other formats. For classic (non-longitudinal) studies, the
+     *     'form name' and 'custom form label' will be returned for each
+     *     repeating form. Longitudinal studies additionally return the
+     *     'event name'. For repeating events in longitudinal studies, a blank
+     *     value will be returned for the form_name. In all cases, a blank
+     *     value will be returned for the 'custom form label' if it is not defined.
      */
     public function exportRepeatingInstrumentsAndEvents($format = 'php')
     {
