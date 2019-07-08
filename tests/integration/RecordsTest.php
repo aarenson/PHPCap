@@ -430,12 +430,11 @@ class RecordsTest extends TestCase
         $recordIds = array ('1001');
     
         $records = self::$basicDemographyProject->exportRecords($format = 'csv', $type = null, $recordIds);
-    
-        $this->assertEquals(count($records), 1, 'Correct number of records returned test.');
 
         $parser = \KzykHys\CsvParser\CsvParser::fromString($records);
         $csv = $parser->parse();
-        
+        $this->assertEquals(2, count($csv), 'Correct number of records returned test.');
+
         $firstDataRow = $csv[1];
         
         $csvRecordId = $firstDataRow[0];
@@ -453,7 +452,7 @@ class RecordsTest extends TestCase
         
         $records = self::$basicDemographyProject->exportRecords($format = 'odm', $type = null, $recordIds);
         
-        $this->assertEquals(count($records), 1, 'Correct number of records returned test.');
+        $this->assertTrue(is_string($records), 'Correct type for records returned test.');
     
         $xml = new \DomDocument();
         $xml->loadXML($records);
@@ -477,7 +476,7 @@ class RecordsTest extends TestCase
         
         $records = self::$basicDemographyProject->exportRecords($format = 'xml', $type = null, $recordIds);
         
-        $this->assertEquals(count($records), 1, 'Correct number of records returned test.');
+        $this->assertTrue(is_string($records), 1, 'Correct type for records returned test.');
         
         $xml = simplexml_load_string($records);
         
@@ -841,7 +840,7 @@ class RecordsTest extends TestCase
             .'</item> </records>';
         
         $result = self::$basicDemographyProject->importRecords($records, $format = 'xml');
-        $this->assertEquals(1, count($result), 'Record count.');
+        $this->assertEquals(1, $result, 'Import result value.');
             
         $result = self::$basicDemographyProject->exportRecords();
         $this->assertEquals(101, count($result), 'Record count after import.');

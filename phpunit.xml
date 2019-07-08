@@ -3,6 +3,7 @@
          bootstrap="vendor/autoload.php">
   <testsuites>
     <testsuite name="unit">
+      <file>tests/unit/ErrorHandlerTest.php</file>
       <file>tests/unit/FileUtilTest.php</file>
       <file>tests/unit/PhpCapExceptionTest.php</file>
       <file>tests/unit/RedCapApiConnectionTest.php</file>

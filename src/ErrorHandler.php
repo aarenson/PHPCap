@@ -22,12 +22,6 @@ class ErrorHandler implements ErrorHandlerInterface
         $httpStatusCode = null,
         $previousException = null
     ) {
-        throw new PhpCapException(
-            $message,
-            $code,
-            $connectionErrorNumber,
-            $httpStatusCode,
-            $previousException
-        );
+        throw new PhpCapException($message, $code, $connectionErrorNumber, $httpStatusCode, $previousException);
     }
 }

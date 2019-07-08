@@ -73,14 +73,7 @@ class RedCap
             $errorHandler = null,
             $connection = null
         ) {
-            return new RedCapProject(
-                $apiUrl,
-                $apiToken,
-                $sslVerify,
-                $caCertificateFile,
-                $errorHandler,
-                $connection
-            );
+            return new RedCapProject($apiUrl, $apiToken, $sslVerify, $caCertificateFile, $errorHandler, $connection);
         };
     }
 
@@ -174,13 +167,17 @@ class RedCap
         
         $projectConstructorCallback = $this->projectConstructorCallback;
         
+        # Note: due to an issue with Xdebug, arguments to multi-line function
+        #       calls, other than the last one, may not be handled correctly
+        #       for code coverage, so the code coverage ignore annotations
+        #       needed to be added below.
         $project = call_user_func(
-            $projectConstructorCallback,
-            $apiUrl = null,
-            $apiToken,
-            $sslVerify = null,
-            $caCertificateFile = null,
-            $errorHandler,
+            $projectConstructorCallback,  // @codeCoverageIgnore
+            $apiUrl = null,               // @codeCoverageIgnore
+            $apiToken,                    // @codeCoverageIgnore
+            $sslVerify = null,            // @codeCoverageIgnore
+            $caCertificateFile = null,    // @codeCoverageIgnore
+            $errorHandler,                // @codeCoverageIgnore
             $connection
         );
         
@@ -205,12 +202,12 @@ class RedCap
         
         # By default, this creates a RedCapProject
         $project = call_user_func(
-            $projectConstructorCallback,
-            $apiUrl = null,
-            $apiToken,
-            $sslVerify = null,
-            $caCertificateFile = null,
-            $errorHandler,
+            $projectConstructorCallback,   // @codeCoverageIgnore
+            $apiUrl = null,                // @codeCoverageIgnore
+            $apiToken,                     // @codeCoverageIgnore
+            $sslVerify = null,             // @codeCoverageIgnore
+            $caCertificateFile = null,     // @codeCoverageIgnore
+            $errorHandler,                 // @codeCoverageIgnore
             $connection
         );
         

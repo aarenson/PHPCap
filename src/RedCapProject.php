@@ -1422,7 +1422,7 @@ class RedCapProject
         
         $result = $this->connection->callWithArray($data);
         
-        $this->processNonExportResult($result);
+        $this->processExportResult($result, $format);
         
         return $result;
     }
